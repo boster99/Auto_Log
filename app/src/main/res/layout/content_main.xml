@@ -31,7 +31,7 @@
                 android:text="@string/price"/>
 
             <TextView
-                style="@style/NarrowColumnHeaderTextStyle"
+                style="@style/WideColumnHeaderTextStyle"
                 android:text="@string/distance"/>
 
             <TextView
@@ -57,11 +57,11 @@
             <TextView
                 android:id="@+id/first_average_row_price"
                 style="@style/NarrowDataTextStyle"
-                android:text="$ 1.899"/>
+                android:text="1.899"/>
 
             <TextView
                 android:id="@+id/first_average_row_dist"
-                style="@style/NarrowDataTextStyle"
+                style="@style/WideDataTextStyle"
                 android:text="389.6 m"/>
 
             <TextView
@@ -87,11 +87,11 @@
             <TextView
                 android:id="@+id/second_average_row_price"
                 style="@style/NarrowDataTextStyle"
-                android:text="$ 1.899"/>
+                android:text="1.899"/>
 
             <TextView
                 android:id="@+id/second_average_row_dist"
-                style="@style/NarrowDataTextStyle"
+                style="@style/WideDataTextStyle"
                 android:text="389.6 m"/>
 
             <TextView
@@ -117,11 +117,11 @@
             <TextView
                 android:id="@+id/third_average_row_price"
                 style="@style/NarrowDataTextStyle"
-                android:text="$ 1.899"/>
+                android:text="1.899"/>
 
             <TextView
                 android:id="@+id/third_average_row_dist"
-                style="@style/NarrowDataTextStyle"
+                style="@style/WideDataTextStyle"
                 android:text="389.6 m"/>
 
             <TextView
