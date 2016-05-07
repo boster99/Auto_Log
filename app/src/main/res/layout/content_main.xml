@@ -4,16 +4,15 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:orientation="horizontal"
+              android:orientation="vertical"
               app:layout_behavior="@string/appbar_scrolling_view_behavior"
               tools:context="com.ctoddcook.auto_log.MainActivity"
               tools:showIn="@layout/app_bar_main">
 
+    <!-- This view group contains the labels and data for averages -->
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#BBDEFB"
-        android:orientation="vertical">
+        style="@style/SectionStyle"
+        android:background="#BBDEFB">
 
         <TextView
             style="@style/SectionHeaderTextStyle"
@@ -136,4 +135,10 @@
                 android:text="17.4 m/g"/>
         </LinearLayout>
     </LinearLayout>
+
+    <!-- This View serves as a divider between averages and historical records -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="@android:color/darker_gray"/>
 </LinearLayout>
