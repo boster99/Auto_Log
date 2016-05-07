@@ -23,23 +23,23 @@
             style="@style/RowStyle">
 
             <TextView
-                style="@style/ColumnHeaderTextStyle"
+                style="@style/WideColumnHeaderTextStyle"
                 android:text="@string/period"/>
 
             <TextView
-                style="@style/ColumnHeaderTextStyle"
+                style="@style/NarrowColumnHeaderTextStyle"
                 android:text="@string/price"/>
 
             <TextView
-                style="@style/ColumnHeaderTextStyle"
+                style="@style/NarrowColumnHeaderTextStyle"
                 android:text="@string/distance"/>
 
             <TextView
-                style="@style/ColumnHeaderTextStyle"
+                style="@style/NarrowColumnHeaderTextStyle"
                 android:text="@string/volume"/>
 
             <TextView
-                style="@style/ColumnHeaderTextStyle"
+                style="@style/WideColumnHeaderTextStyle"
                 android:text="@string/efficiency"/>
 
         </LinearLayout>
@@ -50,28 +50,28 @@
 
             <TextView
                 android:id="@+id/first_average_row_label"
-                style="@style/DataTextStyle"
+                style="@style/WideDataTextStyle"
                 android:gravity="left"
                 android:text="2 Months"/>
 
             <TextView
                 android:id="@+id/first_average_row_price"
-                style="@style/DataTextStyle"
-                android:text="1.899"/>
+                style="@style/NarrowDataTextStyle"
+                android:text="$ 1.899"/>
 
             <TextView
                 android:id="@+id/first_average_row_dist"
-                style="@style/DataTextStyle"
-                android:text="389.6"/>
+                style="@style/NarrowDataTextStyle"
+                android:text="389.6 m"/>
 
             <TextView
                 android:id="@+id/first_average_row_vol"
-                style="@style/DataTextStyle"
+                style="@style/NarrowDataTextStyle"
                 android:text="17.3 g"/>
 
             <TextView
                 android:id="@+id/first_average_row_efficiency"
-                style="@style/DataTextStyle"
+                style="@style/WideDataTextStyle"
                 android:text="17.4 m/g"/>
         </LinearLayout>
 
@@ -80,28 +80,28 @@
 
             <TextView
                 android:id="@+id/second_average_row_label"
-                style="@style/DataTextStyle"
+                style="@style/WideDataTextStyle"
                 android:gravity="left"
                 android:text="4 Months"/>
 
             <TextView
                 android:id="@+id/second_average_row_price"
-                style="@style/DataTextStyle"
-                android:text="1.899"/>
+                style="@style/NarrowDataTextStyle"
+                android:text="$ 1.899"/>
 
             <TextView
                 android:id="@+id/second_average_row_dist"
-                style="@style/DataTextStyle"
-                android:text="389.6"/>
+                style="@style/NarrowDataTextStyle"
+                android:text="389.6 m"/>
 
             <TextView
                 android:id="@+id/second_average_row_vol"
-                style="@style/DataTextStyle"
+                style="@style/NarrowDataTextStyle"
                 android:text="17.3 g"/>
 
             <TextView
                 android:id="@+id/second_average_row_efficiency"
-                style="@style/DataTextStyle"
+                style="@style/WideDataTextStyle"
                 android:text="17.4 m/g"/>
         </LinearLayout>
 
@@ -110,28 +110,28 @@
 
             <TextView
                 android:id="@+id/third_average_row_label"
-                style="@style/DataTextStyle"
+                style="@style/WideDataTextStyle"
                 android:gravity="left"
                 android:text="One Year"/>
 
             <TextView
                 android:id="@+id/third_average_row_price"
-                style="@style/DataTextStyle"
-                android:text="1.899"/>
+                style="@style/NarrowDataTextStyle"
+                android:text="$ 1.899"/>
 
             <TextView
                 android:id="@+id/third_average_row_dist"
-                style="@style/DataTextStyle"
-                android:text="389.6"/>
+                style="@style/NarrowDataTextStyle"
+                android:text="389.6 m"/>
 
             <TextView
                 android:id="@+id/third_average_row_vol"
-                style="@style/DataTextStyle"
+                style="@style/NarrowDataTextStyle"
                 android:text="17.3 g"/>
 
             <TextView
                 android:id="@+id/third_average_row_efficiency"
-                style="@style/DataTextStyle"
+                style="@style/WideDataTextStyle"
                 android:text="17.4 m/g"/>
         </LinearLayout>
     </LinearLayout>
@@ -141,4 +141,7 @@
         android:layout_width="match_parent"
         android:layout_height="8dp"
         android:background="@android:color/darker_gray"/>
+
+    <!-- This view group contains the historical records -->
+
 </LinearLayout>
