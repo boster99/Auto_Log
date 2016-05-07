@@ -1,112 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.ctoddcook.auto_log.MainActivity"
-    tools:showIn="@layout/app_bar_main">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              app:layout_behavior="@string/appbar_scrolling_view_behavior"
+              tools:context="com.ctoddcook.auto_log.MainActivity"
+              tools:showIn="@layout/app_bar_main">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="#BBDEFB">
+        android:background="#BBDEFB"
+        android:orientation="vertical">
 
         <TextView
             style="@style/SectionHeaderTextStyle"
-            android:id="@+id/average_section_title"
             android:text="@string/averages"/>
 
+        <!-- This LinearLayout contains the column headers for the averages -->
         <LinearLayout
-            style="@style/SectionStyle">
+            style="@style/RowStyle">
 
-            <!-- This LinearLayout contains the column headers for the averages -->
-            <LinearLayout
-                style="@style/RowStyle">
+            <TextView
+                style="@style/ColumnHeaderTextStyle"
+                android:text="@string/period"/>
 
-                <TextView
-                    style="@style/ColumnHeaderTextStyle"
-                    android:text="@string/period"/>
+            <TextView
+                style="@style/ColumnHeaderTextStyle"
+                android:text="@string/price"/>
 
-                <TextView
-                    style="@style/ColumnHeaderTextStyle"
-                    android:text="@string/price"/>
+            <TextView
+                style="@style/ColumnHeaderTextStyle"
+                android:text="@string/distance"/>
 
-                <TextView
-                    style="@style/ColumnHeaderTextStyle"
-                    android:text="@string/distance"/>
+            <TextView
+                style="@style/ColumnHeaderTextStyle"
+                android:text="@string/volume"/>
 
-                <TextView
-                    style="@style/ColumnHeaderTextStyle"
-                    android:text="@string/volume"/>
+            <TextView
+                style="@style/ColumnHeaderTextStyle"
+                android:text="@string/efficiency"/>
 
-                <TextView
-                    style="@style/ColumnHeaderTextStyle"
-                    android:text="@string/efficiency"/>
+        </LinearLayout>
 
-            </LinearLayout>
+        <!-- The next three LinearLayouts contain AVERAGES data -->
+        <LinearLayout
+            style="@style/RowStyle">
 
-            <!-- The next three LinearLayouts contain AVERAGES data -->
-            <LinearLayout
-                style="@style/RowStyle">
+            <TextView
+                android:id="@+id/first_average_row_label"
+                style="@style/DataTextStyle"
+                android:gravity="left"
+                android:text="2 Months"/>
 
-                <TextView
-                    style="@style/DataTextStyle"
-                    android:id="@+id/first_average_row_label"
-                    android:gravity="left"
-                    android:text="2 Months"/>
+            <TextView
+                android:id="@+id/first_average_row_price"
+                style="@style/DataTextStyle"
+                android:text="1.899"/>
 
-                <TextView
-                    style="@style/DataTextStyle"
-                    android:id="@+id/first_average_row_price"
-                    android:text="1.899"/>
+            <TextView
+                android:id="@+id/first_average_row_dist"
+                style="@style/DataTextStyle"
+                android:text="389.6"/>
 
-                <TextView
-                    style="@style/DataTextStyle"
-                    android:id="@+id/first_average_row_dist"
-                    android:text="389.6"/>
+            <TextView
+                android:id="@+id/first_average_row_vol"
+                style="@style/DataTextStyle"
+                android:text="17.3 g"/>
 
-                <TextView
-                    style="@style/DataTextStyle"
-                    android:id="@+id/first_average_row_vol"
-                    android:text="17.3 g"/>
-
-                <TextView
-                    style="@style/DataTextStyle"
-                    android:id="@+id/first_average_row_efficiency"
-                    android:text="17.4 m/g"/>
-            </LinearLayout>
+            <TextView
+                android:id="@+id/first_average_row_efficiency"
+                style="@style/DataTextStyle"
+                android:text="17.4 m/g"/>
         </LinearLayout>
 
         <LinearLayout
             style="@style/RowStyle">
 
             <TextView
-                style="@style/DataTextStyle"
                 android:id="@+id/second_average_row_label"
+                style="@style/DataTextStyle"
                 android:gravity="left"
                 android:text="4 Months"/>
 
             <TextView
-                style="@style/DataTextStyle"
                 android:id="@+id/second_average_row_price"
+                style="@style/DataTextStyle"
                 android:text="1.899"/>
 
             <TextView
-                style="@style/DataTextStyle"
                 android:id="@+id/second_average_row_dist"
+                style="@style/DataTextStyle"
                 android:text="389.6"/>
 
             <TextView
-                style="@style/DataTextStyle"
                 android:id="@+id/second_average_row_vol"
+                style="@style/DataTextStyle"
                 android:text="17.3 g"/>
 
             <TextView
-                style="@style/DataTextStyle"
                 android:id="@+id/second_average_row_efficiency"
+                style="@style/DataTextStyle"
                 android:text="17.4 m/g"/>
         </LinearLayout>
 
@@ -114,30 +110,30 @@
             style="@style/RowStyle">
 
             <TextView
-                style="@style/DataTextStyle"
                 android:id="@+id/third_average_row_label"
+                style="@style/DataTextStyle"
                 android:gravity="left"
                 android:text="One Year"/>
 
             <TextView
-                style="@style/DataTextStyle"
                 android:id="@+id/third_average_row_price"
+                style="@style/DataTextStyle"
                 android:text="1.899"/>
 
             <TextView
-                style="@style/DataTextStyle"
                 android:id="@+id/third_average_row_dist"
+                style="@style/DataTextStyle"
                 android:text="389.6"/>
 
             <TextView
-                style="@style/DataTextStyle"
                 android:id="@+id/third_average_row_vol"
+                style="@style/DataTextStyle"
                 android:text="17.3 g"/>
 
             <TextView
-                style="@style/DataTextStyle"
                 android:id="@+id/third_average_row_efficiency"
+                style="@style/DataTextStyle"
                 android:text="17.4 m/g"/>
         </LinearLayout>
     </LinearLayout>
-</RelativeLayout>
+</LinearLayout>
