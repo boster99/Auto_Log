@@ -15,14 +15,11 @@ import static com.ctoddcook.tools.CTools.roundDouble;
  * This is a model class, used to hold all of the data pertaining to a single instance of filling
  * a gas tank. It also includes some
  */
-class FuelingData {
+class FuelingData extends DataHolder {
     public static final int SPAN_3_MONTHS = 0;
     public static final int SPAN_6_MONTHS = 1;
     public static final int SPAN_ONE_YEAR = 2;
     public static final int SPAN_ALL_TIME = 3;
-    public static final String STATUS_NEW = "N";
-    public static final String STATUS_CURRENT = "C";
-    public static final String STATUS_UPDATED = "U";
 
     private static final Date DATE_THRESHOLDS[];
 
@@ -31,7 +28,7 @@ class FuelingData {
     private static final ArrayList<FuelingData> sOneYearSpan = new ArrayList<>();
     private static final ArrayList<FuelingData> sLifetimeSpan = new ArrayList<>();
 
-    private long mRowID = 0L;
+    private long mFuelingID = 0L;
     private long mVehicleID = 0L;
     private Date mDateOfFill = null;
     private double mDistance = 0d;
@@ -39,7 +36,6 @@ class FuelingData {
     private double mPricePaid = 0d;
     private double mOdometer = 0d;
     private String mLocation = null;
-    private String mStatus = STATUS_NEW;
 
     static {
         DATE_THRESHOLDS = new Date[3];
@@ -420,28 +416,28 @@ class FuelingData {
      */
 
     /**
-     * Getter for mRowID, the database prime key value of the row
+     * Getter for mFuelingID, the database prime key value of the row
      * @return the database prime key value of the row
      */
-    public long getRowID() {
-        return mRowID;
+    public long getFuelingID() {
+        return mFuelingID;
     }
 
     /**
-     * Setter for mRowID, the database prime key value of the row. This should only be called
+     * Setter for mFuelingID, the database prime key value of the row. This should only be called
      * when filling in the data retrieved from the database; i.e., this should not be used to
      * "update" the value but only to get the already existing value from the database.
-     * @param rowID the database prime key value of the row
-     * @throws UnsupportedOperationException if mRowID is not 0 when this method is called
+     * @param fuelingID the database prime key value of the row
+     * @throws UnsupportedOperationException if mFuelingID is not 0 when this method is called
      * @throws IllegalArgumentException if the parameter provided is less than 1
      */
-    public void setRowID(long rowID) throws UnsupportedOperationException, IllegalArgumentException {
-        if (mRowID != 0)
+    public void setFuelingID(long fuelingID) throws UnsupportedOperationException, IllegalArgumentException {
+        if (mFuelingID != 0)
             throw new UnsupportedOperationException("The Row ID can only be set once, and cannot be updated");
-        if (rowID < 1)
+        if (fuelingID < 1)
             throw new IllegalArgumentException("The Row ID cannot be less than 1");
 
-        mRowID = rowID;
+        mFuelingID = fuelingID;
     }
 
     /**
