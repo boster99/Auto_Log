@@ -5,8 +5,6 @@
 
 package com.ctoddcook.auto_log;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -17,9 +15,9 @@ import static com.ctoddcook.tools.CTools.roundDouble;
  * This is a model class, used to hold all of the data pertaining to a single instance of filling
  * a gas tank. It also includes some
  */
-class FillData {
-    public static final int SPAN_60_DAYS = 0;
-    public static final int SPAN_120_DAYS = 1;
+class FuelingData {
+    public static final int SPAN_3_MONTHS = 0;
+    public static final int SPAN_6_MONTHS = 1;
     public static final int SPAN_ONE_YEAR = 2;
     public static final int SPAN_ALL_TIME = 3;
     public static final String STATUS_NEW = "N";
@@ -28,10 +26,10 @@ class FillData {
 
     private static final Date DATE_THRESHOLDS[];
 
-    private static final ArrayList<FillData> sFillsInLast60 = new ArrayList<FillData>();
-    private static final ArrayList<FillData> sFillsInLast120 = new ArrayList<FillData>();
-    private static final ArrayList<FillData> sFillsInLastYear = new ArrayList<FillData>();
-    private static final ArrayList<FillData> sAllFills = new ArrayList<FillData>();
+    private static final ArrayList<FuelingData> sThreeMonthSpan = new ArrayList<FuelingData>();
+    private static final ArrayList<FuelingData> sSixMonthSpan = new ArrayList<FuelingData>();
+    private static final ArrayList<FuelingData> sOneYearSpan = new ArrayList<FuelingData>();
+    private static final ArrayList<FuelingData> sLifetimeSpan = new ArrayList<FuelingData>();
 
     private long mRowID = 0L;
     private long mVehicleID = 0L;
@@ -46,13 +44,13 @@ class FillData {
     static {
         DATE_THRESHOLDS = new Date[3];
 
-        Calendar sixtyDaysAgo = Calendar.getInstance();
-        sixtyDaysAgo.add(Calendar.DATE, -60);               // Calculate 60 days before today
-        DATE_THRESHOLDS[SPAN_60_DAYS] = sixtyDaysAgo.getTime();
+        Calendar threeMonthsAgo = Calendar.getInstance();
+        threeMonthsAgo.add(Calendar.MONTH, -3);             // Calculate 3 months before today
+        DATE_THRESHOLDS[SPAN_3_MONTHS] = threeMonthsAgo.getTime();
 
-        Calendar oneHundredTwentyDaysAgo = Calendar.getInstance();
-        oneHundredTwentyDaysAgo.add(Calendar.DATE, -120);   // Calculate 120 days before today
-        DATE_THRESHOLDS[SPAN_120_DAYS] = oneHundredTwentyDaysAgo.getTime();
+        Calendar sixMonthsAgo = Calendar.getInstance();
+        sixMonthsAgo.add(Calendar.MONTH, -6);              // Calculate 6 months before today
+        DATE_THRESHOLDS[SPAN_6_MONTHS] = sixMonthsAgo.getTime();
 
         Calendar oneYearAgo = Calendar.getInstance();
         oneYearAgo.add(Calendar.YEAR, -1);                  // Calculate one year before today
@@ -65,32 +63,32 @@ class FillData {
      */
 
     /**
-     * Returns the appropriate ArrayList of FillData instances for the indicated time span
-     * @param span FillData.SPAN_60_DAYS, FillData.SPAN_120_DAYS, FillData.SPAN_ONE_YEAR or
-     *             FillData.SPAN_ALL_TIME
-     * @return an ArrayList of FillData instances
+     * Returns the appropriate ArrayList of FuelingData instances for the indicated time span
+     * @param span FuelingData.SPAN_3_MONTHS, FuelingData.SPAN_6_MONTHS, FuelingData.SPAN_ONE_YEAR or
+     *             FuelingData.SPAN_ALL_TIME
+     * @return an ArrayList of FuelingData instances
      * @throws IllegalArgumentException if the argument provided does not match one of the required
      * constants.
      */
-    private static ArrayList<FillData> getListForSpan(int span) throws IllegalArgumentException {
-        ArrayList<FillData> listForSpan;
+    private static ArrayList<FuelingData> getListForSpan(int span) throws IllegalArgumentException {
+        ArrayList<FuelingData> listForSpan;
 
         switch (span) {
-            case SPAN_60_DAYS:
-                listForSpan = sFillsInLast60;
+            case SPAN_3_MONTHS:
+                listForSpan = sThreeMonthSpan;
                 break;
-            case SPAN_120_DAYS:
-                listForSpan = sFillsInLast120;
+            case SPAN_6_MONTHS:
+                listForSpan = sSixMonthSpan;
                 break;
             case SPAN_ONE_YEAR:
-                listForSpan = sFillsInLastYear;
+                listForSpan = sOneYearSpan;
                 break;
             case SPAN_ALL_TIME:
-                listForSpan = sAllFills;
+                listForSpan = sLifetimeSpan;
                 break;
             default:
-                throw new IllegalArgumentException("span argument must be " + SPAN_60_DAYS + ", "
-                        + SPAN_120_DAYS + ", " + SPAN_ONE_YEAR + " or " + SPAN_ALL_TIME + ".");
+                throw new IllegalArgumentException("span argument must be " + SPAN_3_MONTHS + ", "
+                        + SPAN_6_MONTHS + ", " + SPAN_ONE_YEAR + " or " + SPAN_ALL_TIME + ".");
         }
 
         return listForSpan;
@@ -99,12 +97,12 @@ class FillData {
     /**
      * Calculates and returns the average (mean) distance for each fill in the indicated time span.
      * Rounded to 1 decimal place.
-     * @param span FillData.SPAN_60_DAYS, FillData.SPAN_120_DAYS, FillData.SPAN_ONE_YEAR or
-     *             FillData.SPAN_ALL_TIME
+     * @param span FuelingData.SPAN_3_MONTHS, FuelingData.SPAN_6_MONTHS, FuelingData.SPAN_ONE_YEAR or
+     *             FuelingData.SPAN_ALL_TIME
      * @return the average (mean) distance for the fills in the indicated time span.
      */
     public static double getAvgDistanceOverSpan(int span) {
-        ArrayList<FillData> fillsOverSpan;
+        ArrayList<FuelingData> fillsOverSpan;
 
         fillsOverSpan = getListForSpan(span);
 
@@ -113,7 +111,7 @@ class FillData {
 
         double totalDistance = 0d;
 
-        for (FillData each: fillsOverSpan)
+        for (FuelingData each: fillsOverSpan)
             totalDistance += each.mDistance;
 
         return roundDouble(totalDistance / fillsOverSpan.size(), 1);
@@ -122,12 +120,12 @@ class FillData {
     /**
      * Calculates and returns the average (mean) volume for each fill in the indicated time span.
      * Rounded to 1 decimal place.
-     * @param span FillData.SPAN_60_DAYS, FillData.SPAN_120_DAYS, FillData.SPAN_ONE_YEAR or
-     *             FillData.SPAN_ALL_TIME
+     * @param span FuelingData.SPAN_3_MONTHS, FuelingData.SPAN_6_MONTHS, FuelingData.SPAN_ONE_YEAR or
+     *             FuelingData.SPAN_ALL_TIME
      * @return the average (mean) distance for the fills in the indicated time span.
      */
     public static double getAvgVolumeOverSpan(int span) {
-        ArrayList<FillData> fillsOverSpan;
+        ArrayList<FuelingData> fillsOverSpan;
 
         fillsOverSpan = getListForSpan(span);
 
@@ -136,7 +134,7 @@ class FillData {
 
         double totalVolume = 0d;
 
-        for (FillData each: fillsOverSpan)
+        for (FuelingData each: fillsOverSpan)
             totalVolume += each.mVolume;
 
         return roundDouble(totalVolume / fillsOverSpan.size(), 1);
@@ -145,12 +143,12 @@ class FillData {
     /**
      * Calculates and returns the average (mean) Price Paid for each fill in the indicated time
      * span. Rounded to 2 decimal places.
-     * @param span FillData.SPAN_60_DAYS, FillData.SPAN_120_DAYS, FillData.SPAN_ONE_YEAR or
-     *             FillData.SPAN_ALL_TIME
+     * @param span FuelingData.SPAN_3_MONTHS, FuelingData.SPAN_6_MONTHS, FuelingData.SPAN_ONE_YEAR or
+     *             FuelingData.SPAN_ALL_TIME
      * @return the average (mean) price paid for the fills in the indicated time span.
      */
     public static double getAvgPricePaidOverSpan(int span) throws IllegalArgumentException {
-        ArrayList<FillData> fillsOverSpan;
+        ArrayList<FuelingData> fillsOverSpan;
 
         fillsOverSpan = getListForSpan(span);
 
@@ -159,7 +157,7 @@ class FillData {
 
         double totalPricePaid = 0d;
 
-        for (FillData each: fillsOverSpan)
+        for (FuelingData each: fillsOverSpan)
             totalPricePaid += each.mPricePaid;
 
         return roundDouble(totalPricePaid / fillsOverSpan.size(), 2);
@@ -168,12 +166,12 @@ class FillData {
     /**
      * Calculates and returns the average (mean) Price Paid per Unit (gallon) over the indicated
      * time span. Rounded to 3 decimal places.
-     * @param span FillData.SPAN_60_DAYS, FillData.SPAN_120_DAYS, FillData.SPAN_ONE_YEAR or
-     *             FillData.SPAN_ALL_TIME
+     * @param span FuelingData.SPAN_3_MONTHS, FuelingData.SPAN_6_MONTHS, FuelingData.SPAN_ONE_YEAR or
+     *             FuelingData.SPAN_ALL_TIME
      * @return the average (mean) price per unit over indicated time span.
      */
     public static double getAvgPricePerUnitOverSpan(int span) throws IllegalArgumentException {
-        ArrayList<FillData> fillsOverSpan;
+        ArrayList<FuelingData> fillsOverSpan;
 
         fillsOverSpan = getListForSpan(span);
 
@@ -183,7 +181,7 @@ class FillData {
         double totalPricePaid = 0d;
         double totalVolume = 0d;
 
-        for (FillData each: fillsOverSpan) {
+        for (FuelingData each: fillsOverSpan) {
             totalPricePaid += each.mPricePaid;
             totalVolume += each.mVolume;
         }
@@ -194,12 +192,12 @@ class FillData {
     /**
      * Calculates and returns the average (mean) Price Paid per Distance Unit (mile or kilometer)
      * over the indicated time span. Rounded to 3 decimal places.
-     * @param span FillData.SPAN_60_DAYS, FillData.SPAN_120_DAYS, FillData.SPAN_ONE_YEAR or
-     *             FillData.SPAN_ALL_TIME
+     * @param span FuelingData.SPAN_3_MONTHS, FuelingData.SPAN_6_MONTHS, FuelingData.SPAN_ONE_YEAR or
+     *             FuelingData.SPAN_ALL_TIME
      * @return the average (mean) price per distance unit over indicated time span.
      */
     public static double getAvgPricePerDistanceOverSpan(int span) throws IllegalArgumentException {
-        ArrayList<FillData> fillsOverSpan;
+        ArrayList<FuelingData> fillsOverSpan;
 
         fillsOverSpan = getListForSpan(span);
 
@@ -209,7 +207,7 @@ class FillData {
         double totalPricePaid = 0d;
         double totalDistance = 0d;
 
-        for (FillData each: fillsOverSpan) {
+        for (FuelingData each: fillsOverSpan) {
             totalPricePaid += each.mPricePaid;
             totalDistance += each.mDistance;
         }
@@ -220,11 +218,11 @@ class FillData {
     /**
      * Calculates and returns the average (mean) distance per volume (mpg) over the indicated
      * time span. Rounded to 1 decimal place.
-     * @param span FillData.SPAN_60_DAYS, FillData.SPAN_120_DAYS or FillData.SPAN_ONE_YEAR
+     * @param span FuelingData.SPAN_3_MONTHS, FuelingData.SPAN_6_MONTHS or FuelingData.SPAN_ONE_YEAR
      * @return the average (mean) distance per volume of fuel (mpg) over indicated time span.
      */
     public static double getAvgMileageOverSpan(int span) throws IllegalArgumentException {
-        ArrayList<FillData> fillsOverSpan;
+        ArrayList<FuelingData> fillsOverSpan;
 
         fillsOverSpan = getListForSpan(span);
 
@@ -234,7 +232,7 @@ class FillData {
         double totalDistance = 0d;
         double totalVolume = 0d;
 
-        for (FillData each: fillsOverSpan) {
+        for (FuelingData each: fillsOverSpan) {
             totalDistance += each.mDistance;
             totalVolume += each.mVolume;
         }
@@ -247,40 +245,40 @@ class FillData {
 
 
     /*
-    Following are methods which get row counts from the arrays containing FillData instances
+    Following are methods which get row counts from the arrays containing FuelingData instances
     in certain time spans.
      */
 
     /**
-     * Provides the count of fills in the "last 60 days" list
-     * @return the size of the sFillsInLast60 array
+     * Provides the count of fills in the "last 3 motnhs" list
+     * @return the size of the sThreeMonthSpan array
      */
-    public static int get60DaysRowCount() {
-        return sFillsInLast60.size();
+    public static int getThreeMonthsRowCount() {
+        return sThreeMonthSpan.size();
     }
 
     /**
-     * Provides the count of fills in the "last 120 days" list
-     * @return the size of the sFillsInLast120 array
+     * Provides the count of fills in the "last 6 months" list
+     * @return the size of the sSixMonthSpan array
      */
-    public static int get120DaysRowCount() {
-        return sFillsInLast120.size();
+    public static int getSixMonthsRowCount() {
+        return sSixMonthSpan.size();
     }
 
     /**
      * Provides the count of fills in the "last year" list
-     * @return the size of the sFillsInLastYear array
+     * @return the size of the sOneYearSpan array
      */
     public static int getOneYearRowCount() {
-       return sFillsInLastYear.size();
+       return sOneYearSpan.size();
     }
 
     /**
      * Returns the count of all fills in memory.
-     * @return the size of the sAllFills array
+     * @return the size of the sLifetimeSpan array
      */
-    public static int getAllRowCount() {
-        return sAllFills.size();
+    public static int getLifetimeRowCount() {
+        return sLifetimeSpan.size();
     }
 
 
@@ -288,13 +286,13 @@ class FillData {
 
 
     /*
-    The next few methods make adjustments to the arrays containing FillData instances
+    The next few methods make adjustments to the arrays containing FuelingData instances
     in certain time spans.
      */
 
     /**
      * This will add (or remove) the instance to (from) the static lists of fill records
-     * based on date. If the fill date (mDateOfFill) is within the last 60 or 120 days or
+     * based on date. If the fill date (mDateOfFill) is within the last 3 or 6 months or
      * last year, this instance will get added to at least one of those lists.
      *
      * Care is taken not to add the instance to a list if it is already there. Likewise, if the
@@ -304,71 +302,71 @@ class FillData {
         if (mDateOfFill == null)
             throw new IllegalStateException("Field mDateOfFill must not be null when this method is called");
 
-        if (mDateOfFill.after(DATE_THRESHOLDS[SPAN_60_DAYS])) {      // Should be in 60-day list?
-            if (!sFillsInLast60.contains(this))     //   Are we already there?
-                sFillsInLast60.add(this);           //     If not, add to the list
+        if (mDateOfFill.after(DATE_THRESHOLDS[SPAN_3_MONTHS])) {      // Should be in 3-month list?
+            if (!sThreeMonthSpan.contains(this))     //   Are we already there?
+                sThreeMonthSpan.add(this);           //     If not, add to the list
         } else {                                    // Otherwise, we should NOT be in the list
-            if (sFillsInLast60.contains(this))      //   But are we there?
-                sFillsInLast60.remove(this);        //     If so, remove from the list
+            if (sThreeMonthSpan.contains(this))      //   But are we there?
+                sThreeMonthSpan.remove(this);        //     If so, remove from the list
         }
 
-        if (mDateOfFill.after(DATE_THRESHOLDS[SPAN_120_DAYS])) {     // Should be in 120-day list?
-            if (!sFillsInLast120.contains(this))    //   Are we already there?
-                sFillsInLast120.add(this);          //     If not, add to the list
+        if (mDateOfFill.after(DATE_THRESHOLDS[SPAN_6_MONTHS])) {     // Should be in 6-month list?
+            if (!sSixMonthSpan.contains(this))    //   Are we already there?
+                sSixMonthSpan.add(this);          //     If not, add to the list
         } else {                                    // Otherwise, we should NOT be in the list
-            if (sFillsInLast120.contains(this))     //   But are we there?
-                sFillsInLast120.remove(this);       //     If so, remove from the list
+            if (sSixMonthSpan.contains(this))     //   But are we there?
+                sSixMonthSpan.remove(this);       //     If so, remove from the list
         }
 
         if (mDateOfFill.after(DATE_THRESHOLDS[SPAN_ONE_YEAR])) {     // Should be in one-year list?
-            if (!sFillsInLastYear.contains(this))   //   Are we already there?
-                sFillsInLastYear.add(this);         //     If not, add to the list
+            if (!sOneYearSpan.contains(this))   //   Are we already there?
+                sOneYearSpan.add(this);         //     If not, add to the list
         } else {                                    // Otherwise, we should NOT be in the list
-            if (sFillsInLastYear.contains(this))    //   But are we there?
-                sFillsInLastYear.remove(this);      //     If so, remove from the list
+            if (sOneYearSpan.contains(this))    //   But are we there?
+                sOneYearSpan.remove(this);      //     If so, remove from the list
         }
 
-        // Finally, regardless of date, add this to the list of all FillData instances
-        if (!sAllFills.contains(this))
-            sAllFills.add(this);
+        // Finally, regardless of date, add this to the list of all FuelingData instances
+        if (!sLifetimeSpan.contains(this))
+            sLifetimeSpan.add(this);
     }
 
     /**
-     * Removes all Fill Data from the arrays (sFillsInLast60, sFillInLast120, sFillsInLastYear)
+     * Removes all Fill Data from the arrays (sThreeMonthSpan, sSixMonthSpan, sOneYearSpan)
      * which are used for calculating averages over time.
      */
     public static void clearSpans() {
-        sFillsInLast60.clear();
-        sFillsInLast120.clear();
-        sFillsInLastYear.clear();
+        sThreeMonthSpan.clear();
+        sSixMonthSpan.clear();
+        sOneYearSpan.clear();
     }
 
     /**
      * Removes all Fill Data from all the arrays, including those used for calculating averages
-     * over time (sFillsInLast60, sFillsInLast120, sFillsInLastYear) and the one used to hold
-     * all existing Fill Data objects (sAllFills).
+     * over time (sThreeMonthSpan, sSixMonthSpan, sOneYearSpan) and the one used to hold
+     * all existing Fill Data objects (sLifetimeSpan).
      */
     public static void clearAll() {
         clearSpans();
-        sAllFills.clear();
+        sLifetimeSpan.clear();
     }
 
     /**
-     * Removes the provided FillData instance from all ArrayLists
-     * @param fd The FillData instance to remove
+     * Removes the provided FuelingData instance from all ArrayLists
+     * @param fd The FuelingData instance to remove
      */
-    public static void remove(FillData fd) {
-        if (sFillsInLast60.contains(fd))
-            sFillsInLast60.remove(fd);
+    public static void remove(FuelingData fd) {
+        if (sThreeMonthSpan.contains(fd))
+            sThreeMonthSpan.remove(fd);
 
-        if (sFillsInLast120.contains(fd))
-            sFillsInLast120.remove(fd);
+        if (sSixMonthSpan.contains(fd))
+            sSixMonthSpan.remove(fd);
 
-        if (sFillsInLastYear.contains(fd))
-            sFillsInLastYear.remove(fd);
+        if (sOneYearSpan.contains(fd))
+            sOneYearSpan.remove(fd);
 
-        if (sAllFills.contains(fd))
-            sAllFills.remove(fd);
+        if (sLifetimeSpan.contains(fd))
+            sLifetimeSpan.remove(fd);
     }
 
 
@@ -376,7 +374,7 @@ class FillData {
 
 
     /*
-    The next few methods calculate values for a specific instance of FillData
+    The next few methods calculate values for a specific instance of FuelingData
      */
 
     /**
@@ -473,7 +471,7 @@ class FillData {
     /**
      * Setter for mDateOfFill, a Date value indicating when the vehicle was filled with gas. After
      * setting the new value, adjustLists() is called to add this instance to (or remove it from)
-     * appropriate arrays of FillData objects.
+     * appropriate arrays of FuelingData objects.
      * @param dateOfFill a Date value indicating when the vehicle was filled with gas
      */
     public void setDateOfFill(Date dateOfFill) {

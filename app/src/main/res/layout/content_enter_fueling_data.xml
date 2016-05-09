@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2016 C. Todd Cook. All rights reserved.
+  -->
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.ctoddcook.auto_log.EnterFuelingDataActivity"
+    tools:showIn="@layout/activity_enter_fueling_data">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#4FC3F7">
+
+        <LinearLayout
+            style="@style/EditRow">
+
+            <TextView
+                style="@style/EditLabel"
+                android:text="@string/DateLabel"/>
+
+            <EditText android:id="@+id/edit_date"
+                      style="@style/EditData"
+                      android:inputType="date"
+                      android:hint="@string/DateLabel"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/EditRow">
+
+            <TextView
+                style="@style/EditLabel"
+                android:text="@string/VolumeLabel"/>
+
+            <EditText android:id="@+id/edit_volume"
+                      style="@style/EditData"
+                      android:inputType="numberDecimal"
+                      android:hint="@string/VolumeLabel"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/EditRow">
+
+            <TextView
+                style="@style/EditLabel"
+                android:text="@string/DistanceLabel"/>
+
+            <EditText android:id="@+id/edit_distance"
+                      style="@style/EditData"
+                      android:inputType="numberDecimal"
+                      android:hint="@string/DistanceLabel"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/EditRow">
+
+            <TextView
+                style="@style/EditLabel"
+                android:text="@string/TotalPricePaidLabel"/>
+
+            <EditText
+                android:id="@+id/edit_total_price_paid"
+                style="@style/EditData"
+                android:inputType="numberDecimal"
+                android:hint="@string/TotalPricePaidLabel"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/EditRow">
+
+            <TextView
+                style="@style/EditLabel"
+                android:text="Date"/>
+
+            <EditText
+                style="@style/EditData"
+                android:hint="Date"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/EditRow">
+
+            <TextView
+                style="@style/EditLabel"
+                android:text="Date"/>
+
+            <EditText
+                style="@style/EditData"
+                android:hint="Date"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/EditRow">
+
+            <TextView
+                style="@style/EditLabel"
+                android:text="Date"/>
+
+            <EditText
+                style="@style/EditData"
+                android:hint="Date"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/EditRow">
+
+            <TextView
+                style="@style/EditLabel"
+                android:text="Date"/>
+
+            <EditText
+                style="@style/EditData"
+                android:hint="Date"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>

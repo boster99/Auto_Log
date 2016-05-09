@@ -14,4 +14,9 @@
     <string name="date">Date</string>
     <string name="averages">Averages</string>
     <string name="period">Period</string>
+    <string name="title_activity_enter_fueling_data">Enter Fueling Details</string>
+    <string name="DateLabel">Date</string>
+    <string name="VolumeLabel">Volume</string>
+    <string name="DistanceLabel">Distance</string>
+    <string name="TotalPricePaidLabel">Total Paid</string>
 </resources>

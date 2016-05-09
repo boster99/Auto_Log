@@ -51,8 +51,8 @@
             <TextView
                 android:id="@+id/first_average_row_label"
                 style="@style/WideDataTextStyle"
-                android:gravity="left"
-                android:text="2 Months"/>
+                android:gravity="start"
+                android:text="3 Months"/>
 
             <TextView
                 android:id="@+id/first_average_row_price"
@@ -81,8 +81,8 @@
             <TextView
                 android:id="@+id/second_average_row_label"
                 style="@style/WideDataTextStyle"
-                android:gravity="left"
-                android:text="4 Months"/>
+                android:gravity="start"
+                android:text="6 Months"/>
 
             <TextView
                 android:id="@+id/second_average_row_price"
@@ -111,7 +111,7 @@
             <TextView
                 android:id="@+id/third_average_row_label"
                 style="@style/WideDataTextStyle"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="One Year"/>
 
             <TextView
@@ -131,6 +131,36 @@
 
             <TextView
                 android:id="@+id/third_average_row_efficiency"
+                style="@style/WideDataTextStyle"
+                android:text="17.4 m/g"/>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/RowStyle">
+
+            <TextView
+                android:id="@+id/fourth_average_row_label"
+                style="@style/WideDataTextStyle"
+                android:gravity="start"
+                android:text="Lifetime"/>
+
+            <TextView
+                android:id="@+id/fourth_average_row_price"
+                style="@style/NarrowDataTextStyle"
+                android:text="1.899"/>
+
+            <TextView
+                android:id="@+id/fourth_average_row_dist"
+                style="@style/WideDataTextStyle"
+                android:text="389.6 m"/>
+
+            <TextView
+                android:id="@+id/fourth_average_row_vol"
+                style="@style/NarrowDataTextStyle"
+                android:text="17.3 g"/>
+
+            <TextView
+                android:id="@+id/fourth_average_row_efficiency"
                 style="@style/WideDataTextStyle"
                 android:text="17.4 m/g"/>
         </LinearLayout>

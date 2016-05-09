@@ -16,25 +16,28 @@ import java.util.Date;
  * Created by C. Todd Cook on 4/19/2016.
  * ctodd@ctoddcook.com
  */
-public class FillDataTest {
-    private static FillData fd5;
-    private static FillData fd25;
-    private static FillData fd55;
-    private static FillData fd75;
-    private static FillData fd105;
-    private static FillData fd119;
-    private static FillData fd121;
-    private static FillData fd260;
-    private static FillData fd350;
-    private static FillData fd400;
+public class FuelingDataTest {
+    private static FuelingData fd5;
+    private static FuelingData fd25;
+    private static FuelingData fd55;
+
+    private static FuelingData fd95;
+    private static FuelingData fd105;
+    private static FuelingData fd169;
+
+    private static FuelingData fd191;
+    private static FuelingData fd260;
+    private static FuelingData fd350;
+
+    private static FuelingData fd400;
 
 
     /**
-     * This sets up 10 FillData objects, named "fd###" where ### is a number representing
+     * This sets up 10 FuelingData objects, named "fd###" where ### is a number representing
      * how many days in the past the fill occurred. For example, fd25 has an mDateOfFill
      * for 25 days ago.
      *
-     * Of the 10 FillData objects:
+     * Of the 10 FuelingData objects:
      * -- 3 of them are in the past 60 days, so they should be in all three arrays sFillsInLast60,
      *    sFillsInLast120 and sFillsInLastYear.
      * -- 3 more objects are in the past 120 days but not in the past 60, so they should be in both
@@ -53,13 +56,13 @@ public class FillDataTest {
         Calendar cal;
 
         /*
-        These first three FillData objects should all end up in the sFillsInLast60, sFillsInLast120
+        These first three FuelingData objects should all end up in the sFillsInLast60, sFillsInLast120
         and sFillsInLastYear arrays.
          */
         if (fd5 == null) {
             cal = Calendar.getInstance();
             cal.add(Calendar.DATE, -5);
-            fd5 = new FillData();
+            fd5 = new FuelingData();
             fd5.setDateOfFill(cal.getTime());
             fd5.setDistance(350.9);
             fd5.setPricePaid(38.45);
@@ -69,7 +72,7 @@ public class FillDataTest {
         if (fd25 == null) {
             cal = Calendar.getInstance();
             cal.add(Calendar.DATE, -25);
-            fd25 = new FillData();
+            fd25 = new FuelingData();
             fd25.setDateOfFill(cal.getTime());
             fd25.setDistance(297.6);
             fd25.setPricePaid(35.70);
@@ -79,7 +82,7 @@ public class FillDataTest {
         if (fd55 == null) {
             cal = Calendar.getInstance();
             cal.add(Calendar.DATE, -55);
-            fd55 = new FillData();
+            fd55 = new FuelingData();
             fd55.setDateOfFill(cal.getTime());
             fd55.setDistance(425.7);
             fd55.setPricePaid(43.40);
@@ -89,53 +92,53 @@ public class FillDataTest {
         /*
         These next three objects should end up in the sFillsInLast120 and sFillsInLastYear arrays.
         */
-        if (fd75 == null) {
+        if (fd95 == null) {
             cal = Calendar.getInstance();
-            cal.add(Calendar.DATE, -75);
-            fd75 = new FillData();
-            fd75.setDateOfFill(cal.getTime());
-            fd75.setDistance(350.9);
-            fd75.setPricePaid(43.15);
-            fd75.setVolume(17.499);
+            cal.add(Calendar.DATE, -95);
+            fd95 = new FuelingData();
+            fd95.setDateOfFill(cal.getTime());
+            fd95.setDistance(350.9);
+            fd95.setPricePaid(43.15);
+            fd95.setVolume(17.499);
         }
 
         if (fd105 == null) {
             cal = Calendar.getInstance();
             cal.add(Calendar.DATE, -105);
-            fd105 = new FillData();
+            fd105 = new FuelingData();
             fd105.setDateOfFill(cal.getTime());
             fd105.setDistance(416.4);
             fd105.setPricePaid(27.27);
             fd105.setVolume(17.982);
         }
 
-        if (fd119 == null) {
+        if (fd169 == null) {
             cal = Calendar.getInstance();
-            cal.add(Calendar.DATE, -119);
-            fd119 = new FillData();
-            fd119.setDateOfFill(cal.getTime());
-            fd119.setDistance(524.1);
-            fd119.setPricePaid(46.17);
-            fd119.setVolume(19.243);
+            cal.add(Calendar.DATE, -169);
+            fd169 = new FuelingData();
+            fd169.setDateOfFill(cal.getTime());
+            fd169.setDistance(524.1);
+            fd169.setPricePaid(46.17);
+            fd169.setVolume(19.243);
         }
 
         /*
         These next three objects should end up in the sFillsInLastYear only.
          */
-        if (fd121 == null) {
+        if (fd191 == null) {
             cal = Calendar.getInstance();
-            cal.add(Calendar.DATE, -121);
-            fd121 = new FillData();
-            fd121.setDateOfFill(cal.getTime());
-            fd121.setDistance(423.7);
-            fd121.setPricePaid(36.23);
-            fd121.setVolume(18.241);
+            cal.add(Calendar.DATE, -191);
+            fd191 = new FuelingData();
+            fd191.setDateOfFill(cal.getTime());
+            fd191.setDistance(423.7);
+            fd191.setPricePaid(36.23);
+            fd191.setVolume(18.241);
         }
 
         if (fd260 == null) {
             cal = Calendar.getInstance();
             cal.add(Calendar.DATE, -260);
-            fd260 = new FillData();
+            fd260 = new FuelingData();
             fd260.setDateOfFill(cal.getTime());
             fd260.setDistance(360.1);
             fd260.setPricePaid(40.18);
@@ -145,7 +148,7 @@ public class FillDataTest {
         if (fd350 == null) {
             cal = Calendar.getInstance();
             cal.add(Calendar.DATE, -350);
-            fd350 = new FillData();
+            fd350 = new FuelingData();
             fd350.setDateOfFill(cal.getTime());
             fd350.setDistance(382.8);
             fd350.setPricePaid(39.04);
@@ -158,7 +161,7 @@ public class FillDataTest {
         if (fd400 == null ) {
             cal = Calendar.getInstance();
             cal.add(Calendar.DATE, -400);
-            fd400 = new FillData();
+            fd400 = new FuelingData();
             fd400.setDateOfFill(cal.getTime());
             fd400.setDistance(402.8);
             fd400.setPricePaid(37.63);
@@ -167,17 +170,17 @@ public class FillDataTest {
     }
 
     /**
-     * Used to reset the FillData instances and subsequently set them up again
+     * Used to reset the FuelingData instances and subsequently set them up again
      * @throws Exception
      */
     private void reset() throws Exception {
         fd5 = null;
         fd25 = null;
         fd55 = null;
-        fd75 = null;
+        fd95 = null;
         fd105 = null;
-        fd119 = null;
-        fd121 = null;
+        fd169 = null;
+        fd191 = null;
         fd260 = null;
         fd350 = null;
         fd400 = null;
@@ -193,17 +196,17 @@ public class FillDataTest {
      */
 
     /**
-     * Check the size of the 4 ArrayLists of FillData objects containing the FillData instances
+     * Check the size of the 4 ArrayLists of FuelingData objects containing the FuelingData instances
      * instantiated inthe setUp() method. These tests are very dependent on the number of
      * instances created and the mDataOfFill data set into them.
      * @throws Exception
      */
     @Test
     public void testCountsInArrays() throws Exception {
-        Assert.assertEquals(3, FillData.get60DaysRowCount());
-        Assert.assertEquals(6, FillData.get120DaysRowCount());
-        Assert.assertEquals(9, FillData.getOneYearRowCount());
-        Assert.assertEquals(10, FillData.getAllRowCount());
+        Assert.assertEquals(3, FuelingData.getThreeMonthsRowCount());
+        Assert.assertEquals(6, FuelingData.getSixMonthsRowCount());
+        Assert.assertEquals(9, FuelingData.getOneYearRowCount());
+        Assert.assertEquals(10, FuelingData.getLifetimeRowCount());
     }
 
     /**
@@ -213,53 +216,53 @@ public class FillDataTest {
      */
     @Test
     public void testArrayClears() throws Exception {
-        FillData.clearSpans();
-        Assert.assertEquals(0, FillData.get60DaysRowCount());   // Should be empty
-        Assert.assertEquals(0, FillData.get120DaysRowCount());  // Should be empty
-        Assert.assertEquals(0, FillData.getOneYearRowCount());  // Should be empty
-        Assert.assertEquals(10, FillData.getAllRowCount());     // Should NOT be empty
+        FuelingData.clearSpans();
+        Assert.assertEquals(0, FuelingData.getThreeMonthsRowCount());   // Should be empty
+        Assert.assertEquals(0, FuelingData.getSixMonthsRowCount());  // Should be empty
+        Assert.assertEquals(0, FuelingData.getOneYearRowCount());  // Should be empty
+        Assert.assertEquals(10, FuelingData.getLifetimeRowCount());     // Should NOT be empty
 
-        FillData.clearAll();
-        Assert.assertEquals(0, FillData.getAllRowCount());      // Now, should be empty
+        FuelingData.clearAll();
+        Assert.assertEquals(0, FuelingData.getLifetimeRowCount());      // Now, should be empty
 
         this.reset();       // Return arrays to "setup" state
     }
 
     /**
-     * Test that a FillData object is properly included and later removed from ArrayLists.
-     * We can't do this directly, since the ArrayLists are private. So we create a FillData and
+     * Test that a FuelingData object is properly included and later removed from ArrayLists.
+     * We can't do this directly, since the ArrayLists are private. So we create a FuelingData and
      * set it's date, then check ArrayList counts, then call remove() and re-check the
      * ArrayList counts.
      * @throws Exception
      */
     @Test
     public void testFillDataInclusionAndRemoval() throws Exception {
-        FillData fd = new FillData();
+        FuelingData fd = new FuelingData();
         Calendar cal = Calendar.getInstance();
-        long count60 = FillData.get60DaysRowCount();
-        long count120 = FillData.get120DaysRowCount();
-        long countYear = FillData.getOneYearRowCount();
-        long countAll = FillData.getAllRowCount();
+        long count60 = FuelingData.getThreeMonthsRowCount();
+        long count120 = FuelingData.getSixMonthsRowCount();
+        long countYear = FuelingData.getOneYearRowCount();
+        long countAll = FuelingData.getLifetimeRowCount();
 
-        // By setting the date to 130 days ago, we should find that getOneYearRowCount() and
-        // getAllRowCount() now return values which have increased by 1. The other two counts
+        // By setting the date to 230 days ago, we should find that getOneYearRowCount() and
+        // getLifetimeRowCount() now return values which have increased by 1. The other two counts
         // should not have changed.
-        cal.add(Calendar.DATE, -130);
+        cal.add(Calendar.DATE, -230);
         fd.setDateOfFill(cal.getTime());
 
-        Assert.assertEquals(count60, FillData.get60DaysRowCount());         // s/b unchanged
-        Assert.assertEquals(count120, FillData.get120DaysRowCount());       // s/b unchanged
-        Assert.assertEquals(countYear+1, FillData.getOneYearRowCount());    // s/b one greater
-        Assert.assertEquals(countAll+1, FillData.getAllRowCount());         // s/b one greater
+        Assert.assertEquals(count60, FuelingData.getThreeMonthsRowCount());         // s/b unchanged
+        Assert.assertEquals(count120, FuelingData.getSixMonthsRowCount());       // s/b unchanged
+        Assert.assertEquals(countYear+1, FuelingData.getOneYearRowCount());    // s/b one greater
+        Assert.assertEquals(countAll+1, FuelingData.getLifetimeRowCount());         // s/b one greater
 
         // Now we call remove, and re-check counts. All counts should then match
         // their original values.
 
-        FillData.remove(fd);
-        Assert.assertEquals(count60, FillData.get60DaysRowCount());         // s/b unchanged
-        Assert.assertEquals(count120, FillData.get120DaysRowCount());       // s/b unchanged
-        Assert.assertEquals(countYear, FillData.getOneYearRowCount());      // s/b back to original
-        Assert.assertEquals(countAll, FillData.getAllRowCount());           // s/b back to original
+        FuelingData.remove(fd);
+        Assert.assertEquals(count60, FuelingData.getThreeMonthsRowCount());         // s/b unchanged
+        Assert.assertEquals(count120, FuelingData.getSixMonthsRowCount());       // s/b unchanged
+        Assert.assertEquals(countYear, FuelingData.getOneYearRowCount());      // s/b back to original
+        Assert.assertEquals(countAll, FuelingData.getLifetimeRowCount());           // s/b back to original
     }
 
 
@@ -271,7 +274,7 @@ public class FillDataTest {
 
     /**
      * Tests that the appropriate span constants are accepted. All of the getXxxOverSpan methods
-     * call the private FillData.getListForSpan(), which checks the argument and throws
+     * call the private FuelingData.getListForSpan(), which checks the argument and throws
      * an exception if the argument is not acceptable.
      * @throws Exception
      */
@@ -279,21 +282,21 @@ public class FillDataTest {
     public void testGetAvgDistanceShouldPassWithCorrectArgument() throws Exception {
         double result = 0d;
 
-        result = FillData.getAvgDistanceOverSpan(FillData.SPAN_60_DAYS);       // expect no error
-        result = FillData.getAvgDistanceOverSpan(FillData.SPAN_120_DAYS);      // expect no error
-        result = FillData.getAvgDistanceOverSpan(FillData.SPAN_ONE_YEAR);      // expect no error
-        result = FillData.getAvgDistanceOverSpan(FillData.SPAN_ALL_TIME);      // expect no error
+        result = FuelingData.getAvgDistanceOverSpan(FuelingData.SPAN_3_MONTHS);       // expect no error
+        result = FuelingData.getAvgDistanceOverSpan(FuelingData.SPAN_6_MONTHS);      // expect no error
+        result = FuelingData.getAvgDistanceOverSpan(FuelingData.SPAN_ONE_YEAR);      // expect no error
+        result = FuelingData.getAvgDistanceOverSpan(FuelingData.SPAN_ALL_TIME);      // expect no error
     }
 
     /**
-     * Pass a "bad" argument through to the private FillData.getListForSpan() to be sure
+     * Pass a "bad" argument through to the private FuelingData.getListForSpan() to be sure
      * it throws an exception.
      * @throws Exception
      */
     @Test(expected = IllegalArgumentException.class)
     public void testGetAvgDistanceShouldFailOnWrongArgument() throws Exception {
         double result = 0d;
-        result = FillData.getAvgDistanceOverSpan(55);                          // Should fail
+        result = FuelingData.getAvgDistanceOverSpan(55);                          // Should fail
     }
 
     /**
@@ -302,7 +305,7 @@ public class FillDataTest {
      */
     @Test
     public void testSingleMPG() throws Exception {
-        FillData fd = new FillData();
+        FuelingData fd = new FuelingData();
         fd.setVolume(18.987);
         fd.setDistance(350.9);
         Assert.assertEquals(18.5, fd5.getMileage());
@@ -330,17 +333,17 @@ public class FillDataTest {
         fd55.setDistance(425.7);
         fd55.setVolume(16.443);
 
-        fd75.setDistance(350.9);
-        fd75.setVolume(17.499);
+        fd95.setDistance(350.9);
+        fd95.setVolume(17.499);
 
         fd105.setDistance(416.4);
         fd105.setVolume(17.982);
 
-        fd119.setDistance(524.1);
-        fd119.setVolume(19.243);
+        fd169.setDistance(524.1);
+        fd169.setVolume(19.243);
 
-        fd121.setDistance(423.7);
-        fd121.setVolume(18.241);
+        fd191.setDistance(423.7);
+        fd191.setVolume(18.241);
 
         fd260.setDistance(360.1);
         fd260.setVolume(19.032);
@@ -351,10 +354,10 @@ public class FillDataTest {
         fd400.setDistance(443.7);
         fd400.setVolume(18.173);
 
-        Assert.assertEquals(20.2, FillData.getAvgMileageOverSpan(FillData.SPAN_60_DAYS));
-        Assert.assertEquals(21.9, FillData.getAvgMileageOverSpan(FillData.SPAN_120_DAYS));
-        Assert.assertEquals(21.8, FillData.getAvgMileageOverSpan(FillData.SPAN_ONE_YEAR));
-        Assert.assertEquals(22.0, FillData.getAvgMileageOverSpan(FillData.SPAN_ALL_TIME));
+        Assert.assertEquals(20.2, FuelingData.getAvgMileageOverSpan(FuelingData.SPAN_3_MONTHS));
+        Assert.assertEquals(21.9, FuelingData.getAvgMileageOverSpan(FuelingData.SPAN_6_MONTHS));
+        Assert.assertEquals(21.8, FuelingData.getAvgMileageOverSpan(FuelingData.SPAN_ONE_YEAR));
+        Assert.assertEquals(22.0, FuelingData.getAvgMileageOverSpan(FuelingData.SPAN_ALL_TIME));
         }
 
     /**
@@ -363,7 +366,7 @@ public class FillDataTest {
      */
     @Test
     public void testPricePerUnit() throws Exception {
-        FillData fd = new FillData();
+        FuelingData fd = new FuelingData();
 
         fd.setVolume(18.987);
         fd.setPricePaid(37.39);
@@ -393,17 +396,17 @@ public class FillDataTest {
         fd55.setPricePaid(43.4);
         fd55.setVolume(16.443);
 
-        fd75.setPricePaid(43.15);
-        fd75.setVolume(17.499);
+        fd95.setPricePaid(43.15);
+        fd95.setVolume(17.499);
 
         fd105.setPricePaid(27.27);
         fd105.setVolume(17.982);
 
-        fd119.setPricePaid(46.17);
-        fd119.setVolume(19.243);
+        fd169.setPricePaid(46.17);
+        fd169.setVolume(19.243);
 
-        fd121.setPricePaid(36.23);
-        fd121.setVolume(18.241);
+        fd191.setPricePaid(36.23);
+        fd191.setVolume(18.241);
 
         fd260.setPricePaid(40.18);
         fd260.setVolume(19.032);
@@ -414,10 +417,10 @@ public class FillDataTest {
         fd400.setPricePaid(36.75);
         fd400.setVolume(18.173);
 
-        Assert.assertEquals(2.192, FillData.getAvgPricePerUnitOverSpan(FillData.SPAN_60_DAYS));
-        Assert.assertEquals(2.161, FillData.getAvgPricePerUnitOverSpan(FillData.SPAN_120_DAYS));
-        Assert.assertEquals(2.149, FillData.getAvgPricePerUnitOverSpan(FillData.SPAN_ONE_YEAR));
-        Assert.assertEquals(2.136, FillData.getAvgPricePerUnitOverSpan(FillData.SPAN_ALL_TIME));
+        Assert.assertEquals(2.192, FuelingData.getAvgPricePerUnitOverSpan(FuelingData.SPAN_3_MONTHS));
+        Assert.assertEquals(2.161, FuelingData.getAvgPricePerUnitOverSpan(FuelingData.SPAN_6_MONTHS));
+        Assert.assertEquals(2.149, FuelingData.getAvgPricePerUnitOverSpan(FuelingData.SPAN_ONE_YEAR));
+        Assert.assertEquals(2.136, FuelingData.getAvgPricePerUnitOverSpan(FuelingData.SPAN_ALL_TIME));
     }
 
     /**
@@ -436,18 +439,18 @@ public class FillDataTest {
         fd5.setPricePaid(37.39);
         fd25.setPricePaid(35.7);
         fd55.setPricePaid(43.4);
-        fd75.setPricePaid(43.15);
+        fd95.setPricePaid(43.15);
         fd105.setPricePaid(27.27);
-        fd119.setPricePaid(46.17);
-        fd121.setPricePaid(36.23);
+        fd169.setPricePaid(46.17);
+        fd191.setPricePaid(36.23);
         fd260.setPricePaid(40.18);
         fd350.setPricePaid(39.04);
         fd400.setPricePaid(36.75);
 
-        Assert.assertEquals(38.83, FillData.getAvgPricePaidOverSpan(FillData.SPAN_60_DAYS));
-        Assert.assertEquals(38.85, FillData.getAvgPricePaidOverSpan(FillData.SPAN_120_DAYS));
-        Assert.assertEquals(38.73, FillData.getAvgPricePaidOverSpan(FillData.SPAN_ONE_YEAR));
-        Assert.assertEquals(38.53, FillData.getAvgPricePaidOverSpan(FillData.SPAN_ALL_TIME));
+        Assert.assertEquals(38.83, FuelingData.getAvgPricePaidOverSpan(FuelingData.SPAN_3_MONTHS));
+        Assert.assertEquals(38.85, FuelingData.getAvgPricePaidOverSpan(FuelingData.SPAN_6_MONTHS));
+        Assert.assertEquals(38.73, FuelingData.getAvgPricePaidOverSpan(FuelingData.SPAN_ONE_YEAR));
+        Assert.assertEquals(38.53, FuelingData.getAvgPricePaidOverSpan(FuelingData.SPAN_ALL_TIME));
     }
 
     @Test
@@ -461,18 +464,18 @@ public class FillDataTest {
         fd5.setVolume(18.987);
         fd25.setVolume(17.702);
         fd55.setVolume(16.443);
-        fd75.setVolume(17.499);
+        fd95.setVolume(17.499);
         fd105.setVolume(17.982);
-        fd119.setVolume(19.243);
-        fd121.setVolume(18.241);
+        fd169.setVolume(19.243);
+        fd191.setVolume(18.241);
         fd260.setVolume(19.032);
         fd350.setVolume(17.045);
         fd400.setVolume(18.173);
 
-        Assert.assertEquals(17.7, FillData.getAvgVolumeOverSpan(FillData.SPAN_60_DAYS));
-        Assert.assertEquals(18.0, FillData.getAvgVolumeOverSpan(FillData.SPAN_120_DAYS));
-        Assert.assertEquals(18.0, FillData.getAvgVolumeOverSpan(FillData.SPAN_ONE_YEAR));
-        Assert.assertEquals(18.0, FillData.getAvgVolumeOverSpan(FillData.SPAN_ALL_TIME));
+        Assert.assertEquals(17.7, FuelingData.getAvgVolumeOverSpan(FuelingData.SPAN_3_MONTHS));
+        Assert.assertEquals(18.0, FuelingData.getAvgVolumeOverSpan(FuelingData.SPAN_6_MONTHS));
+        Assert.assertEquals(18.0, FuelingData.getAvgVolumeOverSpan(FuelingData.SPAN_ONE_YEAR));
+        Assert.assertEquals(18.0, FuelingData.getAvgVolumeOverSpan(FuelingData.SPAN_ALL_TIME));
     }
 
     @Test
@@ -486,18 +489,18 @@ public class FillDataTest {
         fd5.setDistance(350.9);
         fd25.setDistance(297.6);
         fd55.setDistance(425.7);
-        fd75.setDistance(350.9);
+        fd95.setDistance(350.9);
         fd105.setDistance(416.4);
-        fd119.setDistance(524.1);
-        fd121.setDistance(423.7);
+        fd169.setDistance(524.1);
+        fd191.setDistance(423.7);
         fd260.setDistance(360.1);
         fd350.setDistance(382.8);
         fd400.setDistance(443.7);
 
-        Assert.assertEquals(358.1, FillData.getAvgDistanceOverSpan(FillData.SPAN_60_DAYS));
-        Assert.assertEquals(394.3, FillData.getAvgDistanceOverSpan(FillData.SPAN_120_DAYS));
-        Assert.assertEquals(392.5, FillData.getAvgDistanceOverSpan(FillData.SPAN_ONE_YEAR));
-        Assert.assertEquals(397.6, FillData.getAvgDistanceOverSpan(FillData.SPAN_ALL_TIME));
+        Assert.assertEquals(358.1, FuelingData.getAvgDistanceOverSpan(FuelingData.SPAN_3_MONTHS));
+        Assert.assertEquals(394.3, FuelingData.getAvgDistanceOverSpan(FuelingData.SPAN_6_MONTHS));
+        Assert.assertEquals(392.5, FuelingData.getAvgDistanceOverSpan(FuelingData.SPAN_ONE_YEAR));
+        Assert.assertEquals(397.6, FuelingData.getAvgDistanceOverSpan(FuelingData.SPAN_ALL_TIME));
     }
 
     /**
@@ -523,17 +526,17 @@ public class FillDataTest {
         fd55.setDistance(425.7);
         fd55.setPricePaid(43.4);
 
-        fd75.setDistance(350.9);
-        fd75.setPricePaid(43.15);
+        fd95.setDistance(350.9);
+        fd95.setPricePaid(43.15);
 
         fd105.setDistance(416.4);
         fd105.setPricePaid(27.27);
 
-        fd119.setDistance(524.1);
-        fd119.setPricePaid(46.17);
+        fd169.setDistance(524.1);
+        fd169.setPricePaid(46.17);
 
-        fd121.setDistance(423.7);
-        fd121.setPricePaid(36.23);
+        fd191.setDistance(423.7);
+        fd191.setPricePaid(36.23);
 
         fd260.setDistance(360.1);
         fd260.setPricePaid(40.18);
@@ -544,10 +547,10 @@ public class FillDataTest {
         fd400.setDistance(443.7);
         fd400.setPricePaid(36.75);
 
-        Assert.assertEquals(0.108, FillData.getAvgPricePerDistanceOverSpan(FillData.SPAN_60_DAYS));
-        Assert.assertEquals(0.099, FillData.getAvgPricePerDistanceOverSpan(FillData.SPAN_120_DAYS));
-        Assert.assertEquals(0.099, FillData.getAvgPricePerDistanceOverSpan(FillData.SPAN_ONE_YEAR));
-        Assert.assertEquals(0.097, FillData.getAvgPricePerDistanceOverSpan(FillData.SPAN_ALL_TIME));
+        Assert.assertEquals(0.108, FuelingData.getAvgPricePerDistanceOverSpan(FuelingData.SPAN_3_MONTHS));
+        Assert.assertEquals(0.099, FuelingData.getAvgPricePerDistanceOverSpan(FuelingData.SPAN_6_MONTHS));
+        Assert.assertEquals(0.099, FuelingData.getAvgPricePerDistanceOverSpan(FuelingData.SPAN_ONE_YEAR));
+        Assert.assertEquals(0.097, FuelingData.getAvgPricePerDistanceOverSpan(FuelingData.SPAN_ALL_TIME));
     }
 
     /**
@@ -556,7 +559,7 @@ public class FillDataTest {
      */
     @Test
     public void testPricePerDistance() throws Exception {
-        FillData fd = new FillData();
+        FuelingData fd = new FuelingData();
 
         fd.setDistance(382.8);
         fd.setPricePaid(37.39);
@@ -578,7 +581,7 @@ public class FillDataTest {
      */
     @Test (expected = IllegalArgumentException.class)
     public void testRowIDAccessorsIllegalArgument() throws Exception {
-        FillData fd = new FillData();
+        FuelingData fd = new FuelingData();
 
         fd.setRowID(0);
     }
@@ -589,7 +592,7 @@ public class FillDataTest {
      */
     @Test (expected = UnsupportedOperationException.class)
     public void testRowIDAccessorsUnsupportedOp() throws Exception {
-        FillData fd = new FillData();
+        FuelingData fd = new FuelingData();
 
         fd.setRowID(4);     // This one should work fine
         fd.setRowID(5);     // This one should throw an exception
@@ -601,7 +604,7 @@ public class FillDataTest {
      */
     @Test
     public void testRowIDAccessors() throws Exception {
-        FillData fd = new FillData();
+        FuelingData fd = new FuelingData();
 
         fd.setRowID(5);
         Assert.assertEquals(5, fd.getRowID());
@@ -613,7 +616,7 @@ public class FillDataTest {
      */
     @Test
     public void testVehicleIDAccessors() throws Exception {
-        FillData fd = new FillData();
+        FuelingData fd = new FuelingData();
 
         fd.setVehicleID(17);
         Assert.assertEquals(17, fd.getVehicleID());
@@ -621,16 +624,16 @@ public class FillDataTest {
 
     /**
      * Test the mDateOfFill accessors. The method setDateOfFill() has the downstream affect of
-     * adding (or removing) a FillData instance to (from) span ArrayLists; because of that, we don't
-     * create a new FillData object (because many tests in this suite of tests depend on the right
-     * number of FillData instances in those ArrayLists) AND we reset the mDateOfFill field back
-     * to its original value on the existing FillData object we use for this test.
+     * adding (or removing) a FuelingData instance to (from) span ArrayLists; because of that, we don't
+     * create a new FuelingData object (because many tests in this suite of tests depend on the right
+     * number of FuelingData instances in those ArrayLists) AND we reset the mDateOfFill field back
+     * to its original value on the existing FuelingData object we use for this test.
      * @throws Exception
      */
     @Test
     public void testDateOfFillAccessors() throws Exception {
-        // We use an EXISTING FillData object rather than creating a new one, so we don't
-        // add any more FillData objects to the span ArrayLists.
+        // We use an EXISTING FuelingData object rather than creating a new one, so we don't
+        // add any more FuelingData objects to the span ArrayLists.
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -10);
         Date newDate = cal.getTime();
@@ -648,7 +651,7 @@ public class FillDataTest {
      */
     @Test
     public void testDistanceAccessors() throws Exception {
-        FillData fd = new FillData();
+        FuelingData fd = new FuelingData();
         double dist = 512.6;
 
         fd.setDistance(dist);
@@ -661,7 +664,7 @@ public class FillDataTest {
      */
     @Test
     public void testVolumeAccessors() throws Exception {
-        FillData fd = new FillData();
+        FuelingData fd = new FuelingData();
         double vol = 19.7;
 
         fd.setVolume(vol);
@@ -670,7 +673,7 @@ public class FillDataTest {
 
     @Test
     public void testPricePaidAccessors() throws Exception {
-        FillData fd = new FillData();
+        FuelingData fd = new FuelingData();
         double paid = 32.57;
 
         fd.setPricePaid(paid);
@@ -683,7 +686,7 @@ public class FillDataTest {
      */
     @Test
     public void testOdometerAccessors() throws Exception {
-        FillData fd = new FillData();
+        FuelingData fd = new FuelingData();
 
         fd.setOdometer(54);
         Assert.assertEquals(54.0, fd.getOdometer());
@@ -695,7 +698,7 @@ public class FillDataTest {
      */
     @Test
     public void testLocationAccessors() throws Exception {
-        FillData fd = new FillData();
+        FuelingData fd = new FuelingData();
 
         fd.setLocation(1818);
         Assert.assertEquals(1818.0, fd.getLocation());
@@ -707,16 +710,16 @@ public class FillDataTest {
      */
     @Test
     public void testStatusAccessors() throws Exception {
-        FillData fd = new FillData();
+        FuelingData fd = new FuelingData();
 
-        fd.setStatus(FillData.STATUS_NEW);
-        Assert.assertEquals(FillData.STATUS_NEW, fd.getStatus());
+        fd.setStatus(FuelingData.STATUS_NEW);
+        Assert.assertEquals(FuelingData.STATUS_NEW, fd.getStatus());
 
-        fd.setStatus(FillData.STATUS_CURRENT);
-        Assert.assertEquals(FillData.STATUS_CURRENT, fd.getStatus());
+        fd.setStatus(FuelingData.STATUS_CURRENT);
+        Assert.assertEquals(FuelingData.STATUS_CURRENT, fd.getStatus());
 
-        fd.setStatus(FillData.STATUS_UPDATED);
-        Assert.assertEquals(FillData.STATUS_UPDATED, fd.getStatus());
+        fd.setStatus(FuelingData.STATUS_UPDATED);
+        Assert.assertEquals(FuelingData.STATUS_UPDATED, fd.getStatus());
     }
 
     /**
@@ -725,7 +728,7 @@ public class FillDataTest {
      */
     @Test (expected = IllegalArgumentException.class)
     public void testStatusAccessorIllegalArg() throws Exception {
-        FillData fd = new FillData();
+        FuelingData fd = new FuelingData();
 
         fd.setStatus("F");
     }

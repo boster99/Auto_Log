@@ -4,6 +4,8 @@
 
 package com.ctoddcook.auto_log;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -26,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addFill(View v) {
-        Toast.makeText(this, "Sorry, ADD A FILL doesn't work yet. 8(", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this, EnterFuelingDataActivity.class);
+        startActivity(intent);
     }
 
     @Override
