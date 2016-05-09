@@ -24,6 +24,20 @@
 
             <TextView
                 style="@style/EditLabel"
+                android:text="@string/vehicle"/>
+
+            <Spinner android:id="@+id/vehicle_spinner"
+                     android:layout_width="0dp"
+                     android:layout_weight="3"
+                     android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/EditRow">
+
+            <TextView
+                style="@style/EditLabel"
                 android:text="@string/DateLabel"/>
 
             <EditText android:id="@+id/edit_date"
@@ -38,12 +52,12 @@
 
             <TextView
                 style="@style/EditLabel"
-                android:text="@string/VolumeLabel"/>
+                android:text="@string/DistanceLabel"/>
 
-            <EditText android:id="@+id/edit_volume"
+            <EditText android:id="@+id/edit_distance"
                       style="@style/EditData"
                       android:inputType="numberDecimal"
-                      android:hint="@string/VolumeLabel"/>
+                      android:hint="@string/DistanceLabel"/>
 
         </LinearLayout>
 
@@ -52,12 +66,12 @@
 
             <TextView
                 style="@style/EditLabel"
-                android:text="@string/DistanceLabel"/>
+                android:text="@string/VolumeLabel"/>
 
-            <EditText android:id="@+id/edit_distance"
+            <EditText android:id="@+id/edit_volume"
                       style="@style/EditData"
                       android:inputType="numberDecimal"
-                      android:hint="@string/DistanceLabel"/>
+                      android:hint="@string/VolumeLabel"/>
 
         </LinearLayout>
 
@@ -81,11 +95,11 @@
 
             <TextView
                 style="@style/EditLabel"
-                android:text="Date"/>
+                android:text="@string/location"/>
 
             <EditText
                 style="@style/EditData"
-                android:hint="Date"/>
+                android:hint="@string/location"/>
 
         </LinearLayout>
 
@@ -94,37 +108,11 @@
 
             <TextView
                 style="@style/EditLabel"
-                android:text="Date"/>
+                android:text="@string/odometer"/>
 
             <EditText
                 style="@style/EditData"
-                android:hint="Date"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            style="@style/EditRow">
-
-            <TextView
-                style="@style/EditLabel"
-                android:text="Date"/>
-
-            <EditText
-                style="@style/EditData"
-                android:hint="Date"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            style="@style/EditRow">
-
-            <TextView
-                style="@style/EditLabel"
-                android:text="Date"/>
-
-            <EditText
-                style="@style/EditData"
-                android:hint="Date"/>
+                android:hint="@string/odometer"/>
 
         </LinearLayout>
 
