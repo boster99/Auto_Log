@@ -438,6 +438,8 @@ class FuelingData extends DataHolder {
             throw new IllegalArgumentException("The Row ID cannot be less than 1");
 
         mFuelingID = fuelingID;
+
+        touch();
     }
 
     /**
@@ -454,6 +456,8 @@ class FuelingData extends DataHolder {
      */
     public void setVehicleID(long vehicleID) {
         mVehicleID = vehicleID;
+
+        touch();
     }
 
     /**
@@ -473,6 +477,8 @@ class FuelingData extends DataHolder {
     public void setDateOfFill(Date dateOfFill) {
         mDateOfFill = dateOfFill;
         adjustLists();
+
+        touch();
     }
 
     /**
@@ -483,6 +489,8 @@ class FuelingData extends DataHolder {
         Date newDate = new Date();
         newDate.setTime(dateOfFill);
         setDateOfFill(newDate);
+
+        touch();
     }
 
     /**
@@ -502,6 +510,8 @@ class FuelingData extends DataHolder {
         if (distance < 0)
             throw new IllegalArgumentException("distance argument cannot be negative");
         mDistance = distance;
+
+        touch();
     }
 
     /**
@@ -521,6 +531,8 @@ class FuelingData extends DataHolder {
         if (volume < 0)
             throw new IllegalArgumentException("volume argument cannot be negative");
         mVolume = volume;
+
+        touch();
     }
 
     /**
@@ -540,6 +552,8 @@ class FuelingData extends DataHolder {
         if (pricePaid < 0)
             throw new IllegalArgumentException("pricePaid argument cannot be negative");
         mPricePaid = pricePaid;
+
+        touch();
     }
 
     /**
@@ -559,6 +573,8 @@ class FuelingData extends DataHolder {
         if (odometer < 0)
             throw new IllegalArgumentException("odometer argument cannot be negative");
         mOdometer = odometer;
+
+        touch();
     }
 
     /**
@@ -575,27 +591,7 @@ class FuelingData extends DataHolder {
      */
     public void setLocation(String location) {
         mLocation = location;
-    }
 
-    /**
-     * Getter for mStatus, the status of the row. Possible values are <code>N</code> (New row)
-     * <code>C</code> (Current row) or <code>U</code> (Updated row).
-     * @return A length-one String containing N, C or U
-     */
-    public String getStatus() {
-        return mStatus;
-    }
-
-    /**
-     * Setter for mStatus, the status of the row
-     * @param status An 'N', 'C', or 'U' indicating the row is a new one, is current, or updated
-     * @throws IllegalArgumentException if the argument is not an N, C or U
-     */
-    public void setStatus(String status) throws IllegalArgumentException {
-        if (!status.equals(STATUS_NEW) && !status.equals(STATUS_CURRENT) && !status.equals(STATUS_UPDATED))
-            throw new IllegalArgumentException("The provided status must be '" + STATUS_NEW +
-                    "' OR '" + STATUS_CURRENT + "' OR '" + STATUS_UPDATED + "'.");
-
-        mStatus = status;
+        touch();
     }
 }
