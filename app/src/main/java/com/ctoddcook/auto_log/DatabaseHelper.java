@@ -30,11 +30,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursor.getCount() == 0) {
             db.execSQL(AutoLogContract.Fueling.SQL_CREATE_TABLE);
         }
+        cursor.close();
 
         cursor = db.rawQuery(AutoLogContract.queryForTable(AutoLogContract.Vehicle.TABLE_NAME), null);
         if (cursor.getCount() == 0) {
             db.execSQL(AutoLogContract.Fueling.SQL_CREATE_TABLE);
         }
+        cursor.close();
     }
 
 
