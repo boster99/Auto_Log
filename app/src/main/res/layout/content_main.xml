@@ -12,7 +12,7 @@
     <!-- This view group contains the labels and data for averages -->
     <LinearLayout
         style="@style/SectionStyle"
-        android:background="#BBDEFB">
+        android:background="@color/averagesFieldBackground">
 
         <TextView
             style="@style/SectionHeaderTextStyle"
@@ -170,7 +170,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="8dp"
-        android:background="@android:color/darker_gray"/>
+        android:background="@color/divider"/>
 
     <!-- This view group contains the historical records -->
 

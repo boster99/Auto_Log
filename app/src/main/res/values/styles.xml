@@ -47,7 +47,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_margin">2dp</item>
-        <item name="android:background">#90CAF9</item>
+        <item name="android:background">@color/averagesColumnHeaderBackground</item>
     </style>
 
     <style name="WideColumnHeaderTextStyle"
@@ -107,6 +107,15 @@
         <item name="android:textColor">@android:color/black</item>
         <item name="android:background">#B3E5FC</item>
         <item name="android:gravity">left</item>
+    </style>
+
+    <style name="FloatingAddButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">bottom|end</item>
+        <item name="android:layout_margin">@dimen/fab_margin</item>
+        <item name="android:backgroundTint">@color/colorPrimaryDark</item>
+        <item name="android:src">@android:drawable/ic_input_add</item>
     </style>
 
 </resources>
