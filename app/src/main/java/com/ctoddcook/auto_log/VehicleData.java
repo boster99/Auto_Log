@@ -4,6 +4,8 @@
 
 package com.ctoddcook.auto_log;
 
+import java.util.Date;
+
 /**
  * Created by C. Todd Cook on 5/9/2016.
  * ctodd@ctoddcook.com
@@ -19,6 +21,37 @@ public class VehicleData extends DataHolder {
     private String mModel;
     private String mVIN;
     private String mLicensePlate;
+
+
+    /**
+     * Constructor. This version should be used when creating a new instance from the user
+     * interface. It does not setup any fields directly, though DataHolder.mStatus defaults
+     * to NEW.
+     */
+    public VehicleData() {}
+
+    /**
+     * This constructor should be used when retrieving records from the database.
+     * @param id the vehicle id, generated automatically by the database (prime key)
+     * @param name the user-provided name of the record
+     * @param year the vehicle year
+     * @param color the vehicle color
+     * @param model the vehicle model
+     * @param vin the vehicle VIN
+     * @param licensePlate the vehicle license plate
+     * @param lastUpdated the last time the record was updated
+     */
+    public VehicleData(int id, String name, int year, String color, String model, String vin, String licensePlate, Date lastUpdated) {
+        mVehicleID = id;
+        mName = name;
+        mYear = year;
+        mColor = color;
+        mModel = model;
+        mVIN = vin;
+        mLicensePlate = licensePlate;
+        mLastUpdated = lastUpdated;
+        setCurrent();
+    }
 
     /**
      * Getter for mVehicleID field.
