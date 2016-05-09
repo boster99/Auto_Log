@@ -26,10 +26,10 @@ class FuelingData {
 
     private static final Date DATE_THRESHOLDS[];
 
-    private static final ArrayList<FuelingData> sThreeMonthSpan = new ArrayList<FuelingData>();
-    private static final ArrayList<FuelingData> sSixMonthSpan = new ArrayList<FuelingData>();
-    private static final ArrayList<FuelingData> sOneYearSpan = new ArrayList<FuelingData>();
-    private static final ArrayList<FuelingData> sLifetimeSpan = new ArrayList<FuelingData>();
+    private static final ArrayList<FuelingData> sThreeMonthSpan = new ArrayList<>();
+    private static final ArrayList<FuelingData> sSixMonthSpan = new ArrayList<>();
+    private static final ArrayList<FuelingData> sOneYearSpan = new ArrayList<>();
+    private static final ArrayList<FuelingData> sLifetimeSpan = new ArrayList<>();
 
     private long mRowID = 0L;
     private long mVehicleID = 0L;
@@ -38,7 +38,7 @@ class FuelingData {
     private double mVolume = 0d;
     private double mPricePaid = 0d;
     private double mOdometer = 0d;
-    private double mLocation = 0d;
+    private String mLocation = null;
     private String mStatus = STATUS_NEW;
 
     static {
@@ -250,7 +250,7 @@ class FuelingData {
      */
 
     /**
-     * Provides the count of fills in the "last 3 motnhs" list
+     * Provides the count of fills in the "last 3 months" list
      * @return the size of the sThreeMonthSpan array
      */
     public static int getThreeMonthsRowCount() {
@@ -569,7 +569,7 @@ class FuelingData {
      * Getter for mLocation, the GPS location when the tank was filled
      * @return the GPS location when the tank was filled
      */
-    public double getLocation() {
+    public String getLocation() {
         return mLocation;
     }
 
@@ -577,7 +577,7 @@ class FuelingData {
      * Setter for mLocation, the GPS location when the tank was filled
      * @param location the GPS location when the tank was filled
      */
-    public void setLocation(double location) {
+    public void setLocation(String location) {
         mLocation = location;
     }
 

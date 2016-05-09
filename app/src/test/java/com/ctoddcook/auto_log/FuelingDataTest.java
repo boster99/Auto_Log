@@ -197,7 +197,7 @@ public class FuelingDataTest {
 
     /**
      * Check the size of the 4 ArrayLists of FuelingData objects containing the FuelingData instances
-     * instantiated inthe setUp() method. These tests are very dependent on the number of
+     * instantiated in the setUp() method. These tests are very dependent on the number of
      * instances created and the mDataOfFill data set into them.
      * @throws Exception
      */
@@ -280,12 +280,10 @@ public class FuelingDataTest {
      */
     @Test
     public void testGetAvgDistanceShouldPassWithCorrectArgument() throws Exception {
-        double result = 0d;
-
-        result = FuelingData.getAvgDistanceOverSpan(FuelingData.SPAN_3_MONTHS);       // expect no error
-        result = FuelingData.getAvgDistanceOverSpan(FuelingData.SPAN_6_MONTHS);      // expect no error
-        result = FuelingData.getAvgDistanceOverSpan(FuelingData.SPAN_ONE_YEAR);      // expect no error
-        result = FuelingData.getAvgDistanceOverSpan(FuelingData.SPAN_ALL_TIME);      // expect no error
+        FuelingData.getAvgDistanceOverSpan(FuelingData.SPAN_3_MONTHS);      // expect no error
+        FuelingData.getAvgDistanceOverSpan(FuelingData.SPAN_6_MONTHS);      // expect no error
+        FuelingData.getAvgDistanceOverSpan(FuelingData.SPAN_ONE_YEAR);      // expect no error
+        FuelingData.getAvgDistanceOverSpan(FuelingData.SPAN_ALL_TIME);      // expect no error
     }
 
     /**
@@ -295,8 +293,7 @@ public class FuelingDataTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void testGetAvgDistanceShouldFailOnWrongArgument() throws Exception {
-        double result = 0d;
-        result = FuelingData.getAvgDistanceOverSpan(55);                          // Should fail
+        FuelingData.getAvgDistanceOverSpan(55);                          // Should fail
     }
 
     /**
@@ -700,8 +697,8 @@ public class FuelingDataTest {
     public void testLocationAccessors() throws Exception {
         FuelingData fd = new FuelingData();
 
-        fd.setLocation(1818);
-        Assert.assertEquals(1818.0, fd.getLocation());
+        fd.setLocation("Omaha, NE");
+        Assert.assertEquals("Omaha, NE", fd.getLocation());
     }
 
     /**
