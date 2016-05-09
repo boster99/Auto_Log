@@ -17,8 +17,7 @@ public final class AutoLogContract {
     private static final String STRING_TYPE = "TEXT";
     private static final String NOT_NULL = " NOT NULL";
     private static final String COMMA_SEP = ", ";
-    private static final String COLUMN_NAME_STATUS = "status";
-    private static final String COLUMN_NAME_DATESTAMP = "datestamp";
+    private static final String COLUMN_NAME_LAST_UPDATED = "last_updated";
     private static final String CREATE_TABLE_PHRASE = "CREATE TABLE ";
     private static final String KEY_COLUMN_DEFINITION_PHRASE = " INTEGER PRIMARY KEY AUTOINCREMENT,";
     private static final String DROP_TABLE_PHRASE = "DROP TABLE IF EXISTS ";
@@ -63,8 +62,7 @@ public final class AutoLogContract {
                         Fueling.COLUMN_NAME_PRICE_PAID + REAL_TYPE + NOT_NULL + COMMA_SEP +
                         Fueling.COLUMN_NAME_ODOMETER + INT_TYPE + NOT_NULL + COMMA_SEP +
                         Fueling.COLUMN_NAME_LOCATION + REAL_TYPE + COMMA_SEP +
-                        COLUMN_NAME_STATUS + STRING_TYPE + COMMA_SEP +
-                        COLUMN_NAME_DATESTAMP + DATETIME_TYPE + " )";
+                        COLUMN_NAME_LAST_UPDATED + DATETIME_TYPE + " )";
 
         public static final String SQL_DROP_TABLE =
                 "DROP TABLE IF EXISTS " + Fueling.TABLE_NAME;
@@ -83,8 +81,7 @@ public final class AutoLogContract {
         public static final String COLUMN_NAME_MODEL;
         public static final String COLUMN_NAME_VIN;
         public static final String COLUMN_NAME_LICENSE_PLATE;
-        public static final String COLUMN_NAME_STATUS;      // status of record
-        public static final String COLUMN_NAME_DATESTAMP;   // When the record was saved
+        public static final String COLUMN_NAME_LAST_UPDATED;   // When the record was saved
 
 
         static {
@@ -96,8 +93,7 @@ public final class AutoLogContract {
             COLUMN_NAME_MODEL = "model";
             COLUMN_NAME_VIN = "vin";
             COLUMN_NAME_LICENSE_PLATE = "license_plate";
-            COLUMN_NAME_STATUS = "status";
-            COLUMN_NAME_DATESTAMP = "datestamp";
+            COLUMN_NAME_LAST_UPDATED = "last_updated";
         }
 
         public static final String SQL_CREATE_TABLE =
@@ -109,8 +105,7 @@ public final class AutoLogContract {
                         Vehicle.COLUMN_NAME_MODEL + STRING_TYPE + NOT_NULL + COMMA_SEP +
                         Vehicle.COLUMN_NAME_VIN + STRING_TYPE + NOT_NULL + COMMA_SEP +
                         Vehicle.COLUMN_NAME_LICENSE_PLATE + STRING_TYPE + NOT_NULL + COMMA_SEP +
-                        Vehicle.COLUMN_NAME_STATUS + STRING_TYPE + COMMA_SEP +
-                        Vehicle.COLUMN_NAME_DATESTAMP + DATETIME_TYPE + " )";
+                        Vehicle.COLUMN_NAME_LAST_UPDATED + DATETIME_TYPE + " )";
 
         public static final String SQL_DROP_VEHICLE =
                 DROP_TABLE_PHRASE + Vehicle.TABLE_NAME;
