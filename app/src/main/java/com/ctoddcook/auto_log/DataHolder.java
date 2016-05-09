@@ -33,6 +33,19 @@ public class DataHolder {
     }
 
     /**
+     * Sets the state of this instances to CURRENT. Should only be called by a child class
+     * when being instantiated with full data (i.e., when the data is being read from the
+     * database).
+     *
+     * Also, this should be called AT THE END of filling in all the fields from a database query,
+     * as each setter called will likely result in a series of setter methods being called, each
+     * of which will result in the status being set to UPDATED.
+     */
+    protected void setCurrent() {
+        mStatus = STATUS_CURRENT;
+    }
+
+    /**
      * Getter for mLastUpdated field
      * @return value of mLastUpdated field
      */
