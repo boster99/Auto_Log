@@ -100,7 +100,7 @@ public final class AutoLogContract {
             COLUMN_NAME_DATESTAMP = "datestamp";
         }
 
-        public static final String SQL_CREATE_VEHICLE =
+        public static final String SQL_CREATE_TABLE =
                 CREATE_TABLE_PHRASE + Vehicle.TABLE_NAME + " (" +
                         Vehicle._ID + KEY_COLUMN_DEFINITION_PHRASE +       // AKA Vehicle ID
                         Vehicle.COLUMN_NAME_NAME + STRING_TYPE + NOT_NULL + COMMA_SEP +
