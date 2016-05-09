@@ -19,4 +19,9 @@
     <string name="VolumeLabel">Volume</string>
     <string name="DistanceLabel">Distance</string>
     <string name="TotalPricePaidLabel">Total Paid</string>
+    <string name="StartupDataDisplay">---</string>
+    <string name="MainActivityFirstAverageLabel">3 months</string>
+    <string name="MainActivitySecondAverageLabel">6 months</string>
+    <string name="MainActivityThirdAverageLabel">One Year</string>
+    <string name="MainActivityFourthAverageLabel">Lifetime</string>
 </resources>

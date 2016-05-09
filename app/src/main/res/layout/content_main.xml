@@ -52,27 +52,27 @@
                 android:id="@+id/first_average_row_label"
                 style="@style/WideDataTextStyle"
                 android:gravity="start"
-                android:text="3 Months"/>
+                android:text="@string/MainActivityFirstAverageLabel"/>
 
             <TextView
                 android:id="@+id/first_average_row_price"
                 style="@style/NarrowDataTextStyle"
-                android:text="1.899"/>
+                android:text="@string/StartupDataDisplay"/>
 
             <TextView
                 android:id="@+id/first_average_row_dist"
                 style="@style/WideDataTextStyle"
-                android:text="389.6 m"/>
+                android:text="@string/StartupDataDisplay"/>
 
             <TextView
                 android:id="@+id/first_average_row_vol"
                 style="@style/NarrowDataTextStyle"
-                android:text="17.3 g"/>
+                android:text="@string/StartupDataDisplay"/>
 
             <TextView
                 android:id="@+id/first_average_row_efficiency"
                 style="@style/WideDataTextStyle"
-                android:text="17.4 m/g"/>
+                android:text="@string/StartupDataDisplay"/>
         </LinearLayout>
 
         <LinearLayout
@@ -82,27 +82,27 @@
                 android:id="@+id/second_average_row_label"
                 style="@style/WideDataTextStyle"
                 android:gravity="start"
-                android:text="6 Months"/>
+                android:text="@string/MainActivitySecondAverageLabel"/>
 
             <TextView
                 android:id="@+id/second_average_row_price"
                 style="@style/NarrowDataTextStyle"
-                android:text="1.899"/>
+                android:text="@string/StartupDataDisplay"/>
 
             <TextView
                 android:id="@+id/second_average_row_dist"
                 style="@style/WideDataTextStyle"
-                android:text="389.6 m"/>
+                android:text="@string/StartupDataDisplay"/>
 
             <TextView
                 android:id="@+id/second_average_row_vol"
                 style="@style/NarrowDataTextStyle"
-                android:text="17.3 g"/>
+                android:text="@string/StartupDataDisplay"/>
 
             <TextView
                 android:id="@+id/second_average_row_efficiency"
                 style="@style/WideDataTextStyle"
-                android:text="17.4 m/g"/>
+                android:text="@string/StartupDataDisplay"/>
         </LinearLayout>
 
         <LinearLayout
@@ -112,27 +112,27 @@
                 android:id="@+id/third_average_row_label"
                 style="@style/WideDataTextStyle"
                 android:gravity="start"
-                android:text="One Year"/>
+                android:text="@string/MainActivityThirdAverageLabel"/>
 
             <TextView
                 android:id="@+id/third_average_row_price"
                 style="@style/NarrowDataTextStyle"
-                android:text="1.899"/>
+                android:text="@string/StartupDataDisplay"/>
 
             <TextView
                 android:id="@+id/third_average_row_dist"
                 style="@style/WideDataTextStyle"
-                android:text="389.6 m"/>
+                android:text="@string/StartupDataDisplay"/>
 
             <TextView
                 android:id="@+id/third_average_row_vol"
                 style="@style/NarrowDataTextStyle"
-                android:text="17.3 g"/>
+                android:text="@string/StartupDataDisplay"/>
 
             <TextView
                 android:id="@+id/third_average_row_efficiency"
                 style="@style/WideDataTextStyle"
-                android:text="17.4 m/g"/>
+                android:text="@string/StartupDataDisplay"/>
         </LinearLayout>
 
         <LinearLayout
@@ -142,27 +142,27 @@
                 android:id="@+id/fourth_average_row_label"
                 style="@style/WideDataTextStyle"
                 android:gravity="start"
-                android:text="Lifetime"/>
+                android:text="@string/MainActivityFourthAverageLabel"/>
 
             <TextView
                 android:id="@+id/fourth_average_row_price"
                 style="@style/NarrowDataTextStyle"
-                android:text="1.899"/>
+                android:text="@string/StartupDataDisplay"/>
 
             <TextView
                 android:id="@+id/fourth_average_row_dist"
                 style="@style/WideDataTextStyle"
-                android:text="389.6 m"/>
+                android:text="@string/StartupDataDisplay"/>
 
             <TextView
                 android:id="@+id/fourth_average_row_vol"
                 style="@style/NarrowDataTextStyle"
-                android:text="17.3 g"/>
+                android:text="@string/StartupDataDisplay"/>
 
             <TextView
                 android:id="@+id/fourth_average_row_efficiency"
                 style="@style/WideDataTextStyle"
-                android:text="17.4 m/g"/>
+                android:text="@string/StartupDataDisplay"/>
         </LinearLayout>
     </LinearLayout>
 
