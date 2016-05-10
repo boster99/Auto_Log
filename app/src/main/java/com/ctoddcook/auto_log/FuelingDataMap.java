@@ -15,11 +15,24 @@ public final class FuelingDataMap extends AutoLogDataMap implements BaseColumns 
     public static final String TABLE_NAME;
     public static final String COLUMN_NAME_VEHICLE_ID;
     public static final String COLUMN_NAME_DATE_OF_FILL;    // date and time of fill
-    public static final String COLUMN_NAME_DISTANCE;    // miles or kilometers driven
-    public static final String COLUMN_NAME_VOLUME;      // volume (i.e., gallons) of fuel
+    public static final String COLUMN_NAME_DISTANCE;        // miles or kilometers driven
+    public static final String COLUMN_NAME_VOLUME;          // volume (i.e., gallons) of fuel
     public static final String COLUMN_NAME_PRICE_PAID;
     public static final String COLUMN_NAME_ODOMETER;
-    public static final String COLUMN_NAME_LOCATION;    // GPS location
+    public static final String COLUMN_NAME_LOCATION;        // GPS location
+
+
+    // These column numbers must match the order in the CREATE TABLE statement
+    public static final int COLUMN_NBR_FUELING_ID = 0;
+    public static final int COLUMN_NBR_VEHICLE_ID = 1;
+    public static final int COLUMN_NBR_DATE_OF_FILL = 2;
+    public static final int COLUMN_NBR_DISTANCE = 3;
+    public static final int COLUMN_NBR_VOLUME = 4;
+    public static final int COLUMN_NBR_PRICE_PAID = 5;
+    public static final int COLUMN_NBR_ODOMETER = 6;
+    public static final int COLUMN_NBR_LOCATION = 7;
+    public static final int COLUMN_NBR_LAST_UPDATED = 8;
+
 
     static {
         TABLE_NAME = "fueling";
