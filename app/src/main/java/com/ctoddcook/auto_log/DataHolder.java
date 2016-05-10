@@ -13,7 +13,7 @@ import java.util.Date;
  *
  * Provides common fields and methods for data classes.
  */
-public class DataHolder {
+public abstract class DataHolder {
     public static final char STATUS_NEW = 'N';
     public static final char STATUS_CURRENT = 'C';
     public static final char STATUS_UPDATED = 'U';
@@ -93,4 +93,10 @@ public class DataHolder {
     public boolean isCurrent() {
         return (mStatus == STATUS_CURRENT);
     }
+
+    /**
+     * Return the database ID for the instance.
+     * @return The database ID.
+     */
+    public abstract int getID();
 }

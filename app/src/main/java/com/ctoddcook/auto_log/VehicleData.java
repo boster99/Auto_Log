@@ -14,7 +14,7 @@ import java.util.Date;
  * data for different vehicles.
  */
 public class VehicleData extends DataHolder {
-    private long mVehicleID;
+    private int mVehicleID;
     private String mName;
     private int mYear;
     private String mColor;
@@ -57,8 +57,17 @@ public class VehicleData extends DataHolder {
      * Getter for mVehicleID field.
      * @return mVehicleID field value
      */
-    public long getVehicleID() {
+    public int getVehicleID() {
         return mVehicleID;
+    }
+
+    /**
+     * Getter for record ID
+     * @return The database ID for the record
+     */
+    @Override
+    public int getID() {
+        return getVehicleID();
     }
 
     /**
@@ -68,7 +77,7 @@ public class VehicleData extends DataHolder {
      * @throws UnsupportedOperationException If there is already an ID in place for this instance.
      * @throws IllegalArgumentException If the incoming ID is less than 1
      */
-    public void setVehicleID(long vehicleID) throws UnsupportedOperationException, IllegalArgumentException {
+    public void setVehicleID(int vehicleID) throws UnsupportedOperationException, IllegalArgumentException {
         if (mVehicleID != 0)
             throw new UnsupportedOperationException("The Row ID can only be set once, and cannot be updated");
         if (vehicleID < 1)

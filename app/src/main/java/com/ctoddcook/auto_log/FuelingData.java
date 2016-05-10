@@ -28,8 +28,8 @@ class FuelingData extends DataHolder {
     private static final ArrayList<FuelingData> sOneYearSpan = new ArrayList<>();
     private static final ArrayList<FuelingData> sLifetimeSpan = new ArrayList<>();
 
-    private long mFuelingID = 0L;
-    private long mVehicleID = 0L;
+    private int mFuelingID = 0;
+    private int mVehicleID = 0;
     private Date mDateOfFill = null;
     private double mDistance = 0d;
     private double mVolume = 0d;
@@ -419,8 +419,17 @@ class FuelingData extends DataHolder {
      * Getter for mFuelingID, the database prime key value of the row
      * @return the database prime key value of the row
      */
-    public long getFuelingID() {
+    public int getFuelingID() {
         return mFuelingID;
+    }
+
+    /**
+     * Getter for record ID
+     * @return The database ID for the record
+     */
+    @Override
+    public int getID() {
+        return getFuelingID();
     }
 
     /**
@@ -431,7 +440,7 @@ class FuelingData extends DataHolder {
      * @throws UnsupportedOperationException if mFuelingID is not 0 when this method is called
      * @throws IllegalArgumentException if the parameter provided is less than 1
      */
-    public void setFuelingID(long fuelingID) throws UnsupportedOperationException, IllegalArgumentException {
+    public void setFuelingID(int fuelingID) throws UnsupportedOperationException, IllegalArgumentException {
         if (mFuelingID != 0)
             throw new UnsupportedOperationException("The Row ID can only be set once, and cannot be updated");
         if (fuelingID < 1)
@@ -446,7 +455,7 @@ class FuelingData extends DataHolder {
      * Getter for mVehicleID, the unique identifier for the vehicle represented by the data
      * @return the unique identifier for the vehicle represented by the data
      */
-    public long getVehicleID() {
+    public int getVehicleID() {
         return mVehicleID;
     }
 
@@ -454,7 +463,7 @@ class FuelingData extends DataHolder {
      * Setter for mVehicleID, the unique identifier for the vehicle represented by the data
      * @param vehicleID A unique identifier for the vehicle represented by the data
      */
-    public void setVehicleID(long vehicleID) {
+    public void setVehicleID(int vehicleID) {
         mVehicleID = vehicleID;
 
         touch();
