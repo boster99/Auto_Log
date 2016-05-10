@@ -24,7 +24,8 @@ public class AutoLogDataMap {
     public static final String KEY_COLUMN_DEFINITION_PHRASE = " INTEGER PRIMARY KEY AUTOINCREMENT,";
     public static final String DROP_TABLE_PHRASE = "DROP TABLE IF EXISTS ";
 
-    private static final String DOES_TABLE_EXIST_PHRASE = "SELECT name FROM sqlite_master WHERE type='table' AND name='";
+    private static final String DOES_TABLE_EXIST_PHRASE = "SELECT name FROM sqlite_master " +
+            "WHERE type='table' AND name='?'";
 
     /**
      * Checks whether a table exists in the database
@@ -32,7 +33,7 @@ public class AutoLogDataMap {
      * @return whether the table exists
      */
     public static boolean tableExists(SQLiteDatabase db, String tableName) {
-        String query =  DOES_TABLE_EXIST_PHRASE + tableName + "'";
+        String query =  DOES_TABLE_EXIST_PHRASE.replace("?", tableName);
         boolean result = false;
 
         Cursor cursor = db.rawQuery(query, null);
