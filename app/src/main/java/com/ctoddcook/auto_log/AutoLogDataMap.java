@@ -13,6 +13,7 @@ import android.database.sqlite.SQLiteDatabase;
  */
 public class AutoLogDataMap {
     public static final String DATABASE_NAME = "autolog.db";
+    public static final int DATABASE_VERSION = 1;
     public static final String DATETIME_TYPE = "INTEGER";
     public static final String INT_TYPE = "INTEGER";
     public static final String REAL_TYPE = "REAL";
