@@ -6,6 +6,7 @@ package com.ctoddcook.auto_log;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.provider.BaseColumns;
 
 /**
  * Created by C. Todd Cook on 5/10/2016.
@@ -27,6 +28,7 @@ public class AutoLogDataMap {
     public static final String SELECT_PHRASE = "SELECT ";
     public static final String FROM_PHRASE = " FROM ";
     public static final String ORDER_BY_PHRASE = " ORDER BY ";
+    public static final String WHERE_ID_CLAUSE = BaseColumns._ID + "=?";
 
     private static final String DOES_TABLE_EXIST_PHRASE = "SELECT name FROM sqlite_master " +
             "WHERE type='table' AND name='?'";
