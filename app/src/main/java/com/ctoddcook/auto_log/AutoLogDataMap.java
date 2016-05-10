@@ -23,6 +23,9 @@ public class AutoLogDataMap {
     public static final String CREATE_TABLE_PHRASE = "CREATE TABLE ";
     public static final String KEY_COLUMN_DEFINITION_PHRASE = " INTEGER PRIMARY KEY AUTOINCREMENT,";
     public static final String DROP_TABLE_PHRASE = "DROP TABLE IF EXISTS ";
+    public static final String SELECT_PHRASE = "SELECT ";
+    public static final String FROM_PHRASE = " FROM ";
+    public static final String ORDER_BY_PHRASE = " ORDER BY ";
 
     private static final String DOES_TABLE_EXIST_PHRASE = "SELECT name FROM sqlite_master " +
             "WHERE type='table' AND name='?'";
