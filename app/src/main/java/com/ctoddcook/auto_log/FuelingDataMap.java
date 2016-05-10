@@ -60,6 +60,10 @@ public final class FuelingDataMap extends AutoLogDataMap implements BaseColumns 
     public static final String SQL_DROP_TABLE =
             DROP_TABLE_PHRASE + TABLE_NAME;
 
+    public static final String SQL_SELECT_ALL =
+            SELECT_PHRASE + "*" + FROM_PHRASE +
+                    TABLE_NAME + ORDER_BY_PHRASE + COLUMN_NAME_DATE_OF_FILL + " DESC";
+
     public static boolean tableExists(SQLiteDatabase db) {
         return tableExists(db, TABLE_NAME);
     }
