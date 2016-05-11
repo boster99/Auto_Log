@@ -580,7 +580,7 @@ public class FuelingDataTest {
     public void testRowIDAccessorsIllegalArgument() throws Exception {
         FuelingData fd = new FuelingData();
 
-        fd.setRowID(0);
+        fd.setFuelingID(0);
     }
 
     /**
@@ -591,8 +591,8 @@ public class FuelingDataTest {
     public void testRowIDAccessorsUnsupportedOp() throws Exception {
         FuelingData fd = new FuelingData();
 
-        fd.setRowID(4);     // This one should work fine
-        fd.setRowID(5);     // This one should throw an exception
+        fd.setFuelingID(4);     // This one should work fine
+        fd.setFuelingID(5);     // This one should throw an exception
     }
 
     /**
@@ -603,8 +603,8 @@ public class FuelingDataTest {
     public void testRowIDAccessors() throws Exception {
         FuelingData fd = new FuelingData();
 
-        fd.setRowID(5);
-        Assert.assertEquals(5, fd.getRowID());
+        fd.setFuelingID(5);
+        Assert.assertEquals(5, fd.getFuelingID());
     }
 
     /**
@@ -696,9 +696,23 @@ public class FuelingDataTest {
     @Test
     public void testLocationAccessors() throws Exception {
         FuelingData fd = new FuelingData();
+        String loc = "Omaha, NE";
 
-        fd.setLocation("Omaha, NE");
-        Assert.assertEquals("Omaha, NE", fd.getLocation());
+        fd.setLocation(loc);
+        Assert.assertEquals(loc, fd.getLocation());
+    }
+
+    /**
+     * Test the accessors for mGPSCoords
+     * @throws Exception
+     */
+    @Test
+    public void testGPSCoordsAccessors() throws Exception {
+        FuelingData fd = new FuelingData();
+        String gps = "-199,400";
+
+        fd.setGPSCoords(gps);
+        Assert.assertEquals(gps, fd.getGPSCoords());
     }
 
     /**
@@ -709,25 +723,10 @@ public class FuelingDataTest {
     public void testStatusAccessors() throws Exception {
         FuelingData fd = new FuelingData();
 
-        fd.setStatus(FuelingData.STATUS_NEW);
-        Assert.assertEquals(FuelingData.STATUS_NEW, fd.getStatus());
-
-        fd.setStatus(FuelingData.STATUS_CURRENT);
+        fd.setCurrent();
         Assert.assertEquals(FuelingData.STATUS_CURRENT, fd.getStatus());
 
-        fd.setStatus(FuelingData.STATUS_UPDATED);
-        Assert.assertEquals(FuelingData.STATUS_UPDATED, fd.getStatus());
+        fd.setDeleted();
+        Assert.assertEquals(FuelingData.STATUS_DELETED, fd.getStatus());
     }
-
-    /**
-     * Test that the mStatus accessor throws an exception if a bad argument is passed
-     * @throws Exception
-     */
-    @Test (expected = IllegalArgumentException.class)
-    public void testStatusAccessorIllegalArg() throws Exception {
-        FuelingData fd = new FuelingData();
-
-        fd.setStatus("F");
-    }
-
 }

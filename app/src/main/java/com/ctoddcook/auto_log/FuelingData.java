@@ -36,6 +36,7 @@ class FuelingData extends DataHolder {
     private double mPricePaid = 0d;
     private double mOdometer = 0d;
     private String mLocation = null;
+    private String mGPSCoords = null;
 
     static {
         DATE_THRESHOLDS = new Date[3];
@@ -602,5 +603,21 @@ class FuelingData extends DataHolder {
         mLocation = location;
 
         touch();
+    }
+
+    /**
+     * Getter for GPSCoords field
+     * @return the GPS coordinates, if they are captured
+     */
+    public String getGPSCoords() {
+        return mGPSCoords;
+    }
+
+    /**
+     * Setter for the GPS coordinates
+     * @param GPSCoords the GPS coordinates
+     */
+    public void setGPSCoords(String GPSCoords) {
+        mGPSCoords = GPSCoords;
     }
 }
