@@ -12,7 +12,7 @@ import android.provider.BaseColumns;
  * Created by C. Todd Cook on 5/10/2016.
  * ctodd@ctoddcook.com
  */
-public class AutoLogDataMap {
+public abstract class AutoLogDataMap {
     public static final String DATABASE_NAME = "autolog.db";
     public static final int DATABASE_VERSION = 1;
     public static final String DATETIME_TYPE = "INTEGER";
