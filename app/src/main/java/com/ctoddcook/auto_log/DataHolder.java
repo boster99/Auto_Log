@@ -17,6 +17,7 @@ public abstract class DataHolder {
     public static final char STATUS_NEW = 'N';
     public static final char STATUS_CURRENT = 'C';
     public static final char STATUS_UPDATED = 'U';
+    public static final char STATUS_DELETED = 'D';
 
     private char mStatus = STATUS_NEW;
     protected Date mLastUpdated = null;
@@ -43,6 +44,14 @@ public abstract class DataHolder {
      */
     protected void setCurrent() {
         mStatus = STATUS_CURRENT;
+    }
+
+    /**
+     * Marks the record for deletion
+     */
+    public void setDeleted() {
+        mStatus = STATUS_DELETED;
+        touch();
     }
 
     /**
@@ -92,6 +101,14 @@ public abstract class DataHolder {
      */
     public boolean isCurrent() {
         return (mStatus == STATUS_CURRENT);
+    }
+
+    /**
+     * Indicates whether this record is marked for deletion
+     * @return true, if the record is marked for deletion
+     */
+    public boolean isDeleted() {
+        return (mStatus == STATUS_DELETED);
     }
 
     /**
