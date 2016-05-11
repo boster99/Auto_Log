@@ -45,14 +45,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @param newVersion The app's new version, to be upgraded to
      */
     @Override
+    @SuppressWarnings("SpellCheckingInspection")  // because URLs generate typo warnings
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         /*
-        http://stackoverflow.com/questions/21881992/when-is-sqliteopenhelper-oncreate-onupgrade-run
-        This is a good discussion of when onUpgrade() is called.
 
-        https://thebhwgroup.com/blog/how-android-sqlite-onupgrade
+        This is a good discussion of when onUpgrade() is called.
+        http://stackoverflow.com/questions/21881992/when-is-sqliteopenhelper-oncreate-onupgrade-run
+
         Examples
-         */
+        https://thebhwgroup.com/blog/how-android-sqlite-onupgrade
+
+        */
     }
 
 
@@ -94,6 +97,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
 
         return vehicleList;
+    }
+
+    /**
+     * Returns a cursor pointer to all of the rows in the Vehicle table, with just the _ID
+     * and NAME columns provided.
+     * @return a curosr pointing to the Vehicle table
+     */
+    public Cursor fetchSimpleVehicleListCursor() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(VehicleDataMap.SQL_SELECT_SIMPLE, null);
+
+        return cursor;
     }
 
     /**
