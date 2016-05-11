@@ -5,14 +5,12 @@
 package com.ctoddcook.auto_log;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -23,12 +21,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        DataHelper dh = new DataHelper();
+        DatabaseHelper dh = new DatabaseHelper(this);
 //        dh.getSomething();
     }
 
-    public void addFill(View v) {
-        Intent intent = new Intent(this, EnterFuelingDataActivity.class);
+    public void addFueling(View v) {
+        Intent intent = new Intent(this, AddFuelingActivity.class);
         startActivity(intent);
     }
 
