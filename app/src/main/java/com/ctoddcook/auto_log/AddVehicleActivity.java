@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -26,10 +27,11 @@ public class AddVehicleActivity extends AppCompatActivity {
     /**
      * When the user touches "Save", extract all of the entered details, do a little
      * sanity checking, create a new Vehicle object and insert it into the database.
+     *
      * @param v
      */
     public void saveNewVehicle(View v) {
-        VehicleData vd = extractDetails();
+        VehicleData vd = extractDetails(null);
         DatabaseHelper dh = new DatabaseHelper(this);
         dh.insertVehicle(vd);
     }
@@ -39,9 +41,11 @@ public class AddVehicleActivity extends AppCompatActivity {
      * Extracts the details entered by the user and uses them to create a new VehicleData
      * object, which is returned to the calling method. If the details entered violate some
      * important rule, the user is notified, and null is returned.
-     * @return a new VehicleData object, or null if the user screwed up
+     *
+     * @param vd an existing VehicleData instance to update, or null to have a new one created
+     * @return a new/updated VehicleData instance, or null if the user screwed up
      */
-    private VehicleData extractDetails() {
+    private VehicleData extractDetails(VehicleData vd) {
         EditText nameET = (EditText) findViewById(R.id.edit_veh_name);
         EditText yearET = (EditText) findViewById(R.id.edit_veh_year);
         EditText colorET = (EditText) findViewById(R.id.edit_veh_color);
@@ -70,7 +74,9 @@ public class AddVehicleActivity extends AppCompatActivity {
             name = color + " " + year + " " + model;
         }
 
-        VehicleData vd = new VehicleData();
+        if (vd == null)
+            vd = new VehicleData();
+
         vd.setName(name);
         vd.setYear(year);
         vd.setColor(color);
@@ -84,9 +90,17 @@ public class AddVehicleActivity extends AppCompatActivity {
 
     /**
      * Close the activity if the user presses "Cancel"
+     *
      * @param v
      */
     public void cancelAddVehicle(View v) {
+        if (v instanceof Button) {
+            Toast.makeText(this, "It's a BUTTON!!!", Toast.LENGTH_LONG).show();
+        } else
+            Toast.makeText(this, "It's not a button :(", Toast.LENGTH_LONG).show();
+
+        Toast.makeText(this, v.toString(), Toast.LENGTH_LONG).show();
+
         this.finish();
     }
 }

@@ -38,7 +38,7 @@
     <string name="VehLicenseLabel">License Plate</string>
     <string name="add_vehicle_hint">
         HINT: You can enter your own descriptive \"Name\" for this vehicle. Or, if you leave
-        it blank, the vehicle's color, year and model will be used to create a name for you.
+        it blank, the vehicle\'s color, year and model will be used to create a name for you.
     </string>
 
     <!-- For re-used buttons -->

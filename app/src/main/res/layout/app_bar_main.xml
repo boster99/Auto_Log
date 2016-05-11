@@ -24,9 +24,13 @@
 
     <include layout="@layout/content_main" />
 
+    <!-- style="@style/FloatingAddButton"
+     -->
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabAddFueling"
         style="@style/FloatingAddButton"
-        android:id="@+id/fab"
+        app:backgroundTint="@color/colorPrimaryDark"
         android:onClick="addFueling"/>
+
 
 </android.support.design.widget.CoordinatorLayout>
