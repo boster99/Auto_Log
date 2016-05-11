@@ -106,9 +106,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      */
     public Cursor fetchSimpleVehicleListCursor() {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(VehicleDataMap.SQL_SELECT_SIMPLE, null);
 
-        return cursor;
+        return db.rawQuery(VehicleDataMap.SQL_SELECT_SIMPLE, null);
     }
 
     /**
