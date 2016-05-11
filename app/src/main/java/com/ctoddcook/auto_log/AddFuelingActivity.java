@@ -75,4 +75,12 @@ public class AddFuelingActivity extends AppCompatActivity
     public void onNothingSelected(AdapterView<?> parent) {
         // Another interface callback
     }
+
+    public void saveNewFueling(View v) {
+        // TODO: check sanity of data, create an object, and save it to database
+    }
+
+    public void cancelAddFueling(View v) {
+        this.finish();
+    }
 }

@@ -132,6 +132,22 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="80dp"
+        android:gravity="center_horizontal">
+
+        <Button
+            style="@style/SaveButton"
+            android:onClick="saveNewFueling"/>
+
+        <Button
+            style="@style/CancelButton"
+            android:onClick="cancelAddFueling"/>
+    </LinearLayout>
 </RelativeLayout>
 
 
