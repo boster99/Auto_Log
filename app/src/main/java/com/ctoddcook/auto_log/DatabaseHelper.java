@@ -14,48 +14,59 @@ import java.util.Date;
  * ctodd@ctoddcook.com
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
-    private static final String COMMA = ",";
 
     public DatabaseHelper(Context context) {
-        super(context, AutoLogContract.DATABASE_NAME, null, 1);
+        super(context, AutoLogDataMap.DATABASE_NAME, null, AutoLogDataMap.DATABASE_VERSION);
     }
 
 
     /**
      * On create, check for existence of FUELING and VEHICLE tables. If they don't exist,
-     * create them.
+     * create them. (They should not exist, since onCreate() is called when the database
+     * is created.)
      * @param db the database for this app
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Cursor cursor = db.rawQuery(AutoLogContract.queryForTable(AutoLogContract.Fueling.TABLE_NAME), null);
-        if (cursor.getCount() == 0) {
-            db.execSQL(AutoLogContract.Fueling.SQL_CREATE_TABLE);
+        if (!FuelingDataMap.tableExists(db)) {
+            db.execSQL(FuelingDataMap.SQL_CREATE_TABLE);
         }
-        cursor.close();
 
-        cursor = db.rawQuery(AutoLogContract.queryForTable(AutoLogContract.Vehicle.TABLE_NAME), null);
-        if (cursor.getCount() == 0) {
-            db.execSQL(AutoLogContract.Vehicle.SQL_CREATE_TABLE);
+        if (!VehicleDataMap.tableExists(db)) {
+            db.execSQL(VehicleDataMap.SQL_CREATE_TABLE);
         }
-        cursor.close();
     }
 
 
+    /**
+     * Upgrade table(s) when a schema changes from one production release to another.
+     * @param db The database
+     * @param oldVersion The user's old (current) version, to be upgraded from
+     * @param newVersion The app's new version, to be upgraded to
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         /*
-        FUTURE: If the table columns are changed, we need to capture the old data, then
-        adjust the tables, then write the data back into the adjusted tables.
+        http://stackoverflow.com/questions/21881992/when-is-sqliteopenhelper-oncreate-onupgrade-run
+        This is a good discussion of when onUpgrade() is called.
+
+        https://thebhwgroup.com/blog/how-android-sqlite-onupgrade
+        Examples
          */
-        onCreate(db);
     }
+
+
+
+
+    /*
+    FOLLOWING ARE METHODS FOR SELECTING/INSERTING/DELETING/UPDATING THE VEHICLE TABLE
+     */
 
     /**
      * Retrieves the complete list of vehicles from the database.
      * @return an ArrayList of all vehicles defined
      */
-    public ArrayList<VehicleData> getVehicleList() {
+    public ArrayList<VehicleData> fetchVehicleList() {
         SQLiteDatabase db = this.getWritableDatabase();
         ArrayList<VehicleData> vehicleList = new ArrayList<VehicleData>();
         int id, year;
@@ -63,29 +74,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Date lastUpdated = new Date();
         VehicleData vehicle;
 
-        String query = "SELECT " +
-                AutoLogContract.Vehicle.COLUMN_NAME_ID + COMMA +
-                AutoLogContract.Vehicle.COLUMN_NAME_NAME + COMMA +
-                AutoLogContract.Vehicle.COLUMN_NAME_YEAR + COMMA +
-                AutoLogContract.Vehicle.COLUMN_NAME_COLOR + COMMA +
-                AutoLogContract.Vehicle.COLUMN_NAME_MODEL + COMMA +
-                AutoLogContract.Vehicle.COLUMN_NAME_VIN + COMMA +
-                AutoLogContract.Vehicle.COLUMN_NAME_LICENSE_PLATE + COMMA +
-                AutoLogContract.Vehicle.COLUMN_NAME_LAST_UPDATED + "FROM " +
-                AutoLogContract.Vehicle.TABLE_NAME + " ORDER BY " +
-                AutoLogContract.Vehicle.COLUMN_NAME_ID;
-
-        Cursor cursor = db.rawQuery(query, null);
+        Cursor cursor = db.rawQuery(VehicleDataMap.SQL_SELECT_ALL, null);
 
         while (cursor.moveToNext()) {
-            id = cursor.getInt(0);
-            name = cursor.getString(1);
-            year = cursor.getInt(2);
-            color = cursor.getString(3);
-            model = cursor.getString(4);
-            vin = cursor.getString(5);
-            licensePlate = cursor.getString(6);
-            lastUpdated.setTime(cursor.getInt(7));
+            id = cursor.getInt(VehicleDataMap.COLUMN_NBR_ID);
+            name = cursor.getString(VehicleDataMap.COLUMN_NBR_NAME);
+            year = cursor.getInt(VehicleDataMap.COLUMN_NBR_YEAR);
+            color = cursor.getString(VehicleDataMap.COLUMN_NBR_COLOR);
+            model = cursor.getString(VehicleDataMap.COLUMN_NBR_MODEL);
+            vin = cursor.getString(VehicleDataMap.COLUMN_NBR_VIN);
+            licensePlate = cursor.getString(VehicleDataMap.COLUMN_NBR_LICENSE_PLATE);
+            lastUpdated.setTime(cursor.getInt(VehicleDataMap.COLUMN_NBR_LAST_UPDATED));
 
             vehicle = new VehicleData(id, name, year, color, model, vin, licensePlate, lastUpdated);
 
@@ -97,23 +96,262 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return vehicleList;
     }
 
-    public long insertVehicle(VehicleData vehicle) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put(AutoLogContract.Vehicle.COLUMN_NAME_NAME, vehicle.getName());
-        cv.put(AutoLogContract.Vehicle.COLUMN_NAME_YEAR, vehicle.getYear());
-        cv.put(AutoLogContract.Vehicle.COLUMN_NAME_COLOR, vehicle.getColor());
-        cv.put(AutoLogContract.Vehicle.COLUMN_NAME_MODEL, vehicle.getModel());
-        cv.put(AutoLogContract.Vehicle.COLUMN_NAME_VIN, vehicle.getVIN());
-        cv.put(AutoLogContract.Vehicle.COLUMN_NAME_LICENSE_PLATE, vehicle.getLicensePlate());
-        cv.put(AutoLogContract.Vehicle.COLUMN_NAME_LAST_UPDATED, vehicle.getLastUpdated().getTime());
+    /**
+     * Inserts a new vehicle row into the database. After a successful insert, it updates
+     * the instance with the unique ID assigned to its database record, and sets the object's
+     * state to CURRENT.
+     * @param vehicle the vehicle to be added to the database
+     * @return the unique ID of the new record
+     * @throws IllegalArgumentException if the instance's state is not NEW
+     */
+    public int insertVehicle(VehicleData vehicle) throws IllegalArgumentException {
+        if (!vehicle.isNew())
+            throw new IllegalArgumentException("Cannot insert a new vehicle if its state is not new");
 
-        long newID = db.insert(AutoLogContract.Vehicle.TABLE_NAME, null, cv);
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues cv = new ContentValues();
+        cv.put(VehicleDataMap.COLUMN_NAME_NAME, vehicle.getName());
+        cv.put(VehicleDataMap.COLUMN_NAME_YEAR, vehicle.getYear());
+        cv.put(VehicleDataMap.COLUMN_NAME_COLOR, vehicle.getColor());
+        cv.put(VehicleDataMap.COLUMN_NAME_MODEL, vehicle.getModel());
+        cv.put(VehicleDataMap.COLUMN_NAME_VIN, vehicle.getVIN());
+        cv.put(VehicleDataMap.COLUMN_NAME_LICENSE_PLATE, vehicle.getLicensePlate());
+        cv.put(VehicleDataMap.COLUMN_NAME_LAST_UPDATED, vehicle.getLastUpdated().getTime());
+
+        int newID = (int) db.insert(VehicleDataMap.TABLE_NAME, null, cv);
 
         if (newID > 0) {
             vehicle.setVehicleID(newID);
+            vehicle.setCurrent();
         }
 
         return newID;
     }
+
+    /**
+     * Deletes the database row with the ID (prime key) of the Vehicle instance.
+     * @param vehicle the instance to be deleted
+     * @return true if the number of rows deleted is exactly 1
+     * @throws IllegalArgumentException if vehicle's state is not DELETED
+     */
+    public boolean deleteVehicle(VehicleData vehicle) throws IllegalArgumentException {
+        if (!vehicle.isDeleted())
+            throw new IllegalArgumentException("Cannot delete a vehicle whose state is not DELETED");
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        String[] whereArgs = new String[] {String.valueOf(vehicle.getID())};
+
+        int rowsDeleted = db.delete(VehicleDataMap.TABLE_NAME, VehicleDataMap.WHERE_ID_CLAUSE, whereArgs);
+
+        return (rowsDeleted == 1);
+    }
+
+    /**
+     * Updates the database with data from the provided Vehicle instance
+     * @param vehicle the vehicle whose data is to be updated
+     * @return true, if exactly 1 row is updated
+     * @throws IllegalArgumentException if the vehicle's state is not set to UPDATED
+     */
+    public boolean updateVehicle(VehicleData vehicle) throws IllegalArgumentException {
+        if (!vehicle.isUpdated())
+            throw new IllegalArgumentException("Cannot update a vehicle record whose state is not UPDATED");
+
+        boolean result = true;
+        SQLiteDatabase db = this.getWritableDatabase();
+        String[] whereArgs = new String[] {String.valueOf(vehicle.getID())};
+
+        ContentValues cv = new ContentValues();
+        cv.put(VehicleDataMap.COLUMN_NAME_NAME, vehicle.getName());
+        cv.put(VehicleDataMap.COLUMN_NAME_YEAR, vehicle.getYear());
+        cv.put(VehicleDataMap.COLUMN_NAME_COLOR, vehicle.getColor());
+        cv.put(VehicleDataMap.COLUMN_NAME_MODEL, vehicle.getModel());
+        cv.put(VehicleDataMap.COLUMN_NAME_VIN, vehicle.getVIN());
+        cv.put(VehicleDataMap.COLUMN_NAME_LICENSE_PLATE, vehicle.getLicensePlate());
+        cv.put(VehicleDataMap.COLUMN_NAME_LAST_UPDATED, vehicle.getLastUpdated().getTime());
+
+        int rowsUpdated = db.update(VehicleDataMap.TABLE_NAME, cv, VehicleDataMap.WHERE_ID_CLAUSE, whereArgs);
+        if (rowsUpdated == 1)
+            vehicle.setCurrent();
+        else
+            result = false;
+
+        return result;
+    }
+
+    /**
+     * For each VehicleData instance in the list, the object is passed through to
+     * updateVehicle(VehicleData). The number of updated rows is returned; the calling
+     * method can compare this to the number of items in the list as a check on total success.
+     * @param vList an array of VehicleData objects to be updated in the database
+     * @return the number of successfully updated rows
+     */
+    public int updateVehicles(ArrayList<VehicleData> vList) {
+        int result = 0;
+
+        for (VehicleData each: vList) {
+            if (updateVehicle(each))
+                result++;
+        }
+
+        return result;
+    }
+
+
+
+
+
+    /*
+    FOLLOWING ARE METHODS FOR UPDATING/INSERTING/SELECTING/DELETING FUELINGDATA
+     */
+
+
+    /**
+     * Retrieves the complete list of FuelingData records from the database, in descending
+     * order by DateOfFill (i.e., the newest records are fetched first).
+     * @return an ArrayList of FuelingData objects
+     */
+    public ArrayList<FuelingData> fetchFuelingData() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ArrayList<FuelingData> fdList = new ArrayList<FuelingData>();
+        int fuelingID, vehicleID;
+        Date dateOfFill = new Date();
+        Date lastUpdated = new Date();
+        double distance, volume, pricePaid, odometer;
+        String location, gpsCoords;
+        FuelingData fd;
+
+        Cursor cursor = db.rawQuery(FuelingDataMap.SQL_SELECT_ALL, null);
+
+        while (cursor.moveToNext()) {
+            fuelingID = cursor.getInt(FuelingDataMap.COLUMN_NBR_FUELING_ID);
+            vehicleID = cursor.getInt(FuelingDataMap.COLUMN_NBR_VEHICLE_ID);
+            dateOfFill.setTime(cursor.getInt(FuelingDataMap.COLUMN_NBR_DATE_OF_FILL));
+            distance = cursor.getDouble(FuelingDataMap.COLUMN_NBR_DISTANCE);
+            volume = cursor.getDouble(FuelingDataMap.COLUMN_NBR_VOLUME);
+            pricePaid = cursor.getDouble(FuelingDataMap.COLUMN_NBR_PRICE_PAID);
+            odometer = cursor.getDouble(FuelingDataMap.COLUMN_NBR_ODOMETER);
+            location = cursor.getString(FuelingDataMap.COLUMN_NBR_LOCATION);
+            gpsCoords = cursor.getString(FuelingDataMap.COLUMN_NBR_GPS_COORDS);
+            lastUpdated.setTime(cursor.getInt(FuelingDataMap.COLUMN_NBR_LAST_UPDATED));
+
+            fd = new FuelingData(fuelingID, vehicleID, dateOfFill, distance, volume, pricePaid,
+                    odometer, location, gpsCoords, lastUpdated);
+
+            fdList.add(fd);
+        }
+
+        cursor.close();
+
+        return fdList;
+    }
+
+    /**
+     * Inserts a new FuelingData record into the database. After a successful insert, it updates
+     * the instance with the unique ID assigned to its database record, and sets the object's
+     * state to CURRENT.
+     * @param fd the object instance to be inserted
+     * @return the unique ID of the new record
+     * @throws IllegalArgumentException if the object's state is not NEW
+     */
+    public int insertFuelingData(FuelingData fd) throws IllegalArgumentException {
+        if (!fd.isNew())
+            throw new IllegalArgumentException("Cannot insert a FuelingData record if its state is not NEW");
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues cv = new ContentValues();
+        cv.put(FuelingDataMap.COLUMN_NAME_VEHICLE_ID, fd.getVehicleID());
+        cv.put(FuelingDataMap.COLUMN_NAME_DATE_OF_FILL , fd.getDateOfFill().getTime());
+        cv.put(FuelingDataMap.COLUMN_NAME_DISTANCE , fd.getDistance());
+        cv.put(FuelingDataMap.COLUMN_NAME_VOLUME , fd.getVolume());
+        cv.put(FuelingDataMap.COLUMN_NAME_PRICE_PAID , fd.getPricePaid());
+        cv.put(FuelingDataMap.COLUMN_NAME_ODOMETER , fd.getOdometer());
+        cv.put(FuelingDataMap.COLUMN_NAME_LOCATION , fd.getLocation());
+        cv.put(FuelingDataMap.COLUMN_NAME_GPS_COORDS , fd.getGPSCoords());
+        cv.put(FuelingDataMap.COLUMN_NAME_LAST_UPDATED , fd.getLastUpdated().getTime());
+
+        int newID = (int) db.insert(FuelingDataMap.TABLE_NAME, null, cv);
+
+        if (newID > 0) {
+            fd.setFuelingID(newID);
+            fd.setCurrent();
+        }
+
+        return newID;
+    }
+
+    /**
+     * Deletes the database row with the ID (prime key) of the FuelingData instance.
+     * @param fd the instance to be deleted
+     * @return true if the number of rows deleted is exactly 1
+     * @throws IllegalArgumentException if the instance's state is not set to DELETED
+     */
+    public boolean deleteFuelingData(FuelingData fd) throws IllegalArgumentException {
+        if (!fd.isDeleted())
+            throw new IllegalArgumentException("Cannot delete an object if it's state is not DELETED");
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        String[] whereArgs = new String[] {String.valueOf(fd.getID())};
+
+        int rowsDeleted = db.delete(FuelingDataMap.TABLE_NAME, FuelingDataMap.WHERE_ID_CLAUSE, whereArgs);
+
+        return (rowsDeleted == 1);
+    }
+
+    /**
+     * Updates a FuelingData record in the database with new data, and resets the instance's
+     * status to CURRENT. If the update fails (meaning the number of rows updated is not 1)
+     * the status is not changed, and false is returned.
+     * @param fd the instance whose record is to be updated
+     * @return true, if exactly 1 row is updated
+     * @throws IllegalArgumentException if the instance's state is not set to UPDATED
+     */
+    public boolean updateFuelingData(FuelingData fd) throws IllegalArgumentException {
+        if (!fd.isUpdated())
+            throw new IllegalArgumentException("Cannot updated a database record if the object's state is not set to UPDATED");
+
+        boolean result = true;
+        SQLiteDatabase db = this.getWritableDatabase();
+        String[] whereArgs = new String[] {String.valueOf(fd.getID())};
+
+        ContentValues cv = new ContentValues();
+        cv.put(FuelingDataMap.COLUMN_NAME_VEHICLE_ID, fd.getVehicleID());
+        cv.put(FuelingDataMap.COLUMN_NAME_DATE_OF_FILL , fd.getDateOfFill().getTime());
+        cv.put(FuelingDataMap.COLUMN_NAME_DISTANCE , fd.getDistance());
+        cv.put(FuelingDataMap.COLUMN_NAME_VOLUME , fd.getVolume());
+        cv.put(FuelingDataMap.COLUMN_NAME_PRICE_PAID , fd.getPricePaid());
+        cv.put(FuelingDataMap.COLUMN_NAME_ODOMETER , fd.getOdometer());
+        cv.put(FuelingDataMap.COLUMN_NAME_LOCATION , fd.getLocation());
+        cv.put(FuelingDataMap.COLUMN_NAME_GPS_COORDS , fd.getGPSCoords());
+        cv.put(FuelingDataMap.COLUMN_NAME_LAST_UPDATED , fd.getLastUpdated().getTime());
+
+        int rowsUpdated = db.update(FuelingDataMap.TABLE_NAME, cv, FuelingDataMap.WHERE_ID_CLAUSE, whereArgs);
+
+        if (rowsUpdated == 1)
+            fd.setCurrent();
+        else
+            result = false;
+
+        return result;
+    }
+
+    /**
+     * For each FuelingData instance in the provided list, it is passed through to
+     * updateFuelingData(FuelingData). The number of updated rows is returned; the calling
+     * method can compare this to the number of items in the list as a check on total success.
+     * @param fdList an array of FuelingData objects to be updated in the database
+     * @return the number of successfully updated rows
+     */
+    public int updateFuelingData(ArrayList<FuelingData> fdList) {
+        int result = 0;
+
+        for (FuelingData each: fdList) {
+            if (!updateFuelingData(each))
+                result++;
+        }
+
+        return result;
+    }
+
 }
