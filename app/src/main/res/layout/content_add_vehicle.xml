@@ -7,10 +7,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#4FC3F7"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.ctoddcook.auto_log.AddVehicleActivity"
     tools:showIn="@layout/activity_add_vehicle">
 
@@ -28,11 +28,12 @@
                 style="@style/EditLabel"
                 android:text="@string/VehNameLabel"/>
 
-            <EditText android:id="@+id/edit_veh_name"
-                      style="@style/EditData"
-                      android:inputType="text"
-                      android:hint="@string/VehNameLabel"
-                      android:singleLine="true"/>
+            <EditText
+                android:id="@+id/edit_veh_name"
+                style="@style/EditData"
+                android:hint="@string/VehNameLabel"
+                android:inputType="text"
+                android:singleLine="true"/>
 
         </LinearLayout>
 
@@ -43,10 +44,11 @@
                 style="@style/EditLabel"
                 android:text="@string/VehYearLabel"/>
 
-            <EditText android:id="@+id/edit_veh_year"
-                      style="@style/EditData"
-                      android:inputType="number"
-                      android:hint="@string/VehYearLabel"/>
+            <EditText
+                android:id="@+id/edit_veh_year"
+                style="@style/EditData"
+                android:hint="@string/VehYearLabel"
+                android:inputType="number"/>
 
         </LinearLayout>
 
@@ -57,10 +59,11 @@
                 style="@style/EditLabel"
                 android:text="@string/VehColorLabel"/>
 
-            <EditText android:id="@+id/edit_veh_color"
-                      style="@style/EditData"
-                      android:inputType="text"
-                      android:hint="@string/VehColorLabel"/>
+            <EditText
+                android:id="@+id/edit_veh_color"
+                style="@style/EditData"
+                android:hint="@string/VehColorLabel"
+                android:inputType="text"/>
 
         </LinearLayout>
 
@@ -72,10 +75,10 @@
                 android:text="@string/VehModelLabel"/>
 
             <EditText
-                android:id="@+id/edit_total_price_paid"
+                android:id="@+id/edit_veh_model"
                 style="@style/EditData"
-                android:inputType="text"
-                android:hint="@string/VehModelLabel"/>
+                android:hint="@string/VehModelLabel"
+                android:inputType="text"/>
 
         </LinearLayout>
 
@@ -87,6 +90,7 @@
                 android:text="@string/VehVINLabel"/>
 
             <EditText
+                android:id="@+id/edit_veh_vin"
                 style="@style/EditData"
                 android:hint="@string/VehVINLabel"/>
 
@@ -100,9 +104,10 @@
                 android:text="@string/VehLicenseLabel"/>
 
             <EditText
+                android:id="@+id/edit_veh_license_plate"
                 style="@style/EditData"
-                android:textAllCaps="true"
-                android:hint="@string/VehLicenseLabel"/>
+                android:hint="@string/VehLicenseLabel"
+                android:textAllCaps="true"/>
 
         </LinearLayout>
 
@@ -111,18 +116,18 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/add_vehicle_hint"
         android:layout_below="@id/vehicle_add_details"
-        android:textSize="16sp"
-        android:padding="8dp"/>
+        android:padding="8dp"
+        android:text="@string/add_vehicle_hint"
+        android:textSize="16sp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="80dp"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
 
         <Button
             style="@style/SaveButton"
@@ -132,7 +137,6 @@
             style="@style/CancelButton"
             android:onClick="cancelAddVehicle"/>
     </LinearLayout>
-
 
 
 </RelativeLayout>

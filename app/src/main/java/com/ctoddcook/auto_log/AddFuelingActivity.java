@@ -41,8 +41,8 @@ public class AddFuelingActivity extends AppCompatActivity
 
         // if the cursor has no results, open the AddVehicleActivity, then try again
         if (cursor.getCount() < 1) {
-//            Intent intent = new Intent(this, AddVehicleActivity.class);
-//            startActivity(intent);
+            Intent intent = new Intent(this, AddVehicleActivity.class);
+            startActivity(intent);
             cursor = dh.fetchSimpleVehicleListCursor();
         }
 
