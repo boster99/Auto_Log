@@ -60,6 +60,9 @@ public class VehicleDataMap extends AutoLogDataMap implements BaseColumns {
     public static final String SQL_SELECT_ALL =
             SELECT_PHRASE + "*" + FROM_PHRASE +
                     TABLE_NAME + ORDER_BY_PHRASE + _ID;
+
+    public static final String SQL_SELECT_SIMPLE =
+            SELECT_PHRASE + _ID + COMMA_SEP + COLUMN_NAME_NAME + FROM_PHRASE + TABLE_NAME;
     
     public static boolean tableExists(SQLiteDatabase db) {
         return tableExists(db, TABLE_NAME);

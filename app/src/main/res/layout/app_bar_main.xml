@@ -27,6 +27,6 @@
     <android.support.design.widget.FloatingActionButton
         style="@style/FloatingAddButton"
         android:id="@+id/fab"
-        android:onClick="addFill"/>
+        android:onClick="addFueling"/>
 
 </android.support.design.widget.CoordinatorLayout>

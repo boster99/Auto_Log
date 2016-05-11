@@ -24,4 +24,7 @@
     <string name="MainActivitySecondAverageLabel">6 months</string>
     <string name="MainActivityThirdAverageLabel">One Year</string>
     <string name="MainActivityFourthAverageLabel">Lifetime</string>
+    <string name="vehicle">Vehicle</string>
+    <string name="location">Location</string>
+    <string name="odometer">Odometer</string>
 </resources>
