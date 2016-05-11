@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2016 C. Todd Cook. All rights reserved.
+  -->
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4FC3F7"
+    tools:context="com.ctoddcook.auto_log.AddVehicleActivity"
+    tools:showIn="@layout/activity_add_vehicle">
+
+    <LinearLayout
+        android:id="@+id/vehicle_add_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            style="@style/EditRow">
+
+            <TextView
+                style="@style/EditLabel"
+                android:text="@string/VehNameLabel"/>
+
+            <EditText android:id="@+id/edit_veh_name"
+                      style="@style/EditData"
+                      android:inputType="text"
+                      android:hint="@string/VehNameLabel"
+                      android:singleLine="true"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/EditRow">
+
+            <TextView
+                style="@style/EditLabel"
+                android:text="@string/VehYearLabel"/>
+
+            <EditText android:id="@+id/edit_veh_year"
+                      style="@style/EditData"
+                      android:inputType="number"
+                      android:hint="@string/VehYearLabel"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/EditRow">
+
+            <TextView
+                style="@style/EditLabel"
+                android:text="@string/VehColorLabel"/>
+
+            <EditText android:id="@+id/edit_veh_color"
+                      style="@style/EditData"
+                      android:inputType="text"
+                      android:hint="@string/VehColorLabel"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/EditRow">
+
+            <TextView
+                style="@style/EditLabel"
+                android:text="@string/VehModelLabel"/>
+
+            <EditText
+                android:id="@+id/edit_total_price_paid"
+                style="@style/EditData"
+                android:inputType="text"
+                android:hint="@string/VehModelLabel"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/EditRow">
+
+            <TextView
+                style="@style/EditLabel"
+                android:text="@string/VehVINLabel"/>
+
+            <EditText
+                style="@style/EditData"
+                android:hint="@string/VehVINLabel"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/EditRow">
+
+            <TextView
+                style="@style/EditLabel"
+                android:text="@string/VehLicenseLabel"/>
+
+            <EditText
+                style="@style/EditData"
+                android:textAllCaps="true"
+                android:hint="@string/VehLicenseLabel"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_vehicle_hint"
+        android:layout_below="@id/vehicle_add_details"
+        android:textSize="16sp"
+        android:padding="8dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="80dp"
+        android:gravity="center_horizontal">
+
+        <Button
+            style="@style/SaveButton"
+            android:onClick="saveNewVehicle"/>
+
+        <Button
+            style="@style/CancelButton"
+            android:onClick="cancelAddVehicle"/>
+    </LinearLayout>
+
+
+
+</RelativeLayout>
