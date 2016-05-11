@@ -56,7 +56,7 @@ public final class FuelingDataMap extends AutoLogDataMap implements BaseColumns 
                     COLUMN_NAME_DISTANCE + REAL_TYPE + NOT_NULL + COMMA_SEP +
                     COLUMN_NAME_VOLUME + REAL_TYPE + NOT_NULL + COMMA_SEP +
                     COLUMN_NAME_PRICE_PAID + REAL_TYPE + NOT_NULL + COMMA_SEP +
-                    COLUMN_NAME_ODOMETER + INT_TYPE + NOT_NULL + COMMA_SEP +
+                    COLUMN_NAME_ODOMETER + REAL_TYPE + NOT_NULL + COMMA_SEP +
                     COLUMN_NAME_LOCATION + STRING_TYPE + COMMA_SEP +
                     COLUMN_NAME_GPS_COORDS + STRING_TYPE + COMMA_SEP +
                     COLUMN_NAME_LAST_UPDATED + DATETIME_TYPE + " )";
