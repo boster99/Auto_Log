@@ -55,6 +55,53 @@ class FuelingData extends DataHolder {
     }
 
 
+
+    /*
+    Constructors
+    */
+
+    /**
+     * Generic constructor. New object's state will be NEW. All other fields will be null/0/empty.
+     */
+    public FuelingData() {}
+
+    /**
+     * Constructor with all fields provided. Most likely after being read from the database.
+     * This instance's state will be CURRENT.
+     * @param fuelingID the unique database ID for the instance
+     * @param vehicleID foreign key to the vehicle which received this fueling
+     * @param dateOfFill the date of the fueling
+     * @param distance the distance driven between the prior fueling and this one
+     * @param volume the volume of fuel put into the car
+     * @param pricePaid the total price paid for the gas
+     * @param odometer the car's odometer reading; will not necessarily make sense with the distance,
+     *                 if a fueling is missed (not recorded)
+     * @param location the location (city and state) of the fueling, or possibly something
+     *                 more descriptive from the user
+     * @param gpsCoords the gps coordinates of the fueling, if they were known when the fueling
+     *                  occurred
+     * @param lastUpdated the last time this record was updated
+     */
+    public FuelingData(int fuelingID, int vehicleID, Date dateOfFill, double distance, double volume,
+                       double pricePaid, double odometer, String location, String gpsCoords,
+                       Date lastUpdated) {
+        mFuelingID = fuelingID;
+        mVehicleID = vehicleID;
+        mDateOfFill = dateOfFill;
+        mDistance = distance;
+        mVolume = volume;
+        mPricePaid = pricePaid;
+        mOdometer = odometer;
+        mLocation = location;
+        mGPSCoords = gpsCoords;
+        mLastUpdated = lastUpdated;
+
+        setCurrent();
+    }
+
+
+
+
     /*
     Following are methods which calculate average values over time spans.
      */
