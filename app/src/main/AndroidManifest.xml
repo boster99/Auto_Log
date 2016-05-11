@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".EnterFuelingDataActivity"
+            android:name=".AddFuelingActivity"
             android:label="@string/title_activity_enter_fueling_data"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
