@@ -7,20 +7,21 @@ package com.ctoddcook.auto_log;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class AddVehicleActivity extends AppCompatActivity {
+public class AddEditVehicleActivity extends AppCompatActivity {
+    private static final String TAG = "AddEditVehicleActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_vehicle);
+        setContentView(R.layout.activity_add_edit_vehicle);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 
@@ -28,12 +29,16 @@ public class AddVehicleActivity extends AppCompatActivity {
      * When the user touches "Save", extract all of the entered details, do a little
      * sanity checking, create a new Vehicle object and insert it into the database.
      *
-     * @param v
+     * @param v the view which triggered this method call
      */
     public void saveNewVehicle(View v) {
         VehicleData vd = extractDetails(null);
-        DatabaseHelper dh = new DatabaseHelper(this);
-        dh.insertVehicle(vd);
+        if (vd != null) {
+            DatabaseHelper dh = new DatabaseHelper(this);
+            dh.insertVehicle(vd);
+        }
+
+        this.finish();
     }
 
 
@@ -46,6 +51,13 @@ public class AddVehicleActivity extends AppCompatActivity {
      * @return a new/updated VehicleData instance, or null if the user screwed up
      */
     private VehicleData extractDetails(VehicleData vd) {
+        String name = "";
+        String color = "";
+        String model = "";
+        String vin = "";
+        String licPlate = "";
+        int year = 0;
+
         EditText nameET = (EditText) findViewById(R.id.edit_veh_name);
         EditText yearET = (EditText) findViewById(R.id.edit_veh_year);
         EditText colorET = (EditText) findViewById(R.id.edit_veh_color);
@@ -53,21 +65,29 @@ public class AddVehicleActivity extends AppCompatActivity {
         EditText vinET = (EditText) findViewById(R.id.edit_veh_vin);
         EditText licPlateET = (EditText) findViewById(R.id.edit_veh_license_plate);
 
-        String name = nameET.getText().toString();
-        int year = Integer.parseInt(yearET.getText().toString());
-        String color = colorET.getText().toString();
-        String model = modelET.getText().toString();
-        String vin = vinET.getText().toString();
-        String licPlate = licPlateET.getText().toString();
+        if (nameET != null) name = nameET.getText().toString().trim();
+        if (colorET != null) color = colorET.getText().toString().trim();
+        if (modelET != null) model = modelET.getText().toString().trim();
+        if (vinET != null) vin = vinET.getText().toString().trim();
+        if (licPlateET != null) licPlate = licPlateET.getText().toString().trim();
+
+        try {
+            if (yearET != null) year = Integer.parseInt(yearET.getText().toString());
+        } catch (NumberFormatException e) {
+            Log.e(TAG, "extractDetails: vehicle year EditText value is: "
+                    + yearET.getText().toString(), e);
+        }
 
         if (year < 1900 || year > 2100) {
-            Toast.makeText(this, "Whoops! You must provide a year between 1900 and 2100", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Whoops! " + year + " is not a valid model year",
+                    Toast.LENGTH_LONG).show();
             return null;
         }
 
         if (name.length() < 1) {
             if (color.length() < 1 || model.length() < 1) {
-                Toast.makeText(this, "Uh oh! If you don't supply a name, you must supply a color and model", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Uh oh! If you don't supply a name, you must supply a " +
+                        "color and model", Toast.LENGTH_LONG).show();
                 return null;
             }
 
@@ -91,16 +111,9 @@ public class AddVehicleActivity extends AppCompatActivity {
     /**
      * Close the activity if the user presses "Cancel"
      *
-     * @param v
+     * @param v the view that called this method
      */
     public void cancelAddVehicle(View v) {
-        if (v instanceof Button) {
-            Toast.makeText(this, "It's a BUTTON!!!", Toast.LENGTH_LONG).show();
-        } else
-            Toast.makeText(this, "It's not a button :(", Toast.LENGTH_LONG).show();
-
-        Toast.makeText(this, v.toString(), Toast.LENGTH_LONG).show();
-
         this.finish();
     }
 }

@@ -11,26 +11,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
 /**
- *
+ * Activity provides the UI and functions needed to ad a new Fueling Event or edit an
+ * existing one.
  */
-public class AddFuelingActivity extends AppCompatActivity
+public class AddEditFuelingActivity extends AppCompatActivity
         implements AdapterView.OnItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_fueling);
+        setContentView(R.layout.activity_add_edit_fueling);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        setupVehicleSpinner();
     }
 
     private void setupVehicleSpinner() {
@@ -39,9 +39,9 @@ public class AddFuelingActivity extends AppCompatActivity
         DatabaseHelper dh = new DatabaseHelper(this);
         Cursor cursor = dh.fetchSimpleVehicleListCursor();
 
-        // if the cursor has no results, open the AddVehicleActivity, then try again
+        // if the cursor has no results, open the AddEditVehicleActivity, then try again
         if (cursor.getCount() < 1) {
-            Intent intent = new Intent(this, AddVehicleActivity.class);
+            Intent intent = new Intent(this, AddEditVehicleActivity.class);
             startActivity(intent);
             cursor = dh.fetchSimpleVehicleListCursor();
         }
