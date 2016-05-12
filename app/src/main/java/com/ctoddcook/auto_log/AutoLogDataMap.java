@@ -43,7 +43,7 @@ public abstract class AutoLogDataMap {
         boolean result = false;
 
         Cursor cursor = db.rawQuery(query, null);
-        if (cursor.getCount() > 1)
+        if (cursor.getCount() > 0)
             result = true;
         cursor.close();
 
