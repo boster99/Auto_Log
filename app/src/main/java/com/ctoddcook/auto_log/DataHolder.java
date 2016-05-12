@@ -66,8 +66,17 @@ public abstract class DataHolder {
      * Getter for mStatus field
      * @return value of mStatus field.
      */
-    public char getStatus() {
+    protected char getStatus() {
         return mStatus;
+    }
+
+    /**
+     * Generally should not be called. This is provided so child classes can implement Parcelable
+     * and include mStatus in the information passed.
+     * @param newStatus the new status
+     */
+    protected void setStatus(char newStatus) {
+        mStatus = newStatus;
     }
 
     /**
