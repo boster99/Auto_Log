@@ -36,7 +36,7 @@ class FuelingData extends DataHolder {
     private double mPricePaid = 0d;
     private double mOdometer = 0d;
     private String mLocation = null;
-    private String mGPSCoords = null;
+    private String mGPSCoordinates = null;
 
     static {
         DATE_THRESHOLDS = new Date[3];
@@ -78,12 +78,12 @@ class FuelingData extends DataHolder {
      *                 if a fueling is missed (not recorded)
      * @param location the location (city and state) of the fueling, or possibly something
      *                 more descriptive from the user
-     * @param gpsCoords the gps coordinates of the fueling, if they were known when the fueling
+     * @param gpsCoordinates the gps coordinates of the fueling, if they were known when the fueling
      *                  occurred
      * @param lastUpdated the last time this record was updated
      */
     public FuelingData(int fuelingID, int vehicleID, Date dateOfFill, double distance, double volume,
-                       double pricePaid, double odometer, String location, String gpsCoords,
+                       double pricePaid, double odometer, String location, String gpsCoordinates,
                        Date lastUpdated) {
         mFuelingID = fuelingID;
         mVehicleID = vehicleID;
@@ -93,7 +93,7 @@ class FuelingData extends DataHolder {
         mPricePaid = pricePaid;
         mOdometer = odometer;
         mLocation = location;
-        mGPSCoords = gpsCoords;
+        mGPSCoordinates = gpsCoordinates;
         mLastUpdated = lastUpdated;
 
         setCurrent();
@@ -653,18 +653,57 @@ class FuelingData extends DataHolder {
     }
 
     /**
-     * Getter for GPSCoords field
+     * Getter for GPSCoordinates field
      * @return the GPS coordinates, if they are captured
      */
-    public String getGPSCoords() {
-        return mGPSCoords;
+    public String getGPSCoordinates() {
+        return mGPSCoordinates;
     }
 
     /**
      * Setter for the GPS coordinates
-     * @param GPSCoords the GPS coordinates
+     * @param GPSCoordinates the GPS coordinates
      */
-    public void setGPSCoords(String GPSCoords) {
-        mGPSCoords = GPSCoords;
+    public void setGPSCoordinates(String GPSCoordinates) {
+        mGPSCoordinates = GPSCoordinates;
     }
+
+
+    /**
+     * Determines whether another, provided FuelingData instance is the same as this one.
+     * All fields are checked, except for ID and LastUpdated. Strings are compared ignoring case.
+     * @param other the FuelingData instance this one is compared to
+     * @return true if their data is the same
+     */
+    public boolean isEqual(FuelingData other) {
+        if (this == other) return true;
+        if (this.mVehicleID != other.mVehicleID) return false;
+        if (!this.mDateOfFill.equals(other.mDateOfFill)) return false;
+        if (this.mDistance != other.mDistance) return false;
+        if (this.mVolume != other.mVolume) return false;
+        if (this.mPricePaid != other.mPricePaid) return false;
+        if (this.mOdometer != other.mOdometer) return false;
+        if (!this.mLocation.equals(other.mLocation)) return false;
+        if (!this.mGPSCoordinates.equals(other.mGPSCoordinates)) return false;
+
+        return true;
+    }
+
+    /**
+     * Determines whether another, provided FuelingData instance has the same key fields as
+     * this one. Fields checked are mVehicleID, mDateOfFill, mDistance, mVolume, and mPricePaid.
+     * @param other the FuelingData instance this one is compared to
+     * @return true if their data is the same
+     */
+    public boolean isSimilar(FuelingData other) {
+        if (this == other) return true;
+        if (this.mVehicleID != other.mVehicleID) return false;
+        if (!this.mDateOfFill.equals(other.mDateOfFill)) return false;
+        if (this.mDistance != other.mDistance) return false;
+        if (this.mVolume != other.mVolume) return false;
+        if (this.mPricePaid != other.mPricePaid) return false;
+
+        return true;
+    }
+
 }

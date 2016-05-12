@@ -195,4 +195,37 @@ public class VehicleData extends DataHolder {
 
         touch();
     }
+
+    /**
+     * Determines whether this and another (provided) instance are equal. Excludes the ID and
+     * LastUpdated fields. Case is ignored, so "gray" and "GRAY" are equal.
+     * @param other the VehicleData instance to compare against
+     * @return true if all member fields (except ID and LastUpdated) are the same
+     */
+    public boolean isEqual(VehicleData other) {
+        if (this == other) return true;
+        if (!this.mName.equalsIgnoreCase(other.mName)) return false;
+        if (this.mYear != other.mYear) return false;
+        if (!this.mColor.equalsIgnoreCase(other.mColor)) return false;
+        if (!this.mModel.equalsIgnoreCase(other.mModel)) return false;
+        if (!this.mVIN.equalsIgnoreCase(other.mVIN)) return false;
+        if (!this.mLicensePlate.equalsIgnoreCase(other.mLicensePlate)) return false;
+
+        return true;
+    }
+
+    /**
+     * Determines whether the Color, Model and Year of another instance of VehicleData are
+     * the same as this instance's. Case is ignored, so "gray" is the same as "GRAY".
+     * @param other the VehicleData instance to compare against
+     * @return true if the Color, Year and Model are the same
+     */
+    public boolean isSimilar(VehicleData other) {
+        if (this == other) return true;
+        if (this.mYear != other.mYear) return false;
+        if (!this.mColor.equalsIgnoreCase(other.mColor)) return false;
+        if (!this.mModel.equalsIgnoreCase(other.mModel)) return false;
+
+        return true;
+    }
 }
