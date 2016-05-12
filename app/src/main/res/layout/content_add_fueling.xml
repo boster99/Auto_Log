@@ -24,26 +24,16 @@
 
             <TextView
                 style="@style/EditLabel"
+                android:paddingBottom="8dp"
                 android:text="@string/vehicle"/>
 
-            <RelativeLayout
+            <Spinner
+                android:id="@+id/vehicle_spinner"
                 android:layout_width="0dp"
                 android:layout_weight="3"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <Spinner android:id="@+id/vehicle_spinner"
-                         android:layout_width="match_parent"
-                         android:layout_height="wrap_content"/>
-
-                <TextView
-                    android:id="@+id/selected_vehicle"
-                    style="@style/EditData"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/vehicle_spinner"/>
-
-            </RelativeLayout>
+                android:layout_margin="4dp"
+                android:padding="4dp"/>
 
         </LinearLayout>
 
