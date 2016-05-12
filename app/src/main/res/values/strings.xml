@@ -31,7 +31,7 @@
 
     <!-- Following are used on AddVehicle activity -->
     <string name="VehNameLabel">Name</string>
-    <string name="VehYearLabel">Year</string>
+    <string name="VehYearLabel">Model Year</string>
     <string name="VehColorLabel">Color</string>
     <string name="VehModelLabel">Model</string>
     <string name="VehVINLabel">VIN</string>
