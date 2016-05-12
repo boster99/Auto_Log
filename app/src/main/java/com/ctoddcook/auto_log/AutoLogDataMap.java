@@ -15,10 +15,10 @@ import android.provider.BaseColumns;
 public abstract class AutoLogDataMap {
     public static final String DATABASE_NAME = "autolog.db";
     public static final int DATABASE_VERSION = 1;
-    public static final String DATETIME_TYPE = "INTEGER";
-    public static final String INT_TYPE = "INTEGER";
-    public static final String REAL_TYPE = "REAL";
-    public static final String STRING_TYPE = "TEXT";
+    public static final String DATETIME_TYPE = " INTEGER";
+    public static final String INT_TYPE = " INTEGER";
+    public static final String REAL_TYPE = " REAL";
+    public static final String STRING_TYPE = " TEXT";
     public static final String NOT_NULL = " NOT NULL";
     public static final String COMMA_SEP = ", ";
     public static final String COLUMN_NAME_LAST_UPDATED = "last_updated";
