@@ -5,6 +5,8 @@
 
 package com.ctoddcook.auto_log;
 
+import android.util.SparseArray;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -27,6 +29,7 @@ class FuelingData extends DataHolder {
     private static final ArrayList<FuelingData> sSixMonthSpan = new ArrayList<>();
     private static final ArrayList<FuelingData> sOneYearSpan = new ArrayList<>();
     private static final ArrayList<FuelingData> sLifetimeSpan = new ArrayList<>();
+    private static final SparseArray<FuelingData> sFuelingList = new SparseArray<>(200);
 
     private int mFuelingID = 0;
     private int mVehicleID = 0;
@@ -62,6 +65,10 @@ class FuelingData extends DataHolder {
 
     /**
      * Generic constructor. New object's state will be NEW. All other fields will be null/0/empty.
+     *
+     * Note this object will not be added to the static SparseArray, as it may have been created
+     * by the user selecting "Add", followed by the user canceling; we don't want to leave an
+     * empty object in the SparseArray.
      */
     public FuelingData() {}
 
@@ -97,8 +104,31 @@ class FuelingData extends DataHolder {
         mLastUpdated = lastUpdated;
 
         setCurrent();
+        addFueling(this);
     }
 
+
+
+    /*
+    Following methods pertain to adding and getting an instance to/from the static SparseArray.
+     */
+
+    /**
+     * Adds a FuelingData to the static SparseArray used to grab an instance by ID.
+     * @param f the FuelingData object to add
+     */
+    public static void addFueling(FuelingData f) {
+        sFuelingList.append(f.getFuelingID(), f);
+    }
+
+    /**
+     * Retrieves a FuelingData instance by its ID.
+     * @param id The id of the FuelingData object desired
+     * @return The FuelingData object associated with the provided ID, or null if there is none.
+     */
+    public FuelingData getFueling(int id) {
+        return sFuelingList.get(id);
+    }
 
 
 
@@ -484,6 +514,10 @@ class FuelingData extends DataHolder {
      * Setter for mFuelingID, the database prime key value of the row. This should only be called
      * when filling in the data retrieved from the database; i.e., this should not be used to
      * "update" the value but only to get the already existing value from the database.
+     *
+     * We add the instance to the SparseArray, because at the point the object is given an ID is
+     * after it is written to the database, so it is "complete". (This method should not be
+     * called for an object created from data already existing in the database.)
      * @param fuelingID the database prime key value of the row
      * @throws UnsupportedOperationException if mFuelingID is not 0 when this method is called
      * @throws IllegalArgumentException if the parameter provided is less than 1
@@ -495,6 +529,7 @@ class FuelingData extends DataHolder {
             throw new IllegalArgumentException("The Row ID cannot be less than 1");
 
         mFuelingID = fuelingID;
+        addFueling(this);
 
         touch();
     }
@@ -543,11 +578,8 @@ class FuelingData extends DataHolder {
      * @param dateOfFill a Long value indicating the millis representation of the date
      */
     public void setDateOfFill(long dateOfFill) {
-        Date newDate = new Date();
-        newDate.setTime(dateOfFill);
+        Date newDate = new Date(dateOfFill);
         setDateOfFill(newDate);
-
-        touch();
     }
 
     /**
