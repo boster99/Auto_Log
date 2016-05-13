@@ -126,7 +126,7 @@ class FuelingData extends DataHolder {
      * @param id The id of the FuelingData object desired
      * @return The FuelingData object associated with the provided ID, or null if there is none.
      */
-    public FuelingData getFueling(int id) {
+    public static FuelingData getFueling(int id) {
         return sFuelingList.get(id);
     }
 
