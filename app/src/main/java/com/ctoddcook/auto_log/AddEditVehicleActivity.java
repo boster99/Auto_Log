@@ -92,11 +92,7 @@ public class AddEditVehicleActivity extends AppCompatActivity {
      * @return true if all the user-provided details are usable, or false if the user screwed up
      */
     private boolean extractDetails() {
-        String name = "";
-        String color = "";
-        String model = "";
-        String vin = "";
-        String licPlate = "";
+        String name = null, color = null, model = null, vin = null, licPlate = null;
         int year = 0;
 
         EditText nameET = (EditText) findViewById(R.id.edit_veh_name);
@@ -133,8 +129,9 @@ public class AddEditVehicleActivity extends AppCompatActivity {
         /*
         If the user has not provided a name, make one out of the color, year and model
          */
-        if (name.length() < 1) {
-            if (color.length() < 1 || model.length() < 1 || year == 0) {
+        if (name == null || name.length() < 1) {
+            if ((color == null || color.length() < 1) || (model == null || model.length() < 1) ||
+                    year == 0) {
                 Toast.makeText(this, "Uh oh! If you don't supply a name, you must supply a " +
                         "color, year and model", Toast.LENGTH_LONG).show();
                 return false;
