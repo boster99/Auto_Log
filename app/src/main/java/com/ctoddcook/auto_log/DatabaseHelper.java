@@ -282,7 +282,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(FuelingDataMap.COLUMN_NAME_PRICE_PAID , fd.getPricePaid());
         cv.put(FuelingDataMap.COLUMN_NAME_ODOMETER , fd.getOdometer());
         cv.put(FuelingDataMap.COLUMN_NAME_LOCATION , fd.getLocation());
-        cv.put(FuelingDataMap.COLUMN_NAME_GPS_COORDS , fd.getGPSCoords());
+        cv.put(FuelingDataMap.COLUMN_NAME_GPS_COORDS , fd.getGPSCoordinates());
         cv.put(FuelingDataMap.COLUMN_NAME_LAST_UPDATED , fd.getLastUpdated().getTime());
 
         int newID = (int) db.insert(FuelingDataMap.TABLE_NAME, null, cv);
@@ -337,7 +337,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(FuelingDataMap.COLUMN_NAME_PRICE_PAID , fd.getPricePaid());
         cv.put(FuelingDataMap.COLUMN_NAME_ODOMETER , fd.getOdometer());
         cv.put(FuelingDataMap.COLUMN_NAME_LOCATION , fd.getLocation());
-        cv.put(FuelingDataMap.COLUMN_NAME_GPS_COORDS , fd.getGPSCoords());
+        cv.put(FuelingDataMap.COLUMN_NAME_GPS_COORDS , fd.getGPSCoordinates());
         cv.put(FuelingDataMap.COLUMN_NAME_LAST_UPDATED , fd.getLastUpdated().getTime());
 
         int rowsUpdated = db.update(FuelingDataMap.TABLE_NAME, cv, FuelingDataMap.WHERE_ID_CLAUSE, whereArgs);
