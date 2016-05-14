@@ -7,36 +7,38 @@
     <string name="action_settings">Settings</string>
 
     <!-- The following are strings on the main screen -->
-    <string name="price">Price</string>
-    <string name="distance">Dist</string>
-    <string name="volume">Vol</string>
-    <string name="efficiency">MPG</string>
-    <string name="date">Date</string>
-    <string name="averages">Averages</string>
-    <string name="period">Period</string>
-    <string name="title_activity_enter_fueling_data">Enter Fueling Details</string>
-    <string name="DateLabel">Date</string>
-    <string name="VolumeLabel">Volume</string>
-    <string name="DistanceLabel">Distance</string>
-    <string name="TotalPricePaidLabel">Total Paid</string>
-    <string name="StartupDataDisplay">---</string>
-    <string name="MainActivityFirstAverageLabel">3 months</string>
-    <string name="MainActivitySecondAverageLabel">6 months</string>
-    <string name="MainActivityThirdAverageLabel">One Year</string>
-    <string name="MainActivityFourthAverageLabel">Lifetime</string>
-    <string name="vehicle">Vehicle</string>
-    <string name="location">Location</string>
-    <string name="odometer">Odometer</string>
-    <string name="title_activity_add_vehicle">AddVehicleActivity</string>
+    <string name="Main_PriceLabel">Price</string>
+    <string name="Main_DistanceLabel">Dist</string>
+    <string name="Main_VolumeLabel">Vol</string>
+    <string name="Main_EfficiencyLabel">MPG</string>
+    <string name="Main_AveragesLabel">Averages</string>
+    <string name="Main_PeriodLabel">Period</string>
+    <string name="Main_StartupDataDisplay">---</string>
+    <string name="Main_FirstAverageLabel">3 months</string>
+    <string name="Main_ActivitySecondAverageLabel">6 months</string>
+    <string name="Main_ThirdAverageLabel">One Year</string>
+    <string name="Main_FourthAverageLabel">Lifetime</string>
 
-    <!-- Following are used on AddVehicle activity -->
-    <string name="VehNameLabel">Name</string>
-    <string name="VehYearLabel">Model Year</string>
-    <string name="VehColorLabel">Color</string>
-    <string name="VehModelLabel">Model</string>
-    <string name="VehVINLabel">VIN</string>
-    <string name="VehLicenseLabel">License Plate</string>
-    <string name="add_vehicle_hint">
+    <!-- Following are used on AddEditFueling activity -->
+    <string name="title_activity_enter_fueling_data">Enter Fueling Details</string>
+    <string name="Fueling_VehicleLabel">Vehicle</string>
+    <string name="Fueling_DateLabel">Date</string>
+    <string name="Fueling_TimeLabel">Time</string>
+    <string name="Fueling_VolumeLabel">Volume</string>
+    <string name="Fueling_DistanceLabel">Distance</string>
+    <string name="Fueling_TotalPricePaidLabel">Total Paid</string>
+    <string name="Fueling_LocationLabel">Location</string>
+    <string name="Fueling_OdometerLabel">Odometer</string>
+
+    <!-- Following are used on AddEditVehicle activity -->
+    <string name="title_activity_add_vehicle">Enter Vehicle Details</string>
+    <string name="Vehicle_NameLabel">Name</string>
+    <string name="Vehicle_YearLabel">Model Year</string>
+    <string name="Vehicle_ColorLabel">Color</string>
+    <string name="Vehicle_ModelLabel">Model</string>
+    <string name="Vehicle_VINLabel">VIN</string>
+    <string name="Vehicle_LicenseLabel">License Plate</string>
+    <string name="Vehicle_NameEntryHint">
         HINT: You can enter your own descriptive \"Name\" for this vehicle. Or, if you leave
         it blank, the vehicle\'s color, year and model will be used to create a name for you.
     </string>

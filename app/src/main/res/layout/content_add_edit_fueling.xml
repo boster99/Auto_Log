@@ -25,7 +25,7 @@
             <TextView
                 style="@style/EditLabel"
                 android:paddingBottom="8dp"
-                android:text="@string/vehicle"/>
+                android:text="@string/Fueling_VehicleLabel"/>
 
             <Spinner
                 android:id="@+id/vehicle_spinner"
@@ -42,12 +42,12 @@
 
             <TextView
                 style="@style/EditLabel"
-                android:text="@string/DateLabel"/>
+                android:text="@string/Fueling_DateLabel"/>
 
             <EditText android:id="@+id/edit_date"
                       style="@style/EditData"
                       android:inputType="date"
-                      android:hint="@string/DateLabel"/>
+                      android:hint="@string/Fueling_DateLabel"/>
 
         </LinearLayout>
 
@@ -56,12 +56,26 @@
 
             <TextView
                 style="@style/EditLabel"
-                android:text="@string/DistanceLabel"/>
+                android:text="@string/Fueling_TimeLabel"/>
+
+            <EditText android:id="@+id/edit_time"
+                      style="@style/EditData"
+                      android:inputType="date"
+                      android:hint="@string/Fueling_TimeLabel"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/EditRow">
+
+            <TextView
+                style="@style/EditLabel"
+                android:text="@string/Fueling_DistanceLabel"/>
 
             <EditText android:id="@+id/edit_distance"
                       style="@style/EditData"
                       android:inputType="numberDecimal"
-                      android:hint="@string/DistanceLabel"/>
+                      android:hint="@string/Fueling_DistanceLabel"/>
 
         </LinearLayout>
 
@@ -70,12 +84,12 @@
 
             <TextView
                 style="@style/EditLabel"
-                android:text="@string/VolumeLabel"/>
+                android:text="@string/Fueling_VolumeLabel"/>
 
             <EditText android:id="@+id/edit_volume"
                       style="@style/EditData"
                       android:inputType="numberDecimal"
-                      android:hint="@string/VolumeLabel"/>
+                      android:hint="@string/Fueling_VolumeLabel"/>
 
         </LinearLayout>
 
@@ -84,13 +98,13 @@
 
             <TextView
                 style="@style/EditLabel"
-                android:text="@string/TotalPricePaidLabel"/>
+                android:text="@string/Fueling_TotalPricePaidLabel"/>
 
             <EditText
                 android:id="@+id/edit_total_price_paid"
                 style="@style/EditData"
                 android:inputType="numberDecimal"
-                android:hint="@string/TotalPricePaidLabel"/>
+                android:hint="@string/Fueling_TotalPricePaidLabel"/>
 
         </LinearLayout>
 
@@ -99,11 +113,11 @@
 
             <TextView
                 style="@style/EditLabel"
-                android:text="@string/location"/>
+                android:text="@string/Fueling_LocationLabel"/>
 
             <EditText
                 style="@style/EditData"
-                android:hint="@string/location"/>
+                android:hint="@string/Fueling_LocationLabel"/>
 
         </LinearLayout>
 
@@ -112,11 +126,11 @@
 
             <TextView
                 style="@style/EditLabel"
-                android:text="@string/odometer"/>
+                android:text="@string/Fueling_OdometerLabel"/>
 
             <EditText
                 style="@style/EditData"
-                android:hint="@string/odometer"/>
+                android:hint="@string/Fueling_OdometerLabel"/>
 
         </LinearLayout>
 
@@ -131,7 +145,7 @@
 
         <Button
             style="@style/SaveButton"
-            android:onClick="saveNewFueling"/>
+            android:onClick="saveFueling"/>
 
         <Button
             style="@style/CancelButton"

@@ -25,12 +25,12 @@
 
             <TextView
                 style="@style/EditLabel"
-                android:text="@string/VehNameLabel"/>
+                android:text="@string/Vehicle_NameLabel"/>
 
             <EditText
                 android:id="@+id/edit_veh_name"
                 style="@style/EditData"
-                android:hint="@string/VehNameLabel"
+                android:hint="@string/Vehicle_NameLabel"
                 android:inputType="text"
                 android:singleLine="true"/>
 
@@ -41,12 +41,12 @@
 
             <TextView
                 style="@style/EditLabel"
-                android:text="@string/VehYearLabel"/>
+                android:text="@string/Vehicle_YearLabel"/>
 
             <EditText
                 android:id="@+id/edit_veh_year"
                 style="@style/EditData"
-                android:hint="@string/VehYearLabel"
+                android:hint="@string/Vehicle_YearLabel"
                 android:inputType="number"/>
 
         </LinearLayout>
@@ -56,12 +56,12 @@
 
             <TextView
                 style="@style/EditLabel"
-                android:text="@string/VehColorLabel"/>
+                android:text="@string/Vehicle_ColorLabel"/>
 
             <EditText
                 android:id="@+id/edit_veh_color"
                 style="@style/EditData"
-                android:hint="@string/VehColorLabel"
+                android:hint="@string/Vehicle_ColorLabel"
                 android:inputType="text"/>
 
         </LinearLayout>
@@ -71,12 +71,12 @@
 
             <TextView
                 style="@style/EditLabel"
-                android:text="@string/VehModelLabel"/>
+                android:text="@string/Vehicle_ModelLabel"/>
 
             <EditText
                 android:id="@+id/edit_veh_model"
                 style="@style/EditData"
-                android:hint="@string/VehModelLabel"
+                android:hint="@string/Vehicle_ModelLabel"
                 android:inputType="text"/>
 
         </LinearLayout>
@@ -86,12 +86,12 @@
 
             <TextView
                 style="@style/EditLabel"
-                android:text="@string/VehVINLabel"/>
+                android:text="@string/Vehicle_VINLabel"/>
 
             <EditText
                 android:id="@+id/edit_veh_vin"
                 style="@style/EditData"
-                android:hint="@string/VehVINLabel"/>
+                android:hint="@string/Vehicle_VINLabel"/>
 
         </LinearLayout>
 
@@ -101,12 +101,12 @@
 
             <TextView
                 style="@style/EditLabel"
-                android:text="@string/VehLicenseLabel"/>
+                android:text="@string/Vehicle_LicenseLabel"/>
 
             <EditText
                 android:id="@+id/edit_veh_license_plate"
                 style="@style/EditData"
-                android:hint="@string/VehLicenseLabel"
+                android:hint="@string/Vehicle_LicenseLabel"
                 android:textAllCaps="true"/>
 
         </LinearLayout>
@@ -118,7 +118,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/vehicle_add_details"
         android:padding="8dp"
-        android:text="@string/add_vehicle_hint"
+        android:text="@string/Vehicle_NameEntryHint"
         android:textSize="16sp"/>
 
     <LinearLayout
