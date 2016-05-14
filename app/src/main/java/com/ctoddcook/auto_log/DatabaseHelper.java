@@ -71,7 +71,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      */
     public ArrayList<VehicleData> fetchVehicleList() {
         SQLiteDatabase db = this.getWritableDatabase();
-        ArrayList<VehicleData> vehicleList = new ArrayList<VehicleData>();
+        ArrayList<VehicleData> vehicleList = new ArrayList<>();
         int id, year;
         String name, color, model, vin, licensePlate;
         Date lastUpdated = new Date();
@@ -102,7 +102,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**
      * Returns a cursor pointer to all of the rows in the Vehicle table, with just the _ID
      * and NAME columns provided.
-     * @return a curosr pointing to the Vehicle table
+     * @return a cursor pointing to the Vehicle table
      */
     public Cursor fetchSimpleVehicleListCursor() {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -227,12 +227,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      */
     public ArrayList<FuelingData> fetchFuelingData() {
         SQLiteDatabase db = this.getWritableDatabase();
-        ArrayList<FuelingData> fdList = new ArrayList<FuelingData>();
+        ArrayList<FuelingData> fdList = new ArrayList<>();
         int fuelingID, vehicleID;
         Date dateOfFill = new Date();
         Date lastUpdated = new Date();
         double distance, volume, pricePaid, odometer;
-        String location, gpsCoords;
+        String location, gpsCoordinates;
         FuelingData fd;
 
         Cursor cursor = db.rawQuery(FuelingDataMap.SQL_SELECT_ALL, null);
@@ -246,11 +246,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             pricePaid = cursor.getDouble(FuelingDataMap.COLUMN_NBR_PRICE_PAID);
             odometer = cursor.getDouble(FuelingDataMap.COLUMN_NBR_ODOMETER);
             location = cursor.getString(FuelingDataMap.COLUMN_NBR_LOCATION);
-            gpsCoords = cursor.getString(FuelingDataMap.COLUMN_NBR_GPS_COORDS);
+            gpsCoordinates = cursor.getString(FuelingDataMap.COLUMN_NBR_GPS_COORDS);
             lastUpdated.setTime(cursor.getInt(FuelingDataMap.COLUMN_NBR_LAST_UPDATED));
 
             fd = new FuelingData(fuelingID, vehicleID, dateOfFill, distance, volume, pricePaid,
-                    odometer, location, gpsCoords, lastUpdated);
+                    odometer, location, gpsCoordinates, lastUpdated);
 
             fdList.add(fd);
         }
