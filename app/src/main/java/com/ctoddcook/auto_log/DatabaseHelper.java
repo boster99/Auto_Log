@@ -268,7 +268,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @return the unique ID of the new record
      * @throws IllegalArgumentException if the object's state is not NEW
      */
-    public int insertFuelingData(FuelingData fd) throws IllegalArgumentException {
+    public int insertFueling(FuelingData fd) throws IllegalArgumentException {
         if (!fd.isNew())
             throw new IllegalArgumentException("Cannot insert a FuelingData record if its state is not NEW");
 
@@ -301,7 +301,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @return true if the number of rows deleted is exactly 1
      * @throws IllegalArgumentException if the instance's state is not set to DELETED
      */
-    public boolean deleteFuelingData(FuelingData fd) throws IllegalArgumentException {
+    public boolean deleteFueling(FuelingData fd) throws IllegalArgumentException {
         if (!fd.isDeleted())
             throw new IllegalArgumentException("Cannot delete an object if it's state is not DELETED");
 
@@ -321,7 +321,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @return true, if exactly 1 row is updated
      * @throws IllegalArgumentException if the instance's state is not set to UPDATED
      */
-    public boolean updateFuelingData(FuelingData fd) throws IllegalArgumentException {
+    public boolean updateFueling(FuelingData fd) throws IllegalArgumentException {
         if (!fd.isUpdated())
             throw new IllegalArgumentException("Cannot updated a database record if the object's state is not set to UPDATED");
 
@@ -352,16 +352,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * For each FuelingData instance in the provided list, it is passed through to
-     * updateFuelingData(FuelingData). The number of updated rows is returned; the calling
+     * updateFueling(FuelingData). The number of updated rows is returned; the calling
      * method can compare this to the number of items in the list as a check on total success.
      * @param fdList an array of FuelingData objects to be updated in the database
      * @return the number of successfully updated rows
      */
-    public int updateFuelingData(ArrayList<FuelingData> fdList) {
+    public int updateFueling(ArrayList<FuelingData> fdList) {
         int result = 0;
 
         for (FuelingData each: fdList) {
-            if (!updateFuelingData(each))
+            if (!updateFueling(each))
                 result++;
         }
 
