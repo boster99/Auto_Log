@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import static com.ctoddcook.tools.CTools.roundDouble;
+import static com.ctoddcook.tools.CTools.round;
 
 /**
  * This is a model class, used to hold all of the data pertaining to a single instance of filling
@@ -34,10 +34,10 @@ class FuelingData extends DataHolder {
     private int mFuelingID = 0;
     private int mVehicleID = 0;
     private Date mDateOfFill = null;
-    private double mDistance = 0d;
-    private double mVolume = 0d;
-    private double mPricePaid = 0d;
-    private double mOdometer = 0d;
+    private float mDistance = 0;
+    private float mVolume = 0;
+    private float mPricePaid = 0;
+    private float mOdometer = 0;
     private String mLocation = null;
     private String mGPSCoordinates = null;
 
@@ -89,8 +89,8 @@ class FuelingData extends DataHolder {
      *                  occurred
      * @param lastUpdated the last time this record was updated
      */
-    public FuelingData(int fuelingID, int vehicleID, Date dateOfFill, double distance, double volume,
-                       double pricePaid, double odometer, String location, String gpsCoordinates,
+    public FuelingData(int fuelingID, int vehicleID, Date dateOfFill, float distance, float volume,
+                       float pricePaid, float odometer, String location, String gpsCoordinates,
                        Date lastUpdated) {
         mFuelingID = fuelingID;
         mVehicleID = vehicleID;
@@ -175,20 +175,20 @@ class FuelingData extends DataHolder {
      *             FuelingData.SPAN_ALL_TIME
      * @return the average (mean) distance for the fills in the indicated time span.
      */
-    public static double getAvgDistanceOverSpan(int span) {
+    public static float getAvgDistanceOverSpan(int span) {
         ArrayList<FuelingData> fillsOverSpan;
 
         fillsOverSpan = getListForSpan(span);
 
         if (fillsOverSpan.isEmpty())
-            return 0d;
+            return 0;
 
-        double totalDistance = 0d;
+        float totalDistance = 0;
 
         for (FuelingData each: fillsOverSpan)
             totalDistance += each.mDistance;
 
-        return roundDouble(totalDistance / fillsOverSpan.size(), 1);
+        return round(totalDistance / fillsOverSpan.size(), 1);
     }
 
     /**
@@ -198,20 +198,20 @@ class FuelingData extends DataHolder {
      *             FuelingData.SPAN_ALL_TIME
      * @return the average (mean) distance for the fills in the indicated time span.
      */
-    public static double getAvgVolumeOverSpan(int span) {
+    public static float getAvgVolumeOverSpan(int span) {
         ArrayList<FuelingData> fillsOverSpan;
 
         fillsOverSpan = getListForSpan(span);
 
         if (fillsOverSpan.isEmpty())
-            return 0d;
+            return 0;
 
-        double totalVolume = 0d;
+        float totalVolume = 0;
 
         for (FuelingData each: fillsOverSpan)
             totalVolume += each.mVolume;
 
-        return roundDouble(totalVolume / fillsOverSpan.size(), 1);
+        return round(totalVolume / fillsOverSpan.size(), 1);
     }
 
     /**
@@ -221,20 +221,20 @@ class FuelingData extends DataHolder {
      *             FuelingData.SPAN_ALL_TIME
      * @return the average (mean) price paid for the fills in the indicated time span.
      */
-    public static double getAvgPricePaidOverSpan(int span) throws IllegalArgumentException {
+    public static float getAvgPricePaidOverSpan(int span) throws IllegalArgumentException {
         ArrayList<FuelingData> fillsOverSpan;
 
         fillsOverSpan = getListForSpan(span);
 
         if (fillsOverSpan.isEmpty())
-            return 0d;
+            return 0;
 
-        double totalPricePaid = 0d;
+        float totalPricePaid = 0;
 
         for (FuelingData each: fillsOverSpan)
             totalPricePaid += each.mPricePaid;
 
-        return roundDouble(totalPricePaid / fillsOverSpan.size(), 2);
+        return round(totalPricePaid / fillsOverSpan.size(), 2);
     }
 
     /**
@@ -244,23 +244,23 @@ class FuelingData extends DataHolder {
      *             FuelingData.SPAN_ALL_TIME
      * @return the average (mean) price per unit over indicated time span.
      */
-    public static double getAvgPricePerUnitOverSpan(int span) throws IllegalArgumentException {
+    public static float getAvgPricePerUnitOverSpan(int span) throws IllegalArgumentException {
         ArrayList<FuelingData> fillsOverSpan;
 
         fillsOverSpan = getListForSpan(span);
 
         if (fillsOverSpan.isEmpty())
-            return 0d;
+            return 0;
 
-        double totalPricePaid = 0d;
-        double totalVolume = 0d;
+        float totalPricePaid = 0;
+        float totalVolume = 0;
 
         for (FuelingData each: fillsOverSpan) {
             totalPricePaid += each.mPricePaid;
             totalVolume += each.mVolume;
         }
 
-        return roundDouble(totalPricePaid / totalVolume, 3);
+        return round(totalPricePaid / totalVolume, 3);
     }
 
     /**
@@ -270,23 +270,23 @@ class FuelingData extends DataHolder {
      *             FuelingData.SPAN_ALL_TIME
      * @return the average (mean) price per distance unit over indicated time span.
      */
-    public static double getAvgPricePerDistanceOverSpan(int span) throws IllegalArgumentException {
+    public static float getAvgPricePerDistanceOverSpan(int span) throws IllegalArgumentException {
         ArrayList<FuelingData> fillsOverSpan;
 
         fillsOverSpan = getListForSpan(span);
 
         if (fillsOverSpan.isEmpty())
-            return 0d;
+            return 0;
 
-        double totalPricePaid = 0d;
-        double totalDistance = 0d;
+        float totalPricePaid = 0;
+        float totalDistance = 0;
 
         for (FuelingData each: fillsOverSpan) {
             totalPricePaid += each.mPricePaid;
             totalDistance += each.mDistance;
         }
 
-        return roundDouble(totalPricePaid / totalDistance, 3);
+        return round(totalPricePaid / totalDistance, 3);
     }
 
     /**
@@ -295,23 +295,23 @@ class FuelingData extends DataHolder {
      * @param span FuelingData.SPAN_3_MONTHS, FuelingData.SPAN_6_MONTHS or FuelingData.SPAN_ONE_YEAR
      * @return the average (mean) distance per volume of fuel (mpg) over indicated time span.
      */
-    public static double getAvgMileageOverSpan(int span) throws IllegalArgumentException {
+    public static float getAvgMileageOverSpan(int span) throws IllegalArgumentException {
         ArrayList<FuelingData> fillsOverSpan;
 
         fillsOverSpan = getListForSpan(span);
 
         if (fillsOverSpan.isEmpty())
-            return 0d;
+            return 0;
 
-        double totalDistance = 0d;
-        double totalVolume = 0d;
+        float totalDistance = 0;
+        float totalVolume = 0;
 
         for (FuelingData each: fillsOverSpan) {
             totalDistance += each.mDistance;
             totalVolume += each.mVolume;
         }
 
-        return roundDouble(totalDistance / totalVolume, 1);
+        return round(totalDistance / totalVolume, 1);
     }
 
 
@@ -456,33 +456,33 @@ class FuelingData extends DataHolder {
      * 3 decimal places
      * @return the price per unit
      */
-    public double getPricePerUnit() {
+    public float getPricePerUnit() {
         if (mVolume == 0)
             return 0;
 
-        return roundDouble(mPricePaid/mVolume, 3);
+        return round(mPricePaid/mVolume, 3);
     }
 
     /**
      * Calculates the mileage (mpg or lpk) for the instance, rounded to 1 decimal place
      * @return Miles per gallon or litres per kilometer
      */
-    public double getMileage() {
+    public float getMileage() {
         if (mVolume == 0)
             return 0;
 
-        return roundDouble(mDistance/mVolume, 1);
+        return round(mDistance/mVolume, 1);
     }
 
     /**
      * Returns the price per distance unit traveled, rounded to 3 decimal places
      * @return the price per distance unit
      */
-    public double getPricePerDistance() {
+    public float getPricePerDistance() {
         if (mDistance == 0)
             return 0;
 
-        return roundDouble(mPricePaid/mDistance, 3);
+        return round(mPricePaid/mDistance, 3);
     }
 
 
@@ -586,7 +586,7 @@ class FuelingData extends DataHolder {
      * Getter for mDistance, the distance traveled on the tank of gas
      * @return the distance traveled on the tank of gas
      */
-    public double getDistance() {
+    public float getDistance() {
         return mDistance;
     }
 
@@ -595,7 +595,7 @@ class FuelingData extends DataHolder {
      * @param distance the distance traveled on the tank of gas
      * @throws IllegalArgumentException if the volume argument is negative
      */
-    public void setDistance(double distance) throws IllegalArgumentException {
+    public void setDistance(float distance) throws IllegalArgumentException {
         if (distance < 0)
             throw new IllegalArgumentException("distance argument cannot be negative");
         mDistance = distance;
@@ -607,7 +607,7 @@ class FuelingData extends DataHolder {
      * Getter for mVolume, the volume of gas (in gallons or liters) on this fill
      * @return the volume of gas (in gallons or liters) on this fill
      */
-    public double getVolume() {
+    public float getVolume() {
         return mVolume;
     }
 
@@ -616,7 +616,7 @@ class FuelingData extends DataHolder {
      * @param volume the newVolume of gas (in gallons or liters) on this fill
      * @throws IllegalArgumentException if the volume argument is negative
      */
-    public void setVolume(double volume) throws IllegalArgumentException {
+    public void setVolume(float volume) throws IllegalArgumentException {
         if (volume < 0)
             throw new IllegalArgumentException("volume argument cannot be negative");
         mVolume = volume;
@@ -628,7 +628,7 @@ class FuelingData extends DataHolder {
      * Getter for mPricePaid, the total amount paid for the tank of gas
      * @return the total amount paid for the tank of gas
      */
-    public double getPricePaid() {
+    public float getPricePaid() {
         return mPricePaid;
     }
 
@@ -637,7 +637,7 @@ class FuelingData extends DataHolder {
      * @param pricePaid the total amount paid for the tank of gas
      * @throws IllegalArgumentException if the pricePaid argument is negative
      */
-    public void setPricePaid(double pricePaid) throws IllegalArgumentException {
+    public void setPricePaid(float pricePaid) throws IllegalArgumentException {
         if (pricePaid < 0)
             throw new IllegalArgumentException("pricePaid argument cannot be negative");
         mPricePaid = pricePaid;
@@ -649,7 +649,7 @@ class FuelingData extends DataHolder {
      * Getter for mOdometer, the odometer reading when the tank was filled
      * @return the odometer reading when the tank was filled
      */
-    public double getOdometer() {
+    public float getOdometer() {
         return mOdometer;
     }
 
@@ -658,7 +658,7 @@ class FuelingData extends DataHolder {
      * @param odometer the odometer reading when the tank was filled
      * @throws IllegalArgumentException if the odometer value provided is negative
      */
-    public void setOdometer(double odometer) throws IllegalArgumentException {
+    public void setOdometer(float odometer) throws IllegalArgumentException {
         if (odometer < 0)
             throw new IllegalArgumentException("odometer argument cannot be negative");
         mOdometer = odometer;
@@ -707,8 +707,9 @@ class FuelingData extends DataHolder {
      * @param other the FuelingData instance this one is compared to
      * @return true if their data is the same
      */
-    public boolean isEqual(FuelingData other) {
+    public boolean equals(FuelingData other) {
         if (this == other) return true;
+        if (this.getStatus() != other.getStatus()) return false;
         if (this.mVehicleID != other.mVehicleID) return false;
         if (!this.mDateOfFill.equals(other.mDateOfFill)) return false;
         if (this.mDistance != other.mDistance) return false;
@@ -717,6 +718,7 @@ class FuelingData extends DataHolder {
         if (this.mOdometer != other.mOdometer) return false;
         if (!this.mLocation.equals(other.mLocation)) return false;
         if (!this.mGPSCoordinates.equals(other.mGPSCoordinates)) return false;
+        if (!this.getLastUpdated().equals(other.getLastUpdated())) return false;
 
         return true;
     }
@@ -724,16 +726,20 @@ class FuelingData extends DataHolder {
     /**
      * Determines whether another, provided FuelingData instance has the same key fields as
      * this one. Fields checked are mVehicleID, mDateOfFill, mDistance, mVolume, and mPricePaid.
-     * @param other the FuelingData instance this one is compared to
-     * @return true if their data is the same
+     * @param vehID Vehicle ID to be compared against
+     * @param dateOfFill Date of Fill to be compared against
+     * @param distance Distance to be compared against
+     * @param volume Volume to be compared against
+     * @param pricePaid Price Paid to be compared against
+     * @return true if all of the fields match
      */
-    public boolean isSimilar(FuelingData other) {
-        if (this == other) return true;
-        if (this.mVehicleID != other.mVehicleID) return false;
-        if (!this.mDateOfFill.equals(other.mDateOfFill)) return false;
-        if (this.mDistance != other.mDistance) return false;
-        if (this.mVolume != other.mVolume) return false;
-        if (this.mPricePaid != other.mPricePaid) return false;
+    public boolean isDuplicate(int vehID, Date dateOfFill, float distance, float volume, float
+            pricePaid) {
+        if (this.mVehicleID != vehID) return false;
+        if (!this.mDateOfFill.equals(dateOfFill)) return false;
+        if (this.mDistance != distance) return false;
+        if (this.mVolume != volume) return false;
+        if (this.mPricePaid != pricePaid) return false;
 
         return true;
     }
