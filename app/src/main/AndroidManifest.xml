@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AddFuelingActivity"
+            android:name=".AddEditFuelingActivity"
             android:label="@string/title_activity_enter_fueling_data"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -29,7 +29,7 @@
                 android:value="com.ctoddcook.auto_log.MainActivity"/>
         </activity>
         <activity
-            android:name=".AddVehicleActivity"
+            android:name=".AddEditVehicleActivity"
             android:label="@string/title_activity_add_vehicle"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
