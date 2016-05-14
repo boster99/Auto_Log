@@ -9,6 +9,8 @@ import android.util.SparseArray;
 import java.util.ArrayList;
 import java.util.Date;
 
+import static com.ctoddcook.tools.CTools.longToInt;
+
 /**
  * Created by C. Todd Cook on 5/9/2016.
  * ctodd@ctoddcook.com
@@ -68,6 +70,16 @@ public class VehicleData extends DataHolder {
      */
     public static VehicleData getVehicle(int id) {
         return sVehicleList.get(id);
+    }
+
+    /**
+     * Returns the vehicle for the given ID. If no such vehicle is found in the static SparseArray
+     * null is returned.
+     * @param id the ID of the desired VehicleData instance
+     * @return the associated VehicleData instance, or null if there is none
+     */
+    public static VehicleData getVehicle(long id) {
+        return getVehicle(longToInt(id));
     }
 
     /**
