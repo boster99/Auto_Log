@@ -106,7 +106,7 @@ public class AddEditVehicleActivity extends AppCompatActivity {
         if (colorET != null) color = colorET.getText().toString().trim();
         if (modelET != null) model = modelET.getText().toString().trim();
         if (vinET != null) vin = vinET.getText().toString().trim();
-        if (licPlateET != null) licPlate = licPlateET.getText().toString().trim();
+        if (licPlateET != null) licPlate = licPlateET.getText().toString().trim().toUpperCase();
 
         try {
             if (yearET != null) year = Integer.parseInt(yearET.getText().toString());
