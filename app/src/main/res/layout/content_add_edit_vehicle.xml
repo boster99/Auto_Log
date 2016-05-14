@@ -31,8 +31,23 @@
                 android:id="@+id/edit_veh_name"
                 style="@style/EditData"
                 android:hint="@string/Vehicle_NameLabel"
-                android:inputType="text"
+                android:inputType="text|textCapWords|textAutoComplete"
                 android:singleLine="true"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/EditRow">
+
+            <TextView
+                style="@style/EditLabel"
+                android:text="@string/Vehicle_ColorLabel"/>
+
+            <EditText
+                android:id="@+id/edit_veh_color"
+                style="@style/EditData"
+                android:hint="@string/Vehicle_ColorLabel"
+                android:inputType="text|textCapWords|textAutoComplete"/>
 
         </LinearLayout>
 
@@ -56,28 +71,13 @@
 
             <TextView
                 style="@style/EditLabel"
-                android:text="@string/Vehicle_ColorLabel"/>
-
-            <EditText
-                android:id="@+id/edit_veh_color"
-                style="@style/EditData"
-                android:hint="@string/Vehicle_ColorLabel"
-                android:inputType="text"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            style="@style/EditRow">
-
-            <TextView
-                style="@style/EditLabel"
                 android:text="@string/Vehicle_ModelLabel"/>
 
             <EditText
                 android:id="@+id/edit_veh_model"
                 style="@style/EditData"
                 android:hint="@string/Vehicle_ModelLabel"
-                android:inputType="text"/>
+                android:inputType="text|textCapWords|textAutoComplete"/>
 
         </LinearLayout>
 
@@ -91,11 +91,11 @@
             <EditText
                 android:id="@+id/edit_veh_vin"
                 style="@style/EditData"
-                android:hint="@string/Vehicle_VINLabel"/>
+                android:hint="@string/Vehicle_VINLabel"
+                android:inputType="text|textCapWords|textAutoComplete"/>
 
         </LinearLayout>
 
-        <!--TODO Fix License Plate EditText -->
         <LinearLayout
             style="@style/EditRow">
 
@@ -107,7 +107,8 @@
                 android:id="@+id/edit_veh_license_plate"
                 style="@style/EditData"
                 android:hint="@string/Vehicle_LicenseLabel"
-                android:textAllCaps="true"/>
+                android:textAllCaps="true"
+                android:inputType="text|textCapWords|textAutoComplete"/>
 
         </LinearLayout>
 
