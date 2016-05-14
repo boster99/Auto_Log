@@ -8,12 +8,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void addFueling(View v) {
         Intent intent = new Intent(this, AddEditFuelingActivity.class);
+        intent.putExtra(AddEditFuelingActivity.KEY_ADD_EDIT_MODE, AddEditFuelingActivity.MODE_ADD);
         startActivity(intent);
     }
 
