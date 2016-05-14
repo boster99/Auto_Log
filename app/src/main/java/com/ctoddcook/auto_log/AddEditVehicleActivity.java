@@ -28,9 +28,9 @@ public class AddEditVehicleActivity extends AppCompatActivity {
     /**
      * When the activity is created, apart from the standard actions, we retrieve the type of
      * user action (add or edit a mVehicle) and if the mode is EDIT. If the mode is to add a new
-     * mVehicle, we create a new one and assign it to the mVehicle field; if the mode is to edit
+     * vehicle, we create a new one and assign it to the mVehicle field; if the mode is to edit
      * an existing vehicle, we retrieve that vehicle and assign it to mVehicle.
-     * @param savedInstanceState
+     * @param savedInstanceState data saved from prior shut down (probably null)
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
