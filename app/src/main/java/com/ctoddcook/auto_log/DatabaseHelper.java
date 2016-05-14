@@ -231,7 +231,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int fuelingID, vehicleID;
         Date dateOfFill = new Date();
         Date lastUpdated = new Date();
-        double distance, volume, pricePaid, odometer;
+        float distance, volume, pricePaid, odometer;
         String location, gpsCoordinates;
         FuelingData fd;
 
@@ -241,10 +241,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             fuelingID = cursor.getInt(FuelingDataMap.COLUMN_NBR_FUELING_ID);
             vehicleID = cursor.getInt(FuelingDataMap.COLUMN_NBR_VEHICLE_ID);
             dateOfFill.setTime(cursor.getInt(FuelingDataMap.COLUMN_NBR_DATE_OF_FILL));
-            distance = cursor.getDouble(FuelingDataMap.COLUMN_NBR_DISTANCE);
-            volume = cursor.getDouble(FuelingDataMap.COLUMN_NBR_VOLUME);
-            pricePaid = cursor.getDouble(FuelingDataMap.COLUMN_NBR_PRICE_PAID);
-            odometer = cursor.getDouble(FuelingDataMap.COLUMN_NBR_ODOMETER);
+            distance = cursor.getFloat(FuelingDataMap.COLUMN_NBR_DISTANCE);
+            volume = cursor.getFloat(FuelingDataMap.COLUMN_NBR_VOLUME);
+            pricePaid = cursor.getFloat(FuelingDataMap.COLUMN_NBR_PRICE_PAID);
+            odometer = cursor.getFloat(FuelingDataMap.COLUMN_NBR_ODOMETER);
             location = cursor.getString(FuelingDataMap.COLUMN_NBR_LOCATION);
             gpsCoordinates = cursor.getString(FuelingDataMap.COLUMN_NBR_GPS_COORDS);
             lastUpdated.setTime(cursor.getInt(FuelingDataMap.COLUMN_NBR_LAST_UPDATED));
