@@ -44,10 +44,12 @@
                 style="@style/EditLabel"
                 android:text="@string/Fueling_DateLabel"/>
 
-            <EditText android:id="@+id/edit_date"
-                      style="@style/EditData"
-                      android:inputType="date"
-                      android:hint="@string/Fueling_DateLabel"/>
+            <TextView
+                android:id="@+id/edit_date"
+                style="@style/EditData"
+                android:hint="@string/Fueling_DateLabel"
+                android:onClick="showDatePickerDialog"/>
+
 
         </LinearLayout>
 
@@ -58,10 +60,11 @@
                 style="@style/EditLabel"
                 android:text="@string/Fueling_TimeLabel"/>
 
-            <EditText android:id="@+id/edit_time"
-                      style="@style/EditData"
-                      android:inputType="date"
-                      android:hint="@string/Fueling_TimeLabel"/>
+            <TextView
+                android:id="@+id/edit_time"
+                style="@style/EditData"
+                android:hint="@string/Fueling_TimeLabel"
+                android:onClick="showTimePickerDialog"/>
 
         </LinearLayout>
 
@@ -72,10 +75,11 @@
                 style="@style/EditLabel"
                 android:text="@string/Fueling_DistanceLabel"/>
 
-            <EditText android:id="@+id/edit_distance"
-                      style="@style/EditData"
-                      android:inputType="numberDecimal"
-                      android:hint="@string/Fueling_DistanceLabel"/>
+            <EditText
+                android:id="@+id/edit_distance"
+                style="@style/EditData"
+                android:inputType="numberDecimal"
+                android:hint="@string/Fueling_DistanceLabel"/>
 
         </LinearLayout>
 
@@ -116,7 +120,9 @@
                 android:text="@string/Fueling_LocationLabel"/>
 
             <EditText
+                android:id="@+id/edit_location"
                 style="@style/EditData"
+                android:inputType="textAutoComplete|textCapWords"
                 android:hint="@string/Fueling_LocationLabel"/>
 
         </LinearLayout>
@@ -129,7 +135,9 @@
                 android:text="@string/Fueling_OdometerLabel"/>
 
             <EditText
+                android:id="@+id/edit_odometer"
                 style="@style/EditData"
+                android:inputType="textAutoComplete|textCapWords"
                 android:hint="@string/Fueling_OdometerLabel"/>
 
         </LinearLayout>
