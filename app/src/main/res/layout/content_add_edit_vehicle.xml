@@ -13,7 +13,6 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".AddEditVehicleActivity"
     tools:showIn="@layout/activity_add_edit_vehicle">
-
     <LinearLayout
         android:id="@+id/vehicle_add_details"
         android:layout_width="match_parent"
@@ -96,6 +95,7 @@
 
         </LinearLayout>
 
+        <!--TODO Fix License Plate EditText -->
         <LinearLayout
             style="@style/EditRow">
 
@@ -130,7 +130,7 @@
 
         <Button
             style="@style/SaveButton"
-            android:onClick="saveNewVehicle"/>
+            android:onClick="saveVehicle"/>
 
         <Button
             style="@style/CancelButton"
