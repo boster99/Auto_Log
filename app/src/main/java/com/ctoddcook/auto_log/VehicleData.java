@@ -4,6 +4,9 @@
 
 package com.ctoddcook.auto_log;
 
+import android.util.SparseArray;
+
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -14,6 +17,7 @@ import java.util.Date;
  * data for different vehicles.
  */
 public class VehicleData extends DataHolder {
+    private static final SparseArray<VehicleData> sVehicleList = new SparseArray<>(12);
     private int mVehicleID;
     private String mName;
     private int mYear;
@@ -22,11 +26,13 @@ public class VehicleData extends DataHolder {
     private String mVIN;
     private String mLicensePlate;
 
-
     /**
      * Constructor. This version should be used when creating a new instance from the user
      * interface. It does not setup any fields directly, though DataHolder.mStatus defaults
      * to NEW.
+     *
+     * Note: Creating a new, empty instance does not cause it to be added to the sVehicleList
+     * SparseArray, as the user might cancel the operation, leaving an empty instance in the list.
      */
     public VehicleData() {}
 
@@ -51,6 +57,40 @@ public class VehicleData extends DataHolder {
         mLicensePlate = licensePlate;
         mLastUpdated = lastUpdated;
         setCurrent();
+        addVehicle(this);
+    }
+
+    /**
+     * Returns the vehicle for the given ID. If no such vehicle is found in the static SparseArray
+     * null is returned.
+     * @param id the ID of the desired VehicleData instance
+     * @return the associated VehicleData instance, or null if there is none
+     */
+    public static VehicleData getVehicle(int id) {
+        return sVehicleList.get(id);
+    }
+
+    /**
+     * Adds an instance to the static list of Vehicles.
+     * @param v The vehicle to be added to the list
+     */
+    public static void addVehicle(VehicleData v) {
+        sVehicleList.put(v.getID(), v);
+    }
+
+    /**
+     * Returns an iterable list of Vehicles.
+     * @return ArrayList of all of the VehicleData instances
+     */
+    public static ArrayList<VehicleData> getVehicleList() {
+        ArrayList<VehicleData> list = new ArrayList<>();
+        VehicleData v;
+        for (int i=0; i < sVehicleList.size(); i++) {
+            v = sVehicleList.valueAt(i);
+            list.add(v);
+        }
+
+        return list;
     }
 
     /**
@@ -202,14 +242,16 @@ public class VehicleData extends DataHolder {
      * @param other the VehicleData instance to compare against
      * @return true if all member fields (except ID and LastUpdated) are the same
      */
-    public boolean isEqual(VehicleData other) {
+    public boolean equals(VehicleData other) {
         if (this == other) return true;
+        if (getStatus() != other.getStatus()) return false;
         if (!this.mName.equalsIgnoreCase(other.mName)) return false;
         if (this.mYear != other.mYear) return false;
         if (!this.mColor.equalsIgnoreCase(other.mColor)) return false;
         if (!this.mModel.equalsIgnoreCase(other.mModel)) return false;
         if (!this.mVIN.equalsIgnoreCase(other.mVIN)) return false;
         if (!this.mLicensePlate.equalsIgnoreCase(other.mLicensePlate)) return false;
+        if (!getLastUpdated().equals(other.getLastUpdated())) return false;
 
         return true;
     }
@@ -217,15 +259,54 @@ public class VehicleData extends DataHolder {
     /**
      * Determines whether the Color, Model and Year of another instance of VehicleData are
      * the same as this instance's. Case is ignored, so "gray" is the same as "GRAY".
-     * @param other the VehicleData instance to compare against
+     * @param color the color of the other vehicle
+     * @param year the year of the other vehicle
+     * @param model the model of the other vehicle
      * @return true if the Color, Year and Model are the same
      */
-    public boolean isSimilar(VehicleData other) {
-        if (this == other) return true;
-        if (this.mYear != other.mYear) return false;
-        if (!this.mColor.equalsIgnoreCase(other.mColor)) return false;
-        if (!this.mModel.equalsIgnoreCase(other.mModel)) return false;
+    public boolean isSimilar(String color, int year, String model) {
+        if (this.mYear != year) return false;
+        if (!this.mColor.equalsIgnoreCase(color)) return false;
+        if (!this.mModel.equalsIgnoreCase(model)) return false;
 
         return true;
+    }
+
+    /**
+     * Check for possible indications of duplication. Tests are:
+     * -- name
+     * -- color, year and model together
+     * -- vin
+     * -- license plate
+     * Empty values (or 0 in the case of YEAR) are not considered valid for consideration
+     * of duplicates. So, if this instance has an empty name, and the incoming name is empty,
+     * that is not considered a duplicate.
+     * @param name name of the other vehicle
+     * @param color color of the other vehicle
+     * @param year year of the other vehicle
+     * @param model of the other vehicle
+     * @param vin of the other vehicle
+     * @param licensePlate of the other vehicle
+     * @return true if any duplicates are found, false otherwise
+     */
+    public boolean isDuplicate(String name, String color, int year, String model, String vin,
+                               String licensePlate) {
+
+        if (mName.length() > 0 && mName.equalsIgnoreCase(name))
+            return true;
+
+        // Check for color, year and model as a set. If all 3 are duplicates, return true
+        if ((mColor.length() > 0 && mColor.equalsIgnoreCase(color)) &&
+                (mYear != 0 && mYear == year) &&
+                (mModel.length() > 0 && mModel.equalsIgnoreCase(model)))
+            return true;
+
+        if (mVIN.length() > 0 && mVIN.equalsIgnoreCase(vin))
+            return true;
+
+        if (mLicensePlate.length() > 0 && mLicensePlate.equalsIgnoreCase(licensePlate))
+            return true;
+
+        return false;
     }
 }

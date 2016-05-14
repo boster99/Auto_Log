@@ -149,7 +149,7 @@ public class AddEditVehicleActivity extends AppCompatActivity {
          */
         for (VehicleData each: VehicleData.getVehicleList()) {
             if (each == mVehicle) continue;
-            if (each.isSimilar(color, year, model) || each.getName().equalsIgnoreCase(name)) {
+            if (each.isDuplicate(name, color, year, model, vin, licPlate)) {
                 if (!userWantsDuplicate())
                     return false;
             }
