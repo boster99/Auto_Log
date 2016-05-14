@@ -43,5 +43,20 @@ public class CTools {
         bd = bd.setScale(places, BigDecimal.ROUND_HALF_UP);
         return bd.floatValue();
     }
+
+
+    /**
+     * Safely converts/downcasts a long to an int.
+     * @param l the long to be downcast
+     * @return the same value as an int
+     * @throws IllegalArgumentException if the long's value is outside the MIN..MAX range for int
+     */
+    public static int longToInt(long l) throws IllegalArgumentException {
+        if (l < Integer.MIN_VALUE || l > Integer.MAX_VALUE)
+            throw new IllegalArgumentException(l + " cannot be cast to int without chaning its " +
+                    "value.");
+
+        return (int) l;
+    }
 }
 
