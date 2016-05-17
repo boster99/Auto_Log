@@ -768,6 +768,13 @@ class FuelingData extends DataHolder {
     mLongitude = longitude;
   }
 
+  /**
+   * Returns a URI string suitable for passing to a map application or intent
+   * @return a String in the form 'geo:[latitude],[longitude]'
+   */
+  public String getGeoURI() {
+    return "geo:" + mLatitude + "," + mLongitude;
+  }
 
   /**
    * Determines whether another, provided FuelingData instance is the same as this one.
