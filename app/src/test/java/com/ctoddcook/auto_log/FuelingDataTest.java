@@ -64,9 +64,9 @@ public class FuelingDataTest {
             cal.add(Calendar.DATE, -5);
             fd5 = new FuelingData();
             fd5.setDateOfFill(cal.getTime());
-            fd5.setDistance(350.9);
-            fd5.setPricePaid(38.45);
-            fd5.setVolume(18.987);
+            fd5.setDistance(350.9f);
+            fd5.setPricePaid(38.45f);
+            fd5.setVolume(18.987f);
         }
 
         if (fd25 == null) {
@@ -74,9 +74,9 @@ public class FuelingDataTest {
             cal.add(Calendar.DATE, -25);
             fd25 = new FuelingData();
             fd25.setDateOfFill(cal.getTime());
-            fd25.setDistance(297.6);
-            fd25.setPricePaid(35.70);
-            fd25.setVolume(17.702);
+            fd25.setDistance(297.6f);
+            fd25.setPricePaid(35.70f);
+            fd25.setVolume(17.702f);
         }
 
         if (fd55 == null) {
@@ -84,9 +84,9 @@ public class FuelingDataTest {
             cal.add(Calendar.DATE, -55);
             fd55 = new FuelingData();
             fd55.setDateOfFill(cal.getTime());
-            fd55.setDistance(425.7);
-            fd55.setPricePaid(43.40);
-            fd55.setVolume(16.443);
+            fd55.setDistance(425.7f);
+            fd55.setPricePaid(43.40f);
+            fd55.setVolume(16.443f);
         }
 
         /*
@@ -97,9 +97,9 @@ public class FuelingDataTest {
             cal.add(Calendar.DATE, -95);
             fd95 = new FuelingData();
             fd95.setDateOfFill(cal.getTime());
-            fd95.setDistance(350.9);
-            fd95.setPricePaid(43.15);
-            fd95.setVolume(17.499);
+            fd95.setDistance(350.9f);
+            fd95.setPricePaid(43.15f);
+            fd95.setVolume(17.499f);
         }
 
         if (fd105 == null) {
@@ -107,9 +107,9 @@ public class FuelingDataTest {
             cal.add(Calendar.DATE, -105);
             fd105 = new FuelingData();
             fd105.setDateOfFill(cal.getTime());
-            fd105.setDistance(416.4);
-            fd105.setPricePaid(27.27);
-            fd105.setVolume(17.982);
+            fd105.setDistance(416.4f);
+            fd105.setPricePaid(27.27f);
+            fd105.setVolume(17.982f);
         }
 
         if (fd169 == null) {
@@ -117,9 +117,9 @@ public class FuelingDataTest {
             cal.add(Calendar.DATE, -169);
             fd169 = new FuelingData();
             fd169.setDateOfFill(cal.getTime());
-            fd169.setDistance(524.1);
-            fd169.setPricePaid(46.17);
-            fd169.setVolume(19.243);
+            fd169.setDistance(524.1f);
+            fd169.setPricePaid(46.17f);
+            fd169.setVolume(19.243f);
         }
 
         /*
@@ -130,9 +130,9 @@ public class FuelingDataTest {
             cal.add(Calendar.DATE, -191);
             fd191 = new FuelingData();
             fd191.setDateOfFill(cal.getTime());
-            fd191.setDistance(423.7);
-            fd191.setPricePaid(36.23);
-            fd191.setVolume(18.241);
+            fd191.setDistance(423.7f);
+            fd191.setPricePaid(36.23f);
+            fd191.setVolume(18.241f);
         }
 
         if (fd260 == null) {
@@ -140,9 +140,9 @@ public class FuelingDataTest {
             cal.add(Calendar.DATE, -260);
             fd260 = new FuelingData();
             fd260.setDateOfFill(cal.getTime());
-            fd260.setDistance(360.1);
-            fd260.setPricePaid(40.18);
-            fd260.setVolume(19.032);
+            fd260.setDistance(360.1f);
+            fd260.setPricePaid(40.18f);
+            fd260.setVolume(19.032f);
         }
 
         if (fd350 == null) {
@@ -150,9 +150,9 @@ public class FuelingDataTest {
             cal.add(Calendar.DATE, -350);
             fd350 = new FuelingData();
             fd350.setDateOfFill(cal.getTime());
-            fd350.setDistance(382.8);
-            fd350.setPricePaid(39.04);
-            fd350.setVolume(17.045);
+            fd350.setDistance(382.8f);
+            fd350.setPricePaid(39.04f);
+            fd350.setVolume(17.045f);
         }
 
         /*
@@ -163,9 +163,9 @@ public class FuelingDataTest {
             cal.add(Calendar.DATE, -400);
             fd400 = new FuelingData();
             fd400.setDateOfFill(cal.getTime());
-            fd400.setDistance(402.8);
-            fd400.setPricePaid(37.63);
-            fd400.setVolume(18.543);
+            fd400.setDistance(402.8f);
+            fd400.setPricePaid(37.63f);
+            fd400.setVolume(18.543f);
         }
     }
 
@@ -303,9 +303,9 @@ public class FuelingDataTest {
     @Test
     public void testSingleMPG() throws Exception {
         FuelingData fd = new FuelingData();
-        fd.setVolume(18.987);
-        fd.setDistance(350.9);
-        Assert.assertEquals(18.5, fd5.getMileage());
+        fd.setVolume(18.987f);
+        fd.setDistance(350.9f);
+        Assert.assertEquals(18.5f, fd5.getMileage());
     }
 
     /**
@@ -321,40 +321,40 @@ public class FuelingDataTest {
         THAT THESE VALUES NOT BE CHANGED WITHOUT UPDATING THE EXPECTED VALUES IN THE ASSERT()
         STATEMENTS.
          */
-        fd5.setDistance(350.9);
-        fd5.setVolume(18.987);
+        fd5.setDistance(350.9f);
+        fd5.setVolume(18.987f);
 
-        fd25.setDistance(297.6);
-        fd25.setVolume(17.702);
+        fd25.setDistance(297.6f);
+        fd25.setVolume(17.702f);
 
-        fd55.setDistance(425.7);
-        fd55.setVolume(16.443);
+        fd55.setDistance(425.7f);
+        fd55.setVolume(16.443f);
 
-        fd95.setDistance(350.9);
-        fd95.setVolume(17.499);
+        fd95.setDistance(350.9f);
+        fd95.setVolume(17.499f);
 
-        fd105.setDistance(416.4);
-        fd105.setVolume(17.982);
+        fd105.setDistance(416.4f);
+        fd105.setVolume(17.982f);
 
-        fd169.setDistance(524.1);
-        fd169.setVolume(19.243);
+        fd169.setDistance(524.1f);
+        fd169.setVolume(19.243f);
 
-        fd191.setDistance(423.7);
-        fd191.setVolume(18.241);
+        fd191.setDistance(423.7f);
+        fd191.setVolume(18.241f);
 
-        fd260.setDistance(360.1);
-        fd260.setVolume(19.032);
+        fd260.setDistance(360.1f);
+        fd260.setVolume(19.032f);
 
-        fd350.setDistance(382.8);
-        fd350.setVolume(17.045);
+        fd350.setDistance(382.8f);
+        fd350.setVolume(17.045f);
 
-        fd400.setDistance(443.7);
-        fd400.setVolume(18.173);
+        fd400.setDistance(443.7f);
+        fd400.setVolume(18.173f);
 
-        Assert.assertEquals(20.2, FuelingData.getAvgMileageOverSpan(FuelingData.SPAN_3_MONTHS));
-        Assert.assertEquals(21.9, FuelingData.getAvgMileageOverSpan(FuelingData.SPAN_6_MONTHS));
-        Assert.assertEquals(21.8, FuelingData.getAvgMileageOverSpan(FuelingData.SPAN_ONE_YEAR));
-        Assert.assertEquals(22.0, FuelingData.getAvgMileageOverSpan(FuelingData.SPAN_ALL_TIME));
+        Assert.assertEquals(20.2f, FuelingData.getAvgMileageOverSpan(FuelingData.SPAN_3_MONTHS));
+        Assert.assertEquals(21.9f, FuelingData.getAvgMileageOverSpan(FuelingData.SPAN_6_MONTHS));
+        Assert.assertEquals(21.8f, FuelingData.getAvgMileageOverSpan(FuelingData.SPAN_ONE_YEAR));
+        Assert.assertEquals(22.0f, FuelingData.getAvgMileageOverSpan(FuelingData.SPAN_ALL_TIME));
         }
 
     /**
@@ -365,10 +365,10 @@ public class FuelingDataTest {
     public void testPricePerUnit() throws Exception {
         FuelingData fd = new FuelingData();
 
-        fd.setVolume(18.987);
-        fd.setPricePaid(37.39);
+        fd.setVolume(18.987f);
+        fd.setPricePaid(37.39f);
 
-        Assert.assertEquals(1.969, fd.getPricePerUnit());
+        Assert.assertEquals(1.969f, fd.getPricePerUnit());
     }
 
     /**
@@ -384,40 +384,44 @@ public class FuelingDataTest {
         THAT THESE VALUES NOT BE CHANGED WITHOUT UPDATING THE EXPECTED VALUES IN THE ASSERT()
         STATEMENTS.
          */
-        fd5.setPricePaid(37.39);
-        fd5.setVolume(18.987);
+        fd5.setPricePaid(37.39f);
+        fd5.setVolume(18.987f);
 
-        fd25.setPricePaid(35.7);
-        fd25.setVolume(17.702);
+        fd25.setPricePaid(35.7f);
+        fd25.setVolume(17.702f);
 
-        fd55.setPricePaid(43.4);
-        fd55.setVolume(16.443);
+        fd55.setPricePaid(43.4f);
+        fd55.setVolume(16.443f);
 
-        fd95.setPricePaid(43.15);
-        fd95.setVolume(17.499);
+        fd95.setPricePaid(43.15f);
+        fd95.setVolume(17.499f);
 
-        fd105.setPricePaid(27.27);
-        fd105.setVolume(17.982);
+        fd105.setPricePaid(27.27f);
+        fd105.setVolume(17.982f);
 
-        fd169.setPricePaid(46.17);
-        fd169.setVolume(19.243);
+        fd169.setPricePaid(46.17f);
+        fd169.setVolume(19.243f);
 
-        fd191.setPricePaid(36.23);
-        fd191.setVolume(18.241);
+        fd191.setPricePaid(36.23f);
+        fd191.setVolume(18.241f);
 
-        fd260.setPricePaid(40.18);
-        fd260.setVolume(19.032);
+        fd260.setPricePaid(40.18f);
+        fd260.setVolume(19.032f);
 
-        fd350.setPricePaid(39.04);
-        fd350.setVolume(17.045);
+        fd350.setPricePaid(39.04f);
+        fd350.setVolume(17.045f);
 
-        fd400.setPricePaid(36.75);
-        fd400.setVolume(18.173);
+        fd400.setPricePaid(36.75f);
+        fd400.setVolume(18.173f);
 
-        Assert.assertEquals(2.192, FuelingData.getAvgPricePerUnitOverSpan(FuelingData.SPAN_3_MONTHS));
-        Assert.assertEquals(2.161, FuelingData.getAvgPricePerUnitOverSpan(FuelingData.SPAN_6_MONTHS));
-        Assert.assertEquals(2.149, FuelingData.getAvgPricePerUnitOverSpan(FuelingData.SPAN_ONE_YEAR));
-        Assert.assertEquals(2.136, FuelingData.getAvgPricePerUnitOverSpan(FuelingData.SPAN_ALL_TIME));
+        Assert.assertEquals(2.192f, FuelingData.getAvgPricePerUnitOverSpan(FuelingData
+                .SPAN_3_MONTHS));
+        Assert.assertEquals(2.161f, FuelingData.getAvgPricePerUnitOverSpan(FuelingData
+                .SPAN_6_MONTHS));
+        Assert.assertEquals(2.149f, FuelingData.getAvgPricePerUnitOverSpan(FuelingData
+                .SPAN_ONE_YEAR));
+        Assert.assertEquals(2.136f, FuelingData.getAvgPricePerUnitOverSpan(FuelingData
+                .SPAN_ALL_TIME));
     }
 
     /**
@@ -433,21 +437,21 @@ public class FuelingDataTest {
         THAT THESE VALUES NOT BE CHANGED WITHOUT UPDATING THE EXPECTED VALUES IN THE ASSERT()
         STATEMENTS.
          */
-        fd5.setPricePaid(37.39);
-        fd25.setPricePaid(35.7);
-        fd55.setPricePaid(43.4);
-        fd95.setPricePaid(43.15);
-        fd105.setPricePaid(27.27);
-        fd169.setPricePaid(46.17);
-        fd191.setPricePaid(36.23);
-        fd260.setPricePaid(40.18);
-        fd350.setPricePaid(39.04);
-        fd400.setPricePaid(36.75);
+        fd5.setPricePaid(37.39f);
+        fd25.setPricePaid(35.7f);
+        fd55.setPricePaid(43.4f);
+        fd95.setPricePaid(43.15f);
+        fd105.setPricePaid(27.27f);
+        fd169.setPricePaid(46.17f);
+        fd191.setPricePaid(36.23f);
+        fd260.setPricePaid(40.18f);
+        fd350.setPricePaid(39.04f);
+        fd400.setPricePaid(36.75f);
 
-        Assert.assertEquals(38.83, FuelingData.getAvgPricePaidOverSpan(FuelingData.SPAN_3_MONTHS));
-        Assert.assertEquals(38.85, FuelingData.getAvgPricePaidOverSpan(FuelingData.SPAN_6_MONTHS));
-        Assert.assertEquals(38.73, FuelingData.getAvgPricePaidOverSpan(FuelingData.SPAN_ONE_YEAR));
-        Assert.assertEquals(38.53, FuelingData.getAvgPricePaidOverSpan(FuelingData.SPAN_ALL_TIME));
+        Assert.assertEquals(38.83f, FuelingData.getAvgPricePaidOverSpan(FuelingData.SPAN_3_MONTHS));
+        Assert.assertEquals(38.85f, FuelingData.getAvgPricePaidOverSpan(FuelingData.SPAN_6_MONTHS));
+        Assert.assertEquals(38.73f, FuelingData.getAvgPricePaidOverSpan(FuelingData.SPAN_ONE_YEAR));
+        Assert.assertEquals(38.53f, FuelingData.getAvgPricePaidOverSpan(FuelingData.SPAN_ALL_TIME));
     }
 
     @Test
@@ -458,21 +462,21 @@ public class FuelingDataTest {
         THAT THESE VALUES NOT BE CHANGED WITHOUT UPDATING THE EXPECTED VALUES IN THE ASSERT()
         STATEMENTS.
          */
-        fd5.setVolume(18.987);
-        fd25.setVolume(17.702);
-        fd55.setVolume(16.443);
-        fd95.setVolume(17.499);
-        fd105.setVolume(17.982);
-        fd169.setVolume(19.243);
-        fd191.setVolume(18.241);
-        fd260.setVolume(19.032);
-        fd350.setVolume(17.045);
-        fd400.setVolume(18.173);
+        fd5.setVolume(18.987f);
+        fd25.setVolume(17.702f);
+        fd55.setVolume(16.443f);
+        fd95.setVolume(17.499f);
+        fd105.setVolume(17.982f);
+        fd169.setVolume(19.243f);
+        fd191.setVolume(18.241f);
+        fd260.setVolume(19.032f);
+        fd350.setVolume(17.045f);
+        fd400.setVolume(18.173f);
 
-        Assert.assertEquals(17.7, FuelingData.getAvgVolumeOverSpan(FuelingData.SPAN_3_MONTHS));
-        Assert.assertEquals(18.0, FuelingData.getAvgVolumeOverSpan(FuelingData.SPAN_6_MONTHS));
-        Assert.assertEquals(18.0, FuelingData.getAvgVolumeOverSpan(FuelingData.SPAN_ONE_YEAR));
-        Assert.assertEquals(18.0, FuelingData.getAvgVolumeOverSpan(FuelingData.SPAN_ALL_TIME));
+        Assert.assertEquals(17.7f, FuelingData.getAvgVolumeOverSpan(FuelingData.SPAN_3_MONTHS));
+        Assert.assertEquals(18.0f, FuelingData.getAvgVolumeOverSpan(FuelingData.SPAN_6_MONTHS));
+        Assert.assertEquals(18.0f, FuelingData.getAvgVolumeOverSpan(FuelingData.SPAN_ONE_YEAR));
+        Assert.assertEquals(18.0f, FuelingData.getAvgVolumeOverSpan(FuelingData.SPAN_ALL_TIME));
     }
 
     @Test
@@ -483,21 +487,21 @@ public class FuelingDataTest {
         THAT THESE VALUES NOT BE CHANGED WITHOUT UPDATING THE EXPECTED VALUES IN THE ASSERT()
         STATEMENTS.
          */
-        fd5.setDistance(350.9);
-        fd25.setDistance(297.6);
-        fd55.setDistance(425.7);
-        fd95.setDistance(350.9);
-        fd105.setDistance(416.4);
-        fd169.setDistance(524.1);
-        fd191.setDistance(423.7);
-        fd260.setDistance(360.1);
-        fd350.setDistance(382.8);
-        fd400.setDistance(443.7);
+        fd5.setDistance(350.9f);
+        fd25.setDistance(297.6f);
+        fd55.setDistance(425.7f);
+        fd95.setDistance(350.9f);
+        fd105.setDistance(416.4f);
+        fd169.setDistance(524.1f);
+        fd191.setDistance(423.7f);
+        fd260.setDistance(360.1f);
+        fd350.setDistance(382.8f);
+        fd400.setDistance(443.7f);
 
-        Assert.assertEquals(358.1, FuelingData.getAvgDistanceOverSpan(FuelingData.SPAN_3_MONTHS));
-        Assert.assertEquals(394.3, FuelingData.getAvgDistanceOverSpan(FuelingData.SPAN_6_MONTHS));
-        Assert.assertEquals(392.5, FuelingData.getAvgDistanceOverSpan(FuelingData.SPAN_ONE_YEAR));
-        Assert.assertEquals(397.6, FuelingData.getAvgDistanceOverSpan(FuelingData.SPAN_ALL_TIME));
+        Assert.assertEquals(358.1f, FuelingData.getAvgDistanceOverSpan(FuelingData.SPAN_3_MONTHS));
+        Assert.assertEquals(394.3f, FuelingData.getAvgDistanceOverSpan(FuelingData.SPAN_6_MONTHS));
+        Assert.assertEquals(392.5f, FuelingData.getAvgDistanceOverSpan(FuelingData.SPAN_ONE_YEAR));
+        Assert.assertEquals(397.6f, FuelingData.getAvgDistanceOverSpan(FuelingData.SPAN_ALL_TIME));
     }
 
     /**
@@ -514,40 +518,44 @@ public class FuelingDataTest {
         STATEMENTS.
          */
 
-        fd5.setDistance(350.9);
-        fd5.setPricePaid(37.39);
+        fd5.setDistance(350.9f);
+        fd5.setPricePaid(37.39f);
 
-        fd25.setDistance(297.6);
-        fd25.setPricePaid(35.7);
+        fd25.setDistance(297.6f);
+        fd25.setPricePaid(35.7f);
 
-        fd55.setDistance(425.7);
-        fd55.setPricePaid(43.4);
+        fd55.setDistance(425.7f);
+        fd55.setPricePaid(43.4f);
 
-        fd95.setDistance(350.9);
-        fd95.setPricePaid(43.15);
+        fd95.setDistance(350.9f);
+        fd95.setPricePaid(43.15f);
 
-        fd105.setDistance(416.4);
-        fd105.setPricePaid(27.27);
+        fd105.setDistance(416.4f);
+        fd105.setPricePaid(27.27f);
 
-        fd169.setDistance(524.1);
-        fd169.setPricePaid(46.17);
+        fd169.setDistance(524.1f);
+        fd169.setPricePaid(46.17f);
 
-        fd191.setDistance(423.7);
-        fd191.setPricePaid(36.23);
+        fd191.setDistance(423.7f);
+        fd191.setPricePaid(36.23f);
 
-        fd260.setDistance(360.1);
-        fd260.setPricePaid(40.18);
+        fd260.setDistance(360.1f);
+        fd260.setPricePaid(40.18f);
 
-        fd350.setDistance(382.8);
-        fd350.setPricePaid(39.04);
+        fd350.setDistance(382.8f);
+        fd350.setPricePaid(39.04f);
 
-        fd400.setDistance(443.7);
-        fd400.setPricePaid(36.75);
+        fd400.setDistance(443.7f);
+        fd400.setPricePaid(36.75f);
 
-        Assert.assertEquals(0.108, FuelingData.getAvgPricePerDistanceOverSpan(FuelingData.SPAN_3_MONTHS));
-        Assert.assertEquals(0.099, FuelingData.getAvgPricePerDistanceOverSpan(FuelingData.SPAN_6_MONTHS));
-        Assert.assertEquals(0.099, FuelingData.getAvgPricePerDistanceOverSpan(FuelingData.SPAN_ONE_YEAR));
-        Assert.assertEquals(0.097, FuelingData.getAvgPricePerDistanceOverSpan(FuelingData.SPAN_ALL_TIME));
+        Assert.assertEquals(0.108f, FuelingData.getAvgPricePerDistanceOverSpan(FuelingData
+                .SPAN_3_MONTHS));
+        Assert.assertEquals(0.099f, FuelingData.getAvgPricePerDistanceOverSpan(FuelingData
+                .SPAN_6_MONTHS));
+        Assert.assertEquals(0.099f, FuelingData.getAvgPricePerDistanceOverSpan(FuelingData
+                .SPAN_ONE_YEAR));
+        Assert.assertEquals(0.097f, FuelingData.getAvgPricePerDistanceOverSpan(FuelingData
+                .SPAN_ALL_TIME));
     }
 
     /**
@@ -558,10 +566,10 @@ public class FuelingDataTest {
     public void testPricePerDistance() throws Exception {
         FuelingData fd = new FuelingData();
 
-        fd.setDistance(382.8);
-        fd.setPricePaid(37.39);
+        fd.setDistance(382.8f);
+        fd.setPricePaid(37.39f);
 
-        Assert.assertEquals(0.098, fd.getPricePerDistance());
+        Assert.assertEquals(0.098f, fd.getPricePerDistance());
     }
 
 
@@ -649,7 +657,7 @@ public class FuelingDataTest {
     @Test
     public void testDistanceAccessors() throws Exception {
         FuelingData fd = new FuelingData();
-        double dist = 512.6;
+        float dist = 512.6f;
 
         fd.setDistance(dist);
         Assert.assertEquals(dist, fd.getDistance());
@@ -662,7 +670,7 @@ public class FuelingDataTest {
     @Test
     public void testVolumeAccessors() throws Exception {
         FuelingData fd = new FuelingData();
-        double vol = 19.7;
+        float vol = 19.7f;
 
         fd.setVolume(vol);
         Assert.assertEquals(vol, fd.getVolume());
@@ -671,7 +679,7 @@ public class FuelingDataTest {
     @Test
     public void testPricePaidAccessors() throws Exception {
         FuelingData fd = new FuelingData();
-        double paid = 32.57;
+        float paid = 32.57f;
 
         fd.setPricePaid(paid);
         Assert.assertEquals(paid, fd.getPricePaid());
@@ -686,7 +694,7 @@ public class FuelingDataTest {
         FuelingData fd = new FuelingData();
 
         fd.setOdometer(54);
-        Assert.assertEquals(54.0, fd.getOdometer());
+        Assert.assertEquals(54.0f, fd.getOdometer());
     }
 
     /**
@@ -703,16 +711,29 @@ public class FuelingDataTest {
     }
 
     /**
+     * Test the accessors for mLatitude
+     * @throws Exception
+     */
+    @Test
+    public void testLatitudeAccessors() throws Exception {
+        FuelingData fd = new FuelingData();
+        float lat = -199.5f;
+
+        fd.setLatitude(lat);
+        Assert.assertEquals(lat, fd.getLatitude());
+    }
+
+    /**
      * Test the accessors for mGPSCoords
      * @throws Exception
      */
     @Test
-    public void testGPSCoordsAccessors() throws Exception {
+    public void testLongitudeAccessors() throws Exception {
         FuelingData fd = new FuelingData();
-        String gps = "-199,400";
+        float lng = 400.3f;
 
-        fd.setGPSCoords(gps);
-        Assert.assertEquals(gps, fd.getGPSCoords());
+        fd.setLatitude(lng);
+        Assert.assertEquals(lng, fd.getLatitude());
     }
 
     /**
