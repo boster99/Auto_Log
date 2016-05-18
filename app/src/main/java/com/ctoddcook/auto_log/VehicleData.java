@@ -9,7 +9,7 @@ import android.util.SparseArray;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static com.ctoddcook.tools.CTools.longToInt;
+import static com.ctoddcook.CGenTools.CTools.longToInt;
 
 /**
  * Created by C. Todd Cook on 5/9/2016.
