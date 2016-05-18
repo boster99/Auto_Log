@@ -157,12 +157,12 @@
         android:gravity="center_horizontal">
 
         <Button
-            style="@style/SaveButton"
-            android:onClick="saveFueling"/>
-
-        <Button
             style="@style/CancelButton"
             android:onClick="cancelAddFueling"/>
+
+        <Button
+            style="@style/SaveButton"
+            android:onClick="saveFueling"/>
     </LinearLayout>
 </RelativeLayout>
 
