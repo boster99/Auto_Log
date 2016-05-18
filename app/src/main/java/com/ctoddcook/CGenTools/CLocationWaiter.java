@@ -145,7 +145,8 @@ public class CLocationWaiter implements LocationListener,
    */
   @Override
   public void onLocationChanged(Location location) {
-    mLocation = location;
+    if (CLocationTools.isBetterLocation(location, mLocation))
+      mLocation = location;
     wrapUp();
   }
 
