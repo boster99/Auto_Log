@@ -109,7 +109,7 @@ public class CLocationTools {
    * @param location  The new Location that you want to evaluate
    * @param currentBestLocation  The current Location fix, to which you want to compare the new one
    */
-  protected boolean isBetterLocation(Location location, Location currentBestLocation) {
+  protected static boolean isBetterLocation(Location location, Location currentBestLocation) {
     if (currentBestLocation == null) {
       // A new location is always better than no location
       return true;
@@ -160,11 +160,10 @@ public class CLocationTools {
    * @param provider2 second provider
    * @return true if they are the same, including if they are both <code>null</code>
    */
-  private boolean isSameProvider(String provider1, String provider2) {
+  private static boolean isSameProvider(String provider1, String provider2) {
     if (provider1 == null) {
       return provider2 == null;
     }
     return provider1.equals(provider2);
   }
-
 }
