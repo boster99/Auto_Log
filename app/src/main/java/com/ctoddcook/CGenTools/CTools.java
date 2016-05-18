@@ -2,7 +2,7 @@
  * Copyright (c) 2016 C. Todd Cook. All rights reserved.
  */
 
-package com.ctoddcook.tools;import java.math.BigDecimal;
+package com.ctoddcook.CGenTools;import java.math.BigDecimal;
 
 /**
  * Created by C. Todd Cook on 4/22/2016.
