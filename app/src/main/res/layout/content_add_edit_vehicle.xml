@@ -14,7 +14,7 @@
     tools:context=".AddEditVehicleActivity"
     tools:showIn="@layout/activity_add_edit_vehicle">
     <LinearLayout
-        android:id="@+id/vehicle_add_details"
+        android:id="@+id/vehicle_details_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -28,11 +28,11 @@
                 android:text="@string/Vehicle_NameLabel"/>
 
             <EditText
-                android:id="@+id/edit_veh_name"
+                android:id="@+id/vehicle_edit_name"
                 style="@style/EditData"
                 android:hint="@string/Vehicle_NameLabel"
                 android:inputType="text|textCapWords|textAutoComplete"
-                android:singleLine="true"/>
+                android:imeOptions="actionNext"/>
 
         </LinearLayout>
 
@@ -44,10 +44,11 @@
                 android:text="@string/Vehicle_ColorLabel"/>
 
             <EditText
-                android:id="@+id/edit_veh_color"
+                android:id="@+id/vehicle_edit_color"
                 style="@style/EditData"
                 android:hint="@string/Vehicle_ColorLabel"
-                android:inputType="text|textCapWords|textAutoComplete"/>
+                android:inputType="text|textCapWords|textAutoComplete"
+                android:imeOptions="actionNext"/>
 
         </LinearLayout>
 
@@ -59,10 +60,11 @@
                 android:text="@string/Vehicle_YearLabel"/>
 
             <EditText
-                android:id="@+id/edit_veh_year"
+                android:id="@+id/vehicle_edit_year"
                 style="@style/EditData"
                 android:hint="@string/Vehicle_YearLabel"
-                android:inputType="number"/>
+                android:inputType="number"
+                android:imeOptions="actionNext"/>
 
         </LinearLayout>
 
@@ -74,10 +76,11 @@
                 android:text="@string/Vehicle_ModelLabel"/>
 
             <EditText
-                android:id="@+id/edit_veh_model"
+                android:id="@+id/vehicle_edit_model"
                 style="@style/EditData"
                 android:hint="@string/Vehicle_ModelLabel"
-                android:inputType="text|textCapWords|textAutoComplete"/>
+                android:inputType="text|textCapWords|textAutoComplete"
+                android:imeOptions="actionNext"/>
 
         </LinearLayout>
 
@@ -89,10 +92,11 @@
                 android:text="@string/Vehicle_VINLabel"/>
 
             <EditText
-                android:id="@+id/edit_veh_vin"
+                android:id="@+id/vehicle_edit_vin"
                 style="@style/EditData"
                 android:hint="@string/Vehicle_VINLabel"
-                android:inputType="text|textCapWords|textAutoComplete"/>
+                android:inputType="text|textCapCharacters|textNoSuggestions"
+                android:imeOptions="actionNext"/>
 
         </LinearLayout>
 
@@ -104,11 +108,11 @@
                 android:text="@string/Vehicle_LicenseLabel"/>
 
             <EditText
-                android:id="@+id/edit_veh_license_plate"
+                android:id="@+id/vehicle_edit_license_plate"
                 style="@style/EditData"
                 android:hint="@string/Vehicle_LicenseLabel"
-                android:textAllCaps="true"
-                android:inputType="text|textCapWords|textAutoComplete"/>
+                android:inputType="text|textCapCharacters|textNoSuggestions"
+                android:imeOptions="actionDone"/>
 
         </LinearLayout>
 
@@ -117,7 +121,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/vehicle_add_details"
+        android:layout_below="@id/vehicle_details_layout"
         android:padding="8dp"
         android:text="@string/Vehicle_NameEntryHint"
         android:textSize="16sp"/>
@@ -130,12 +134,12 @@
         android:orientation="horizontal">
 
         <Button
-            style="@style/SaveButton"
-            android:onClick="saveVehicle"/>
-
-        <Button
             style="@style/CancelButton"
             android:onClick="cancelAddVehicle"/>
+
+        <Button
+            style="@style/SaveButton"
+            android:onClick="saveVehicle"/>
     </LinearLayout>
 
 
