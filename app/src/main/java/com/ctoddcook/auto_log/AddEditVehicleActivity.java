@@ -95,12 +95,12 @@ public class AddEditVehicleActivity extends AppCompatActivity {
         String name = null, color = null, model = null, vin = null, licPlate = null;
         int year = 0;
 
-        EditText nameET = (EditText) findViewById(R.id.edit_veh_name);
-        EditText yearET = (EditText) findViewById(R.id.edit_veh_year);
-        EditText colorET = (EditText) findViewById(R.id.edit_veh_color);
-        EditText modelET = (EditText) findViewById(R.id.edit_veh_model);
-        EditText vinET = (EditText) findViewById(R.id.edit_veh_vin);
-        EditText licPlateET = (EditText) findViewById(R.id.edit_veh_license_plate);
+        EditText nameET = (EditText) findViewById(R.id.vehicle_edit_name);
+        EditText yearET = (EditText) findViewById(R.id.vehicle_edit_year);
+        EditText colorET = (EditText) findViewById(R.id.vehicle_edit_color);
+        EditText modelET = (EditText) findViewById(R.id.vehicle_edit_model);
+        EditText vinET = (EditText) findViewById(R.id.vehicle_edit_vin);
+        EditText licPlateET = (EditText) findViewById(R.id.vehicle_edit_license_plate);
 
         if (nameET != null) name = nameET.getText().toString().trim();
         if (colorET != null) color = colorET.getText().toString().trim();
