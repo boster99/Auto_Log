@@ -28,7 +28,7 @@
                 android:text="@string/Fueling_VehicleLabel"/>
 
             <Spinner
-                android:id="@+id/vehicle_spinner"
+                android:id="@+id/fueling_vehicle_spinner"
                 android:layout_width="0dp"
                 android:layout_weight="3"
                 android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
                 android:text="@string/Fueling_DateLabel"/>
 
             <TextView
-                android:id="@+id/edit_date"
+                android:id="@+id/fueling_edit_date"
                 style="@style/EditData"
                 android:hint="@string/Fueling_DateLabel"
                 android:onClick="showDatePickerDialog"/>
@@ -61,7 +61,7 @@
                 android:text="@string/Fueling_TimeLabel"/>
 
             <TextView
-                android:id="@+id/edit_time"
+                android:id="@+id/fueling_edit_time"
                 style="@style/EditData"
                 android:hint="@string/Fueling_TimeLabel"
                 android:onClick="showTimePickerDialog"/>
@@ -76,9 +76,10 @@
                 android:text="@string/Fueling_DistanceLabel"/>
 
             <EditText
-                android:id="@+id/edit_distance"
+                android:id="@+id/fueling_edit_distance"
                 style="@style/EditData"
                 android:inputType="numberDecimal"
+                android:imeOptions="actionNext"
                 android:hint="@string/Fueling_DistanceLabel"/>
 
         </LinearLayout>
@@ -93,6 +94,7 @@
             <EditText android:id="@+id/edit_volume"
                       style="@style/EditData"
                       android:inputType="numberDecimal"
+                      android:imeOptions="actionNext"
                       android:hint="@string/Fueling_VolumeLabel"/>
 
         </LinearLayout>
@@ -105,9 +107,10 @@
                 android:text="@string/Fueling_TotalPricePaidLabel"/>
 
             <EditText
-                android:id="@+id/edit_total_price_paid"
+                android:id="@+id/fueling_edit_total_price_paid"
                 style="@style/EditData"
                 android:inputType="numberDecimal"
+                android:imeOptions="actionNext"
                 android:hint="@string/Fueling_TotalPricePaidLabel"/>
 
         </LinearLayout>
@@ -120,9 +123,10 @@
                 android:text="@string/Fueling_LocationLabel"/>
 
             <EditText
-                android:id="@+id/edit_location"
+                android:id="@+id/fueling_edit_location"
                 style="@style/EditData"
                 android:inputType="textAutoComplete|textCapWords"
+                android:imeOptions="actionNext"
                 android:hint="@string/Fueling_LocationLabel"/>
 
         </LinearLayout>
@@ -135,9 +139,10 @@
                 android:text="@string/Fueling_OdometerLabel"/>
 
             <EditText
-                android:id="@+id/edit_odometer"
+                android:id="@+id/fueling_edit_odometer"
                 style="@style/EditData"
-                android:inputType="textAutoComplete|textCapWords"
+                android:inputType="numberDecimal"
+                android:imeOptions="actionDone"
                 android:hint="@string/Fueling_OdometerLabel"/>
 
         </LinearLayout>
