@@ -44,34 +44,34 @@
 
         </LinearLayout>
 
-        <!-- The next three LinearLayouts contain AVERAGES data -->
+        <!-- The next four LinearLayouts contain AVERAGES data -->
         <LinearLayout
             style="@style/RowStyle">
 
             <TextView
                 android:id="@+id/first_average_row_label"
-                style="@style/WideDataTextStyle"
+                style="@style/WideDarkDataTextStyle"
                 android:gravity="start"
                 android:text="@string/Main_FirstAverageLabel"/>
 
             <TextView
                 android:id="@+id/first_average_row_price"
-                style="@style/NarrowDataTextStyle"
+                style="@style/NarrowDarkDataTextStyle"
                 android:text="@string/Main_StartupDataDisplay"/>
 
             <TextView
                 android:id="@+id/first_average_row_dist"
-                style="@style/WideDataTextStyle"
+                style="@style/WideDarkDataTextStyle"
                 android:text="@string/Main_StartupDataDisplay"/>
 
             <TextView
                 android:id="@+id/first_average_row_vol"
-                style="@style/NarrowDataTextStyle"
+                style="@style/NarrowDarkDataTextStyle"
                 android:text="@string/Main_StartupDataDisplay"/>
 
             <TextView
                 android:id="@+id/first_average_row_efficiency"
-                style="@style/WideDataTextStyle"
+                style="@style/WideDarkDataTextStyle"
                 android:text="@string/Main_StartupDataDisplay"/>
         </LinearLayout>
 
@@ -80,28 +80,28 @@
 
             <TextView
                 android:id="@+id/second_average_row_label"
-                style="@style/WideDataTextStyle"
+                style="@style/WideDarkDataTextStyle"
                 android:gravity="start"
                 android:text="@string/Main_ActivitySecondAverageLabel"/>
 
             <TextView
                 android:id="@+id/second_average_row_price"
-                style="@style/NarrowDataTextStyle"
+                style="@style/NarrowDarkDataTextStyle"
                 android:text="@string/Main_StartupDataDisplay"/>
 
             <TextView
                 android:id="@+id/second_average_row_dist"
-                style="@style/WideDataTextStyle"
+                style="@style/WideDarkDataTextStyle"
                 android:text="@string/Main_StartupDataDisplay"/>
 
             <TextView
                 android:id="@+id/second_average_row_vol"
-                style="@style/NarrowDataTextStyle"
+                style="@style/NarrowDarkDataTextStyle"
                 android:text="@string/Main_StartupDataDisplay"/>
 
             <TextView
                 android:id="@+id/second_average_row_efficiency"
-                style="@style/WideDataTextStyle"
+                style="@style/WideDarkDataTextStyle"
                 android:text="@string/Main_StartupDataDisplay"/>
         </LinearLayout>
 
@@ -110,28 +110,28 @@
 
             <TextView
                 android:id="@+id/third_average_row_label"
-                style="@style/WideDataTextStyle"
+                style="@style/WideDarkDataTextStyle"
                 android:gravity="start"
                 android:text="@string/Main_ThirdAverageLabel"/>
 
             <TextView
                 android:id="@+id/third_average_row_price"
-                style="@style/NarrowDataTextStyle"
+                style="@style/NarrowDarkDataTextStyle"
                 android:text="@string/Main_StartupDataDisplay"/>
 
             <TextView
                 android:id="@+id/third_average_row_dist"
-                style="@style/WideDataTextStyle"
+                style="@style/WideDarkDataTextStyle"
                 android:text="@string/Main_StartupDataDisplay"/>
 
             <TextView
                 android:id="@+id/third_average_row_vol"
-                style="@style/NarrowDataTextStyle"
+                style="@style/NarrowDarkDataTextStyle"
                 android:text="@string/Main_StartupDataDisplay"/>
 
             <TextView
                 android:id="@+id/third_average_row_efficiency"
-                style="@style/WideDataTextStyle"
+                style="@style/WideDarkDataTextStyle"
                 android:text="@string/Main_StartupDataDisplay"/>
         </LinearLayout>
 
@@ -140,28 +140,28 @@
 
             <TextView
                 android:id="@+id/fourth_average_row_label"
-                style="@style/WideDataTextStyle"
+                style="@style/WideDarkDataTextStyle"
                 android:gravity="start"
                 android:text="@string/Main_FourthAverageLabel"/>
 
             <TextView
                 android:id="@+id/fourth_average_row_price"
-                style="@style/NarrowDataTextStyle"
+                style="@style/NarrowDarkDataTextStyle"
                 android:text="@string/Main_StartupDataDisplay"/>
 
             <TextView
                 android:id="@+id/fourth_average_row_dist"
-                style="@style/WideDataTextStyle"
+                style="@style/WideDarkDataTextStyle"
                 android:text="@string/Main_StartupDataDisplay"/>
 
             <TextView
                 android:id="@+id/fourth_average_row_vol"
-                style="@style/NarrowDataTextStyle"
+                style="@style/NarrowDarkDataTextStyle"
                 android:text="@string/Main_StartupDataDisplay"/>
 
             <TextView
                 android:id="@+id/fourth_average_row_efficiency"
-                style="@style/WideDataTextStyle"
+                style="@style/WideDarkDataTextStyle"
                 android:text="@string/Main_StartupDataDisplay"/>
         </LinearLayout>
     </LinearLayout>
@@ -173,5 +173,48 @@
         android:background="@color/divider"/>
 
     <!-- This view group contains the historical records -->
+    <LinearLayout
+        style="@style/SectionStyle"
+        android:background="@color/historicalsFieldBackground">
+
+        <TextView
+            style="@style/SectionHeaderTextStyle"
+            android:textColor="@color/historicalsTextColor"
+            android:text="@string/Main_HistoricalsLabel"/>
+
+        <!-- This LinearLayout contains the column headers for the averages -->
+        <LinearLayout
+            style="@style/RowStyle">
+
+            <TextView
+                style="@style/WideColumnHeaderTextStyle"
+                android:text="@string/Main_DateLabel"/>
+
+            <TextView
+                style="@style/NarrowColumnHeaderTextStyle"
+                android:text="@string/Main_PriceLabel"/>
+
+            <TextView
+                style="@style/WideColumnHeaderTextStyle"
+                android:text="@string/Main_DistanceLabel"/>
+
+            <TextView
+                style="@style/NarrowColumnHeaderTextStyle"
+                android:text="@string/Main_VolumeLabel"/>
+
+            <TextView
+                style="@style/WideColumnHeaderTextStyle"
+                android:text="@string/Main_EfficiencyLabel"/>
+
+        </LinearLayout>
+
+        <!-- This ListView contains the historical records, and allows scrolling -->
+        <ListView
+            android:id="@+id/Main_HistoricalsList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </ListView>
+    </LinearLayout>
 
 </LinearLayout>
