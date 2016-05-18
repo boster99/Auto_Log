@@ -15,75 +15,75 @@ import android.view.View;
 
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "MainActivity";
+  private static final String TAG = "MainActivity";
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+    setSupportActionBar(toolbar);
+  }
+
+  public void addFueling(View v) {
+    Intent intent = new Intent(this, AddEditFuelingActivity.class);
+    intent.putExtra(AddEditFuelingActivity.KEY_ADD_EDIT_MODE, AddEditFuelingActivity.MODE_ADD);
+    startActivity(intent);
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    // Inflate the menu; this adds items to the action bar if it is present.
+    getMenuInflater().inflate(R.menu.menu_main, menu);
+    return true;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    // Handle action bar item clicks here. The action bar will
+    // automatically handle clicks on the Home/Up button, so long
+    // as you specify a parent activity in AndroidManifest.xml.
+    int id = item.getItemId();
+
+    //noinspection SimplifiableIfStatement
+    if (id == R.id.action_settings) {
+      return true;
     }
 
-    public void addFueling(View v) {
-        Intent intent = new Intent(this, AddEditFuelingActivity.class);
-        intent.putExtra(AddEditFuelingActivity.KEY_ADD_EDIT_MODE, AddEditFuelingActivity.MODE_ADD);
-        startActivity(intent);
-    }
+    return super.onOptionsItemSelected(item);
+  }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+  @Override
+  public void onPause() {
+    super.onPause();
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    // TODO: Temporary save of entered/edited data.
+    // Use onPause() for quick, light operations. Use onStop() for heavier, more-permanent
+    // shut-down procedures.
+  }
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+  @Override
+  protected void onResume() {
+    super.onResume();
 
-        return super.onOptionsItemSelected(item);
-    }
+    // TODO: Retrieve data from temporary storage
+  }
 
-    @Override
-    public void onPause() {
-        super.onPause();
+  @Override
+  protected void onStop() {
+    super.onStop();
 
-        // TODO: Temporary save of entered/edited data.
-        // Use onPause() for quick, light operations. Use onStop() for heavier, more-permanent
-        // shut-down procedures.
-    }
+    // TODO: Save data.
+    // Maybe don't need this; maybe onPause() is enough.
+  }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+  @Override
+  protected void onStart() {
+    super.onStart();
 
-        // TODO: Retrieve data from temporary storage
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        // TODO: Save data.
-        // Maybe don't need this; maybe onPause() is enough.
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        // TODO: Retrieve temp data to recover entered-but-not-saved data
-        // Maybe don't need this. Maybe onResume() is enough.
-        // Use onPause() for quick, light operations. Use onStop() for heavier, more-permanent
-        // shut-down procedures.
-    }
+    // TODO: Retrieve temp data to recover entered-but-not-saved data
+    // Maybe don't need this. Maybe onResume() is enough.
+    // Use onPause() for quick, light operations. Use onStop() for heavier, more-permanent
+    // shut-down procedures.
+  }
 }
