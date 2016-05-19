@@ -18,6 +18,9 @@ import java.util.Date;
  * The "name" of a property is immutable. You can change the value, or even the type of the
  * value, but if you want to change the name you'll need to delete the old property and create
  * a new one with the new name.
+ * <p>
+ * Also, all names are trimmed and converted to all-lower case. Name uniqueness is therefore
+ * case-ignorant, so "CAR" is equal to "car" is equal to " Car ".
  * <p>Created by C. Todd Cook on 5/18/2016.<br>
  * ctodd@ctoddcook.com
  */
@@ -189,7 +192,9 @@ public class Property extends DataHolder {
   }
 
   /**
-   * Private accessor sets the name of this property, after some quick sanity checking.
+   * Private accessor sets the name of this property, after some quick sanity checking. Note that
+   * all names are trimmed and converted to lowercase; name-uniqueness ignores case, so "CAR"
+   * equals "car".
    * @param name the name of this property
    * @throws IllegalArgumentException if the name is null or empty
    */
