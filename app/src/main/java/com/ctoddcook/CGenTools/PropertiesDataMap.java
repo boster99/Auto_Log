@@ -20,6 +20,7 @@ public class PropertiesDataMap extends AutoLogDataMap implements BaseColumns {
   public static final String COLUMN_NAME_TYPE = "type";
   public static final String COLUMN_NAME_VALUE = "value";
 
+  public static final int COLUMN_NBR_ID = 0;
   public static final int COLUMN_NBR_NAME = 1;
   public static final int COLUMN_NBR_TYPE = 2;
   public static final int COLUMN_NBR_VALUE = 3;
