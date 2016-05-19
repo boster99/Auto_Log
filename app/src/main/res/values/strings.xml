@@ -50,7 +50,7 @@
     <string name="CancelButton">Cancel</string>
 
     <!-- For Fueling data display formatting -->
-    <string name="Fueling_CurrencyForm">¤ 0.00</string>
+    <string name="Fueling_CurrencyForm">¤ 0.000</string>
     <string name="Fueling_SingleDecimalPointForm">0.0</string>
     <string name="Fueling_DataPattern">%1$s %2$s</string>
     <string name="Fueling_DistanceAbbrev">m</string>
