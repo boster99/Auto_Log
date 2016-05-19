@@ -83,6 +83,7 @@ public class AddEditVehicleActivity extends AppCompatActivity {
       }
     }
 
+    setResult(RESULT_OK);
     this.finish();
   }
 
@@ -199,6 +200,7 @@ public class AddEditVehicleActivity extends AppCompatActivity {
    * @param v the view that called this method
    */
   public void cancelAddVehicle(View v) {
+    setResult(RESULT_CANCELED);
     this.finish();
   }
 }
