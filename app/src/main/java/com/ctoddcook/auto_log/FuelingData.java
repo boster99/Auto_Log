@@ -319,7 +319,7 @@ class FuelingData extends DataHolder {
    * @param span FuelingData.SPAN_3_MONTHS, FuelingData.SPAN_6_MONTHS or FuelingData.SPAN_ONE_YEAR
    * @return the average (mean) distance per volume of fuel (mpg) over indicated time span.
    */
-  public static float getAvgMileageOverSpan(int span) throws IllegalArgumentException {
+  public static float getAvgEfficiencyOverSpan(int span) throws IllegalArgumentException {
     ArrayList<FuelingData> fillsOverSpan;
 
     fillsOverSpan = getListForSpan(span);
@@ -494,11 +494,11 @@ class FuelingData extends DataHolder {
   }
 
   /**
-   * Calculates the mileage (mpg or lpk) for the instance, rounded to 1 decimal place
+   * Calculates the efficiency (mpg or lpk) for the instance, rounded to 1 decimal place
    *
    * @return Miles per gallon or litres per kilometer
    */
-  public float getMileage() {
+  public float getEfficiency() {
     if (mVolume == 0)
       return 0;
 
