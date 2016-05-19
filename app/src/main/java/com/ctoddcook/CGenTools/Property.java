@@ -96,13 +96,14 @@ public class Property extends DataHolder {
    * @param name the name of the property
    * @param type the data type of the property
    * @param value the value of the property
+   * @param lastUpdated the date the row was last updated
    * @throws IllegalArgumentException if the provided id is less than 1, or if the indicated data
    * type is not supported
    * @throws ParseException if a String representation of a Date cannot be parsed into an actual
    * Date object
    */
-  public Property(int id, String name, int type, String value) throws IllegalArgumentException,
-      ParseException {
+  public Property(int id, String name, int type, String value, Date lastUpdated) throws
+      IllegalArgumentException, ParseException {
     super();
     if (id < 1)
       throw new IllegalArgumentException("mId value must be at least 1");
@@ -131,6 +132,8 @@ public class Property extends DataHolder {
       default:
         throw new IllegalArgumentException("Provided type is illegal. Type is: " + type);
     }
+
+    this.mLastUpdated = lastUpdated;
 
     setCurrent();
   }
