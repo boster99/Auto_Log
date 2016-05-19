@@ -7,6 +7,7 @@ package com.ctoddcook.auto_log;
 import android.util.SparseArray;
 
 import com.ctoddcook.CGenTools.DataHolder;
+import com.ctoddcook.CGenTools.Property;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,6 +22,8 @@ import static com.ctoddcook.CGenTools.CTools.longToInt;
  * data for different vehicles.
  */
 public class VehicleData extends DataHolder {
+  public static final String DEFAULT_VEHICLE_NAME = "Default Vehicle ID";
+  public static final int DEFAULT_VEHICLE_TYPE = Property.TYPE_INT;
   private static final SparseArray<VehicleData> sVehicleList = new SparseArray<>(12);
   private int mVehicleID;
   private String mName;
