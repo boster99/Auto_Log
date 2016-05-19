@@ -8,6 +8,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.ctoddcook.auto_log.FuelingDataMap;
 
@@ -26,27 +27,46 @@ import java.util.NoSuchElementException;
  */
 public class PropertiesHelper {
 
+  private static final String TAG = "PropertiesHelper";
+
   private static HashMap<String, Property> sPropertyMap = new HashMap<>(10);
-  private static PropertiesHelper sPh;
-  private static SQLiteDatabase sDb;
+  private static PropertiesHelper sPH;
+  private static SQLiteDatabase sDB;
 
 
   /**
    * Returns a reference to the single PropertiesHelper instance. If the instance does not
    * already exist, it will be instantiated, and all Properties will be read from the database
    * and added to the HashMap.
-   * @param db a reference to an existing SQLiteOpenHelper so we can execute SQL
    * @return a reference to the single PropertiesHelper instance
-   * @throws ParseException if a downstream method throws it
+   * @throws UnsupportedOperationException if setDatabaseHelper() has not already been called
+   * @see #setDatabaseHelper(SQLiteOpenHelper)
    */
-  public static PropertiesHelper getInstance(SQLiteOpenHelper db) throws ParseException {
-    if (sPh == null) {
-      sPh = new PropertiesHelper();
-      sDb = db.getWritableDatabase();
-      sPh.fetchProperties();
+  public static PropertiesHelper getInstance() {
+    // Make sure a database helper has already been provided
+    if (sDB == null)
+      throw new UnsupportedOperationException("Whoa. setDatabaseHelper() must be called before " +
+          "this method is called.");
+
+    if (sPH == null) {
+      sPH = new PropertiesHelper();
+      sPH.fetchProperties();
     }
 
-    return sPh;
+    return sPH;
+  }
+
+  /**
+   * Sets the database helper this object will use to issue SQL commands. Must be called before
+   * getInstance().
+   * @param db the database helper to use
+   * @see #getInstance()
+   */
+  public static void setDatabaseHelper(SQLiteOpenHelper db) {
+    if (db == null)
+      throw new IllegalArgumentException("Provided SQLiteOpenHelper argument is null. Bad.");
+
+    sDB = db.getWritableDatabase();
   }
 
   /**
@@ -136,11 +156,10 @@ public class PropertiesHelper {
   /**
    * Retrieves all Property rows from the database. Each is added to the HashMap for quick
    * retrieval.
-   * @throws ParseException if thrown by a downstream method call
    */
-  private void fetchProperties() throws ParseException {
-    if (!PropertyDataMap.tableExists(sDb))
-      sDb.execSQL(PropertyDataMap.SQL_CREATE_TABLE);
+  private void fetchProperties() {
+    if (!PropertyDataMap.tableExists(sDB))
+      sDB.execSQL(PropertyDataMap.SQL_CREATE_TABLE);
 
     int id, type;
     String name, value;
@@ -149,7 +168,7 @@ public class PropertiesHelper {
 
     String sql = PropertyDataMap.SQL_SELECT_ALL;
 
-    Cursor cursor = sDb.rawQuery(sql, null);
+    Cursor cursor = sDB.rawQuery(sql, null);
 
     while (cursor.moveToNext()) {
       id = cursor.getInt(PropertyDataMap.COLUMN_NBR_ID);
@@ -158,9 +177,12 @@ public class PropertiesHelper {
       value = cursor.getString(PropertyDataMap.COLUMN_NBR_VALUE);
       lastUpdated.setTime(cursor.getInt(PropertyDataMap.COLUMN_NBR_LAST_UPDATED));
 
-      p = new Property(id, name, type, value, lastUpdated);
-
-      sPropertyMap.put(p.getName(), p);
+      try {
+        p = new Property(id, name, type, value, lastUpdated);
+        sPropertyMap.put(p.getName(), p);
+      } catch (ParseException ex) {
+        Log.e(TAG, "fetchProperties: Failed to fetch properties due to data error", ex);
+      }
     }
 
     cursor.close();
@@ -204,7 +226,7 @@ public class PropertiesHelper {
     cv.put(PropertyDataMap.COLUMN_NAME_VALUE, p.getValueAsString());
     cv.put(PropertyDataMap.COLUMN_NAME_LAST_UPDATED, p.getLastUpdated().getTime());
 
-    int rowsUpdated = sDb.update(PropertyDataMap.TABLE_NAME, cv, PropertyDataMap.WHERE_ID_CLAUSE,
+    int rowsUpdated = sDB.update(PropertyDataMap.TABLE_NAME, cv, PropertyDataMap.WHERE_ID_CLAUSE,
         whereArgs);
 
     if (rowsUpdated == 1)
@@ -231,7 +253,7 @@ public class PropertiesHelper {
     cv.put(PropertyDataMap.COLUMN_NAME_VALUE, p.getValueAsString());
     cv.put(PropertyDataMap.COLUMN_NAME_LAST_UPDATED, p.getLastUpdated().getTime());
 
-    int newID = (int) sDb.insert(PropertyDataMap.TABLE_NAME, null, cv);
+    int newID = (int) sDB.insert(PropertyDataMap.TABLE_NAME, null, cv);
 
     if (newID > 0) {
       p.setID(newID);
@@ -252,7 +274,7 @@ public class PropertiesHelper {
 
     String[] whereArgs = new String[]{String.valueOf(p.getID())};
 
-    int rowsDeleted = sDb.delete(FuelingDataMap.TABLE_NAME, FuelingDataMap.WHERE_ID_CLAUSE,
+    int rowsDeleted = sDB.delete(FuelingDataMap.TABLE_NAME, FuelingDataMap.WHERE_ID_CLAUSE,
         whereArgs);
 
     return (rowsDeleted == 1);
