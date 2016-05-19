@@ -28,8 +28,9 @@ public class Property extends DataHolder {
   public static final int TYPE_DOUBLE = 1;
   public static final int TYPE_STRING = 2;
   public static final int TYPE_DATETIME = 3;
+  private static final int INITIAL_ID_VALUE = -1;
 
-  private int mId = -1;
+  private int mPropertyID = INITIAL_ID_VALUE;
   private String mName;
   private int mType = -1;
   private String mStringVal;
@@ -106,7 +107,7 @@ public class Property extends DataHolder {
       IllegalArgumentException, ParseException {
     super();
     if (id < 1)
-      throw new IllegalArgumentException("mId value must be at least 1");
+      throw new IllegalArgumentException("mPropertyID value must be at least 1");
 
     setName(name);
 
@@ -204,7 +205,25 @@ public class Property extends DataHolder {
    * @return the database id
    */
   public int getID() {
-    return mId;
+    return mPropertyID;
+  }
+
+  /**
+   * Setter for mPropertyID, the database prime key value of the row. This should only be called
+   * when filling in the data retrieved from the database; i.e., this should not be used to
+   * "update" the value but only to get the already existing value from the database.
+   * @param newID the id from the database
+   * @throws UnsupportedOperationException if the Property already has an ID
+   * @throws IllegalArgumentException if the new ID is less than 1
+   */
+  public void setID(int newID) throws UnsupportedOperationException, IllegalArgumentException {
+    if (mPropertyID != INITIAL_ID_VALUE)
+      throw new UnsupportedOperationException("The Row ID can only be set once, and cannot be updated");
+    if (newID < 1)
+      throw new IllegalArgumentException("The Row ID cannot be less than 1. Value given: " + newID);
+
+    mPropertyID = newID;
+    touch();
   }
 
   /**
@@ -298,7 +317,7 @@ public class Property extends DataHolder {
     if (other == null)
       return false;
 
-    if (this.mId != other.mId) return false;
+    if (this.mPropertyID != other.mPropertyID) return false;
     if (!this.mName.equalsIgnoreCase(other.mName.trim())) return false;
     if (this.mType != other.mType) return false;
 
