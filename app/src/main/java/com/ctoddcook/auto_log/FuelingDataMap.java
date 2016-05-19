@@ -79,5 +79,20 @@ public final class FuelingDataMap extends AutoLogDataMap implements BaseColumns 
   public static boolean tableExists(SQLiteDatabase db) {
     return tableExists(db, TABLE_NAME);
   }
+
+  /**
+   * Returns a string containing a SELECT statement for fetching FuelingData records from the
+   * database for a particular vehicleID (or all vehicles).
+   * @param vehicleID the vehicle to filter by, or 0 to get all records with no filter
+   * @return a string with a SELECT statement
+   */
+  public static String getSelectSQL(int vehicleID) {
+    String where = "";
+    if (vehicleID > 0)
+      where = " WHERE " + COLUMN_NAME_VEHICLE_ID + " = " + vehicleID;
+
+    return SELECT_PHRASE + "*" + FROM_PHRASE + TABLE_NAME +
+        where + ORDER_BY_PHRASE + COLUMN_NAME_DATE_OF_FILL + " DESC";
+  }
 }
 
