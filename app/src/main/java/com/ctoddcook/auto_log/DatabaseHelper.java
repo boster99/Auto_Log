@@ -236,17 +236,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
    *
    * @return an ArrayList of FuelingData objects
    */
-  public ArrayList<FuelingData> fetchFuelingData() {
+  public ArrayList<FuelingData> fetchFuelingData(int vehicleID) {
     SQLiteDatabase db = this.getWritableDatabase();
     ArrayList<FuelingData> fdList = new ArrayList<>();
-    int fuelingID, vehicleID;
+    int fuelingID;
     Date dateOfFill = new Date();
     Date lastUpdated = new Date();
     float distance, volume, pricePaid, odometer, latitude, longitude;
     String location;
     FuelingData fd;
+    String sql = FuelingDataMap.getSelectSQL(vehicleID);
 
-    Cursor cursor = db.rawQuery(FuelingDataMap.SQL_SELECT_ALL, null);
+    Cursor cursor = db.rawQuery(sql, null);
 
     while (cursor.moveToNext()) {
       fuelingID = cursor.getInt(FuelingDataMap.COLUMN_NBR_FUELING_ID);
