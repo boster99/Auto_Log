@@ -14,7 +14,7 @@ import com.ctoddcook.auto_log.AutoLogDataMap;
  * <p>Created by C. Todd Cook on 5/18/2016.<br>
  * ctodd@ctoddcook.com
  */
-public class PropertiesDataMap extends AutoLogDataMap implements BaseColumns {
+public class PropertyDataMap extends AutoLogDataMap implements BaseColumns {
   public static final String TABLE_NAME = "properties";
   public static final String COLUMN_NAME_NAME = "name";
   public static final String COLUMN_NAME_TYPE = "type";
