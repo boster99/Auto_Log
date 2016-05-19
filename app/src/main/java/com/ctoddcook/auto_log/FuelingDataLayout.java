@@ -114,24 +114,20 @@ public class FuelingDataLayout extends LinearLayout {
     this.addView(tvLabel);
 
     TextView tvPrice = new TextView(c, null, R.style.NarrowLightDataTextStyle);
-    tvPrice.setText(mCurrencyForm.format(fd.getPricePerUnit()));
+    tvPrice.setText(formatPrice(fd.getPricePerUnit()));
     this.addView(tvPrice);
 
     // todo change literals to localization
     TextView tvDist = new TextView(c, null, R.style.WideLightDataTextStyle);
-    tvDist.setText(String.format(displayPattern, mDistanceForm.format(fd.getDistance()),
-        distanceAbbrev));
+    tvDist.setText(formatDistance(fd.getDistance()));
     this.addView(tvDist);
 
     TextView tvVol = new TextView(c, null, R.style.NarrowLightDataTextStyle);
-    tvVol.setText(String.format(displayPattern, mVolumeForm.format(fd.getVolume()),
-        volumeAbbrev));
+    tvVol.setText(formatVolume(fd.getVolume()));
     this.addView(tvVol);
 
     TextView tvEff = new TextView(c, null, R.style.WideLightDataTextStyle);
-    tvEff.setText(String.format(displayPattern, mEfficiencyForm.format(fd.getMileage()),
-        efficiencyAbbrev));
-
+    tvEff.setText(formatEfficiency(fd.getEfficiency()));
     this.addView(tvEff);
   }
 
@@ -141,5 +137,48 @@ public class FuelingDataLayout extends LinearLayout {
    */
   public FuelingData getFuelingData() {
     return mFuelingData;
+  }
+
+  /**
+   * Returns proper, localized formaatting for the price paid per unit (i.e., price per gallon or
+   * per litre). Used by populateSelf() and available to other methods.
+   * @param price the price paid per unit
+   * @return a localized currency value, such as $ 1.899.
+   * @see #populateSelf(Context, FuelingData)
+   */
+  public static String formatPrice(float price) {
+    return mCurrencyForm.format(price);
+  }
+
+  /**
+   * Returns a formatted String version of the provided distance. Called by populateSelf() and
+   * available to other methods, too.
+   * @param dist the distance covered in a tank of fuel
+   * @return a formatted String
+   * @see #populateSelf(Context, FuelingData)
+   */
+  public static String formatDistance(float dist) {
+    return String.format(displayPattern, mDistanceForm.format(dist), distanceAbbrev);
+  }
+
+  /**
+   * Returns a formatted String version of the provided volume. Used by populateSelf(), but
+   * available to outside methods as well.
+   * @param vol the volume to convert to formatted String
+   * @return a formatted String
+   * @see #populateSelf(Context, FuelingData)
+   */
+  public static String formatVolume(float vol) {
+    return String.format(displayPattern, mVolumeForm.format(vol), volumeAbbrev);
+  }
+
+  /**
+   * Returns a formatted String version of the provided efficiency value. Used by populateSelf(),
+   * but available to outside methods as well.
+   * @param eff the efficiency to be converted to String
+   * @return the formatted String
+   */
+  public static String formatEfficiency(float eff) {
+    return String.format(displayPattern, mEfficiencyForm.format(eff), efficiencyAbbrev);
   }
 }
