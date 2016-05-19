@@ -42,7 +42,7 @@ public abstract class DataHolder {
      * as each setter called will likely result in a series of setter methods being called, each
      * of which will result in the status being set to UPDATED.
      */
-    protected void setCurrent() {
+    public void setCurrent() {
         mStatus = STATUS_CURRENT;
     }
 
