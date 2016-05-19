@@ -327,4 +327,17 @@ public class Property extends DataHolder {
 
     return sDateFormat;
   }
+
+  /**
+   * Upates this Property based on the values of another Property.
+   * @param other the Property with the new values to use
+   */
+  public void update(Property other) {
+    this.mType = other.mType;
+    this.mStringVal = other.mStringVal;
+    this.mIntVal = other.mIntVal;
+    this.mDoubleVal = other.mDoubleVal;
+    this.mDateTimeVal = other.mDateTimeVal;
+    touch();
+  }
 }
