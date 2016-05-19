@@ -7,6 +7,8 @@ package com.ctoddcook.auto_log;
 
 import android.util.SparseArray;
 
+import com.ctoddcook.CGenTools.DataHolder;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
