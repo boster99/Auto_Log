@@ -154,6 +154,16 @@ public class PropertiesHelper {
   }
 
   /**
+   * Simply checks for the existence of a Property with the provied name.
+   * @param name The name to check
+   * @return true if the Property exists, false otherwise
+   */
+  public boolean doesNameExist(String name) {
+    Property p = sPropertyMap.get(name);
+    return p != null;
+  }
+
+  /**
    * Retrieves all Property rows from the database. Each is added to the HashMap for quick
    * retrieval.
    */
