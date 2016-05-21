@@ -23,7 +23,6 @@ import java.util.Date;
 public class FuelingArrayAdapter extends ArrayAdapter<Fueling> {
   private final Context context;
   private final ArrayList<Fueling> fuelingsList;
-  private final FuelingDataLayout fdl = new FuelingDataLayout(getContext());
 
   /**
    * Required constructor.
@@ -45,7 +44,6 @@ public class FuelingArrayAdapter extends ArrayAdapter<Fueling> {
    * file and building them from scratch.
    */
   static class ViewHolder {
-    public FuelingDataLayout fdl;
     public TextView tvDate;
     public TextView tvPrice;
     public TextView tvDist;
@@ -53,23 +51,23 @@ public class FuelingArrayAdapter extends ArrayAdapter<Fueling> {
     public TextView tvEff;
 
     public void setDate(Date date) {
-      tvDate.setText(fdl.formatDate(date));
+      tvDate.setText(FormatHandler.formatDate(date));
     }
 
     public void setPrice(float price) {
-      tvPrice.setText(fdl.formatPrice(price));
+      tvPrice.setText(FormatHandler.formatPrice(price));
     }
 
     public void setDistance(float dist) {
-      tvDist.setText(fdl.formatDistance(dist));
+      tvDist.setText(FormatHandler.formatDistance(dist));
     }
 
     public void setVolume(float vol) {
-      tvVol.setText(fdl.formatVolume(vol));
+      tvVol.setText(FormatHandler.formatVolume(vol));
     }
 
     public void setEfficiency(float eff) {
-      tvEff.setText(fdl.formatEfficiency(eff));
+      tvEff.setText(FormatHandler.formatEfficiency(eff));
     }
   }
 
@@ -101,7 +99,6 @@ public class FuelingArrayAdapter extends ArrayAdapter<Fueling> {
       rowView = inflater.inflate(R.layout.fueling_row_layout, parent, false);
 
       ViewHolder newHolder = new ViewHolder();
-      newHolder.fdl = this.fdl;
       newHolder.tvDate = (TextView) rowView.findViewById(R.id.fueling_row_date);
       newHolder.tvPrice = (TextView) rowView.findViewById(R.id.fueling_row_price);
       newHolder.tvDist = (TextView) rowView.findViewById(R.id.fueling_row_dist);
