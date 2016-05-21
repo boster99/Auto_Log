@@ -66,7 +66,7 @@ public abstract class DataHolder {
      * Getter for mStatus field
      * @return value of mStatus field.
      */
-    protected char getStatus() {
+    public char getStatus() {
         return mStatus;
     }
 
