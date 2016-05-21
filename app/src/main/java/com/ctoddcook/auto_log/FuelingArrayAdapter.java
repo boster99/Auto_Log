@@ -52,7 +52,7 @@ public class FuelingArrayAdapter extends ArrayAdapter<Fueling> {
     public TextView tvEff;
 
     public void setDate(Date date) {
-      tvDate.setText(FormatHandler.formatDate(date));
+      tvDate.setText(FormatHandler.formatShortDate(date));
     }
 
     public void setPrice(float price) {
