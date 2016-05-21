@@ -182,7 +182,7 @@
             android:textColor="@color/historicalsTextColor"
             android:text="@string/Main_HistoricalsLabel"/>
 
-        <!-- This LinearLayout contains the column headers for the averages -->
+        <!-- This LinearLayout contains the column headers for the historical records -->
         <LinearLayout
             style="@style/RowStyle">
 
@@ -212,7 +212,8 @@
         <ListView
             android:id="@+id/Main_HistoricalsList"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_margin="4dp">
 
         </ListView>
     </LinearLayout>
