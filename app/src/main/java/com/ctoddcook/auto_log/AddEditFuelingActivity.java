@@ -190,7 +190,8 @@ public class AddEditFuelingActivity extends AppCompatActivity
   public void setLocation(Location gpsLocation) {
     String cityAndState = null;
     if (gpsLocation != null) {
-      cityAndState = CLocationTools.getCity(this, gpsLocation, true);
+      cityAndState = CLocationTools.getCity(this, gpsLocation,
+          CLocationTools.OPTION_INCLUDE_STATE_ABBREV);
       mGPSLocation = gpsLocation;
     }
 
