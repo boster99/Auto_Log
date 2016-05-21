@@ -9,10 +9,10 @@ import android.provider.BaseColumns;
  * <p>Created by C. Todd Cook on 4/12/2016.<br>
  * ctodd@ctoddcook.com
  */
-public final class FuelingDataMap extends AutoLogDataMap implements BaseColumns {
+public final class FuelingDBMap extends AutoLogDataMap implements BaseColumns {
   // To prevent someone from accidentally instantiating this class, here is
   // an empty constructor.
-  private FuelingDataMap() {
+  private FuelingDBMap() {
   }
 
 
@@ -81,7 +81,7 @@ public final class FuelingDataMap extends AutoLogDataMap implements BaseColumns 
   }
 
   /**
-   * Returns a string containing a SELECT statement for fetching FuelingData records from the
+   * Returns a string containing a SELECT statement for fetching Fueling records from the
    * database for a particular vehicleID (or all vehicles).
    * @param vehicleID the vehicle to filter by, or 0 to get all records with no filter
    * @return a string with a SELECT statement
