@@ -22,7 +22,7 @@ import static com.ctoddcook.CGenTools.CTools.longToInt;
  * data for different vehicles.
  */
 public class VehicleData extends DataHolder {
-  public static final String DEFAULT_VEHICLE_NAME = "Default Vehicle ID";
+  public static final String DEFAULT_VEHICLE_KEY = "com.ctoddcook.auto_log.DefaultVehicleID";
   public static final int DEFAULT_VEHICLE_TYPE = Property.TYPE_INT;
   private static final SparseArray<VehicleData> sVehicleList = new SparseArray<>(12);
   private int mVehicleID;
@@ -114,6 +114,15 @@ public class VehicleData extends DataHolder {
     }
 
     return list;
+  }
+
+  /**
+   * Clears the static in-memory list of vehicles. Should be called before re-fetching vehicles
+   * from the database.
+   */
+  public static void clearAll() {
+    if (sVehicleList != null)
+      sVehicleList.clear();
   }
 
   /**
