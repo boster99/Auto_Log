@@ -58,7 +58,9 @@ class FuelingData extends DataHolder {
     DATE_THRESHOLDS[SPAN_ONE_YEAR] = oneYearAgo.getTime();
   }
 
-  private int mFuelingID = 0;
+  private static final int INITIAL_ID = -1;
+
+  private int mFuelingID = INITIAL_ID;
   private int mVehicleID = 0;
   private Date mDateOfFill = null;
   private float mDistance = 0f;
@@ -119,7 +121,7 @@ class FuelingData extends DataHolder {
     mLastUpdated = lastUpdated;
 
     setCurrent();
-    addFueling(this);
+    adjustLists();
   }
 
 
@@ -129,12 +131,15 @@ class FuelingData extends DataHolder {
      */
 
   /**
-   * Adds a FuelingData to the static SparseArray used to grab an instance by ID.
+   * Adds a FuelingData to the static SparseArray used to grab an instance by ID. (Does not add
+   * it to the list if it's ID has not yet been set--meaning it's a new object and not yet saved
+   * to the database. Also checks to see if the object is already in the list.)
    *
    * @param f the FuelingData object to add
    */
-  public static void addFueling(FuelingData f) {
-    sFuelingList.append(f.getFuelingID(), f);
+  private static void addToSparseArray(FuelingData f) {
+    if (f.mFuelingID != INITIAL_ID && sFuelingList.get(f.mFuelingID) == null)
+      sFuelingList.append(f.mFuelingID, f);
   }
 
   /**
@@ -200,9 +205,9 @@ class FuelingData extends DataHolder {
     fillsOverSpan = getListForSpan(span);
 
     if (fillsOverSpan.isEmpty())
-      return 0;
+      return 0.0f;
 
-    float totalDistance = 0;
+    float totalDistance = 0.0f;
 
     for (FuelingData each : fillsOverSpan)
       totalDistance += each.mDistance;
@@ -224,9 +229,9 @@ class FuelingData extends DataHolder {
     fillsOverSpan = getListForSpan(span);
 
     if (fillsOverSpan.isEmpty())
-      return 0;
+      return 0.0f;
 
-    float totalVolume = 0;
+    float totalVolume = 0.0f;
 
     for (FuelingData each : fillsOverSpan)
       totalVolume += each.mVolume;
@@ -244,18 +249,26 @@ class FuelingData extends DataHolder {
    */
   public static float getAvgPricePaidOverSpan(int span) throws IllegalArgumentException {
     ArrayList<FuelingData> fillsOverSpan;
+    int countOfNonZeroEntries = 0;
 
     fillsOverSpan = getListForSpan(span);
 
     if (fillsOverSpan.isEmpty())
-      return 0;
+      return 0.0f;
 
-    float totalPricePaid = 0;
+    float totalPricePaid = 0.0f;
 
-    for (FuelingData each : fillsOverSpan)
-      totalPricePaid += each.mPricePaid;
+    for (FuelingData each : fillsOverSpan) {
+      if (each.mPricePaid > 0.0f) {
+        totalPricePaid += each.mPricePaid;
+        countOfNonZeroEntries++;
+      }
+    }
 
-    return round(totalPricePaid / fillsOverSpan.size(), 2);
+    if (countOfNonZeroEntries == 0)
+      return 0.0f;
+
+    return round(totalPricePaid / countOfNonZeroEntries, 2);
   }
 
   /**
@@ -272,15 +285,20 @@ class FuelingData extends DataHolder {
     fillsOverSpan = getListForSpan(span);
 
     if (fillsOverSpan.isEmpty())
-      return 0;
+      return 0.0f;
 
-    float totalPricePaid = 0;
-    float totalVolume = 0;
+    float totalPricePaid = 0.0f;
+    float totalVolume = 0.0f;
 
     for (FuelingData each : fillsOverSpan) {
-      totalPricePaid += each.mPricePaid;
-      totalVolume += each.mVolume;
+      if (each.mPricePaid > 0.0f && each.mVolume > 0.0f) {
+        totalPricePaid += each.mPricePaid;
+        totalVolume += each.mVolume;
+      }
     }
+
+    if (totalVolume == 0.0f)
+      return 0.0f;
 
     return round(totalPricePaid / totalVolume, 3);
   }
@@ -299,15 +317,20 @@ class FuelingData extends DataHolder {
     fillsOverSpan = getListForSpan(span);
 
     if (fillsOverSpan.isEmpty())
-      return 0;
+      return 0.0f;
 
-    float totalPricePaid = 0;
-    float totalDistance = 0;
+    float totalPricePaid = 0.0f;
+    float totalDistance = 0.0f;
 
     for (FuelingData each : fillsOverSpan) {
-      totalPricePaid += each.mPricePaid;
-      totalDistance += each.mDistance;
+      if (each.mPricePaid > 0.0f && each.mDistance > 0.0f) {
+        totalPricePaid += each.mPricePaid;
+        totalDistance += each.mDistance;
+      }
     }
+
+    if (totalDistance == 0.0f)
+      return 0.0f;
 
     return round(totalPricePaid / totalDistance, 3);
   }
@@ -325,15 +348,18 @@ class FuelingData extends DataHolder {
     fillsOverSpan = getListForSpan(span);
 
     if (fillsOverSpan.isEmpty())
-      return 0;
+      return 0.0f;
 
-    float totalDistance = 0;
-    float totalVolume = 0;
+    float totalDistance = 0.0f;
+    float totalVolume = 0.0f;
 
     for (FuelingData each : fillsOverSpan) {
       totalDistance += each.mDistance;
       totalVolume += each.mVolume;
     }
+
+    if (totalVolume == 0.0f)
+      return 0.0f;
 
     return round(totalDistance / totalVolume, 1);
   }
@@ -400,6 +426,7 @@ class FuelingData extends DataHolder {
     sThreeMonthSpan.clear();
     sSixMonthSpan.clear();
     sOneYearSpan.clear();
+    sLifetimeSpan.clear();
   }
 
   /**
@@ -467,9 +494,12 @@ class FuelingData extends DataHolder {
         sOneYearSpan.remove(this);      //     If so, remove from the list
     }
 
-    // Finally, regardless of date, add this to the list of all FuelingData instances
+    // Finally, regardless of date, add this to the list of all FuelingData instances as well as
+    // to the SparseArray list.
     if (!sLifetimeSpan.contains(this))
       sLifetimeSpan.add(this);
+
+    addToSparseArray(this);
   }
 
 
@@ -554,7 +584,7 @@ class FuelingData extends DataHolder {
       throw new IllegalArgumentException("The Row ID cannot be less than 1");
 
     mFuelingID = fuelingID;
-    addFueling(this);
+    addToSparseArray(this);
 
     touch();
   }
