@@ -137,7 +137,7 @@ public class PropertiesHelper {
    * @param forName the name of the desired property
    * @return the int value
    */
-  public int getIntValue(String forName) {
+  public long getLongValue(String forName) {
     forName = forName.trim().toLowerCase();
     Property p = sPropertyMap.get(forName);
     if (p == null)
