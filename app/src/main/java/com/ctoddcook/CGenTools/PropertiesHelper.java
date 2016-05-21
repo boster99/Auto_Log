@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.ctoddcook.auto_log.FuelingDataMap;
+import com.ctoddcook.auto_log.FuelingDBMap;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -78,10 +78,13 @@ public class PropertiesHelper {
       throw new IllegalArgumentException("Property instance may not be null");
 
     Property pExisting = sPropertyMap.get(pNew.getName());
-    if (pExisting != null)
-      pExisting.update(pNew);
-    else
+    if (pExisting == null) {
       sPropertyMap.put(pNew.getName(), pNew);
+      insertProperty(pNew);
+    } else if (!pExisting.equals(pNew)) {
+      pExisting.update(pNew);
+      updateProperty(pNew);
+    }
   }
 
   /**
@@ -107,6 +110,7 @@ public class PropertiesHelper {
    * @return the String value
    */
   public String getStringValue(String forName) {
+    forName = forName.trim().toLowerCase();
     Property p = sPropertyMap.get(forName);
     if (p == null)
       throw new NoSuchElementException("No property found for name: " + forName);
@@ -120,6 +124,7 @@ public class PropertiesHelper {
    * @return the double value
    */
   public double getDoubleValue(String forName) {
+    forName = forName.trim().toLowerCase();
     Property p = sPropertyMap.get(forName);
     if (p == null)
       throw new NoSuchElementException("No property found for name: " + forName);
@@ -133,6 +138,7 @@ public class PropertiesHelper {
    * @return the int value
    */
   public int getIntValue(String forName) {
+    forName = forName.trim().toLowerCase();
     Property p = sPropertyMap.get(forName);
     if (p == null)
       throw new NoSuchElementException("No property found for name: " + forName);
@@ -146,6 +152,7 @@ public class PropertiesHelper {
    * @return the date value
    */
   public Date getDateValue(String forName) {
+    forName = forName.trim().toLowerCase();
     Property p = sPropertyMap.get(forName);
     if (p == null)
       throw new NoSuchElementException("No property found for name: " + forName);
@@ -159,6 +166,7 @@ public class PropertiesHelper {
    * @return true if the Property exists, false otherwise
    */
   public boolean doesNameExist(String name) {
+    name = name.trim().toLowerCase();
     Property p = sPropertyMap.get(name);
     return p != null;
   }
@@ -284,7 +292,7 @@ public class PropertiesHelper {
 
     String[] whereArgs = new String[]{String.valueOf(p.getID())};
 
-    int rowsDeleted = sDB.delete(FuelingDataMap.TABLE_NAME, FuelingDataMap.WHERE_ID_CLAUSE,
+    int rowsDeleted = sDB.delete(FuelingDBMap.TABLE_NAME, FuelingDBMap.WHERE_ID_CLAUSE,
         whereArgs);
 
     return (rowsDeleted == 1);
