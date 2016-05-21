@@ -30,7 +30,7 @@ public class PropertiesHelper {
   private static final String TAG = "PropertiesHelper";
 
   private static HashMap<String, Property> sPropertyMap = new HashMap<>(10);
-  private static PropertiesHelper sPH;
+  private static PropertiesHelper sInstance;
   private static SQLiteDatabase sDB;
 
 
@@ -42,18 +42,18 @@ public class PropertiesHelper {
    * @throws UnsupportedOperationException if setDatabaseHelper() has not already been called
    * @see #setDatabaseHelper(SQLiteOpenHelper)
    */
-  public static PropertiesHelper getInstance() {
+  public static synchronized PropertiesHelper getInstance() {
     // Make sure a database helper has already been provided
     if (sDB == null)
       throw new UnsupportedOperationException("Whoa. setDatabaseHelper() must be called before " +
           "this method is called.");
 
-    if (sPH == null) {
-      sPH = new PropertiesHelper();
-      sPH.fetchProperties();
+    if (sInstance == null) {
+      sInstance = new PropertiesHelper();
+      sInstance.fetchProperties();
     }
 
-    return sPH;
+    return sInstance;
   }
 
   /**
@@ -62,7 +62,7 @@ public class PropertiesHelper {
    * @param db the database helper to use
    * @see #getInstance()
    */
-  public static void setDatabaseHelper(SQLiteOpenHelper db) {
+  public static synchronized void setDatabaseHelper(SQLiteOpenHelper db) {
     if (db == null)
       throw new IllegalArgumentException("Provided SQLiteOpenHelper argument is null. Bad.");
 
