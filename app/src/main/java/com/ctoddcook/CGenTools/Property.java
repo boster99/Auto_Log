@@ -114,7 +114,7 @@ public class Property extends DataHolder {
 
     setName(name);
 
-    switch (mType) {
+    switch (type) {
       case TYPE_DATETIME:
         try {
           setValue(getDateFormat().parse(value));
@@ -137,6 +137,7 @@ public class Property extends DataHolder {
         throw new IllegalArgumentException("Provided type is illegal. Type is: " + type);
     }
 
+    mType = type;
     this.mLastUpdated = lastUpdated;
 
     setCurrent();
