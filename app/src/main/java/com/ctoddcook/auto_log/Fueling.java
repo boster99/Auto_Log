@@ -28,7 +28,7 @@ import static com.ctoddcook.CGenTools.CTools.round;
  * latitude and longitude will be retrieved and used to provide the user with a city and state;
  * after that the user might change that description.
  */
-class FuelingData extends DataHolder {
+class Fueling extends DataHolder {
   public static final int SPAN_3_MONTHS = 0;
   public static final int SPAN_6_MONTHS = 1;
   public static final int SPAN_ONE_YEAR = 2;
@@ -36,11 +36,11 @@ class FuelingData extends DataHolder {
 
   private static final Date DATE_THRESHOLDS[];
 
-  private static final ArrayList<FuelingData> sThreeMonthSpan = new ArrayList<>();
-  private static final ArrayList<FuelingData> sSixMonthSpan = new ArrayList<>();
-  private static final ArrayList<FuelingData> sOneYearSpan = new ArrayList<>();
-  private static final ArrayList<FuelingData> sLifetimeSpan = new ArrayList<>();
-  private static final SparseArray<FuelingData> sFuelingList = new SparseArray<>(200);
+  private static final ArrayList<Fueling> sThreeMonthSpan = new ArrayList<>();
+  private static final ArrayList<Fueling> sSixMonthSpan = new ArrayList<>();
+  private static final ArrayList<Fueling> sOneYearSpan = new ArrayList<>();
+  private static final ArrayList<Fueling> sLifetimeSpan = new ArrayList<>();
+  private static final SparseArray<Fueling> sFuelingList = new SparseArray<>(200);
 
   static {
     DATE_THRESHOLDS = new Date[3];
@@ -84,7 +84,7 @@ class FuelingData extends DataHolder {
    * by the user selecting "Add", followed by the user canceling; we don't want to leave an
    * empty object in the SparseArray.
    */
-  public FuelingData() {
+  public Fueling() {
   }
 
   /**
@@ -105,9 +105,9 @@ class FuelingData extends DataHolder {
    * @param longitude   the longitude of the fueling, if known when the fueling occurred
    * @param lastUpdated the last time this record was updated
    */
-  public FuelingData(int fuelingID, int vehicleID, Date dateOfFill, float distance, float volume,
-                     float pricePaid, float odometer, String location, float latitude,
-                     float longitude, Date lastUpdated) {
+  public Fueling(int fuelingID, int vehicleID, Date dateOfFill, float distance, float volume,
+                 float pricePaid, float odometer, String location, float latitude,
+                 float longitude, Date lastUpdated) {
     mFuelingID = fuelingID;
     mVehicleID = vehicleID;
     mDateOfFill = dateOfFill;
@@ -131,24 +131,24 @@ class FuelingData extends DataHolder {
      */
 
   /**
-   * Adds a FuelingData to the static SparseArray used to grab an instance by ID. (Does not add
+   * Adds a Fueling to the static SparseArray used to grab an instance by ID. (Does not add
    * it to the list if it's ID has not yet been set--meaning it's a new object and not yet saved
    * to the database. Also checks to see if the object is already in the list.)
    *
-   * @param f the FuelingData object to add
+   * @param f the Fueling object to add
    */
-  private static void addToSparseArray(FuelingData f) {
+  private static void addToSparseArray(Fueling f) {
     if (f.mFuelingID != INITIAL_ID && sFuelingList.get(f.mFuelingID) == null)
       sFuelingList.append(f.mFuelingID, f);
   }
 
   /**
-   * Retrieves a FuelingData instance by its ID.
+   * Retrieves a Fueling instance by its ID.
    *
-   * @param id The id of the FuelingData object desired
-   * @return The FuelingData object associated with the provided ID, or null if there is none.
+   * @param id The id of the Fueling object desired
+   * @return The Fueling object associated with the provided ID, or null if there is none.
    */
-  public static FuelingData getFueling(int id) {
+  public static Fueling getFueling(int id) {
     return sFuelingList.get(id);
   }
 
@@ -159,16 +159,16 @@ class FuelingData extends DataHolder {
      */
 
   /**
-   * Returns the appropriate ArrayList of FuelingData instances for the indicated time span
+   * Returns the appropriate ArrayList of Fueling instances for the indicated time span
    *
-   * @param span FuelingData.SPAN_3_MONTHS, FuelingData.SPAN_6_MONTHS, FuelingData.SPAN_ONE_YEAR or
-   *             FuelingData.SPAN_ALL_TIME
-   * @return an ArrayList of FuelingData instances
+   * @param span Fueling.SPAN_3_MONTHS, Fueling.SPAN_6_MONTHS, Fueling.SPAN_ONE_YEAR or
+   *             Fueling.SPAN_ALL_TIME
+   * @return an ArrayList of Fueling instances
    * @throws IllegalArgumentException if the argument provided does not match one of the required
    *                                  constants.
    */
-  private static ArrayList<FuelingData> getListForSpan(int span) throws IllegalArgumentException {
-    ArrayList<FuelingData> listForSpan;
+  private static ArrayList<Fueling> getListForSpan(int span) throws IllegalArgumentException {
+    ArrayList<Fueling> listForSpan;
 
     switch (span) {
       case SPAN_3_MONTHS:
@@ -195,12 +195,12 @@ class FuelingData extends DataHolder {
    * Calculates and returns the average (mean) distance for each fill in the indicated time span.
    * Rounded to 1 decimal place.
    *
-   * @param span FuelingData.SPAN_3_MONTHS, FuelingData.SPAN_6_MONTHS, FuelingData.SPAN_ONE_YEAR or
-   *             FuelingData.SPAN_ALL_TIME
+   * @param span Fueling.SPAN_3_MONTHS, Fueling.SPAN_6_MONTHS, Fueling.SPAN_ONE_YEAR or
+   *             Fueling.SPAN_ALL_TIME
    * @return the average (mean) distance for the fills in the indicated time span.
    */
   public static float getAvgDistanceOverSpan(int span) {
-    ArrayList<FuelingData> fillsOverSpan;
+    ArrayList<Fueling> fillsOverSpan;
 
     fillsOverSpan = getListForSpan(span);
 
@@ -209,7 +209,7 @@ class FuelingData extends DataHolder {
 
     float totalDistance = 0.0f;
 
-    for (FuelingData each : fillsOverSpan)
+    for (Fueling each : fillsOverSpan)
       totalDistance += each.mDistance;
 
     return round(totalDistance / fillsOverSpan.size(), 1);
@@ -219,12 +219,12 @@ class FuelingData extends DataHolder {
    * Calculates and returns the average (mean) volume for each fill in the indicated time span.
    * Rounded to 1 decimal place.
    *
-   * @param span FuelingData.SPAN_3_MONTHS, FuelingData.SPAN_6_MONTHS, FuelingData.SPAN_ONE_YEAR or
-   *             FuelingData.SPAN_ALL_TIME
+   * @param span Fueling.SPAN_3_MONTHS, Fueling.SPAN_6_MONTHS, Fueling.SPAN_ONE_YEAR or
+   *             Fueling.SPAN_ALL_TIME
    * @return the average (mean) distance for the fills in the indicated time span.
    */
   public static float getAvgVolumeOverSpan(int span) {
-    ArrayList<FuelingData> fillsOverSpan;
+    ArrayList<Fueling> fillsOverSpan;
 
     fillsOverSpan = getListForSpan(span);
 
@@ -233,7 +233,7 @@ class FuelingData extends DataHolder {
 
     float totalVolume = 0.0f;
 
-    for (FuelingData each : fillsOverSpan)
+    for (Fueling each : fillsOverSpan)
       totalVolume += each.mVolume;
 
     return round(totalVolume / fillsOverSpan.size(), 1);
@@ -243,12 +243,12 @@ class FuelingData extends DataHolder {
    * Calculates and returns the average (mean) Price Paid for each fill in the indicated time
    * span. Rounded to 2 decimal places.
    *
-   * @param span FuelingData.SPAN_3_MONTHS, FuelingData.SPAN_6_MONTHS, FuelingData.SPAN_ONE_YEAR or
-   *             FuelingData.SPAN_ALL_TIME
+   * @param span Fueling.SPAN_3_MONTHS, Fueling.SPAN_6_MONTHS, Fueling.SPAN_ONE_YEAR or
+   *             Fueling.SPAN_ALL_TIME
    * @return the average (mean) price paid for the fills in the indicated time span.
    */
   public static float getAvgPricePaidOverSpan(int span) throws IllegalArgumentException {
-    ArrayList<FuelingData> fillsOverSpan;
+    ArrayList<Fueling> fillsOverSpan;
     int countOfNonZeroEntries = 0;
 
     fillsOverSpan = getListForSpan(span);
@@ -258,7 +258,7 @@ class FuelingData extends DataHolder {
 
     float totalPricePaid = 0.0f;
 
-    for (FuelingData each : fillsOverSpan) {
+    for (Fueling each : fillsOverSpan) {
       if (each.mPricePaid > 0.0f) {
         totalPricePaid += each.mPricePaid;
         countOfNonZeroEntries++;
@@ -275,12 +275,12 @@ class FuelingData extends DataHolder {
    * Calculates and returns the average (mean) Price Paid per Unit (gallon) over the indicated
    * time span. Rounded to 3 decimal places.
    *
-   * @param span FuelingData.SPAN_3_MONTHS, FuelingData.SPAN_6_MONTHS, FuelingData.SPAN_ONE_YEAR or
-   *             FuelingData.SPAN_ALL_TIME
+   * @param span Fueling.SPAN_3_MONTHS, Fueling.SPAN_6_MONTHS, Fueling.SPAN_ONE_YEAR or
+   *             Fueling.SPAN_ALL_TIME
    * @return the average (mean) price per unit over indicated time span.
    */
   public static float getAvgPricePerUnitOverSpan(int span) throws IllegalArgumentException {
-    ArrayList<FuelingData> fillsOverSpan;
+    ArrayList<Fueling> fillsOverSpan;
 
     fillsOverSpan = getListForSpan(span);
 
@@ -290,7 +290,7 @@ class FuelingData extends DataHolder {
     float totalPricePaid = 0.0f;
     float totalVolume = 0.0f;
 
-    for (FuelingData each : fillsOverSpan) {
+    for (Fueling each : fillsOverSpan) {
       if (each.mPricePaid > 0.0f && each.mVolume > 0.0f) {
         totalPricePaid += each.mPricePaid;
         totalVolume += each.mVolume;
@@ -307,12 +307,12 @@ class FuelingData extends DataHolder {
    * Calculates and returns the average (mean) Price Paid per Distance Unit (mile or kilometer)
    * over the indicated time span. Rounded to 3 decimal places.
    *
-   * @param span FuelingData.SPAN_3_MONTHS, FuelingData.SPAN_6_MONTHS, FuelingData.SPAN_ONE_YEAR or
-   *             FuelingData.SPAN_ALL_TIME
+   * @param span Fueling.SPAN_3_MONTHS, Fueling.SPAN_6_MONTHS, Fueling.SPAN_ONE_YEAR or
+   *             Fueling.SPAN_ALL_TIME
    * @return the average (mean) price per distance unit over indicated time span.
    */
   public static float getAvgPricePerDistanceOverSpan(int span) throws IllegalArgumentException {
-    ArrayList<FuelingData> fillsOverSpan;
+    ArrayList<Fueling> fillsOverSpan;
 
     fillsOverSpan = getListForSpan(span);
 
@@ -322,7 +322,7 @@ class FuelingData extends DataHolder {
     float totalPricePaid = 0.0f;
     float totalDistance = 0.0f;
 
-    for (FuelingData each : fillsOverSpan) {
+    for (Fueling each : fillsOverSpan) {
       if (each.mPricePaid > 0.0f && each.mDistance > 0.0f) {
         totalPricePaid += each.mPricePaid;
         totalDistance += each.mDistance;
@@ -339,11 +339,11 @@ class FuelingData extends DataHolder {
    * Calculates and returns the average (mean) distance per volume (mpg) over the indicated
    * time span. Rounded to 1 decimal place.
    *
-   * @param span FuelingData.SPAN_3_MONTHS, FuelingData.SPAN_6_MONTHS or FuelingData.SPAN_ONE_YEAR
+   * @param span Fueling.SPAN_3_MONTHS, Fueling.SPAN_6_MONTHS or Fueling.SPAN_ONE_YEAR
    * @return the average (mean) distance per volume of fuel (mpg) over indicated time span.
    */
   public static float getAvgEfficiencyOverSpan(int span) throws IllegalArgumentException {
-    ArrayList<FuelingData> fillsOverSpan;
+    ArrayList<Fueling> fillsOverSpan;
 
     fillsOverSpan = getListForSpan(span);
 
@@ -353,7 +353,7 @@ class FuelingData extends DataHolder {
     float totalDistance = 0.0f;
     float totalVolume = 0.0f;
 
-    for (FuelingData each : fillsOverSpan) {
+    for (Fueling each : fillsOverSpan) {
       totalDistance += each.mDistance;
       totalVolume += each.mVolume;
     }
@@ -369,7 +369,7 @@ class FuelingData extends DataHolder {
 
 
     /*
-    Following are methods which get row counts from the arrays containing FuelingData instances
+    Following are methods which get row counts from the arrays containing Fueling instances
     in certain time spans.
      */
 
@@ -414,7 +414,7 @@ class FuelingData extends DataHolder {
 
 
     /*
-    The next few methods make adjustments to the arrays containing FuelingData instances
+    The next few methods make adjustments to the arrays containing Fueling instances
     in certain time spans.
      */
 
@@ -440,11 +440,11 @@ class FuelingData extends DataHolder {
   }
 
   /**
-   * Removes the provided FuelingData instance from all ArrayLists
+   * Removes the provided Fueling instance from all ArrayLists
    *
-   * @param fd The FuelingData instance to remove
+   * @param fd The Fueling instance to remove
    */
-  public static void remove(FuelingData fd) {
+  public static void remove(Fueling fd) {
     if (sThreeMonthSpan.contains(fd))
       sThreeMonthSpan.remove(fd);
 
@@ -494,7 +494,7 @@ class FuelingData extends DataHolder {
         sOneYearSpan.remove(this);      //     If so, remove from the list
     }
 
-    // Finally, regardless of date, add this to the list of all FuelingData instances as well as
+    // Finally, regardless of date, add this to the list of all Fueling instances as well as
     // to the SparseArray list.
     if (!sLifetimeSpan.contains(this))
       sLifetimeSpan.add(this);
@@ -507,7 +507,7 @@ class FuelingData extends DataHolder {
 
 
     /*
-    The next few methods calculate values for a specific instance of FuelingData
+    The next few methods calculate values for a specific instance of Fueling
      */
 
   /**
@@ -641,7 +641,7 @@ class FuelingData extends DataHolder {
   /**
    * Setter for mDateOfFill, a Date value indicating when the vehicle was filled with gas. After
    * setting the new value, adjustLists() is called to add this instance to (or remove it from)
-   * appropriate arrays of FuelingData objects.
+   * appropriate arrays of Fueling objects.
    *
    * @param dateOfFill a Date value indicating when the vehicle was filled with gas
    */
@@ -809,13 +809,13 @@ class FuelingData extends DataHolder {
   }
 
   /**
-   * Determines whether another, provided FuelingData instance is the same as this one.
+   * Determines whether another, provided Fueling instance is the same as this one.
    * All fields are checked, except for ID and LastUpdated. Strings are compared ignoring case.
    *
-   * @param other the FuelingData instance this one is compared to
+   * @param other the Fueling instance this one is compared to
    * @return true if their data is the same
    */
-  public boolean equals(FuelingData other) {
+  public boolean equals(Fueling other) {
     if (this == other) return true;
     if (this.getStatus() != other.getStatus()) return false;
     if (this.mVehicleID != other.mVehicleID) return false;
@@ -833,7 +833,7 @@ class FuelingData extends DataHolder {
   }
 
   /**
-   * Determines whether another, provided FuelingData instance has the same key fields as
+   * Determines whether another, provided Fueling instance has the same key fields as
    * this one. Fields checked are mVehicleID, mDateOfFill, mDistance, mVolume, and mPricePaid.
    *
    * @param vehID      Vehicle ID to be compared against
