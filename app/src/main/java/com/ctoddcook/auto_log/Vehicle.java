@@ -21,10 +21,10 @@ import static com.ctoddcook.CGenTools.CTools.longToInt;
  * A fairly simple, straightforward data class. No calculations. Just store and present
  * data for different vehicles.
  */
-public class VehicleData extends DataHolder {
+public class Vehicle extends DataHolder {
   public static final String DEFAULT_VEHICLE_KEY = "com.ctoddcook.auto_log.DefaultVehicleID";
   public static final int DEFAULT_VEHICLE_TYPE = Property.TYPE_INT;
-  private static final SparseArray<VehicleData> sVehicleList = new SparseArray<>(12);
+  private static final SparseArray<Vehicle> sVehicleList = new SparseArray<>(12);
   private int mVehicleID;
   private String mName;
   private int mYear;
@@ -41,7 +41,7 @@ public class VehicleData extends DataHolder {
    * Note: Creating a new, empty instance does not cause it to be added to the sVehicleList
    * SparseArray, as the user might cancel the operation, leaving an empty instance in the list.
    */
-  public VehicleData() {
+  public Vehicle() {
   }
 
   /**
@@ -56,7 +56,7 @@ public class VehicleData extends DataHolder {
    * @param licensePlate the vehicle license plate
    * @param lastUpdated  the last time the record was updated
    */
-  public VehicleData(int id, String name, int year, String color, String model, String vin, String licensePlate, Date lastUpdated) {
+  public Vehicle(int id, String name, int year, String color, String model, String vin, String licensePlate, Date lastUpdated) {
     mVehicleID = id;
     mName = name;
     mYear = year;
@@ -73,10 +73,10 @@ public class VehicleData extends DataHolder {
    * Returns the vehicle for the given ID. If no such vehicle is found in the static SparseArray
    * null is returned.
    *
-   * @param id the ID of the desired VehicleData instance
-   * @return the associated VehicleData instance, or null if there is none
+   * @param id the ID of the desired Vehicle instance
+   * @return the associated Vehicle instance, or null if there is none
    */
-  public static VehicleData getVehicle(int id) {
+  public static Vehicle getVehicle(int id) {
     return sVehicleList.get(id);
   }
 
@@ -84,10 +84,10 @@ public class VehicleData extends DataHolder {
    * Returns the vehicle for the given ID. If no such vehicle is found in the static SparseArray
    * null is returned.
    *
-   * @param id the ID of the desired VehicleData instance
-   * @return the associated VehicleData instance, or null if there is none
+   * @param id the ID of the desired Vehicle instance
+   * @return the associated Vehicle instance, or null if there is none
    */
-  public static VehicleData getVehicle(long id) {
+  public static Vehicle getVehicle(long id) {
     return getVehicle(longToInt(id));
   }
 
@@ -96,18 +96,18 @@ public class VehicleData extends DataHolder {
    *
    * @param v The vehicle to be added to the list
    */
-  public static void addVehicle(VehicleData v) {
+  public static void addVehicle(Vehicle v) {
     sVehicleList.put(v.getID(), v);
   }
 
   /**
    * Returns an iterable list of Vehicles.
    *
-   * @return ArrayList of all of the VehicleData instances
+   * @return ArrayList of all of the Vehicle instances
    */
-  public static ArrayList<VehicleData> getVehicleList() {
-    ArrayList<VehicleData> list = new ArrayList<>();
-    VehicleData v;
+  public static ArrayList<Vehicle> getVehicleList() {
+    ArrayList<Vehicle> list = new ArrayList<>();
+    Vehicle v;
     for (int i = 0; i < sVehicleList.size(); i++) {
       v = sVehicleList.valueAt(i);
       list.add(v);
@@ -287,10 +287,10 @@ public class VehicleData extends DataHolder {
    * Determines whether this and another (provided) instance are equal. Excludes the ID and
    * LastUpdated fields. Case is ignored, so "gray" and "GRAY" are equal.
    *
-   * @param other the VehicleData instance to compare against
+   * @param other the Vehicle instance to compare against
    * @return true if all member fields (except ID and LastUpdated) are the same
    */
-  public boolean equals(VehicleData other) {
+  public boolean equals(Vehicle other) {
     if (this == other) return true;
     if (getStatus() != other.getStatus()) return false;
     if (!this.mName.equalsIgnoreCase(other.mName)) return false;
@@ -305,7 +305,7 @@ public class VehicleData extends DataHolder {
   }
 
   /**
-   * Determines whether the Color, Model and Year of another instance of VehicleData are
+   * Determines whether the Color, Model and Year of another instance of Vehicle are
    * the same as this instance's. Case is ignored, so "gray" is the same as "GRAY".
    *
    * @param color the color of the other vehicle
