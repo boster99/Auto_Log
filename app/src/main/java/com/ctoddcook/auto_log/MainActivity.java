@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
   private static final int ADD_FIRST_VEHICLE = 755;
   private static final int ADD_FUELING = 442;
   private static PropertiesHelper sPH;
-  private static DatabaseHelper sDH;
+  private static DatabaseHelper sDatabaseHelper;
   private int mCurrentVehicleID = 0;
   private ListView mHistoricalsList;
 
@@ -56,8 +56,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     FormatHandler.init(this);
 
-    sDH = new DatabaseHelper(this);
-    PropertiesHelper.setDatabaseHelper(sDH);
+    sDatabaseHelper = DatabaseHelper.getInstance(this);
+    PropertiesHelper.setDatabaseHelper(sDatabaseHelper);
     sPH = PropertiesHelper.getInstance();
 
     populateScreen();
@@ -82,22 +82,24 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
       mCurrentVehicleID = (int) sPH.getLongValue(Vehicle.DEFAULT_VEHICLE_KEY);
 
     // Fetch the list of vehicles into memory
-    ArrayList<Vehicle> vList = sDH.fetchVehicleList();
+    ArrayList<Vehicle> vList = sDatabaseHelper.fetchVehicleList();
 
     /*
     If no vehicles were found in the database, we open the activity to add at least one vehicle.
     Then we fetch the list again. If the list is not empty (expected) we use the newly-added
     vehicle as the Default, and add that default to properties.
      */
+
     if (vList.isEmpty()) {
       Intent intent = new Intent(this, AddEditVehicleActivity.class);
       intent.putExtra(AddEditVehicleActivity.KEY_ADD_EDIT_MODE, AddEditVehicleActivity.MODE_ADD);
       startActivityForResult(intent, ADD_FIRST_VEHICLE);
     } else {
-      if (mCurrentVehicleID == 0)
+      if (mCurrentVehicleID == 0) {
         mCurrentVehicleID = vList.get(0).getID();
-      Property p = new Property(Vehicle.DEFAULT_VEHICLE_KEY, mCurrentVehicleID);
-      sPH.put(p);
+        Property p = new Property(Vehicle.DEFAULT_VEHICLE_KEY, mCurrentVehicleID);
+        sPH.put(p);
+      }
     }
   }
 
@@ -158,12 +160,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
    */
   private void loadForVehicle(int id) {
     //todo add a spinning-circle progress bar
-    ArrayList<Fueling> fList = sDH.fetchFuelingData(id);
+    ArrayList<Fueling> fList = sDatabaseHelper.fetchFuelingData(id);
+
     if (fList.isEmpty()) {
       addFueling();
     } else {
-      loadHistoricals(fList);
       loadAverages();
+      loadHistoricals(fList);
     }
   }
 
