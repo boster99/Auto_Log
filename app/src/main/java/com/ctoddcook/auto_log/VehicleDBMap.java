@@ -12,7 +12,7 @@ import android.provider.BaseColumns;
  * Created by C. Todd Cook on 5/10/2016.
  * ctodd@ctoddcook.com
  */
-public class VehicleDataMap extends AutoLogDataMap implements BaseColumns {
+public class VehicleDBMap extends AutoLogDataMap implements BaseColumns {
     public static final String TABLE_NAME;
     public static final String COLUMN_NAME_NAME;
     public static final String COLUMN_NAME_YEAR;
