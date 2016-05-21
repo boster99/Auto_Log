@@ -48,9 +48,10 @@ public class AddEditFuelingActivity extends AppCompatActivity
   private static final String TAG = "AddEditFuelingActivity";
   public static boolean dupeCheckResult;
   private int mode;
-  private FuelingData mFueling;
-  private VehicleData mVehicle;
+  private Fueling mFueling;
+  private Vehicle mVehicle;
   private Date mDateOfFill;
+  private Location mGPSLocation;
   private int mYear, mMonth, mDay, mHour, mMinute;
 
   /**
@@ -69,13 +70,12 @@ public class AddEditFuelingActivity extends AppCompatActivity
     setSupportActionBar(toolbar);
     if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-    setupVehicleSpinner();
 
     mode = getIntent().getIntExtra(KEY_ADD_EDIT_MODE, -1);
 
     switch (mode) {
       case MODE_ADD:
-        mFueling = new FuelingData();
+        mFueling = new Fueling();
         getInitialLocation();
         break;
       case MODE_EDIT:
@@ -84,11 +84,17 @@ public class AddEditFuelingActivity extends AppCompatActivity
           throw new IllegalArgumentException("In edit mode, a Fueling ID must be " +
               "provided");
 
-        mFueling = FuelingData.getFueling(fuelingID);
+        mFueling = Fueling.getFueling(fuelingID);
         break;
       default:
         throw new IllegalArgumentException("Calling process must specify add/edit mode");
     }
+
+    int vehicleID = getIntent().getIntExtra(Vehicle.DEFAULT_VEHICLE_KEY, -1);
+    if (vehicleID > 0) {
+      mVehicle = Vehicle.getVehicle(vehicleID);
+    }
+    setupVehicleSpinner();
 
     // Get the current, local, date and time; set the seconds and milliseconds to 0
     GregorianCalendar gc = new GregorianCalendar();
@@ -124,7 +130,7 @@ public class AddEditFuelingActivity extends AppCompatActivity
     }
 
     // make an adapter from the cursor
-    String[] from = new String[]{VehicleDataMap.COLUMN_NAME_NAME};
+    String[] from = new String[]{VehicleDBMap.COLUMN_NAME_NAME};
     int[] to = new int[]{android.R.id.text1};
     SimpleCursorAdapter sca = new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item,
         cursor, from, to, 0);
@@ -139,6 +145,24 @@ public class AddEditFuelingActivity extends AppCompatActivity
 
       // set spinner listener to display the selected item ID
       spinner.setOnItemSelectedListener(this);
+
+      /*
+      If we have a vehicle indicated (we should) then set the spinner to show that vehicle as
+      selected.
+       */
+      if (mVehicle != null) {
+        String name = mVehicle.getName();
+        int pos = 0;
+
+        for (int i = 0; i < spinner.getCount(); i++) {
+          if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(name)) {
+            pos = i;
+            break;
+          }
+        }
+
+        spinner.setSelection(pos);
+      }
     }
   }
 
@@ -158,15 +182,17 @@ public class AddEditFuelingActivity extends AppCompatActivity
    * coordinates. We use those coordinates to find the city and state, and provide that in the
    * "Location" field as a help to the user.
    * <p>
-   * Note this should only be called when we are adding a new FuelingData instance only, so we
+   * Note this should only be called when we are adding a new Fueling instance only, so we
    * don't overwrite a location description the user has already provided.
-   * @param location the location retrieved by CLocationWaiter
+   * @param gpsLocation the location retrieved by CLocationWaiter
    */
   @Override
-  public void setLocation(Location location) {
+  public void setLocation(Location gpsLocation) {
     String cityAndState = null;
-    if (location != null)
-      cityAndState = CLocationTools.getCity(this, location, true);
+    if (gpsLocation != null) {
+      cityAndState = CLocationTools.getCity(this, gpsLocation, true);
+      mGPSLocation = gpsLocation;
+    }
 
     if (cityAndState != null) {
       EditText locET = (EditText) findViewById(R.id.fueling_edit_location);
@@ -196,10 +222,10 @@ public class AddEditFuelingActivity extends AppCompatActivity
    * @param id     the row ID of the item that is selected
    */
   public void onItemSelected(AdapterView<?> parent, View v, int pos, long id) {
-    mVehicle = VehicleData.getVehicle(id);
+    mVehicle = Vehicle.getVehicle(id);
     Log.i(TAG, "onItemSelected: value of int pos is " + pos);
     Log.i(TAG, "onItemSelected: value of long id is " + id);
-    //TODO I MIGHT BE MIS-USING THE ID PARAMGER ...
+    //TODO I MIGHT BE MIS-USING THE ID PARAMETER ...
     // IT MIGHT BE GIVING A POSITION IN THE LIST, AND NOT THE DATABASE RECORD ID
   }
 
@@ -221,10 +247,10 @@ public class AddEditFuelingActivity extends AppCompatActivity
       DatabaseHelper dh = new DatabaseHelper(this);
       switch (mode) {
         case MODE_ADD:
-//                    dh.insertFueling(mFueling);
+          dh.insertFueling(mFueling);
           break;
         case MODE_EDIT:
-//                    dh.updateFueling(mFueling);
+          dh.updateFueling(mFueling);
           break;
         default:
           throw new IllegalArgumentException("Member field mode does not " +
@@ -232,15 +258,18 @@ public class AddEditFuelingActivity extends AppCompatActivity
       }
     }
 
+    Intent intent = new Intent();
+    intent.putExtra(Vehicle.DEFAULT_VEHICLE_KEY, mVehicle.getID());
+    setResult(RESULT_OK, intent);
     this.finish();
   }
 
   /**
    * Extracts data from the UI fields -- i.e., entered by the user -- and puts them into the
-   * FuelingData object which will be saved to the database.
+   * Fueling object which will be saved to the database.
    * <p>
    * <strong>Note:</strong> We do not do anything with Location (GPS) data here.
-   * GPS-based (or network-based) location data is gathered when a new FuelingData object is
+   * GPS-based (or network-based) location data is gathered when a new Fueling object is
    * created by this activity, and is used to initialize the "Location" field for the user. While
    * we keep (and save to the database) the system-provided location information, we don't give
    * the user a means to update it. The idea is that the user can updated their descriptive
@@ -258,8 +287,7 @@ public class AddEditFuelingActivity extends AppCompatActivity
    * @return true if no problems were encountered, and no sanity checks failed
    */
   public boolean extractDetails() {
-    //TODO Figure out why mVehicle is null
-//        int vehicleID = mVehicle.getID();
+    int vehicleID = mVehicle.getID();
     Date date;
     float distance = 0f, volume = 0f, pricePaid = 0f, odometer = 0f;
     String location = null, gpsCoordinates = null;
@@ -309,6 +337,19 @@ public class AddEditFuelingActivity extends AppCompatActivity
       return false;
     }
 
+    mFueling.setVehicleID(mVehicle.getID());
+    mFueling.setDateOfFill(mDateOfFill);
+    mFueling.setDistance(distance);
+    mFueling.setVolume(volume);
+    mFueling.setPricePaid(pricePaid);
+    mFueling.setOdometer(odometer);
+    mFueling.setLocation(location);
+
+    if (mGPSLocation != null) {
+      mFueling.setLatitude((float)mGPSLocation.getLatitude());
+      mFueling.setLongitude((float)mGPSLocation.getLongitude());
+    }
+
     return true;
   }
 
@@ -318,6 +359,7 @@ public class AddEditFuelingActivity extends AppCompatActivity
    * @param v The View which triggered this method call
    */
   public void cancelAddFueling(View v) {
+    setResult(RESULT_CANCELED);
     this.finish();
   }
 
@@ -348,7 +390,7 @@ public class AddEditFuelingActivity extends AppCompatActivity
 
 
   /**
-   * Opens a Date Pikcer dialog for the user to change the date of fill
+   * Opens a Date Picker dialog for the user to change the date of fill
    *
    * @param v the view which called this message
    */
@@ -400,7 +442,7 @@ public class AddEditFuelingActivity extends AppCompatActivity
   }
 
   /**
-   * Present the working DateofFill (not yet stored into a FuelingData object, though it may
+   * Present the working DateOfFill (not yet stored into a Fueling object, though it may
    * have come from one if we're in EDIT mode). Splits the information into separate Date and
    * Time components, so Date Picker and Time Picker dialogs may be used to update these fields.
    */
