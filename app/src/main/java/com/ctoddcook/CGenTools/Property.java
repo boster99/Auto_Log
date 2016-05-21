@@ -27,7 +27,7 @@ import java.util.Date;
 public class Property extends DataHolder {
   private static final String TAG = "Property";
 
-  public static final int TYPE_INT = 0;
+  public static final int TYPE_LONG = 0;
   public static final int TYPE_DOUBLE = 1;
   public static final int TYPE_STRING = 2;
   public static final int TYPE_DATETIME = 3;
@@ -37,7 +37,7 @@ public class Property extends DataHolder {
   private String mName;
   private int mType = -1;
   private String mStringVal;
-  private int mIntVal;
+  private long mLongVal;
   private double mDoubleVal;
   private Date mDateTimeVal;
 
@@ -64,7 +64,7 @@ public class Property extends DataHolder {
    * @param name the name of the property
    * @param value the value
    */
-  public Property(String name, int value) {
+  public Property(String name, long value) {
     super();
     setName(name);
     setValue(value);
@@ -127,8 +127,8 @@ public class Property extends DataHolder {
       case TYPE_DOUBLE:
         setValue(Double.parseDouble(value));
         break;
-      case TYPE_INT:
-        setValue(Integer.parseInt(value));
+      case TYPE_LONG:
+        setValue(Long.parseLong(value));
         break;
       case TYPE_STRING:
         setValue(value);
@@ -162,9 +162,9 @@ public class Property extends DataHolder {
    * Accessor to set the int value of this property.
    * @param value the int value
    */
-  public void setValue(int value) {
-    mType = TYPE_INT;
-    mIntVal = value;
+  public void setValue(long value) {
+    mType = TYPE_LONG;
+    mLongVal = value;
     touch();
   }
 
@@ -260,8 +260,8 @@ public class Property extends DataHolder {
    * Accessor to the int value of the property
    * @return the int value
    */
-  public int getIntValue() {
-    return mIntVal;
+  public long getIntValue() {
+    return mLongVal;
   }
 
   /**
@@ -290,8 +290,8 @@ public class Property extends DataHolder {
         return getDateFormat().format(mDateTimeVal);
       case TYPE_DOUBLE:
         return Double.toString(mDoubleVal);
-      case TYPE_INT:
-        return Integer.toString(mIntVal);
+      case TYPE_LONG:
+        return Long.toString(mLongVal);
       case TYPE_STRING:
         return mStringVal;
     }
@@ -314,7 +314,7 @@ public class Property extends DataHolder {
    * Standard method checks for equality of all pertinent members of this and another instance.
    * Note it does not actually check <strong>all</strong> members; based on the data type
    * indicated by this property, it checks the related values and ignores the others. (For
-   * example, if the data type is TYPE_INT, the two instances' int values will be compared, but
+   * example, if the data type is TYPE_LONG, the two instances' int values will be compared, but
    * their double, Date and String values will be ignored.)
    * @param other the other Property to compare
    * @return true if all pertinent fields match
@@ -334,8 +334,8 @@ public class Property extends DataHolder {
       case TYPE_DOUBLE:
         if (this.mDoubleVal != other.mDoubleVal) return false;
         break;
-      case TYPE_INT:
-        if (this.mIntVal != other.mIntVal) return false;
+      case TYPE_LONG:
+        if (this.mLongVal != other.mLongVal) return false;
         break;
       case TYPE_STRING:
         if (!this.mStringVal.equals(other.mStringVal)) return false;
@@ -363,7 +363,7 @@ public class Property extends DataHolder {
   public void update(Property other) {
     this.mType = other.mType;
     this.mStringVal = other.mStringVal;
-    this.mIntVal = other.mIntVal;
+    this.mLongVal = other.mLongVal;
     this.mDoubleVal = other.mDoubleVal;
     this.mDateTimeVal = other.mDateTimeVal;
     touch();
