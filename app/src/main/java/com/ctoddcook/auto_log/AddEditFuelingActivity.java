@@ -41,12 +41,15 @@ public class AddEditFuelingActivity extends AppCompatActivity
     implements AdapterView.OnItemSelectedListener, DatePickerFragment.DatePickerCaller,
     TimePickerFragment.TimePickerCaller, CLocationWaiter.locationCaller {
 
+  private static final String TAG = "AddEditFuelingActivity";
+  private static DatabaseHelper sDatabaseHelper;
+
   public static final String KEY_ADD_EDIT_MODE = "com.ctoddcook.auto_log.ADD_EDIT_MODE";
   public static final String KEY_FUELING_ID = "com.ctoddcook.auto_log.FUELING_ID";
   public static final int MODE_ADD = 1;
   public static final int MODE_EDIT = 2;
-  private static final String TAG = "AddEditFuelingActivity";
   public static boolean dupeCheckResult;
+
   private int mode;
   private Fueling mFueling;
   private Vehicle mVehicle;
@@ -68,6 +71,8 @@ public class AddEditFuelingActivity extends AppCompatActivity
     setContentView(R.layout.activity_add_edit_fueling);
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
+    sDatabaseHelper = DatabaseHelper.getInstance(this);
+
     if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     GregorianCalendar gc = new GregorianCalendar();
@@ -118,8 +123,7 @@ public class AddEditFuelingActivity extends AppCompatActivity
    */
   private void setupVehicleSpinner() {
     // get a cursor providing IDs and NAMEs for each vehicle
-    DatabaseHelper dh = new DatabaseHelper(this);
-    Cursor cursor = dh.fetchSimpleVehicleListCursor();
+    Cursor cursor = sDatabaseHelper.fetchSimpleVehicleListCursor();
 
     // if the cursor has no results, open the AddEditVehicleActivity, then try again
     if (cursor.getCount() < 1) {
@@ -127,7 +131,7 @@ public class AddEditFuelingActivity extends AppCompatActivity
       intent.putExtra(AddEditVehicleActivity.KEY_ADD_EDIT_MODE, AddEditVehicleActivity
           .MODE_ADD);
       startActivity(intent);
-      cursor = dh.fetchSimpleVehicleListCursor();
+      cursor = sDatabaseHelper.fetchSimpleVehicleListCursor();
     }
 
     // make an adapter from the cursor
@@ -246,13 +250,12 @@ public class AddEditFuelingActivity extends AppCompatActivity
    */
   public void saveFueling(View v) {
     if (extractDetails()) {
-      DatabaseHelper dh = new DatabaseHelper(this);
       switch (mode) {
         case MODE_ADD:
-          dh.insertFueling(mFueling);
+          sDatabaseHelper.insertFueling(mFueling);
           break;
         case MODE_EDIT:
-          dh.updateFueling(mFueling);
+          sDatabaseHelper.updateFueling(mFueling);
           break;
         default:
           throw new IllegalArgumentException("Member field mode does not " +
