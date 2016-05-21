@@ -6,7 +6,6 @@ package com.ctoddcook.auto_log;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.widget.TextView;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -35,7 +34,12 @@ public class FormatHandler {
   private static DecimalFormat mDistanceForm = null;
   private static DecimalFormat mVolumeForm = null;
   private static DecimalFormat mEfficiencyForm = null;
-  private static final DateFormat mDateForm = SimpleDateFormat.getDateInstance(DateFormat.SHORT);
+  private static final DateFormat mShortDateForm =
+      SimpleDateFormat.getDateInstance(DateFormat.SHORT);
+  private static final DateFormat mMediumDateForm =
+      SimpleDateFormat.getDateInstance(DateFormat.MEDIUM);
+  private static final DateFormat mLongDateForm =
+      SimpleDateFormat.getDateInstance(DateFormat.LONG);
   private static boolean hasBeenSetup = false;
   private static String displayPattern = null;
   private static String distanceAbbrev = null;
@@ -98,16 +102,42 @@ public class FormatHandler {
   }
 
   /**
-   * Returns proper, localized formatting for the date of fill. Used by populateSelf() and
-   * available to outside methods.
-   * @param date the date to be formatted
+   * Returns proper, localized formatting for the date of fill. This utilizes the SHORT form,
+   * which, in the U.S. looks like 5/19/16 (for May 19, 2016).
+   * @param date the date to be formatted in SHORT form
    * @return a String with the formatted date
    */
-  public static String formatDate(Date date) {
+  public static String formatShortDate(Date date) {
     if (!hasBeenSetup)
       throw new UnsupportedOperationException("FormatHandler has not been initialized");
 
-    return mDateForm.format(date);
+    return mShortDateForm.format(date);
+  }
+
+  /**
+   * Returns proper, localized formatting for the date of fill. This utilizes the MEDIUM form,
+   * which, in the U.S. looks like 5/19/16 (for May 19, 2016).
+   * @param date the date to be formatted in MEDIUM form
+   * @return a String with the formatted date
+   */
+  public static String formatMediumDate(Date date) {
+    if (!hasBeenSetup)
+      throw new UnsupportedOperationException("FormatHandler has not been initialized");
+
+    return mMediumDateForm.format(date);
+  }
+
+  /**
+   * Returns proper, localized formatting for the date of fill. This utilizes the Long form, which,
+   * in the U.S. looks like December 19, 2016.
+   * @param date the date to be formatted in LONG form
+   * @return a String with the formatted date
+   */
+  public static String formatLongDate(Date date) {
+    if (!hasBeenSetup)
+      throw new UnsupportedOperationException("FormatHandler has not been initialized");
+
+    return mLongDateForm.format(date);
   }
 
   /**
