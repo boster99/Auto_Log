@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
   private void prepareVehicles() {
     // Get the default Vehicle
     if (sPH.doesNameExist(Vehicle.DEFAULT_VEHICLE_KEY))
-      mCurrentVehicleID = sPH.getIntValue(Vehicle.DEFAULT_VEHICLE_KEY);
+      mCurrentVehicleID = (int) sPH.getLongValue(Vehicle.DEFAULT_VEHICLE_KEY);
 
     // Fetch the list of vehicles into memory
     ArrayList<Vehicle> vList = sDH.fetchVehicleList();
