@@ -35,7 +35,7 @@ public class FormatHandler {
   private static DecimalFormat mDistanceForm = null;
   private static DecimalFormat mVolumeForm = null;
   private static DecimalFormat mEfficiencyForm = null;
-  private static final DateFormat mDateForm = SimpleDateFormat.getDateInstance();
+  private static final DateFormat mDateForm = SimpleDateFormat.getDateInstance(DateFormat.SHORT);
   private static boolean hasBeenSetup = false;
   private static String displayPattern = null;
   private static String distanceAbbrev = null;
