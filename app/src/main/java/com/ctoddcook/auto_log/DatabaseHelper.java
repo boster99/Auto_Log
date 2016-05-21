@@ -5,16 +5,19 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Date;
+
+// todo implement singleton pattern with synchronized getInstance(Context) method
 
 /**
  * Created by C. Todd Cook on 4/17/2016.
  * ctodd@ctoddcook.com
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
-
+  private static final String TAG = "DatabaseHelper";
   public static final int DATABASE_VERSION = 2;
 
   public DatabaseHelper(Context context) {
@@ -79,7 +82,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     ArrayList<Vehicle> vehicleList = new ArrayList<>();
     int id, year;
     String name, color, model, vin, licensePlate;
-    Date lastUpdated = new Date();
+    Date lastUpdated;
     Vehicle vehicle;
 
     Vehicle.clearAll();
@@ -94,7 +97,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
       model = cursor.getString(VehicleDBMap.COLUMN_NBR_MODEL);
       vin = cursor.getString(VehicleDBMap.COLUMN_NBR_VIN);
       licensePlate = cursor.getString(VehicleDBMap.COLUMN_NBR_LICENSE_PLATE);
-      lastUpdated.setTime(cursor.getInt(VehicleDBMap.COLUMN_NBR_LAST_UPDATED));
+      lastUpdated = new Date(cursor.getInt(VehicleDBMap.COLUMN_NBR_LAST_UPDATED));
 
       vehicle = new Vehicle(id, name, year, color, model, vin, licensePlate, lastUpdated);
 
@@ -242,8 +245,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     SQLiteDatabase db = this.getWritableDatabase();
     ArrayList<Fueling> fdList = new ArrayList<>();
     int fuelingID;
-    Date dateOfFill = new Date();
-    Date lastUpdated = new Date();
+    Date dateOfFill;
+    Date lastUpdated;
     float distance, volume, pricePaid, odometer, latitude, longitude;
     String location;
     Fueling fd;
@@ -256,7 +259,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     while (cursor.moveToNext()) {
       fuelingID = cursor.getInt(FuelingDBMap.COLUMN_NBR_FUELING_ID);
       vehicleID = cursor.getInt(FuelingDBMap.COLUMN_NBR_VEHICLE_ID);
-      dateOfFill.setTime(cursor.getLong(FuelingDBMap.COLUMN_NBR_DATE_OF_FILL));
+      dateOfFill = new Date(cursor.getLong(FuelingDBMap.COLUMN_NBR_DATE_OF_FILL));
       distance = cursor.getFloat(FuelingDBMap.COLUMN_NBR_DISTANCE);
       volume = cursor.getFloat(FuelingDBMap.COLUMN_NBR_VOLUME);
       pricePaid = cursor.getFloat(FuelingDBMap.COLUMN_NBR_PRICE_PAID);
@@ -264,7 +267,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
       location = cursor.getString(FuelingDBMap.COLUMN_NBR_LOCATION);
       latitude = cursor.getFloat(FuelingDBMap.COLUMN_NBR_LATITUDE);
       longitude = cursor.getFloat(FuelingDBMap.COLUMN_NBR_LONGITUDE);
-      lastUpdated.setTime(cursor.getLong(FuelingDBMap.COLUMN_NBR_LAST_UPDATED));
+      lastUpdated = new Date(cursor.getLong(FuelingDBMap.COLUMN_NBR_LAST_UPDATED));
 
       fd = new Fueling(fuelingID, vehicleID, dateOfFill, distance, volume, pricePaid,
           odometer, location, latitude, longitude, lastUpdated);
