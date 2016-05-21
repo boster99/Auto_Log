@@ -578,7 +578,7 @@ class Fueling extends DataHolder {
    * @throws IllegalArgumentException      if the parameter provided is less than 1
    */
   public void setFuelingID(int fuelingID) throws UnsupportedOperationException, IllegalArgumentException {
-    if (mFuelingID != 0)
+    if (mFuelingID != INITIAL_ID)
       throw new UnsupportedOperationException("The Row ID can only be set once, and cannot be updated");
     if (fuelingID < 1)
       throw new IllegalArgumentException("The Row ID cannot be less than 1");
