@@ -17,11 +17,27 @@ import java.util.Date;
  * ctodd@ctoddcook.com
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
+
   private static final String TAG = "DatabaseHelper";
+  private static DatabaseHelper sInstance;
   public static final int DATABASE_VERSION = 2;
 
-  public DatabaseHelper(Context context) {
+
+  private DatabaseHelper(Context context) {
     super(context, AutoLogDataMap.DATABASE_NAME, null, DATABASE_VERSION);
+  }
+
+
+  /**
+   * Returns reference to singleton instance for global use.
+   * @param c the context in which this is being used
+   * @return a reference to the global DatabaseHelper instance
+   */
+  public static synchronized DatabaseHelper getInstance(Context c) {
+    if (sInstance == null)
+      sInstance = new DatabaseHelper(c);
+
+    return sInstance;
   }
 
 
@@ -63,6 +79,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         https://thebhwgroup.com/blog/how-android-sqlite-onupgrade
 
         */
+  }
+
+
+  /**
+   * Closes the open database. Should be called before the app exits.
+   */
+  public void close() {
+    sInstance.close();
   }
 
 
@@ -393,5 +417,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     return result;
   }
-
 }

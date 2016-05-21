@@ -18,6 +18,10 @@ import android.widget.Toast;
  * This activity is used for adding a new, or editing an existing Vehicle.
  */
 public class AddEditVehicleActivity extends AppCompatActivity {
+  private static final String TAG = "AddEditVehicleActivity";
+
+  private static DatabaseHelper sDatabaseHelper;
+
   public static final String KEY_ADD_EDIT_MODE = "com.ctoddcook.auto_log.ADD_EDIT_MODE";
   public static final String KEY_VEHICLE_ID = "com.ctoddcook.auto_log.VEHICLE_ID";
   public static final int MODE_ADD = 1;
@@ -25,8 +29,6 @@ public class AddEditVehicleActivity extends AppCompatActivity {
   public static boolean dupeCheckResult;
   private int mode;
   private Vehicle mVehicle;
-
-  private static final String TAG = "AddEditVehicleActivity";
 
   /**
    * When the activity is created, apart from the standard actions, we retrieve the type of
@@ -43,6 +45,8 @@ public class AddEditVehicleActivity extends AppCompatActivity {
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
     if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+    sDatabaseHelper = DatabaseHelper.getInstance(this);
 
     mode = getIntent().getIntExtra(KEY_ADD_EDIT_MODE, 0);
 
@@ -72,13 +76,12 @@ public class AddEditVehicleActivity extends AppCompatActivity {
    */
   public void saveVehicle(View v) {
     if (extractDetails()) {
-      DatabaseHelper dh = new DatabaseHelper(this);
       switch (mode) {
         case MODE_ADD:
-          dh.insertVehicle(mVehicle);
+          sDatabaseHelper.insertVehicle(mVehicle);
           break;
         case MODE_EDIT:
-          dh.updateVehicle(mVehicle);
+          sDatabaseHelper.updateVehicle(mVehicle);
           break;
         default:
           throw new IllegalArgumentException("Member field mode does not " +
