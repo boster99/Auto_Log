@@ -23,7 +23,7 @@ import static com.ctoddcook.CGenTools.CTools.longToInt;
  */
 public class Vehicle extends DataHolder {
   public static final String DEFAULT_VEHICLE_KEY = "com.ctoddcook.auto_log.DefaultVehicleID";
-  public static final int DEFAULT_VEHICLE_TYPE = Property.TYPE_INT;
+  public static final int DEFAULT_VEHICLE_TYPE = Property.TYPE_LONG;
   private static final SparseArray<Vehicle> sVehicleList = new SparseArray<>(12);
   private int mVehicleID;
   private String mName;
