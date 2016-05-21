@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2016 C. Todd Cook. All rights reserved.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              style="@style/RowStyle"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/fueling_row_date"
+        style="@style/WideLightDataTextStyle"
+        android:gravity="start"/>
+
+    <TextView
+        android:id="@+id/fueling_row_price"
+        style="@style/NarrowLightDataTextStyle"
+        android:text="@string/Main_StartupDataDisplay"/>
+
+    <TextView
+        android:id="@+id/fueling_row_dist"
+        style="@style/WideLightDataTextStyle"
+        android:text="@string/Main_StartupDataDisplay"/>
+
+    <TextView
+        android:id="@+id/fueling_row_vol"
+        style="@style/NarrowLightDataTextStyle"
+        android:text="@string/Main_StartupDataDisplay"/>
+
+    <TextView
+        android:id="@+id/fueling_row_efficiency"
+        style="@style/WideLightDataTextStyle"
+        android:text="@string/Main_StartupDataDisplay"/>
+
+</LinearLayout>
