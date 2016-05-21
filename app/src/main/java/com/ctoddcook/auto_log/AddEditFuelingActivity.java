@@ -295,15 +295,15 @@ public class AddEditFuelingActivity extends AppCompatActivity
     date = mDateOfFill;
 
     EditText distET = (EditText) findViewById(R.id.fueling_edit_distance);
-    if (distET != null && distET.getText() != null)
+    if (distET != null && distET.getText() != null && !distET.getText().toString().isEmpty())
       distance = Float.parseFloat(distET.getText().toString());
 
     EditText volET = (EditText) findViewById(R.id.edit_volume);
-    if (volET != null && volET.getText() != null)
+    if (volET != null && volET.getText() != null && !volET.getText().toString().isEmpty())
       volume = Float.parseFloat(volET.getText().toString());
 
     EditText paidET = (EditText) findViewById(R.id.fueling_edit_total_price_paid);
-    if (paidET != null && paidET.getText() != null)
+    if (paidET != null && paidET.getText() != null && !paidET.getText().toString().isEmpty())
       pricePaid = Float.parseFloat(paidET.getText().toString());
 
     EditText locET = (EditText) findViewById(R.id.fueling_edit_location);
@@ -311,7 +311,7 @@ public class AddEditFuelingActivity extends AppCompatActivity
       location = locET.getText().toString().trim();
 
     EditText odoET = (EditText) findViewById(R.id.fueling_edit_odometer);
-    if (odoET != null && odoET.getText() != null)
+    if (odoET != null && odoET.getText() != null && !odoET.getText().toString().isEmpty())
       odometer = Float.parseFloat(odoET.getText().toString());
 
     if (date == null) {
