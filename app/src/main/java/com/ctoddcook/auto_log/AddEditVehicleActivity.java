@@ -14,6 +14,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**
+ * This activity is used for adding a new, or editing an existing Vehicle.
+ */
 public class AddEditVehicleActivity extends AppCompatActivity {
   public static final String KEY_ADD_EDIT_MODE = "com.ctoddcook.auto_log.ADD_EDIT_MODE";
   public static final String KEY_VEHICLE_ID = "com.ctoddcook.auto_log.VEHICLE_ID";
@@ -21,7 +24,7 @@ public class AddEditVehicleActivity extends AppCompatActivity {
   public static final int MODE_EDIT = 2;
   public static boolean dupeCheckResult;
   private int mode;
-  private VehicleData mVehicle;
+  private Vehicle mVehicle;
 
   private static final String TAG = "AddEditVehicleActivity";
 
@@ -45,14 +48,14 @@ public class AddEditVehicleActivity extends AppCompatActivity {
 
     switch (mode) {
       case MODE_ADD:
-        mVehicle = new VehicleData();
+        mVehicle = new Vehicle();
         break;
       case MODE_EDIT:
         int vehicleID = getIntent().getIntExtra(KEY_VEHICLE_ID, -1);
         if (vehicleID < 0)
           throw new IllegalArgumentException("In edit mode, a Vehicle ID must be provided");
 
-        mVehicle = VehicleData.getVehicle(vehicleID);
+        mVehicle = Vehicle.getVehicle(vehicleID);
         break;
       default:
         throw new IllegalArgumentException("Calling process must specify add/edit mode");
@@ -143,10 +146,10 @@ public class AddEditVehicleActivity extends AppCompatActivity {
     }
 
         /*
-        Check existing VehicleData instances for same Color, Year and Model, or with the same name.
+        Check existing Vehicle instances for same Color, Year and Model, or with the same name.
         If a similar mVehicle is found, ask the user if this duplicate should be saved.
          */
-    for (VehicleData each : VehicleData.getVehicleList()) {
+    for (Vehicle each : Vehicle.getVehicleList()) {
       if (each == mVehicle) continue;
       if (each.isDuplicate(name, color, year, model, vin, licPlate)) {
         if (!userWantsDuplicate())
