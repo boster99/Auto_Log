@@ -21,6 +21,7 @@ import java.util.Date;
  * ctodd@ctoddcook.com
  */
 public class FuelingArrayAdapter extends ArrayAdapter<Fueling> {
+  private static final String TAG = "FuelingArrayAdapter";
   private final Context context;
   private final ArrayList<Fueling> fuelingsList;
 
@@ -109,11 +110,11 @@ public class FuelingArrayAdapter extends ArrayAdapter<Fueling> {
 
     ViewHolder holder = (ViewHolder) rowView.getTag();
 
-    holder.setDate(fuelingsList.get(pos).getDateOfFill());
-    holder.setPrice(fuelingsList.get(pos).getPricePerUnit());
-    holder.setDistance(fuelingsList.get(pos).getDistance());
-    holder.setVolume(fuelingsList.get(pos).getVolume());
-    holder.setEfficiency(fuelingsList.get(pos).getEfficiency());
+    holder.setDate(fd.getDateOfFill());
+    holder.setPrice(fd.getPricePerUnit());
+    holder.setDistance(fd.getDistance());
+    holder.setVolume(fd.getVolume());
+    holder.setEfficiency(fd.getEfficiency());
 
     return rowView;
   }
