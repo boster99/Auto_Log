@@ -2,10 +2,14 @@
 <resources>
     <color name="colorPrimary">#1976D2</color>
     <color name="colorPrimaryDark">#0D47A1</color>
-    <color name="colorAccent">#FFEB3B</color>
+    <color name="colorAccent">#000000</color>
 
     <color name="averagesFieldBackground">#90CAF9</color>
     <color name="averagesColumnHeaderBackground">#64B5F6</color>
+
+    <color name="historicalsFieldBackground">#0D47A1</color>
+    <color name="historicalsColumnHeaderBackground">#64B5F6</color>
+    <color name="historicalsTextColor">#FFEE58</color>
 
     <color name="divider">#757575</color>
 </resources>

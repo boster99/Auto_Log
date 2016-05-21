@@ -6,24 +6,31 @@ package com.ctoddcook.auto_log;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.util.AttributeSet;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 /**
- * This child of LinearLayout adds a FuelingData object association, so that when the user
- * touches a LinaerLayout, the host activity can retrieve the FuelingData details of interest to
- * the user and display them (or delete them, or edit them, or whatever).
- * <p>Created by C. Todd Cook on 5/18/2016.<br>
+ * This provides standard formatting functions for this app. This is designed to have these
+ * methods called in a static fashion, and in fact, other classes cannot instantiate a
+ * FormatHandler object.
+ * <p>
+ * However, it does need initialization before it is used, and that initialization requires a
+ * Context object, so it can get appropriate screen dimensions, localization, etc., so when it
+ * reads resource files for strings (like currency format) it can get appropriate versions.
+ * <p>
+ * So the app needs to call the static method FormatHandler.init() early on, before any other
+ * methods are called, and pass to init() the Context.
+ * <p>
+ * Created by C. Todd Cook on 5/18/2016.<br>
  * ctodd@ctoddcook.com
  */
-public class FuelingDataLayout extends LinearLayout {
+public class FormatHandler {
   private static DecimalFormat mCurrencyForm = null;
   private static DecimalFormat mDistanceForm = null;
   private static DecimalFormat mVolumeForm = null;
@@ -35,46 +42,36 @@ public class FuelingDataLayout extends LinearLayout {
   private static String volumeAbbrev = null;
   private static String efficiencyAbbrev = null;
 
-  private FuelingData mFuelingData;
+  private Fueling mFueling;
+
+  private FormatHandler() {
+    // Nothing. Not allowed.
+  }
 
   /**
    * Constructor takes the context from which this instance has been instantiated and a style
    * tag, and uses them to call the super constructor. Then sets up shared/static class members
    * (if that has not already been done) and then fills this LinearLayout with TextViews
-   * presenting data from the provided FuelingData instance.
+   * presenting data from the provided Fueling instance.
    * @param c the context which instantiated this object
-   * @param style the style to apply to the LinearLayout
-   * @param fd the FuelingData instance to associate with this LinearLayout
    *
-   * @see #setupStaticMembers()
-   * @see #populateSelf(Context, FuelingData)
+   * @see #setupStaticMembers(Context)
    */
-  public FuelingDataLayout(Context c, int style, FuelingData fd) {
-    super(c, null, style);
-    setupStaticMembers();
-    populateSelf(c, fd);
+  private FormatHandler(Context c) {
+    setupStaticMembers(c);
   }
 
-  private FuelingDataLayout(Context c) {
-    super(c);
+  public static void init(Context c) {
+    FormatHandler f = new FormatHandler(c);
   }
-
-  private FuelingDataLayout(Context c, AttributeSet a, int style) {
-    super(c, a, style);
-  }
-
-  private FuelingDataLayout(Context c, AttributeSet a) {
-    super(c, a);
-  }
-
   /**
    * One-time setup of shared, static members of the class.
    */
-  private void setupStaticMembers() {
+  private void setupStaticMembers(Context context) {
     if (hasBeenSetup) return;
 
     // Read some @string resources
-    Resources res = getResources();
+    Resources res = context.getResources();
     displayPattern = res.getString(R.string.Fueling_DataPattern);
     distanceAbbrev = res.getString(R.string.Fueling_DistanceAbbrev);
     volumeAbbrev = res.getString(R.string.Fueling_VolumeAbbrev);
@@ -101,52 +98,28 @@ public class FuelingDataLayout extends LinearLayout {
   }
 
   /**
-   * Populates this LinearLayout with TextViews displaying the perinent details for the provided
-   * FuelingData object.
-   * @param c the context from which this instance was instantiated
-   * @param fd the FuelingData instance associated with this
+   * Returns proper, localized formatting for the date of fill. Used by populateSelf() and
+   * available to outside methods.
+   * @param date the date to be formatted
+   * @return a String with the formatted date
    */
-  private void populateSelf(Context c, FuelingData fd) {
-    mFuelingData = fd;
+  public static String formatDate(Date date) {
+    if (!hasBeenSetup)
+      throw new UnsupportedOperationException("FormatHandler has not been initialized");
 
-    TextView tvLabel = new TextView(c, null, R.style.WideLightDataTextStyle);
-    tvLabel.setText(mDateForm.format(fd.getDateOfFill()));
-    this.addView(tvLabel);
-
-    TextView tvPrice = new TextView(c, null, R.style.NarrowLightDataTextStyle);
-    tvPrice.setText(formatPrice(fd.getPricePerUnit()));
-    this.addView(tvPrice);
-
-    // todo change literals to localization
-    TextView tvDist = new TextView(c, null, R.style.WideLightDataTextStyle);
-    tvDist.setText(formatDistance(fd.getDistance()));
-    this.addView(tvDist);
-
-    TextView tvVol = new TextView(c, null, R.style.NarrowLightDataTextStyle);
-    tvVol.setText(formatVolume(fd.getVolume()));
-    this.addView(tvVol);
-
-    TextView tvEff = new TextView(c, null, R.style.WideLightDataTextStyle);
-    tvEff.setText(formatEfficiency(fd.getEfficiency()));
-    this.addView(tvEff);
+    return mDateForm.format(date);
   }
 
   /**
-   * Accessor to retrieve the FuelingData object associated with this instance.
-   * @return a FuelingData instance
-   */
-  public FuelingData getFuelingData() {
-    return mFuelingData;
-  }
-
-  /**
-   * Returns proper, localized formaatting for the price paid per unit (i.e., price per gallon or
+   * Returns proper, localized formatting for the price paid per unit (i.e., price per gallon or
    * per litre). Used by populateSelf() and available to other methods.
    * @param price the price paid per unit
    * @return a localized currency value, such as $ 1.899.
-   * @see #populateSelf(Context, FuelingData)
    */
   public static String formatPrice(float price) {
+    if (!hasBeenSetup)
+      throw new UnsupportedOperationException("FormatHandler has not been initialized");
+
     return mCurrencyForm.format(price);
   }
 
@@ -155,9 +128,11 @@ public class FuelingDataLayout extends LinearLayout {
    * available to other methods, too.
    * @param dist the distance covered in a tank of fuel
    * @return a formatted String
-   * @see #populateSelf(Context, FuelingData)
    */
   public static String formatDistance(float dist) {
+    if (!hasBeenSetup)
+      throw new UnsupportedOperationException("FormatHandler has not been initialized");
+
     return String.format(displayPattern, mDistanceForm.format(dist), distanceAbbrev);
   }
 
@@ -166,9 +141,11 @@ public class FuelingDataLayout extends LinearLayout {
    * available to outside methods as well.
    * @param vol the volume to convert to formatted String
    * @return a formatted String
-   * @see #populateSelf(Context, FuelingData)
    */
   public static String formatVolume(float vol) {
+    if (!hasBeenSetup)
+      throw new UnsupportedOperationException("FormatHandler has not been initialized");
+
     return String.format(displayPattern, mVolumeForm.format(vol), volumeAbbrev);
   }
 
@@ -179,6 +156,9 @@ public class FuelingDataLayout extends LinearLayout {
    * @return the formatted String
    */
   public static String formatEfficiency(float eff) {
+    if (!hasBeenSetup)
+      throw new UnsupportedOperationException("FormatHandler has not been initialized");
+
     return String.format(displayPattern, mEfficiencyForm.format(eff), efficiencyAbbrev);
   }
 }

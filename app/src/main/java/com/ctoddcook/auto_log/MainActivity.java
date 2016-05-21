@@ -54,6 +54,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
 
+    FormatHandler.init(this);
+
     sDH = new DatabaseHelper(this);
     PropertiesHelper.setDatabaseHelper(sDH);
     sPH = PropertiesHelper.getInstance();
@@ -187,29 +189,28 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
    */
   private void loadAverages() {
     TextView tv;
-    FuelingDataLayout fdl = new FuelingDataLayout(this);
 
     /*
     Values for the first row of averages, spanning 3 months
      */
     tv = (TextView) findViewById(R.id.first_average_row_price);
     if (tv != null)
-      tv.setText(fdl.formatPrice(Fueling.getAvgPricePerUnitOverSpan(
+      tv.setText(FormatHandler.formatPrice(Fueling.getAvgPricePerUnitOverSpan(
           Fueling.SPAN_3_MONTHS)));
 
     tv = (TextView) findViewById(R.id.first_average_row_dist);
     if (tv != null)
-      tv.setText(fdl.formatDistance(Fueling.getAvgDistanceOverSpan(
+      tv.setText(FormatHandler.formatDistance(Fueling.getAvgDistanceOverSpan(
           Fueling.SPAN_3_MONTHS)));
 
     tv = (TextView) findViewById(R.id.first_average_row_vol);
     if (tv != null)
-      tv.setText(fdl.formatVolume(Fueling.getAvgVolumeOverSpan(
+      tv.setText(FormatHandler.formatVolume(Fueling.getAvgVolumeOverSpan(
           Fueling.SPAN_3_MONTHS)));
 
     tv = (TextView) findViewById(R.id.first_average_row_efficiency);
     if (tv != null)
-      tv.setText(fdl.formatEfficiency(Fueling.getAvgEfficiencyOverSpan(
+      tv.setText(FormatHandler.formatEfficiency(Fueling.getAvgEfficiencyOverSpan(
           Fueling.SPAN_3_MONTHS)));
 
 
@@ -218,22 +219,22 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
      */
     tv = (TextView) findViewById(R.id.second_average_row_price);
     if (tv != null)
-      tv.setText(fdl.formatPrice(Fueling.getAvgPricePerUnitOverSpan(
+      tv.setText(FormatHandler.formatPrice(Fueling.getAvgPricePerUnitOverSpan(
           Fueling.SPAN_6_MONTHS)));
 
     tv = (TextView) findViewById(R.id.second_average_row_dist);
     if (tv != null)
-      tv.setText(fdl.formatDistance(Fueling.getAvgDistanceOverSpan(
+      tv.setText(FormatHandler.formatDistance(Fueling.getAvgDistanceOverSpan(
           Fueling.SPAN_6_MONTHS)));
 
     tv = (TextView) findViewById(R.id.second_average_row_vol);
     if (tv != null)
-      tv.setText(fdl.formatVolume(Fueling.getAvgVolumeOverSpan(
+      tv.setText(FormatHandler.formatVolume(Fueling.getAvgVolumeOverSpan(
           Fueling.SPAN_6_MONTHS)));
 
     tv = (TextView) findViewById(R.id.second_average_row_efficiency);
     if (tv != null)
-      tv.setText(fdl.formatEfficiency(Fueling.getAvgEfficiencyOverSpan(
+      tv.setText(FormatHandler.formatEfficiency(Fueling.getAvgEfficiencyOverSpan(
           Fueling.SPAN_6_MONTHS)));
 
 
@@ -243,22 +244,22 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
      */
     tv = (TextView) findViewById(R.id.third_average_row_price);
     if (tv != null)
-      tv.setText(fdl.formatPrice(Fueling.getAvgPricePerUnitOverSpan(
+      tv.setText(FormatHandler.formatPrice(Fueling.getAvgPricePerUnitOverSpan(
           Fueling.SPAN_ONE_YEAR)));
 
     tv = (TextView) findViewById(R.id.third_average_row_dist);
     if (tv != null)
-      tv.setText(fdl.formatDistance(Fueling.getAvgDistanceOverSpan(
+      tv.setText(FormatHandler.formatDistance(Fueling.getAvgDistanceOverSpan(
           Fueling.SPAN_ONE_YEAR)));
 
     tv = (TextView) findViewById(R.id.third_average_row_vol);
     if (tv != null)
-      tv.setText(fdl.formatVolume(Fueling.getAvgVolumeOverSpan(
+      tv.setText(FormatHandler.formatVolume(Fueling.getAvgVolumeOverSpan(
           Fueling.SPAN_ONE_YEAR)));
 
     tv = (TextView) findViewById(R.id.third_average_row_efficiency);
     if (tv != null)
-      tv.setText(fdl.formatEfficiency(Fueling.getAvgEfficiencyOverSpan(
+      tv.setText(FormatHandler.formatEfficiency(Fueling.getAvgEfficiencyOverSpan(
           Fueling.SPAN_ONE_YEAR)));
 
 
@@ -268,22 +269,22 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
      */
     tv = (TextView) findViewById(R.id.fourth_average_row_price);
     if (tv != null)
-      tv.setText(fdl.formatPrice(Fueling.getAvgPricePerUnitOverSpan(
+      tv.setText(FormatHandler.formatPrice(Fueling.getAvgPricePerUnitOverSpan(
           Fueling.SPAN_ALL_TIME)));
 
     tv = (TextView) findViewById(R.id.fourth_average_row_dist);
     if (tv != null)
-      tv.setText(fdl.formatDistance(Fueling.getAvgDistanceOverSpan(
+      tv.setText(FormatHandler.formatDistance(Fueling.getAvgDistanceOverSpan(
           Fueling.SPAN_ALL_TIME)));
 
     tv = (TextView) findViewById(R.id.fourth_average_row_vol);
     if (tv != null)
-      tv.setText(fdl.formatVolume(Fueling.getAvgVolumeOverSpan(
+      tv.setText(FormatHandler.formatVolume(Fueling.getAvgVolumeOverSpan(
           Fueling.SPAN_ALL_TIME)));
 
     tv = (TextView) findViewById(R.id.fourth_average_row_efficiency);
     if (tv != null)
-      tv.setText(fdl.formatEfficiency(Fueling.getAvgEfficiencyOverSpan(
+      tv.setText(FormatHandler.formatEfficiency(Fueling.getAvgEfficiencyOverSpan(
           Fueling.SPAN_ALL_TIME)));
   }
 

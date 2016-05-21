@@ -60,22 +60,41 @@
         <item name="android:layout_weight">4</item>
     </style>
 
-    <style name="DataTextStyle">
+    <style name="DataTextParent">
         <item name="android:gravity">right</item>
         <item name="android:textSize">15sp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_margin">2dp</item>
+    </style>
+
+    <style name="DarkDataTextStyle"
+        parent="@style/DataTextParent">
         <item name="android:textColor">@android:color/black</item>
     </style>
 
-    <style name="WideDataTextStyle"
-           parent="@style/DataTextStyle">
+    <style name="LightDataTextStyle"
+           parent="@style/DataTextParent">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="WideDarkDataTextStyle"
+           parent="@style/DarkDataTextStyle">
         <item name="android:layout_weight">5</item>
     </style>
 
-    <style name="NarrowDataTextStyle"
-           parent="@style/DataTextStyle">
+    <style name="NarrowDarkDataTextStyle"
+           parent="@style/DarkDataTextStyle">
+        <item name="android:layout_weight">4</item>
+    </style>
+
+    <style name="WideLightDataTextStyle"
+           parent="@style/LightDataTextStyle">
+        <item name="android:layout_weight">5</item>
+    </style>
+
+    <style name="NarrowLightDataTextStyle"
+           parent="@style/LightDataTextStyle">
         <item name="android:layout_weight">4</item>
     </style>
 

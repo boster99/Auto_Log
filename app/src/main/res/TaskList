@@ -1,7 +1,16 @@
-//TODO Create view Vehicle List activity
-//TODO Connect nav drawer to view Vehicle List activity
-//TODO Create view Vehicle Details activity
-//TODO Create icon
-//TODO Create view Fueling Details activity
-//TODO Create view Fueling Average Details activity
-//TODO Get GPS coordinates
+todo Create view Vehicle List activity
+todo Connect nav drawer to view Vehicle List activity
+todo Create view Vehicle Details activity with edit and delete buttons
+todo Create icon
+todo Create view Fueling Details activity with edit and delete buttons
+todo Create view Fueling Average Details activity
+todo Offer a setting for the user: do not try to get location information
+todo Show map when user touches coordinates -- or just have a button
+        See: http://stackoverflow.com/questions/6205827/how-to-open-standard-google-map-application-from-my-application
+        See: https://developer.android.com/reference/android/net/Uri.html
+todo add ViewStub with android:layout="@layout/progress_overlay" for progress bar
+        See: https://developer.android.com/training/improving-layouts/loading-ondemand.html
+todo Create icons in multiple sizes. They will replace those in res/mipmap.
+todo In AdnroidManifest.xml, update android:icon="@mipmap/ic_launcher" with new icon
+todo Figure out how to backup data
+todo Figure out how to share a vehicle and its data with another user
