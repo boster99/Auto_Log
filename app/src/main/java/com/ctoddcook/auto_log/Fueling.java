@@ -5,6 +5,7 @@
 
 package com.ctoddcook.auto_log;
 
+import android.util.Log;
 import android.util.SparseArray;
 
 import com.ctoddcook.CGenTools.DataHolder;
@@ -29,6 +30,8 @@ import static com.ctoddcook.CGenTools.CTools.round;
  * after that the user might change that description.
  */
 class Fueling extends DataHolder {
+  private static final String TAG = "Fueling";
+
   public static final int SPAN_3_MONTHS = 0;
   public static final int SPAN_6_MONTHS = 1;
   public static final int SPAN_ONE_YEAR = 2;
@@ -108,6 +111,7 @@ class Fueling extends DataHolder {
   public Fueling(int fuelingID, int vehicleID, Date dateOfFill, float distance, float volume,
                  float pricePaid, float odometer, String location, float latitude,
                  float longitude, Date lastUpdated) {
+
     mFuelingID = fuelingID;
     mVehicleID = vehicleID;
     mDateOfFill = dateOfFill;
