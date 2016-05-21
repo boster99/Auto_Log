@@ -70,6 +70,7 @@ public class AddEditFuelingActivity extends AppCompatActivity
     setSupportActionBar(toolbar);
     if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+    GregorianCalendar gc = new GregorianCalendar();
 
     mode = getIntent().getIntExtra(KEY_ADD_EDIT_MODE, -1);
 
@@ -85,6 +86,7 @@ public class AddEditFuelingActivity extends AppCompatActivity
               "provided");
 
         mFueling = Fueling.getFueling(fuelingID);
+        gc.setTimeInMillis(mFueling.getDateOfFill().getTime());
         break;
       default:
         throw new IllegalArgumentException("Calling process must specify add/edit mode");
@@ -97,7 +99,6 @@ public class AddEditFuelingActivity extends AppCompatActivity
     setupVehicleSpinner();
 
     // Get the current, local, date and time; set the seconds and milliseconds to 0
-    GregorianCalendar gc = new GregorianCalendar();
     gc.set(Calendar.SECOND, 0);
     gc.set(Calendar.MILLISECOND, 0);
     mDateOfFill = gc.getTime();
