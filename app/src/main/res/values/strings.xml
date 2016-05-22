@@ -32,6 +32,26 @@
     <string name="Fueling_LocationLabel">Location</string>
     <string name="Fueling_OdometerLabel">Odometer</string>
 
+    <!-- Following are used in the span_ fueling_ and vehicle_details_layout.xmls -->
+    <string name="Fueling_DateTimeLabel">Date and Time</string>
+    <string name="Fueling_EfficiencyLabel">Miles/Gallon</string>
+    <string name="Fueling_PriceEfficiencyLabel">Price/Mile</string>
+    <string name="Fueling_PricePerUnitLabel">Price/Gallon</string>
+    <string name="Fueling_LatitudeLongitude">GPS Coordinates</string>
+    <string name="Fueling_GPSHint">
+        HINT: Touch the coordinates, and a map will show the location.
+    </string>
+
+    <string name="Span_VehicleLabel">Vehicle</string>
+    <string name="Span_PeriodLabel">Period</string>
+    <string name="Span_DistanceLabel">Avg Distance</string>
+    <string name="Span_VolumeLabel">Avg Volume</string>
+    <string name="Span_TotalPriceLabel">Avg Price</string>
+    <string name="Span_PricePerUnitLabel">Avg Price/Gallon</string>
+    <string name="Span_EfficiencyLabel">Avg Miles/Gallon</string>
+    <string name="Span_PricePerDistanceLabel">Avg Price/Mile</string>
+
+
     <!-- Following are used on AddEditVehicle activity -->
     <string name="title_activity_add_vehicle">Enter Vehicle Details</string>
     <string name="Vehicle_NameLabel">Name</string>
