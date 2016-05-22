@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
       addFueling();
     } else {
       loadAverages();
-      loadHistoricals(fList);
+      loadHistoricalFuelingsList(fList);
     }
   }
 
@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
    * Handler for loading historical Fueling data into the scrolling ListView.
    * @param fList the complete list of Fuelings for the current Vehicle.
    */
-  private void loadHistoricals(ArrayList<Fueling> fList) {
+  private void loadHistoricalFuelingsList(ArrayList<Fueling> fList) {
     if (mHistoricalsList == null) {
       mHistoricalsList = (ListView) findViewById(R.id.Main_HistoricalsList);
       if (mHistoricalsList != null) mHistoricalsList.setOnItemClickListener(this);
