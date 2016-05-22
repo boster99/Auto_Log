@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2016 C. Todd Cook. All rights reserved.
+  -->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        style="@style/LabelDataPairStyle">
+
+        <TextView
+            style="@style/DetailLabelStyle"
+            android:paddingBottom="8dp"
+            android:text="@string/Vehicle_NameLabel"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:id="@+id/vehicle_detail_name"
+            style="@style/ViewDetailStyle"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/LabelDataPairStyle">
+
+        <TextView
+            style="@style/DetailLabelStyle"
+            android:text="@string/Vehicle_ColorLabel"/>
+
+        <TextView
+            android:id="@+id/vehicle_detail_color"
+            style="@style/ViewDetailStyle"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/LabelDataPairStyle">
+
+        <TextView
+            style="@style/DetailLabelStyle"
+            android:text="@string/Vehicle_YearLabel"/>
+
+        <TextView
+            android:id="@+id/vehicle_detail_year"
+            style="@style/ViewDetailStyle"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/LabelDataPairStyle">
+
+        <TextView
+            style="@style/DetailLabelStyle"
+            android:text="@string/Vehicle_ModelLabel"/>
+
+        <TextView
+            android:id="@+id/vehicle_detail_model"
+            style="@style/ViewDetailStyle"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/LabelDataPairStyle">
+
+        <TextView
+            style="@style/DetailLabelStyle"
+            android:text="@string/Vehicle_VINLabel"/>
+
+        <TextView
+            android:id="@+id/vehicle_detail_vin"
+            style="@style/ViewDetailStyle"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/LabelDataPairStyle">
+
+        <TextView
+            style="@style/DetailLabelStyle"
+            android:text="@string/Vehicle_LicenseLabel"/>
+
+        <TextView
+            android:id="@+id/vehicle_detail_license_plate"
+            style="@style/ViewDetailStyle"/>
+
+    </LinearLayout>
+
+</LinearLayout>
