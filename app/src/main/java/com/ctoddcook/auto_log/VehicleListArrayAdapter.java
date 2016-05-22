@@ -98,6 +98,8 @@ public class VehicleListArrayAdapter extends ArrayAdapter<Vehicle> {
 
     holder.setName(vehicle.getName(), vehicle.getID() == mDefaultVehicleID);
 
+    rowView.setTag(vehicle);
+
     return rowView;
   }
 }
