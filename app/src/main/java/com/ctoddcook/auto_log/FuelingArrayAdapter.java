@@ -116,6 +116,8 @@ public class FuelingArrayAdapter extends ArrayAdapter<Fueling> {
     holder.setVolume(fd.getVolume());
     holder.setEfficiency(fd.getEfficiency());
 
+    rowView.setTag(fd);
+
     return rowView;
   }
 }
