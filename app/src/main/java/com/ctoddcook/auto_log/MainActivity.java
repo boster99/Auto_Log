@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
   private void populateScreen() {
     prepareVehicles();
     if (mCurrentVehicleID > 0)
-      loadForVehicle(mCurrentVehicleID);
+      loadFuelingsForVehicle(mCurrentVehicleID);
   }
 
   /**
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
           int id = data.getIntExtra(Vehicle.DEFAULT_VEHICLE_KEY, 0);
           if (id > 0) {
             mCurrentVehicleID = id;
-            loadForVehicle(mCurrentVehicleID);
+            loadFuelingsForVehicle(mCurrentVehicleID);
           }
         }
         break;
@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
    * Handler for loading Vehicle data for a specified id.
    * @param id the id for the desired Vehicle.
    */
-  private void loadForVehicle(int id) {
+  private void loadFuelingsForVehicle(int id) {
     //todo add a spinning-circle progress bar
     ArrayList<Fueling> fList = sDatabaseHelper.fetchFuelingData(id);
 
@@ -188,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
    * Averages portion of the main screen. This should only be called after a fetch of all of the
    * rows for a particular vehicle.
    *
-   * @see #loadForVehicle(int id)
+   * @see #loadFuelingsForVehicle(int id)
    */
   private void loadAverages() {
     TextView tv;
