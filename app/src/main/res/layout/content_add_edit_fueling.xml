@@ -20,10 +20,10 @@
         android:orientation="vertical">
 
         <LinearLayout
-            style="@style/EditRow">
+            style="@style/LabelDataPairStyle">
 
             <TextView
-                style="@style/EditLabel"
+                style="@style/DetailLabelStyle"
                 android:paddingBottom="8dp"
                 android:text="@string/Fueling_VehicleLabel"/>
 
@@ -38,15 +38,15 @@
         </LinearLayout>
 
         <LinearLayout
-            style="@style/EditRow">
+            style="@style/LabelDataPairStyle">
 
             <TextView
-                style="@style/EditLabel"
+                style="@style/DetailLabelStyle"
                 android:text="@string/Fueling_DateLabel"/>
 
             <TextView
                 android:id="@+id/fueling_edit_date"
-                style="@style/EditData"
+                style="@style/EditDetailStyle"
                 android:hint="@string/Fueling_DateLabel"
                 android:onClick="showDatePickerDialog"/>
 
@@ -54,30 +54,30 @@
         </LinearLayout>
 
         <LinearLayout
-            style="@style/EditRow">
+            style="@style/LabelDataPairStyle">
 
             <TextView
-                style="@style/EditLabel"
+                style="@style/DetailLabelStyle"
                 android:text="@string/Fueling_TimeLabel"/>
 
             <TextView
                 android:id="@+id/fueling_edit_time"
-                style="@style/EditData"
+                style="@style/EditDetailStyle"
                 android:hint="@string/Fueling_TimeLabel"
                 android:onClick="showTimePickerDialog"/>
 
         </LinearLayout>
 
         <LinearLayout
-            style="@style/EditRow">
+            style="@style/LabelDataPairStyle">
 
             <TextView
-                style="@style/EditLabel"
+                style="@style/DetailLabelStyle"
                 android:text="@string/Fueling_DistanceLabel"/>
 
             <EditText
                 android:id="@+id/fueling_edit_distance"
-                style="@style/EditData"
+                style="@style/EditDetailStyle"
                 android:inputType="numberDecimal"
                 android:imeOptions="actionNext"
                 android:hint="@string/Fueling_DistanceLabel"/>
@@ -85,14 +85,14 @@
         </LinearLayout>
 
         <LinearLayout
-            style="@style/EditRow">
+            style="@style/LabelDataPairStyle">
 
             <TextView
-                style="@style/EditLabel"
+                style="@style/DetailLabelStyle"
                 android:text="@string/Fueling_VolumeLabel"/>
 
             <EditText android:id="@+id/edit_volume"
-                      style="@style/EditData"
+                      style="@style/EditDetailStyle"
                       android:inputType="numberDecimal"
                       android:imeOptions="actionNext"
                       android:hint="@string/Fueling_VolumeLabel"/>
@@ -100,15 +100,15 @@
         </LinearLayout>
 
         <LinearLayout
-            style="@style/EditRow">
+            style="@style/LabelDataPairStyle">
 
             <TextView
-                style="@style/EditLabel"
+                style="@style/DetailLabelStyle"
                 android:text="@string/Fueling_TotalPricePaidLabel"/>
 
             <EditText
                 android:id="@+id/fueling_edit_total_price_paid"
-                style="@style/EditData"
+                style="@style/EditDetailStyle"
                 android:inputType="numberDecimal"
                 android:imeOptions="actionNext"
                 android:hint="@string/Fueling_TotalPricePaidLabel"/>
@@ -116,15 +116,15 @@
         </LinearLayout>
 
         <LinearLayout
-            style="@style/EditRow">
+            style="@style/LabelDataPairStyle">
 
             <TextView
-                style="@style/EditLabel"
+                style="@style/DetailLabelStyle"
                 android:text="@string/Fueling_LocationLabel"/>
 
             <EditText
                 android:id="@+id/fueling_edit_location"
-                style="@style/EditData"
+                style="@style/EditDetailStyle"
                 android:inputType="textAutoComplete|textCapWords"
                 android:imeOptions="actionNext"
                 android:hint="@string/Fueling_LocationLabel"/>
@@ -132,15 +132,15 @@
         </LinearLayout>
 
         <LinearLayout
-            style="@style/EditRow">
+            style="@style/LabelDataPairStyle">
 
             <TextView
-                style="@style/EditLabel"
+                style="@style/DetailLabelStyle"
                 android:text="@string/Fueling_OdometerLabel"/>
 
             <EditText
                 android:id="@+id/fueling_edit_odometer"
-                style="@style/EditData"
+                style="@style/EditDetailStyle"
                 android:inputType="numberDecimal"
                 android:imeOptions="actionDone"
                 android:hint="@string/Fueling_OdometerLabel"/>
