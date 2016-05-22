@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2016 C. Todd Cook. All rights reserved.
+  -->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        style="@style/LabelDataPairStyle">
+
+        <TextView
+            style="@style/DetailLabelStyle"
+            android:paddingBottom="8dp"
+            android:text="@string/Fueling_VehicleLabel"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:id="@+id/fueling_detail_vehicle"
+            style="@style/ViewDetailStyle"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/LabelDataPairStyle">
+
+        <TextView
+            style="@style/DetailLabelStyle"
+            android:text="@string/Fueling_DateTimeLabel"/>
+
+        <TextView
+            android:id="@+id/fueling_detail_date"
+            style="@style/ViewDetailStyle"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/LabelDataPairStyle">
+
+        <TextView
+            style="@style/DetailLabelStyle"
+            android:text="@string/Fueling_TimeLabel"/>
+
+        <TextView
+            android:id="@+id/fueling_detail_time"
+            style="@style/ViewDetailStyle"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/LabelDataPairStyle">
+
+        <TextView
+            style="@style/DetailLabelStyle"
+            android:text="@string/Fueling_DistanceLabel"/>
+
+        <TextView
+            android:id="@+id/fueling_detail_distance"
+            style="@style/ViewDetailStyle"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/LabelDataPairStyle">
+
+        <TextView
+            style="@style/DetailLabelStyle"
+            android:text="@string/Fueling_VolumeLabel"/>
+
+        <TextView
+            android:id="@+id/edit_volume"
+            style="@style/ViewDetailStyle"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/LabelDataPairStyle">
+
+        <TextView
+            style="@style/DetailLabelStyle"
+            android:text="@string/Fueling_TotalPricePaidLabel"/>
+
+        <TextView
+            android:id="@+id/fueling_detail_total_price_paid"
+            style="@style/ViewDetailStyle"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/LabelDataPairStyle">
+
+        <TextView
+            style="@style/DetailLabelStyle"
+            android:text="@string/Fueling_LocationLabel"/>
+
+        <TextView
+            android:id="@+id/fueling_detail_location"
+            style="@style/ViewDetailStyle"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/LabelDataPairStyle">
+
+        <TextView
+            style="@style/DetailLabelStyle"
+            android:text="@string/Fueling_OdometerLabel"/>
+
+        <TextView
+            android:id="@+id/fueling_detail_odometer"
+            style="@style/ViewDetailStyle"/>
+
+    </LinearLayout>
+
+
+    <!--
+    A dividing line between top and bottom
+    -->
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/divider"/>
+
+
+
+    <!--
+    Following are calculated numbers
+    -->
+
+    <LinearLayout
+        style="@style/LabelDataPairStyle">
+
+        <TextView
+            style="@style/DetailLabelStyle"
+            android:text="@string/Fueling_EfficiencyLabel"/>
+
+        <TextView
+            android:id="@+id/fueling_detail_efficiency"
+            style="@style/ViewDetailStyle"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/LabelDataPairStyle">
+
+        <TextView
+            style="@style/DetailLabelStyle"
+            android:text="@string/Fueling_PricePerUnitLabel"/>
+
+        <TextView
+            android:id="@+id/fueling_detail_price_per_unit"
+            style="@style/ViewDetailStyle"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/LabelDataPairStyle">
+
+        <TextView
+            style="@style/DetailLabelStyle"
+            android:text="@string/Fueling_PriceEfficiencyLabel"/>
+
+        <TextView
+            android:id="@+id/fueling_detail_price_per_distance"
+            style="@style/ViewDetailStyle"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/LabelDataPairStyle">
+
+        <TextView
+            style="@style/DetailLabelStyle"
+            android:text="@string/Fueling_LatitudeLongitude"/>
+
+        <TextView
+            android:id="@+id/fueling_detail_coordinates"
+            style="@style/ViewDetailStyle"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/fueling_gps_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="@string/Fueling_GPSHint"
+        android:textColor="#000000"
+        android:textSize="13sp"/>
+
+</LinearLayout>
