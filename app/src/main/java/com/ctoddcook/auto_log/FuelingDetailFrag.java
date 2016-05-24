@@ -26,8 +26,8 @@ public class FuelingDetailFrag extends Fragment {
    * passed through a Bundle, so parameters can be provided again later if the Fragment needs to
    * be reconstituted.
    *
-   * @param fuelingID the id of the vehicle to display
-   * @return a new VehicleDetailFrag
+   * @param fuelingID the id of the fueling to display
+   * @return a new FuelingDetailFrag
    */
   public static FuelingDetailFrag getInstance(int fuelingID) {
     FuelingDetailFrag fdf = new FuelingDetailFrag();
@@ -38,8 +38,8 @@ public class FuelingDetailFrag extends Fragment {
   }
 
   /**
-   * This simply gets (from arguments) the ID of the vehicle to be displayed, then retrieves that
-   * vehicle.
+   * This simply gets (from arguments) the ID of the fueling to be displayed, then retrieves that
+   * fueling.
    *
    * @param savedInstanceState If the fragment is being re-created from
    *                           a previous saved state, this is the state.
@@ -52,7 +52,7 @@ public class FuelingDetailFrag extends Fragment {
   }
 
   /**
-   * Puts the details from the vehicle in question into the TextViews which are displayed on screen.
+   * Puts the details from the fueling in question into the TextViews which are displayed on screen.
    *
    * @param inflater           The LayoutInflater object that can be used to inflate
    *                           any views in the fragment,
