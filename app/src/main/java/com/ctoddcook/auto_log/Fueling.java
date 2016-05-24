@@ -5,7 +5,6 @@
 
 package com.ctoddcook.auto_log;
 
-import android.util.Log;
 import android.util.SparseArray;
 
 import com.ctoddcook.CGenTools.DataHolder;
@@ -25,7 +24,7 @@ import static com.ctoddcook.CGenTools.CTools.round;
  * (with an 'm' prefix). This is not to be confused with the Android framework of location
  * services. This is intended to hold the user's descriptive text of where he/she got gas. It
  * could read as a city and state, or a gas station, or a street address. It will be initialized
- * (in the AddEditFuelingActivity class) to a city and state via location services--i.e., a
+ * (in the Activity_AddEditFueling class) to a city and state via location services--i.e., a
  * latitude and longitude will be retrieved and used to provide the user with a city and state;
  * after that the user might change that description.
  */
