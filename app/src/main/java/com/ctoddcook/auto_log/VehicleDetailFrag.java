@@ -17,7 +17,7 @@ import android.widget.TextView;
  */
 public class VehicleDetailFrag extends Fragment {
   private static final String TAG = "VehicleDetailFrag";
-  private static final String VEH_ID = "vehicleID";
+  private static final String POSITION = "Position";
   private Vehicle mVehicle;
 
   /**
@@ -25,13 +25,13 @@ public class VehicleDetailFrag extends Fragment {
    * passed through a Bundle, so parameters can be provided again later if the Fragment needs to
    * be reconstituted.
    *
-   * @param vehID the id of the vehicle to display
+   * @param position the id of the vehicle to display
    * @return a new VehicleDetailFrag
    */
-  public static VehicleDetailFrag getInstance(int vehID) {
+  public static VehicleDetailFrag getInstance(int position) {
     VehicleDetailFrag vdf = new VehicleDetailFrag();
     Bundle args = new Bundle();
-    args.putInt(VEH_ID, vehID);
+    args.putInt(POSITION, position);
     vdf.setArguments(args);
     return vdf;
   }
@@ -46,7 +46,7 @@ public class VehicleDetailFrag extends Fragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    int vehID = (getArguments() != null ? getArguments().getInt(VEH_ID) : 1);
+    int vehID = (getArguments() != null ? getArguments().getInt(POSITION) : 1);
     mVehicle = Vehicle.getVehicle(vehID);
   }
 
