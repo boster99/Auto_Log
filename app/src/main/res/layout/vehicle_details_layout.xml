@@ -69,10 +69,10 @@
 
         <TextView
             style="@style/DetailLabelStyle"
-            android:text="@string/Vehicle_VINLabel"/>
+            android:text="@string/Vehicle_LicenseLabel"/>
 
         <TextView
-            android:id="@+id/vehicle_detail_vin"
+            android:id="@+id/vehicle_detail_license_plate"
             style="@style/ViewDetailStyle"/>
 
     </LinearLayout>
@@ -82,10 +82,10 @@
 
         <TextView
             style="@style/DetailLabelStyle"
-            android:text="@string/Vehicle_LicenseLabel"/>
+            android:text="@string/Vehicle_VINLabel"/>
 
         <TextView
-            android:id="@+id/vehicle_detail_license_plate"
+            android:id="@+id/vehicle_detail_vin"
             style="@style/ViewDetailStyle"/>
 
     </LinearLayout>
