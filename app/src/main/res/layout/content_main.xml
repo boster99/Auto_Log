@@ -6,7 +6,7 @@
               android:layout_height="wrap_content"
               android:orientation="vertical"
               app:layout_behavior="@string/appbar_scrolling_view_behavior"
-              tools:context="com.ctoddcook.auto_log.MainActivity"
+              tools:context=".Activity_Main"
               tools:showIn="@layout/app_bar_main">
 
     <!-- This view group contains the labels and data for averages -->
