@@ -6,7 +6,8 @@ import android.provider.BaseColumns;
 /**
  * This provides Database/SQL information for the table which holds Fueling data. Includes column
  * names, types, ordinal numbers, table name, create table statement, select all, etc.
- * <p>Created by C. Todd Cook on 4/12/2016.<br>
+ * <p>
+ * Created by C. Todd Cook on 4/12/2016.<br>
  * ctodd@ctoddcook.com
  */
 public final class FuelingDBMap extends AutoLogDataMap implements BaseColumns {
