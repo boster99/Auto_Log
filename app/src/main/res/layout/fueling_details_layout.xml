@@ -43,19 +43,6 @@
 
         <TextView
             style="@style/DetailLabelStyle"
-            android:text="@string/Fueling_TimeLabel"/>
-
-        <TextView
-            android:id="@+id/fueling_detail_time"
-            style="@style/ViewDetailStyle"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        style="@style/LabelDataPairStyle">
-
-        <TextView
-            style="@style/DetailLabelStyle"
             android:text="@string/Fueling_DistanceLabel"/>
 
         <TextView
@@ -72,7 +59,7 @@
             android:text="@string/Fueling_VolumeLabel"/>
 
         <TextView
-            android:id="@+id/edit_volume"
+            android:id="@+id/fueling_detail_volume"
             style="@style/ViewDetailStyle"/>
 
     </LinearLayout>
