@@ -562,7 +562,7 @@ class Fueling extends DataHolder {
    * Accessor to entire list of Fuelings
    * @return list of all retrieved Fuelings
    */
-  public ArrayList<Fueling> getFuelingList() {
+  public static ArrayList<Fueling> getFuelingList() {
     return sLifetimeSpan;
   }
 
