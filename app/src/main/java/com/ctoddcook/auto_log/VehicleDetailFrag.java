@@ -28,7 +28,7 @@ public class VehicleDetailFrag extends Fragment {
    * @param vehID the id of the vehicle to display
    * @return a new VehicleDetailFrag
    */
-  public static VehicleDetailFrag init(int vehID) {
+  public static VehicleDetailFrag getInstance(int vehID) {
     VehicleDetailFrag vdf = new VehicleDetailFrag();
     Bundle args = new Bundle();
     args.putInt(VEH_ID, vehID);
