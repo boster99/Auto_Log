@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ctoddcook.CGenTools.PropertiesHelper;
@@ -55,11 +56,14 @@ public class VehicleListArrayAdapter extends ArrayAdapter<Vehicle> {
    */
   static class ViewHolder {
     public TextView tvName;
+    public ImageView ivBadge;
 
-    public void setName(String name, boolean isDefault) {
-      if (isDefault) name += DEFAULT_SUFFIX;
-
+    public void setName(String name) {
       tvName.setText(name);
+    }
+
+    public void showBadge(boolean show) {
+      ivBadge.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
     }
   }
 
@@ -91,14 +95,14 @@ public class VehicleListArrayAdapter extends ArrayAdapter<Vehicle> {
 
       ViewHolder newHolder = new ViewHolder();
       newHolder.tvName = (TextView) rowView.findViewById(R.id.vehilce_name);
+      newHolder.ivBadge = (ImageView) rowView.findViewById(R.id.vehicle_badge);
       rowView.setTag(newHolder);
     }
 
     ViewHolder holder = (ViewHolder) rowView.getTag();
 
-    holder.setName(vehicle.getName(), vehicle.getID() == mDefaultVehicleID);
-
-    rowView.setTag(vehicle);
+    holder.setName(vehicle.getName());
+    holder.showBadge(vehicle.getID() == mDefaultVehicleID);
 
     return rowView;
   }
