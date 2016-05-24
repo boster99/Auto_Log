@@ -6,4 +6,9 @@
         android:icon="@drawable/ic_car"
         android:title="@string/menu_item_vehicles"/>
 
+    <item
+        android:id="@+id/action_backup"
+        android:icon="@drawable/ic_backup"
+        android:title="@string/menu_item_backup"/>
+
 </menu>
