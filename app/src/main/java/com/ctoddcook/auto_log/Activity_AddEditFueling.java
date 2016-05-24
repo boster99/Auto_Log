@@ -36,12 +36,15 @@ import java.util.GregorianCalendar;
 /**
  * Activity provides the UI and functions needed to ad a new Fueling Event or edit an
  * existing one.
+ * <p>
+ * Created by C. Todd Cook on 5/11/2016.<br>
+ * ctodd@ctoddcook.com
  */
-public class AddEditFuelingActivity extends AppCompatActivity
+public class Activity_AddEditFueling extends AppCompatActivity
     implements AdapterView.OnItemSelectedListener, DatePickerFragment.DatePickerCaller,
     TimePickerFragment.TimePickerCaller, CLocationWaiter.locationCaller {
 
-  private static final String TAG = "AddEditFuelingActivity";
+  private static final String TAG = "Activity_AddEditFueling";
   private static DatabaseHelper sDatabaseHelper;
 
   public static final String KEY_ADD_EDIT_MODE = "com.ctoddcook.auto_log.ADD_EDIT_MODE";
@@ -179,7 +182,7 @@ public class AddEditFuelingActivity extends AppCompatActivity
     Whichever comes first, it will then call setLocation() in this class to provide that location
     information.
     */
-    CLocationWaiter locWaiter = new CLocationWaiter(this, 1500);
+    new CLocationWaiter(this, maxDelay);
   }
 
   /**
@@ -292,10 +295,9 @@ public class AddEditFuelingActivity extends AppCompatActivity
    * @return true if no problems were encountered, and no sanity checks failed
    */
   public boolean extractDetails() {
-    int vehicleID = mVehicle.getID();
     Date date;
     float distance = 0f, volume = 0f, pricePaid = 0f, odometer = 0f;
-    String location = null, gpsCoordinates = null;
+    String location = null;
 
     date = mDateOfFill;
 
@@ -381,16 +383,16 @@ public class AddEditFuelingActivity extends AppCompatActivity
         "and Price Paid. Do you want to save this as a duplicate?");
     b.setPositiveButton("Yes, Save Duplicate", new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface d, int id) {
-        AddEditFuelingActivity.dupeCheckResult = true;
+        Activity_AddEditFueling.dupeCheckResult = true;
       }
     });
     b.setNegativeButton("No thank you", new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface d, int id) {
-        AddEditFuelingActivity.dupeCheckResult = false;
+        Activity_AddEditFueling.dupeCheckResult = false;
       }
     });
 
-    return AddEditFuelingActivity.dupeCheckResult;
+    return Activity_AddEditFueling.dupeCheckResult;
   }
 
 
