@@ -559,6 +559,14 @@ class Fueling extends DataHolder {
      */
 
   /**
+   * Accessor to entire list of Fuelings
+   * @return list of all retrieved Fuelings
+   */
+  public ArrayList<Fueling> getFuelingList() {
+    return sLifetimeSpan;
+  }
+
+  /**
    * Getter for mFuelingID, the database prime key value of the row
    *
    * @return the database prime key value of the row
