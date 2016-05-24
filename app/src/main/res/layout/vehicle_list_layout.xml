@@ -13,7 +13,16 @@
     <TextView
         android:id="@+id/vehilce_name"
         style="@style/WideDarkDataTextStyle"
-        android:textSize="20sp"
-        android:gravity="start"/>
+        android:textSize="24sp"
+        android:gravity="start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/vehicle_badge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_red_badge"
+        android:contentDescription="Red Badge"/>
 
 </LinearLayout>
