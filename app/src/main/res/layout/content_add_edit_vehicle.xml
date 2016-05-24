@@ -21,15 +21,15 @@
         android:orientation="vertical">
 
         <LinearLayout
-            style="@style/EditRow">
+            style="@style/LabelDataPairStyle">
 
             <TextView
-                style="@style/EditLabel"
+                style="@style/DetailLabelStyle"
                 android:text="@string/Vehicle_NameLabel"/>
 
             <EditText
                 android:id="@+id/vehicle_edit_name"
-                style="@style/EditData"
+                style="@style/EditDetailStyle"
                 android:hint="@string/Vehicle_NameLabel"
                 android:inputType="text|textCapWords|textAutoComplete"
                 android:imeOptions="actionNext"/>
@@ -37,15 +37,15 @@
         </LinearLayout>
 
         <LinearLayout
-            style="@style/EditRow">
+            style="@style/LabelDataPairStyle">
 
             <TextView
-                style="@style/EditLabel"
+                style="@style/DetailLabelStyle"
                 android:text="@string/Vehicle_ColorLabel"/>
 
             <EditText
                 android:id="@+id/vehicle_edit_color"
-                style="@style/EditData"
+                style="@style/EditDetailStyle"
                 android:hint="@string/Vehicle_ColorLabel"
                 android:inputType="text|textCapWords|textAutoComplete"
                 android:imeOptions="actionNext"/>
@@ -53,15 +53,15 @@
         </LinearLayout>
 
         <LinearLayout
-            style="@style/EditRow">
+            style="@style/LabelDataPairStyle">
 
             <TextView
-                style="@style/EditLabel"
+                style="@style/DetailLabelStyle"
                 android:text="@string/Vehicle_YearLabel"/>
 
             <EditText
                 android:id="@+id/vehicle_edit_year"
-                style="@style/EditData"
+                style="@style/EditDetailStyle"
                 android:hint="@string/Vehicle_YearLabel"
                 android:inputType="number"
                 android:imeOptions="actionNext"/>
@@ -69,15 +69,15 @@
         </LinearLayout>
 
         <LinearLayout
-            style="@style/EditRow">
+            style="@style/LabelDataPairStyle">
 
             <TextView
-                style="@style/EditLabel"
+                style="@style/DetailLabelStyle"
                 android:text="@string/Vehicle_ModelLabel"/>
 
             <EditText
                 android:id="@+id/vehicle_edit_model"
-                style="@style/EditData"
+                style="@style/EditDetailStyle"
                 android:hint="@string/Vehicle_ModelLabel"
                 android:inputType="text|textCapWords|textAutoComplete"
                 android:imeOptions="actionNext"/>
@@ -85,34 +85,34 @@
         </LinearLayout>
 
         <LinearLayout
-            style="@style/EditRow">
+            style="@style/LabelDataPairStyle">
 
             <TextView
-                style="@style/EditLabel"
-                android:text="@string/Vehicle_VINLabel"/>
-
-            <EditText
-                android:id="@+id/vehicle_edit_vin"
-                style="@style/EditData"
-                android:hint="@string/Vehicle_VINLabel"
-                android:inputType="text|textCapCharacters|textNoSuggestions"
-                android:imeOptions="actionNext"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            style="@style/EditRow">
-
-            <TextView
-                style="@style/EditLabel"
+                style="@style/DetailLabelStyle"
                 android:text="@string/Vehicle_LicenseLabel"/>
 
             <EditText
                 android:id="@+id/vehicle_edit_license_plate"
-                style="@style/EditData"
+                style="@style/EditDetailStyle"
                 android:hint="@string/Vehicle_LicenseLabel"
                 android:inputType="text|textCapCharacters|textNoSuggestions"
                 android:imeOptions="actionDone"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/LabelDataPairStyle">
+
+            <TextView
+                style="@style/DetailLabelStyle"
+                android:text="@string/Vehicle_VINLabel"/>
+
+            <EditText
+                android:id="@+id/vehicle_edit_vin"
+                style="@style/EditDetailStyle"
+                android:hint="@string/Vehicle_VINLabel"
+                android:inputType="text|textCapCharacters|textNoSuggestions"
+                android:imeOptions="actionNext"/>
 
         </LinearLayout>
 
