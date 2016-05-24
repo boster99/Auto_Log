@@ -17,7 +17,7 @@ import android.widget.TextView;
  */
 public class VehicleDetailFrag extends Fragment {
   private static final String TAG = "VehicleDetailFrag";
-  private static final String POSITION = "Position";
+  private static final String VEHICLE_ID = "VehicleID";
   private Vehicle mVehicle;
 
   /**
@@ -25,13 +25,13 @@ public class VehicleDetailFrag extends Fragment {
    * passed through a Bundle, so parameters can be provided again later if the Fragment needs to
    * be reconstituted.
    *
-   * @param position the id of the vehicle to display
+   * @param vehicleID the id of the vehicle to display
    * @return a new VehicleDetailFrag
    */
-  public static VehicleDetailFrag getInstance(int position) {
+  public static VehicleDetailFrag getInstance(int vehicleID) {
     VehicleDetailFrag vdf = new VehicleDetailFrag();
     Bundle args = new Bundle();
-    args.putInt(POSITION, position);
+    args.putInt(VEHICLE_ID, vehicleID);
     vdf.setArguments(args);
     return vdf;
   }
@@ -46,7 +46,7 @@ public class VehicleDetailFrag extends Fragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    int vehID = (getArguments() != null ? getArguments().getInt(POSITION) : 1);
+    int vehID = (getArguments() != null ? getArguments().getInt(VEHICLE_ID) : -1);
     mVehicle = Vehicle.getVehicle(vehID);
   }
 
@@ -73,7 +73,7 @@ public class VehicleDetailFrag extends Fragment {
     tvColor.setText(mVehicle.getColor());
 
     TextView tvYear = (TextView) layoutView.findViewById(R.id.vehicle_detail_year);
-    tvYear.setText(mVehicle.getYear());
+    tvYear.setText(Integer.toString(mVehicle.getYear()));
 
     TextView tvModel = (TextView) layoutView.findViewById(R.id.vehicle_detail_model);
     tvModel.setText(mVehicle.getModel());
