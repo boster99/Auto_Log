@@ -551,6 +551,31 @@ class Fueling extends DataHolder {
   }
 
 
+  /**
+   * Returns a String representation of the indicated span.
+   * @param span the desired span. The value passed must be one of:
+   *             <ul>
+   *             <li>Fueling.SPAN_3_MONTHS</li>
+   *             <li>Fueling.SPAN_6_MONTHS</li>
+   *             <li>Fueling.SPAN_ONE_YEAR</li>
+   *             <li>Fueling.SPAN_ALL_TIME</li>
+   *             </ul>
+   * @return a String representing the provided span.
+   */
+  public static String getSpanPeriod(int span) {
+    switch (span) {
+      case SPAN_3_MONTHS:
+        return "3 Months";
+      case SPAN_6_MONTHS:
+        return "6 months";
+      case SPAN_ONE_YEAR:
+        return "One Year";
+      case SPAN_ALL_TIME:
+        return "Lifetime";
+      default:
+        throw new IllegalArgumentException("Argument passed: " + span + " is not a valid span");
+    }
+  }
 
 
 
