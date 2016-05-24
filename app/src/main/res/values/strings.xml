@@ -77,4 +77,13 @@
     <string name="Fueling_VolumeAbbrev">g</string>
     <string name="Fueling_EfficiencyAbbrev">m/g</string>
 
+
+    <!-- Menu Titles -->
+    <string name="menu_item_vehicles">Show Vehicles</string>
+    <string name="menu_item_backup">Backup to Cloud</string>
+
+    <!-- Miscellaneous -->
+    <string name="main_drawer_open">Drawer Opening</string>
+    <string name="main_drawer_close">Drawer Closing</string>
+
 </resources>
