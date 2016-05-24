@@ -181,6 +181,33 @@ public class FormatHandler {
   }
 
   /**
+   * Returns proper, localized formatting for a date and time. This version utilizes a LONG date
+   * and a SHORT time.
+   * @param date the date to be formatted in LONG form
+   * @return a String with the formatted date
+   */
+  public static String formatLongDateShortTime(Date date) {
+    if (!hasBeenSetup)
+      throw new UnsupportedOperationException("FormatHandler has not been initialized");
+
+    return mLongDateForm.format(date) + " " + mShortTimeForm.format(date);
+  }
+
+
+  /**
+   * Returns proper, localized formatting for a date and time. This version utilizes a MEDIUM date
+   * and a SHORT time.
+   * @param date the date to be formatted in LONG form
+   * @return a String with the formatted date
+   */
+  public static String formatMediumDateShortTime(Date date) {
+    if (!hasBeenSetup)
+      throw new UnsupportedOperationException("FormatHandler has not been initialized");
+
+    return mMediumDateForm.format(date) + " " + mShortTimeForm.format(date);
+  }
+
+  /**
    * Returns proper, localized formatting for a time.
    * @param date the date to be formatted in SHORT form
    * @return a String with the formatted date
