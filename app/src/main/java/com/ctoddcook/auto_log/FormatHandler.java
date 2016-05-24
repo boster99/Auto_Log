@@ -23,8 +23,8 @@ import java.util.Locale;
  * Context object, so it can get appropriate screen dimensions, localization, etc., so when it
  * reads resource files for strings (like currency format) it can get appropriate versions.
  * <p>
- * So the app needs to call the static method FormatHandler.init() early on, before any other
- * methods are called, and pass to init() the Context.
+ * So the app needs to call the static method FormatHandler.getInstance() early on, before any other
+ * methods are called, and pass to getInstance() the Context.
  * <p>
  * Created by C. Todd Cook on 5/18/2016.<br>
  * ctodd@ctoddcook.com
@@ -34,12 +34,28 @@ public class FormatHandler {
   private static DecimalFormat mDistanceForm = null;
   private static DecimalFormat mVolumeForm = null;
   private static DecimalFormat mEfficiencyForm = null;
+
   private static final DateFormat mShortDateForm =
       SimpleDateFormat.getDateInstance(DateFormat.SHORT);
   private static final DateFormat mMediumDateForm =
       SimpleDateFormat.getDateInstance(DateFormat.MEDIUM);
   private static final DateFormat mLongDateForm =
       SimpleDateFormat.getDateInstance(DateFormat.LONG);
+
+  private static final DateFormat mShortDateTimeForm =
+      SimpleDateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
+  private static final DateFormat mMediumDateTimeForm =
+      SimpleDateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);
+  private static final DateFormat mLongDateTimeForm =
+      SimpleDateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG);
+
+  private static final DateFormat mShortTimeForm =
+      SimpleDateFormat.getTimeInstance(DateFormat.SHORT);
+  private static final DateFormat mMediumTimeForm =
+      SimpleDateFormat.getTimeInstance(DateFormat.MEDIUM);
+  private static final DateFormat mLongTimeForm =
+      SimpleDateFormat.getTimeInstance(DateFormat.LONG);
+
   private static boolean hasBeenSetup = false;
   private static String displayPattern = null;
   private static String distanceAbbrev = null;
@@ -52,21 +68,9 @@ public class FormatHandler {
     // Nothing. Not allowed.
   }
 
-  /**
-   * Constructor takes the context from which this instance has been instantiated and a style
-   * tag, and uses them to call the super constructor. Then sets up shared/static class members
-   * (if that has not already been done) and then fills this LinearLayout with TextViews
-   * presenting data from the provided Fueling instance.
-   * @param c the context which instantiated this object
-   *
-   * @see #setupStaticMembers(Context)
-   */
-  private FormatHandler(Context c) {
-    setupStaticMembers(c);
-  }
-
   public static void init(Context c) {
-    FormatHandler f = new FormatHandler(c);
+    FormatHandler f = new FormatHandler();
+    f.setupStaticMembers(c);
   }
   /**
    * One-time setup of shared, static members of the class.
@@ -102,7 +106,7 @@ public class FormatHandler {
   }
 
   /**
-   * Returns proper, localized formatting for the date of fill. This utilizes the SHORT form,
+   * Returns proper, localized formatting for a date. This utilizes the SHORT form,
    * which, in the U.S. looks like 5/19/16 (for May 19, 2016).
    * @param date the date to be formatted in SHORT form
    * @return a String with the formatted date
@@ -115,7 +119,7 @@ public class FormatHandler {
   }
 
   /**
-   * Returns proper, localized formatting for the date of fill. This utilizes the MEDIUM form,
+   * Returns proper, localized formatting for a date. This utilizes the MEDIUM form,
    * which, in the U.S. looks like 5/19/16 (for May 19, 2016).
    * @param date the date to be formatted in MEDIUM form
    * @return a String with the formatted date
@@ -128,7 +132,7 @@ public class FormatHandler {
   }
 
   /**
-   * Returns proper, localized formatting for the date of fill. This utilizes the Long form, which,
+   * Returns proper, localized formatting for a date. This utilizes the Long form, which,
    * in the U.S. looks like December 19, 2016.
    * @param date the date to be formatted in LONG form
    * @return a String with the formatted date
@@ -138,6 +142,78 @@ public class FormatHandler {
       throw new UnsupportedOperationException("FormatHandler has not been initialized");
 
     return mLongDateForm.format(date);
+  }
+
+  /**
+   * Returns proper, localized formatting for a date and time.
+   * @param date the date to be formatted in SHORT form
+   * @return a String with the formatted date
+   */
+  public static String formatShortDateTime(Date date) {
+    if (!hasBeenSetup)
+      throw new UnsupportedOperationException("FormatHandler has not been initialized");
+
+    return mShortDateTimeForm.format(date);
+  }
+
+  /**
+   * Returns proper, localized formatting for a date and time.
+   * @param date the date to be formatted in MEDIUM form
+   * @return a String with the formatted date
+   */
+  public static String formatMediumDateTime(Date date) {
+    if (!hasBeenSetup)
+      throw new UnsupportedOperationException("FormatHandler has not been initialized");
+
+    return mMediumDateTimeForm.format(date);
+  }
+
+  /**
+   * Returns proper, localized formatting for a date and time.
+   * @param date the date to be formatted in LONG form
+   * @return a String with the formatted date
+   */
+  public static String formatLongDateTime(Date date) {
+    if (!hasBeenSetup)
+      throw new UnsupportedOperationException("FormatHandler has not been initialized");
+
+    return mLongDateTimeForm.format(date);
+  }
+
+  /**
+   * Returns proper, localized formatting for a time.
+   * @param date the date to be formatted in SHORT form
+   * @return a String with the formatted date
+   */
+  public static String formatShortTime(Date date) {
+    if (!hasBeenSetup)
+      throw new UnsupportedOperationException("FormatHandler has not been initialized");
+
+    return mShortTimeForm.format(date);
+  }
+
+  /**
+   * Returns proper, localized formatting for a time.
+   * @param date the date to be formatted in MEDIUM form
+   * @return a String with the formatted date
+   */
+  public static String formatMediumTime(Date date) {
+    if (!hasBeenSetup)
+      throw new UnsupportedOperationException("FormatHandler has not been initialized");
+
+    return mMediumTimeForm.format(date);
+  }
+
+  /**
+   * Returns proper, localized formatting for a time.
+   * @param date the date to be formatted in LONG form
+   * @return a String with the formatted date
+   */
+  public static String formatLongTime(Date date) {
+    if (!hasBeenSetup)
+      throw new UnsupportedOperationException("FormatHandler has not been initialized");
+
+    return mLongTimeForm.format(date);
   }
 
   /**
