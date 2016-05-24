@@ -4,6 +4,7 @@
 
 package com.ctoddcook.auto_log;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +14,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import static android.support.v4.app.ActivityCompat.startActivity;
 
 /**
  * Builds presentation UI for a simeple list of Vehicles. Sets up the root ViewGroup (a LiewView)
@@ -47,19 +50,20 @@ public class ViewVehicleList extends AppCompatActivity implements AdapterView
   }
 
   /**
-   * Handler for when the user touches an item on the ListView of Vehicles.
+   * Handler for when the user touches an item on the ListView of Vehicles. Opens
+   * Activity_ViewDetail class and tells it to display vehicle ddetails.
    * @param parent the parent Adapter, see VehicleListArrayAdapter class
    * @param view the UI item that was touched
    * @param pos the position in the list that was touched
    * @param id the id of the touched item
    */
   public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
-    // fixme change so this starts new activity
     if (view instanceof LinearLayout) {
       Vehicle vehicle = (Vehicle) parent.getItemAtPosition(pos);
-      Toast.makeText(this, "Touch of " + vehicle.getName(), Toast.LENGTH_LONG).show();
-      Toast.makeText(this, "pos is " + pos, Toast.LENGTH_SHORT).show();
-      Toast.makeText(this, "id is " + id, Toast.LENGTH_SHORT).show();
+      Intent intent = new Intent(this, Activity_ViewDetail.class);
+      intent.putExtra(Activity_ViewDetail.ARG_TYPE, Activity_ViewDetail.TYPE_VEHICLE);
+      intent.putExtra(Activity_ViewDetail.ARG_ITEM_ID, vehicle.getID());
+      startActivity(intent);
     }
   }
 
