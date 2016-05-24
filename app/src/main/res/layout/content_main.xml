@@ -46,7 +46,8 @@
 
         <!-- The next four LinearLayouts contain AVERAGES data -->
         <LinearLayout
-            style="@style/RowStyle">
+            style="@style/RowStyle"
+            android:id="@+id/averages_first_row">
 
             <TextView
                 android:id="@+id/first_average_row_label"
@@ -76,7 +77,8 @@
         </LinearLayout>
 
         <LinearLayout
-            style="@style/RowStyle">
+            style="@style/RowStyle"
+            android:id="@+id/averages_second_row">
 
             <TextView
                 android:id="@+id/second_average_row_label"
@@ -106,7 +108,8 @@
         </LinearLayout>
 
         <LinearLayout
-            style="@style/RowStyle">
+            style="@style/RowStyle"
+            android:id="@+id/averages_third_row">
 
             <TextView
                 android:id="@+id/third_average_row_label"
@@ -136,7 +139,8 @@
         </LinearLayout>
 
         <LinearLayout
-            style="@style/RowStyle">
+            style="@style/RowStyle"
+            android:id="@+id/averages_fourth_row">
 
             <TextView
                 android:id="@+id/fourth_average_row_label"
