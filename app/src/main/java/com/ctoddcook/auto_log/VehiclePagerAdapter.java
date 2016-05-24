@@ -12,8 +12,8 @@ import java.util.ArrayList;
  * Created by C. Todd Cook on 5/24/2016.<br>
  * ctodd@ctoddcook.com
  */
-public class VehicleAdapter extends FragmentStatePagerAdapter {
-  private static final String TAG = "VehicleAdapter";
+public class VehiclePagerAdapter extends FragmentStatePagerAdapter {
+  private static final String TAG = "VehiclePagerAdapter";
   private final ArrayList<Vehicle> mVehicles;
 
   /**
@@ -22,7 +22,7 @@ public class VehicleAdapter extends FragmentStatePagerAdapter {
    * @param fragmentManager the manager overseeing this adapter
    * @param vehicles a list of vehicles, from which details will be retrieved for display
    */
-  public VehicleAdapter(FragmentManager fragmentManager, ArrayList<Vehicle> vehicles) {
+  public VehiclePagerAdapter(FragmentManager fragmentManager, ArrayList<Vehicle> vehicles) {
     super(fragmentManager);
     mVehicles = vehicles;
   }
