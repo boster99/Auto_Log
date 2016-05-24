@@ -72,7 +72,7 @@ public class FuelingDetailFrag extends Fragment {
     tvVehicle.setText(Vehicle.getVehicle(mFueling.getVehicleID()).getName());
 
     TextView tvDate = (TextView) layoutView.findViewById(R.id.fueling_detail_date);
-    tvDate.setText(FormatHandler.formatLongDateTime(mFueling.getDateOfFill()));
+    tvDate.setText(FormatHandler.formatLongDateShortTime(mFueling.getDateOfFill()));
 
     TextView tvDist = (TextView) layoutView.findViewById(R.id.fueling_detail_distance);
     tvDist.setText(FormatHandler.formatDistance(mFueling.getDistance()));
