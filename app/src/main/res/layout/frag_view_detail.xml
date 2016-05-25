@@ -1,23 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright (c) 2016 C. Todd Cook. All rights reserved.
+
+  This layout is associated with Activity_ViewDetail, and provides ViewPager functionality for
+  multiple fragments: Vehicle Details, Fueling Details, and Averages Details.
   -->
 
 <!-- Update value in tools:context -->
 
-<LinearLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#78909C">
+    android:fitsSystemWindows="true"
+    tools:context=".Activity_ViewDetail">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+    </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/Details_Pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
     </android.support.v4.view.ViewPager>
 
-</LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabEditFueling"
+        style="@style/FloatingAddButton.BottomEnd"
+        android:src="@drawable/ic_green_edit"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabDeleteFueling"
+        style="@style/FloatingAddButton.BottomStart"
+        android:src="@drawable/ic_green_delete"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabEditVehicle"
+        style="@style/FloatingAddButton.BottomStart"
+        android:src="@drawable/ic_green_edit"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabDeleteVehicle"
+        style="@style/FloatingAddButton.BottomStart"
+        android:src="@drawable/ic_green_delete"/>
+
+</android.support.design.widget.CoordinatorLayout>
 
 
 
