@@ -86,29 +86,29 @@ public class FuelingArrayAdapter extends ArrayAdapter<Fueling> {
   @Override
   public View getView(int pos, View convertView, ViewGroup parent) {
 
-    View rowView = convertView;
+    View row = convertView;
     Fueling fd = fuelingsList.get(pos);
 
     /*
-    Reuse views. Only create a rowView from scratch if the call to this method did not give us
+    Reuse views. Only create a row from scratch if the call to this method did not give us
     an old (no longer visible) view we could reuse. This makes memory-use more efficient, and
     makes scrolling smoother.
      */
-    if (rowView == null) {
+    if (row == null) {
       LayoutInflater inflater = (LayoutInflater) context
           .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-      rowView = inflater.inflate(R.layout.fueling_row_layout, parent, false);
+      row = inflater.inflate(R.layout.fueling_row_layout, parent, false);
 
       ViewHolder newHolder = new ViewHolder();
-      newHolder.tvDate = (TextView) rowView.findViewById(R.id.fueling_row_date);
-      newHolder.tvPrice = (TextView) rowView.findViewById(R.id.fueling_row_price);
-      newHolder.tvDist = (TextView) rowView.findViewById(R.id.fueling_row_dist);
-      newHolder.tvVol = (TextView) rowView.findViewById(R.id.fueling_row_vol);
-      newHolder.tvEff = (TextView) rowView.findViewById(R.id.fueling_row_efficiency);
-      rowView.setTag(newHolder);
+      newHolder.tvDate = (TextView) row.findViewById(R.id.fueling_row_date);
+      newHolder.tvPrice = (TextView) row.findViewById(R.id.fueling_row_price);
+      newHolder.tvDist = (TextView) row.findViewById(R.id.fueling_row_dist);
+      newHolder.tvVol = (TextView) row.findViewById(R.id.fueling_row_vol);
+      newHolder.tvEff = (TextView) row.findViewById(R.id.fueling_row_efficiency);
+      row.setTag(newHolder);
     }
 
-    ViewHolder holder = (ViewHolder) rowView.getTag();
+    ViewHolder holder = (ViewHolder) row.getTag();
 
     holder.setDate(fd.getDateOfFill());
     holder.setPrice(fd.getPricePerUnit());
@@ -116,8 +116,6 @@ public class FuelingArrayAdapter extends ArrayAdapter<Fueling> {
     holder.setVolume(fd.getVolume());
     holder.setEfficiency(fd.getEfficiency());
 
-    rowView.setTag(fd);
-
-    return rowView;
+    return row;
   }
 }
