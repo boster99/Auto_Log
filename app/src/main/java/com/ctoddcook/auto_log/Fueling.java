@@ -44,6 +44,9 @@ class Fueling extends DataHolder {
   private static final ArrayList<Fueling> sLifetimeSpan = new ArrayList<>();
   private static final SparseArray<Fueling> sFuelingList = new SparseArray<>(200);
 
+  private static final String GEO_PREFIX = "geo:";
+  private static final String GEO_NOT_CAPTURED = "<not captured>";
+
   static {
     DATE_THRESHOLDS = new Date[3];
 
@@ -841,7 +844,15 @@ class Fueling extends DataHolder {
    * @return a String in the form 'geo:[latitude],[longitude]'
    */
   public String getGeoURI() {
-    return "geo:" + mLatitude + "," + mLongitude;
+    return (isGeoURIValid() ? "geo:" + mLatitude + "," + mLongitude : "<not captured>");
+  }
+
+  /**
+   * Indicates whether the latitude and longitude are valid.
+   * @return true, if latitude + longitude != 0
+   */
+  public boolean isGeoURIValid() {
+    return (mLatitude+mLongitude != 0f);
   }
 
   /**
