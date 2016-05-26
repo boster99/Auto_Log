@@ -123,6 +123,8 @@ public class Property extends DataHolder {
     if (id < 1)
       throw new IllegalArgumentException("mPropertyID value must be at least 1");
 
+    mPropertyID = id;
+
     setName(name);
 
     switch (type) {
