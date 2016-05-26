@@ -169,7 +169,8 @@
 
         <TextView
             android:id="@+id/fueling_detail_coordinates"
-            style="@style/ViewDetailStyle"/>
+            style="@style/ViewDetailStyle"
+            android:onClick="showMap"/>
 
     </LinearLayout>
 
