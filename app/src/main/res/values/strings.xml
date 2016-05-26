@@ -1,89 +1,92 @@
 <resources>
-    <string name="app_name">Auto Log</string>
+  <string name="app_name">Auto Log</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+  <string name="navigation_drawer_open">Open navigation drawer</string>
+  <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
+  <string name="action_settings">Settings</string>
 
-    <!-- The following are strings on the main screen -->
-    <string name="Main_DateLabel">Date</string>
-    <string name="Main_PriceLabel">Price</string>
-    <string name="Main_DistanceLabel">Dist</string>
-    <string name="Main_VolumeLabel">Vol</string>
-    <string name="Main_EfficiencyLabel">MPG</string>
-    <string name="Main_AveragesLabel">Averages</string>
-    <string name="Main_HistoricalsLabel">Historical</string>
-    <string name="Main_PeriodLabel">Period</string>
-    <string name="Main_StartupDataDisplay">---</string>
-    <string name="Main_FirstAverageLabel">3 months</string>
-    <string name="Main_ActivitySecondAverageLabel">6 months</string>
-    <string name="Main_ThirdAverageLabel">One Year</string>
-    <string name="Main_FourthAverageLabel">Lifetime</string>
+  <!-- The following are strings on the main screen -->
+  <string name="Main_DateLabel">Date</string>
+  <string name="Main_PriceLabel">Price</string>
+  <string name="Main_DistanceLabel">Dist</string>
+  <string name="Main_VolumeLabel">Vol</string>
+  <string name="Main_EfficiencyLabel">MPG</string>
+  <string name="Main_AveragesLabel">Averages</string>
+  <string name="Main_HistoricalsLabel">Historical</string>
+  <string name="Main_PeriodLabel">Period</string>
+  <string name="Main_StartupDataDisplay">---</string>
+  <string name="Main_FirstAverageLabel">3 months</string>
+  <string name="Main_ActivitySecondAverageLabel">6 months</string>
+  <string name="Main_ThirdAverageLabel">One Year</string>
+  <string name="Main_FourthAverageLabel">Lifetime</string>
 
-    <!-- Following are used on AddEditFueling activity -->
-    <string name="title_activity_enter_fueling_data">Enter Fueling Details</string>
-    <string name="Fueling_VehicleLabel">Vehicle</string>
-    <string name="Fueling_DateLabel">Date</string>
-    <string name="Fueling_TimeLabel">Time</string>
-    <string name="Fueling_VolumeLabel">Volume</string>
-    <string name="Fueling_DistanceLabel">Distance</string>
-    <string name="Fueling_TotalPricePaidLabel">Total Price Paid</string>
-    <string name="Fueling_LocationLabel">Location</string>
-    <string name="Fueling_OdometerLabel">Odometer</string>
+  <!-- Following are used on AddEditFueling activity -->
+  <string name="title_activity_enter_fueling_data">Enter Fueling Details</string>
+  <string name="Fueling_VehicleLabel">Vehicle</string>
+  <string name="Fueling_DateLabel">Date</string>
+  <string name="Fueling_TimeLabel">Time</string>
+  <string name="Fueling_VolumeLabel">Volume</string>
+  <string name="Fueling_DistanceLabel">Distance</string>
+  <string name="Fueling_TotalPricePaidLabel">Total Price Paid</string>
+  <string name="Fueling_LocationLabel">Location</string>
+  <string name="Fueling_OdometerLabel">Odometer</string>
 
-    <!-- Following are used in the span_ fueling_ and vehicle_details_layout.xmls -->
-    <string name="Fueling_DateTimeLabel">Date and Time</string>
-    <string name="Fueling_EfficiencyLabel">Miles/Gallon</string>
-    <string name="Fueling_PriceEfficiencyLabel">Price/Mile</string>
-    <string name="Fueling_PricePerUnitLabel">Price/Gallon</string>
-    <string name="Fueling_LatitudeLongitude">GPS Coordinates</string>
+  <!-- Following are used in the span_ fueling_ and vehicle_details_layout.xmls -->
+  <string name="Fueling_DateTimeLabel">Date and Time</string>
+  <string name="Fueling_EfficiencyLabel">Miles/Gallon</string>
+  <string name="Fueling_PriceEfficiencyLabel">Price/Mile</string>
+  <string name="Fueling_PricePerUnitLabel">Price/Gallon</string>
+  <string name="Fueling_LatitudeLongitude">GPS Coordinates</string>
     <string name="Fueling_GPSHint">
         HINT: Touch the coordinates, and a map will show the location.
     </string>
 
-    <string name="Span_VehicleLabel">Vehicle</string>
-    <string name="Span_PeriodLabel">Period</string>
-    <string name="Span_DistanceLabel">Avg Distance</string>
-    <string name="Span_VolumeLabel">Avg Volume</string>
-    <string name="Span_TotalPriceLabel">Avg Price</string>
-    <string name="Span_PricePerUnitLabel">Avg Price/Gallon</string>
-    <string name="Span_EfficiencyLabel">Avg Miles/Gallon</string>
-    <string name="Span_PricePerDistanceLabel">Avg Price/Mile</string>
+  <string name="Span_VehicleLabel">Vehicle</string>
+  <string name="Span_PeriodLabel">Period</string>
+  <string name="Span_DistanceLabel">Avg Distance</string>
+  <string name="Span_VolumeLabel">Avg Volume</string>
+  <string name="Span_TotalPriceLabel">Avg Price</string>
+  <string name="Span_PricePerUnitLabel">Avg Price/Gallon</string>
+  <string name="Span_EfficiencyLabel">Avg Miles/Gallon</string>
+  <string name="Span_PricePerDistanceLabel">Avg Price/Mile</string>
 
 
-    <!-- Following are used on AddEditVehicle activity -->
-    <string name="title_activity_add_vehicle">Enter Vehicle Details</string>
-    <string name="Vehicle_NameLabel">Name</string>
-    <string name="Vehicle_YearLabel">Model Year</string>
-    <string name="Vehicle_ColorLabel">Color</string>
-    <string name="Vehicle_ModelLabel">Model</string>
-    <string name="Vehicle_VINLabel">VIN</string>
-    <string name="Vehicle_LicenseLabel">License Plate</string>
+  <!-- Following are used on AddEditVehicle activity -->
+  <string name="title_activity_add_vehicle">Enter Vehicle Details</string>
+  <string name="Vehicle_NameLabel">Name</string>
+  <string name="Vehicle_YearLabel">Model Year</string>
+  <string name="Vehicle_ColorLabel">Color</string>
+  <string name="Vehicle_ModelLabel">Model</string>
+  <string name="Vehicle_VINLabel">VIN</string>
+  <string name="Vehicle_LicenseLabel">License Plate</string>
     <string name="Vehicle_NameEntryHint">
         HINT: You can enter your own descriptive \"Name\" for this vehicle. Or, if you leave
         it blank, the vehicle\'s color, year and model will be used to create a name for you.
     </string>
 
-    <!-- For re-used buttons -->
-    <string name="SaveButton">Save</string>
-    <string name="CancelButton">Cancel</string>
+  <!-- For re-used buttons -->
+  <string name="SaveButton">Save</string>
+  <string name="CancelButton">Cancel</string>
+  <string name="EditButton">Edit</string>
+  <string name="DeleteButton">Delete</string>
 
-    <!-- For Fueling data display formatting -->
-    <string name="Fueling_CurrencyForm">¤ 0.000</string>
-    <string name="Fueling_SingleDecimalPointForm">0.0</string>
-    <string name="Fueling_DataPattern">%1$s %2$s</string>
-    <string name="Fueling_DistanceAbbrev">m</string>
-    <string name="Fueling_VolumeAbbrev">g</string>
-    <string name="Fueling_EfficiencyAbbrev">m/g</string>
+  <!-- For Fueling data display formatting -->
+  <string name="Fueling_CurrencyForm">¤ 0.000</string>
+  <string name="Fueling_SingleDecimalPointForm">0.0</string>
+  <string name="Fueling_DataPattern">%1$s %2$s</string>
+  <string name="Fueling_DistanceAbbrev">m</string>
+  <string name="Fueling_VolumeAbbrev">g</string>
+  <string name="Fueling_EfficiencyAbbrev">m/g</string>
 
 
-    <!-- Menu Titles -->
-    <string name="menu_item_vehicles">Show Vehicles</string>
-    <string name="menu_item_backup">Backup to Cloud</string>
+  <!-- Menu Titles -->
+  <string name="menu_item_vehicles">Show Vehicles</string>
+  <string name="menu_item_backup">Backup to Cloud</string>
 
-    <!-- Miscellaneous -->
-    <string name="main_drawer_open">Drawer Opening</string>
-    <string name="main_drawer_close">Drawer Closing</string>
+  <!-- Miscellaneous -->
+  <string name="main_drawer_open">Drawer Opening</string>
+  <string name="main_drawer_close">Drawer Closing</string>
+  <string name="vehicle_list_activity_title">Vehicle List</string>
 
 </resources>
