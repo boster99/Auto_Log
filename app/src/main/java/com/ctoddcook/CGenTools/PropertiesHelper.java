@@ -83,7 +83,7 @@ public class PropertiesHelper {
       insertProperty(pNew);
     } else if (!pExisting.equals(pNew)) {
       pExisting.update(pNew);
-      updateProperty(pNew);
+      updateProperty(pExisting);
     }
   }
 
