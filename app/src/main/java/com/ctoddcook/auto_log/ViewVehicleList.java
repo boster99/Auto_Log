@@ -13,6 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.ctoddcook.CGenTools.PropertiesHelper;
+import com.ctoddcook.CGenTools.Property;
+
 import java.util.ArrayList;
 
 /**
@@ -34,6 +37,8 @@ public class ViewVehicleList extends AppCompatActivity implements AdapterView
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_view_vehicle_list);
     showVehicles();
+    Toast.makeText(this, "Long-press a vehicle to make it your default vehicle",
+        Toast.LENGTH_LONG).show();
   }
 
   /**
@@ -45,7 +50,10 @@ public class ViewVehicleList extends AppCompatActivity implements AdapterView
 
     if (sVehicleListView == null) {
       sVehicleListView = (ListView) findViewById(R.id.Vehicle_ListView);
-      if (sVehicleListView != null) sVehicleListView.setOnItemClickListener(this);
+      if (sVehicleListView != null) {
+        sVehicleListView.setOnItemClickListener(this);
+        sVehicleListView.setOnItemLongClickListener(this);
+      }
     }
 
     sVehicleListView.setAdapter(new VehicleListArrayAdapter(this, mVehicleList));
@@ -79,20 +87,25 @@ public class ViewVehicleList extends AppCompatActivity implements AdapterView
    * @param parent   The AbsListView where the click happened
    * @param view     The view within the AbsListView that was clicked
    * @param pos      The position of the view in the list
-   * @param id       The row id of the item that was clicked
+   * @param id       The row id of the item that was clicked (not reliable in this instance)
    * @return true if the callback consumed the long click, false otherwise
    */
   @Override
   public boolean onItemLongClick(AdapterView<?> parent, View view, int pos, long id) {
-    // fixme change this so it opens menu (for setting default or retiring)
+    PropertiesHelper ph = PropertiesHelper.getInstance();
+    int defaultVehID = (int) ph.getLongValue(Vehicle.DEFAULT_VEHICLE_KEY);
+
     if (view instanceof LinearLayout) {
-      Vehicle vehicle = (Vehicle) view.getTag();
-      Toast.makeText(this, "Long touch of " + vehicle.getName(), Toast.LENGTH_LONG).show();
-      Toast.makeText(this, "pos is " + pos, Toast.LENGTH_SHORT).show();
-      Toast.makeText(this, "id is " + id, Toast.LENGTH_SHORT).show();
+      Vehicle vehicle = (Vehicle) parent.getItemAtPosition(pos);
+      int vehID = vehicle.getID();
+      if (vehID != defaultVehID && Vehicle.getVehicle(vehID) != null) {
+        ph.put(new Property(Vehicle.DEFAULT_VEHICLE_KEY, vehID));
+      }
     }
 
-    return false;
+    showVehicles();
+
+    return true;
   }
 
   /**
