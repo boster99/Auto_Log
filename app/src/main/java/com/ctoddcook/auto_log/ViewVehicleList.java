@@ -15,8 +15,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import static android.support.v4.app.ActivityCompat.startActivity;
-
 /**
  * Builds presentation UI for a simeple list of Vehicles. Sets up the root ViewGroup (a LiewView)
  * and gives it an ArrayAdapter which handles display of individual rows. When a row is touched,
@@ -29,24 +27,28 @@ public class ViewVehicleList extends AppCompatActivity implements AdapterView
 
   private static final String TAG = "ViewVehicleList";
 
-  private ListView mVehicleListView;
-  private ArrayList<Vehicle> mVehicleList;
+  private static ListView sVehicleListView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_view_vehicle_list);
-    mVehicleList = DatabaseHelper.getInstance(this).fetchVehicleList();
-    initList();
+    showVehicles();
   }
 
-  private void initList() {
-    if (mVehicleListView == null) {
-      mVehicleListView = (ListView) findViewById(R.id.Vehicle_ListView);
-      if (mVehicleListView != null) mVehicleListView.setOnItemClickListener(this);
+  /**
+   * Fetches the list of vehicles from the database and displays them as a list
+   */
+  private void showVehicles() {
+    ArrayList<Vehicle> mVehicleList;
+    mVehicleList = DatabaseHelper.getInstance(this).fetchVehicleList();
+
+    if (sVehicleListView == null) {
+      sVehicleListView = (ListView) findViewById(R.id.Vehicle_ListView);
+      if (sVehicleListView != null) sVehicleListView.setOnItemClickListener(this);
     }
 
-    mVehicleListView.setAdapter(new VehicleListArrayAdapter(this, mVehicleList));
+    sVehicleListView.setAdapter(new VehicleListArrayAdapter(this, mVehicleList));
   }
 
   /**
@@ -91,5 +93,32 @@ public class ViewVehicleList extends AppCompatActivity implements AdapterView
     }
 
     return false;
+  }
+
+  /**
+   * Called by the floating action button. Opens the activity for adding a new vechile. We're
+   * passing a 0 for requestCode, so we won't get a meaningful requestCode passed back to
+   * onActivityResult(); that's okay because there's only one activity we start for result from
+   * this activity.
+   * @param v the button that was clicked
+   */
+  public void addVehicle(View v) {
+    Intent intent = new Intent(this, Activity_AddEditVehicle.class);
+    intent.putExtra(Activity_AddEditVehicle.KEY_ADD_EDIT_MODE, Activity_AddEditVehicle.MODE_ADD);
+    startActivityForResult(intent, 0);
+  }
+
+  /**
+   * Called when the Activity_AddEditVehicle class closes, so we can refresh our list of
+   * displayed vechicles.
+   * @param requestCode Would indicate which activity called this, except that we pass a 0 above
+   * @param resultCode whether the user clicked "save" or "cancel"; doesn't matter, we refresh
+   *                   the list regardless
+   * @param data any data we might want to process (there's none we want to process)
+   */
+  @Override
+  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    showVehicles();
   }
 }
