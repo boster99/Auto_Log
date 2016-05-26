@@ -17,8 +17,8 @@ import android.widget.Toast;
 /**
  * This activity is used for adding a new, or editing an existing Vehicle.
  */
-public class AddEditVehicleActivity extends AppCompatActivity {
-  private static final String TAG = "AddEditVehicleActivity";
+public class Activity_AddEditVehicle extends AppCompatActivity {
+  private static final String TAG = "Activity_AddEditVehicle";
 
   private static DatabaseHelper sDatabaseHelper;
 
@@ -187,16 +187,16 @@ public class AddEditVehicleActivity extends AppCompatActivity {
         " same name. Do you want to save this as a duplicate?");
     b.setPositiveButton("Yes, Save Duplicate", new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface d, int id) {
-        AddEditVehicleActivity.dupeCheckResult = true;
+        Activity_AddEditVehicle.dupeCheckResult = true;
       }
     });
     b.setNegativeButton("No thank you", new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface d, int id) {
-        AddEditVehicleActivity.dupeCheckResult = false;
+        Activity_AddEditVehicle.dupeCheckResult = false;
       }
     });
 
-    return AddEditVehicleActivity.dupeCheckResult;
+    return Activity_AddEditVehicle.dupeCheckResult;
   }
 
 
