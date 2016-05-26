@@ -14,9 +14,28 @@
         style="@style/SectionStyle"
         android:background="@color/averagesFieldBackground">
 
-        <TextView
-            style="@style/SectionHeaderTextStyle"
-            android:text="@string/Main_AveragesLabel"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/averages_title"
+                style="@style/SectionHeaderTextStyle"
+                android:layout_width="wrap_content"
+                android:paddingTop="3dp"
+                android:text="@string/Main_AveragesLabel"
+                android:gravity="bottom"/>
+
+            <Spinner
+                android:id="@+id/main_vehicle_spinner"
+                android:layout_toRightOf="@id/averages_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:spinnerMode="dropdown"
+                android:visibility="visible"/>
+
+        </RelativeLayout>
 
         <!-- This LinearLayout contains the column headers for the averages -->
         <LinearLayout
