@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <!-- Base application theme. -->
@@ -146,19 +147,6 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">@dimen/fab_margin</item>
-        <item name="android:src">@android:drawable/ic_input_add</item>
-    </style>
-
-    <style name="FloatingAddButton.BottomEnd" parent="@style/FloatingAddButton">
-        <item name="android:layout_gravity">bottom|end</item>
-    </style>
-
-    <style name="FloatingAddButton.BottomCenter" parent="@style/FloatingAddButton">
-        <item name="android:layout_gravity">bottom|center</item>
-    </style>
-
-    <style name="FloatingAddButton.BottomStart" parent="@style/FloatingAddButton">
-        <item name="android:layout_gravity">bottom|start</item>
     </style>
 
     <style name="SaveButton">
@@ -171,6 +159,18 @@
         <item name="android:layout_width">96dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:text">@string/CancelButton</item>
+    </style>
+
+    <style name="EditButton">
+        <item name="android:layout_width">96dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:text">@string/EditButton</item>
+    </style>
+
+    <style name="DeleteButton">
+        <item name="android:layout_width">96dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:text">@string/DeleteButton</item>
     </style>
 
 </resources>
