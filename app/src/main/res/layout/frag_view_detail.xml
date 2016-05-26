@@ -18,50 +18,54 @@
     android:fitsSystemWindows="true"
     tools:context=".Activity_ViewDetail">
 
-    <android.support.design.widget.AppBarLayout
+  <android.support.design.widget.AppBarLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:fitsSystemWindows="true"
+      android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:layout_scrollFlags="scroll|enterAlways|snap"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways|snap"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+  </android.support.design.widget.AppBarLayout>
 
-    </android.support.design.widget.AppBarLayout>
+  <!-- fixme need to find a way to get buttons to work -->
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="horizontal">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/Details_Pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     </android.support.v4.view.ViewPager>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabEditFueling"
-        style="@style/FloatingAddButton.BottomEnd"
-        android:src="@drawable/ic_green_edit"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabDeleteFueling"
-        style="@style/FloatingAddButton.BottomStart"
-        android:src="@drawable/ic_green_delete"/>
+      <Button
+          android:id="@+id/delete_item"
+          style="@style/DeleteButton"
+          android:onClick="deleteDetail"/>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabEditVehicle"
-        style="@style/FloatingAddButton.BottomStart"
-        android:src="@drawable/ic_green_edit"/>
+      <Button
+          android:id="@+id/edit_item"
+          style="@style/EditButton"
+          android:onClick="editDetail"/>
+    </LinearLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabDeleteVehicle"
-        style="@style/FloatingAddButton.BottomStart"
-        android:src="@drawable/ic_green_delete"/>
-
+  </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
 
 
