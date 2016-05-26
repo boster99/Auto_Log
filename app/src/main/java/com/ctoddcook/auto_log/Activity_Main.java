@@ -5,7 +5,13 @@
 package com.ctoddcook.auto_log;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteCursor;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SimpleCursorAdapter;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -14,6 +20,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +31,7 @@ import java.util.ArrayList;
 
 
 /**
- * The Main activity for this app. This diplays a split screen:
+ * The Main activity for this app. This displays a split screen:
  * <ul>
  *   <li>The top of the screen displays averages over some time spans</li>
  *   <li>The bottom of the screen displays historical records</li>
@@ -33,8 +40,9 @@ import java.util.ArrayList;
  * Created by C. Todd Cook on 5/01/2016.<br>
  * ctodd@ctoddcook.com
  */
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
-  private static final String TAG = "MainActivity";
+public class Activity_Main extends AppCompatActivity implements AdapterView.OnItemClickListener,
+    View.OnClickListener, AdapterView.OnItemSelectedListener {
+  private static final String TAG = "Activity_Main";
   private static final int PROGRESS = 0x1;
   private static final int ADD_FIRST_VEHICLE = 755;
   private static final int ADD_FUELING = 442;
@@ -42,6 +50,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
   private static DatabaseHelper sDatabaseHelper;
   private int mCurrentVehicleID = 0;
   private ListView mHistoricalsList;
+  private DrawerLayout mDrawerLayout;
+  private Toolbar mToolbar;
+  private ListView mDrawerList;
+  private ArrayList<Vehicle> mVehicles;
 
   /**
    * Called by the system when the UI elements of the activity are created.
@@ -50,9 +62,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-    setSupportActionBar(toolbar);
+    setContentView(R.layout.activity_main_nav_drawer);
+    mToolbar = (Toolbar) findViewById(R.id.toolbar);
+    setSupportActionBar(mToolbar);
+
+    mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
     FormatHandler.init(this);
 
@@ -60,8 +74,169 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     PropertiesHelper.setDatabaseHelper(sDatabaseHelper);
     sPH = PropertiesHelper.getInstance();
 
+    setupDrawer();
+
     populateScreen();
   }
+
+  private void setupVehicleSpinner() {
+//    ArrayAdapter adapter = new ArrayAdapter(this, R.layout.vehicle_name_array_adapter,
+//        R.id.spinner_vehicle_name, mVehicles);
+//    Spinner spinner = (Spinner) findViewById(R.id.main_vehicle_spinner);
+//    if (spinner != null)
+//      spinner.setAdapter(adapter);
+//    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//
+//    /*
+//      If we have a vehicle indicated (we should) then set the spinner to show that vehicle as
+//      selected.
+//    */
+//    if (mCurrentVehicleID != 0) {
+//      int pos = 0;
+//
+//      for (int i = 0; i < spinner.getCount(); i++) {
+//        int spinnerItemID = ((Vehicle)spinner.getItemAtPosition(i)).getID();
+//        if (spinnerItemID == mCurrentVehicleID) {
+//          pos = i;
+//          break;
+//        }
+//      }
+//
+//      spinner.setSelection(pos);
+//    }
+//  }
+//
+    // get a cursor providing IDs and NAMEs for each vehicle
+    Cursor cursor = sDatabaseHelper.fetchSimpleVehicleListCursor();
+
+    // if the cursor has no results, open the Activity_AddEditVehicle, then try again
+    if (cursor.getCount() < 1) {
+      Intent intent = new Intent(this, Activity_AddEditVehicle.class);
+      intent.putExtra(Activity_AddEditVehicle.KEY_ADD_EDIT_MODE, Activity_AddEditVehicle
+          .MODE_ADD);
+      startActivity(intent);
+      cursor = sDatabaseHelper.fetchSimpleVehicleListCursor();
+    }
+
+    // make an adapter from the cursor
+    String[] from = new String[]{VehicleDBMap.COLUMN_NAME_NAME};
+    int[] to = new int[]{android.R.id.text1};
+    SimpleCursorAdapter sca = new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item,
+        cursor, from, to, 0);
+
+    // set layout for activated adapter
+    sca.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+    // get xml file spinner and set adapter
+    Spinner spinner = (Spinner) this.findViewById(R.id.main_vehicle_spinner);
+    if (spinner != null) {
+      spinner.setAdapter(sca);
+
+      // set spinner listener to display the selected item ID
+      spinner.setOnItemSelectedListener(this);
+
+      /*
+      If we have a vehicle indicated (we should) then set the spinner to show that vehicle as
+      selected.
+       */
+      if (mCurrentVehicleID != 0) {
+        int pos = 0;
+
+        for (int i = 0; i < spinner.getCount(); i++) {
+          SQLiteCursor row = ((SQLiteCursor)spinner.getItemAtPosition(i));
+          int spinnerItemId = row.getInt(row.getColumnIndex("_id"));
+          if (spinnerItemId == mCurrentVehicleID) {
+            pos = i;
+            break;
+          }
+        }
+
+        spinner.setSelection(pos);
+      }
+    }
+
+  }
+
+  /**
+   * <p>Callback method to be invoked when an item in this view has been
+   * selected. This callback is invoked only when the newly selected
+   * position is different from the previously selected position or if
+   * there was no selected item.</p>
+   * <p/>
+   * Impelmenters can call getItemAtPosition(position) if they need to access the
+   * data associated with the selected item.
+   *
+   * @param parent   The AdapterView where the selection happened
+   * @param view     The view within the AdapterView that was clicked
+   * @param position The position of the view in the adapter
+   * @param id       The row id of the item that is selected
+   */
+  @Override
+  public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+    if (mCurrentVehicleID != id && Vehicle.getVehicle(id) != null) {
+      mCurrentVehicleID = (int) id;
+      loadFuelingsForVehicle(mCurrentVehicleID);
+    }
+  }
+
+  /**
+   * Callback method to be invoked when the selection disappears from this
+   * view. The selection can disappear for instance when touch is activated
+   * or when the adapter becomes empty.
+   *
+   * @param parent The AdapterView that now contains no selected item.
+   */
+  @Override
+  public void onNothingSelected(AdapterView<?> parent) {
+    Spinner spinner = (Spinner) parent;
+    if (spinner.getCount() > 0) {
+      spinner.setSelection(0);
+      SQLiteCursor row = ((SQLiteCursor)spinner.getItemAtPosition(0));
+      int spinnerItemId = row.getInt(row.getColumnIndex("_id"));
+
+      mCurrentVehicleID = spinnerItemId;
+      prepareVehicles();
+    }
+  }
+
+  /**
+   * Initialize the sliding navigation drawer, and initialize the hamburger which will open the
+   * drawer. This largely follows the demo found here:
+   *   http://www.android4devs.com/2015/06/navigation-view-material-design-support.html
+   */
+  private void setupDrawer() {
+    NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
+    if (navView == null) return;
+
+    navView.setNavigationItemSelectedListener(new Listener_NavDrawer_Main(this));
+
+    /*
+    The ActionBarDrawerToggle puts the menu (aka, "hamburger") icon on the action bar for opening
+     the navication drawer.
+     */
+    ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+        mToolbar, R.string.main_drawer_open, R.string.main_drawer_close) {
+
+      @Override
+      public void onDrawerClosed(View drawerView) {
+        // I don't care to do anything special in response to the drawer opening
+        super.onDrawerClosed(drawerView);
+      }
+
+      @Override
+      public void onDrawerOpened(View drawerView) {
+        // I don't care to do anything special in response to the drawer closing
+        super.onDrawerOpened(drawerView);
+      }
+    };
+
+    // Connecting the actionbarToggle to the drawer
+    mDrawerLayout.addDrawerListener(actionBarDrawerToggle);
+
+    // Calling syncState() is required or else your hamburger icon wont show up
+    actionBarDrawerToggle.syncState();
+  }
+
 
   /**
    * Handler for calling other methods to gather vehicle information, then fueling information
@@ -69,6 +244,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
    */
   private void populateScreen() {
     prepareVehicles();
+    setupVehicleSpinner();
     if (mCurrentVehicleID > 0)
       loadFuelingsForVehicle(mCurrentVehicleID);
   }
@@ -78,11 +254,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
    */
   private void prepareVehicles() {
     // Get the default Vehicle
-    if (sPH.doesNameExist(Vehicle.DEFAULT_VEHICLE_KEY))
+    if (mCurrentVehicleID == 0 && sPH.doesNameExist(Vehicle.DEFAULT_VEHICLE_KEY))
       mCurrentVehicleID = (int) sPH.getLongValue(Vehicle.DEFAULT_VEHICLE_KEY);
 
     // Fetch the list of vehicles into memory
-    ArrayList<Vehicle> vList = sDatabaseHelper.fetchVehicleList();
+    mVehicles = sDatabaseHelper.fetchVehicleList();
 
     /*
     If no vehicles were found in the database, we open the activity to add at least one vehicle.
@@ -90,13 +266,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     vehicle as the Default, and add that default to properties.
      */
 
-    if (vList.isEmpty()) {
-      Intent intent = new Intent(this, AddEditVehicleActivity.class);
-      intent.putExtra(AddEditVehicleActivity.KEY_ADD_EDIT_MODE, AddEditVehicleActivity.MODE_ADD);
+    if (mVehicles.isEmpty()) {
+      Intent intent = new Intent(this, Activity_AddEditVehicle.class);
+      intent.putExtra(Activity_AddEditVehicle.KEY_ADD_EDIT_MODE, Activity_AddEditVehicle.MODE_ADD);
       startActivityForResult(intent, ADD_FIRST_VEHICLE);
     } else {
       if (mCurrentVehicleID == 0) {
-        mCurrentVehicleID = vList.get(0).getID();
+        mCurrentVehicleID = mVehicles.get(0).getID();
         Property p = new Property(Vehicle.DEFAULT_VEHICLE_KEY, mCurrentVehicleID);
         sPH.put(p);
       }
@@ -139,15 +315,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
   }
 
   /**
-   * Creates an Intent of type AddEditFuelingActivity, tells it we're in ADD mode (rather than
+   * Creates an Intent of type Activity_AddEditFueling, tells it we're in ADD mode (rather than
    * EDIT mode) and tells it the default vehicle ID, and opens the Intent. When the intent is
    * closed, we re-fetch the list of fuelings and redisplay averages and historicals.
    */
   private void addFueling() {
-    Intent intent = new Intent(this, AddEditFuelingActivity.class);
+    Intent intent = new Intent(this, Activity_AddEditFueling.class);
 
     // Tell the new activity whether we're in ADD mode or EDIT mode
-    intent.putExtra(AddEditFuelingActivity.KEY_ADD_EDIT_MODE, AddEditFuelingActivity.MODE_ADD);
+    intent.putExtra(Activity_AddEditFueling.KEY_ADD_EDIT_MODE, Activity_AddEditFueling.MODE_ADD);
 
     // Tell the new activity what the default vehicle is
     intent.putExtra(Vehicle.DEFAULT_VEHICLE_KEY, mCurrentVehicleID);
@@ -192,6 +368,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
    */
   private void loadAverages() {
     TextView tv;
+    LinearLayout ll;
 
     /*
     Values for the first row of averages, spanning 3 months
@@ -216,6 +393,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
       tv.setText(FormatHandler.formatEfficiency(Fueling.getAvgEfficiencyOverSpan(
           Fueling.SPAN_3_MONTHS)));
 
+    ll = (LinearLayout) findViewById(R.id.averages_first_row);
+    if (ll != null) ll.setOnClickListener(this);
+
+
 
     /*
     Values for the second row of averages, spanning 6 months
@@ -239,6 +420,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     if (tv != null)
       tv.setText(FormatHandler.formatEfficiency(Fueling.getAvgEfficiencyOverSpan(
           Fueling.SPAN_6_MONTHS)));
+
+    ll = (LinearLayout) findViewById(R.id.averages_second_row);
+    if (ll != null) ll.setOnClickListener(this);
 
 
 
@@ -265,6 +449,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
       tv.setText(FormatHandler.formatEfficiency(Fueling.getAvgEfficiencyOverSpan(
           Fueling.SPAN_ONE_YEAR)));
 
+    ll = (LinearLayout) findViewById(R.id.averages_third_row);
+    if (ll != null) ll.setOnClickListener(this);
+
 
 
     /*
@@ -289,7 +476,51 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     if (tv != null)
       tv.setText(FormatHandler.formatEfficiency(Fueling.getAvgEfficiencyOverSpan(
           Fueling.SPAN_ALL_TIME)));
+
+    ll = (LinearLayout) findViewById(R.id.averages_fourth_row);
+    if (ll != null) ll.setOnClickListener(this);
   }
+
+
+  /**
+   * Handler for when the user touches a row in the list of averages.
+   * @param v the LinearLayout which generated this call
+   */
+  public void onClick(View v) {
+    if (!(v instanceof LinearLayout)) {
+      Toast.makeText(this, "Uh oh ... onClick came form some other type of View",
+          Toast.LENGTH_LONG).show();
+      return;
+    }
+
+    int pos;
+
+    switch (((LinearLayout)v).getId()) {
+      case R.id.averages_first_row:
+        pos = 0;
+        break;
+      case R.id.averages_second_row:
+        pos = 1;
+        break;
+      case R.id.averages_third_row:
+        pos = 2;
+        break;
+      case R.id.averages_fourth_row:
+        pos = 3;
+        break;
+      default:
+        throw new IllegalArgumentException("Cannot identify the View which generated call to " +
+            "onClick(). toString(): " + v.toString());
+    }
+
+    Intent intent = new Intent(this, Activity_ViewDetail.class);
+    intent.putExtra(Activity_ViewDetail.ARG_TYPE, Activity_ViewDetail.TYPE_AVERAGE);
+    intent.putExtra(Activity_ViewDetail.ARG_POSITION, pos);
+    intent.putExtra(Activity_ViewDetail.ARG_VEHICLE, Vehicle.getVehicle(mCurrentVehicleID)
+        .getName());
+    startActivity(intent);
+  }
+
 
   /**
    * Handler for when the user touches an item on the ListView of historical Fuelings.
@@ -301,8 +532,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
   public void onItemClick(AdapterView<?> parent, View v, int pos, long id) {
     if (v instanceof LinearLayout) {
       Fueling fd = (Fueling) parent.getItemAtPosition(pos);
-      Toast.makeText(this, "Price per mile was " + Float.toString(fd.getPricePerDistance()),
-          Toast.LENGTH_LONG).show();
+      Intent intent = new Intent(this, Activity_ViewDetail.class);
+      intent.putExtra(Activity_ViewDetail.ARG_TYPE, Activity_ViewDetail.TYPE_FUELING);
+      intent.putExtra(Activity_ViewDetail.ARG_POSITION, pos);
+      startActivity(intent);
     }
   }
 
@@ -315,11 +548,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
   /*
   ** FOLLOWING ARE METHODS I *MIGHT* HAVE TO DEAL WITH. RESEARCH IS NEEDED.
    */
+  // todo DO I need an appbar menu on main screen?
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     // Inflate the menu; this adds items to the action bar if it is present.
-    getMenuInflater().inflate(R.menu.menu_main, menu);
+    getMenuInflater().inflate(R.menu.main_appbar_menu, menu);
     return true;
   }
 
@@ -330,7 +564,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     // as you specify a parent activity in AndroidManifest.xml.
     int id = item.getItemId();
 
-    //noinspection SimplifiableIfStatement
+    // This responds to touches on items on the appbar menu
     if (id == R.id.action_settings) {
       return true;
     }
