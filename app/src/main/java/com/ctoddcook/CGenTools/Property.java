@@ -60,11 +60,22 @@ public class Property extends DataHolder {
   }
 
   /**
-   * Constructor providing a property name and an int value
+   * Constructor providing a property name and a long value
    * @param name the name of the property
    * @param value the value
    */
   public Property(String name, long value) {
+    super();
+    setName(name);
+    setValue(value);
+  }
+
+  /**
+   * Constructor providing a property name and an int value
+   * @param name the name of the property
+   * @param value the value
+   */
+  public Property(String name, int value) {
     super();
     setName(name);
     setValue(value);
@@ -159,12 +170,22 @@ public class Property extends DataHolder {
   }
 
   /**
-   * Accessor to set the int value of this property.
+   * Accessor to set the long value of this property.
    * @param value the int value
    */
   public void setValue(long value) {
     mType = TYPE_LONG;
     mLongVal = value;
+    touch();
+  }
+
+  /**
+   * Accessor to set the int value of this property.
+   * @param value the int value
+   */
+  public void setValue(int value) {
+    mType = TYPE_LONG;
+    mLongVal = (long) value;
     touch();
   }
 
