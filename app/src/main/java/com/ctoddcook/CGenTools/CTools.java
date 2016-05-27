@@ -58,5 +58,15 @@ public class CTools {
 
         return (int) l;
     }
+
+
+  /**
+   * Used to test the truth of an assumption. If it is true, nothing happens. If the assumption
+   * fails, a RuntimeException is throwh.
+   * @param c the expression assumed to be true
+   */
+  public static void assertTrue(final boolean c) {
+        if (!c) throw new RuntimeException("assertion failed");
+    }
 }
 
