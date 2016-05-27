@@ -16,16 +16,32 @@ import java.io.*;
 public class DatabaseToXmlExporter extends XmlBase {
   public static final String HEADER = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
   private final BufferedWriter w;
-  private static SQLiteOpenHelper sDbOpener;
+  private static SQLiteDatabase mDB;
 
   private DatabaseToXmlExporter(final File outFile) throws IOException { //I hate checked exceptions
     this(new FileOutputStream(outFile));
   }
 
-  public DatabaseToXmlExporter(final OutputStream os) throws IOException {
+  private DatabaseToXmlExporter(final OutputStream os) throws IOException {
     w = new BufferedWriter(new OutputStreamWriter(os, "UTF8"));
     w.append(HEADER);
     w.newLine();
+    openTag(DATABASE_TAG);
+    w.newLine();
+  }
+
+  public synchronized static DatabaseToXmlExporter getInstance(SQLiteOpenHelper dbOpener, File outFile)
+      throws IOException {
+    if (mDB == null) mDB = dbOpener.getReadableDatabase();
+
+    return new DatabaseToXmlExporter(outFile);
+  }
+
+  public synchronized static DatabaseToXmlExporter getInstance(SQLiteOpenHelper dbOpener, OutputStream os)
+      throws IOException {
+    if (mDB == null) mDB = dbOpener.getReadableDatabase();
+
+    return new DatabaseToXmlExporter(os);
   }
 
   public void close() throws IOException {
@@ -33,10 +49,10 @@ public class DatabaseToXmlExporter extends XmlBase {
     w.close();
   }
 
-  public void writeTable(final SQLiteDatabase db, final String tableName, final String pkColumn) throws IOException {
+  public void writeTable(final String tableName, final String pkColumn) throws IOException {
     openTag(TABLE_TAG, NAME_ATTR, tableName, PK_ATTR, pkColumn);
     w.newLine();
-    final Cursor c = db.rawQuery("select * from " + tableName, null);
+    final Cursor c = mDB.rawQuery("select * from " + tableName, null);
     if (c.moveToFirst()) {
       final int cols = c.getColumnCount();
       do {
@@ -58,13 +74,6 @@ public class DatabaseToXmlExporter extends XmlBase {
     w.newLine();
   }
 
-  public synchronized static DatabaseToXmlExporter getInstance(SQLiteOpenHelper dbOpener, File outFile)
-      throws IOException {
-    if (sDbOpener == null) sDbOpener = dbOpener;
-
-    return new DatabaseToXmlExporter(outFile);
-  }
-
   private void exportData(final SQLiteDatabase database, final File f, String[] tables,
                           String[] primaryKeys) throws IOException {
     if (tables == null) throw new IllegalArgumentException("Parameter tables is null");
@@ -75,7 +84,7 @@ public class DatabaseToXmlExporter extends XmlBase {
 
     final DatabaseToXmlExporter x = new DatabaseToXmlExporter(f);
     for (int i = 0; i < tables.length; i++) {
-      x.writeTable(database, tables[i], primaryKeys[i]);
+      x.writeTable(tables[i], primaryKeys[i]);
     }
     x.close();
   }
@@ -91,7 +100,7 @@ public class DatabaseToXmlExporter extends XmlBase {
 
     final DatabaseToXmlExporter x = new DatabaseToXmlExporter(os);
     for (int i = 0; i < tables.length; i++) {
-      x.writeTable(database, tables[i], primaryKeys[i]);
+      x.writeTable(tables[i], primaryKeys[i]);
     }
     x.close();
   }
