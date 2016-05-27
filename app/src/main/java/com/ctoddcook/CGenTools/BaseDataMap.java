@@ -21,7 +21,7 @@ public abstract class BaseDataMap {
   public static final String COMMA_SEP = ", ";
   public static final String COLUMN_NAME_LAST_UPDATED = "last_updated";
   public static final String CREATE_TABLE_PHRASE = "CREATE TABLE ";
-  public static final String KEY_COLUMN_DEFINITION_PHRASE = " INTEGER PRIMARY KEY AUTOINCREMENT,";
+  public static final String KEY_COLUMN_DEFINITION_PHRASE = " INTEGER PRIMARY KEY,";
   public static final String DROP_TABLE_PHRASE = "DROP TABLE IF EXISTS ";
   public static final String SELECT_PHRASE = "SELECT ";
   public static final String FROM_PHRASE = " FROM ";
