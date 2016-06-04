@@ -359,4 +359,8 @@ public class Vehicle extends DataHolder {
 
     return false;
   }
+
+  public String toString() {
+    return getName();
+  }
 }
