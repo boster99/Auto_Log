@@ -24,8 +24,8 @@ import static com.ctoddcook.CGenTools.CTools.longToInt;
 public class Vehicle extends DataHolder {
   public static final String DEFAULT_VEHICLE_KEY = "com.ctoddcook.auto_log.DefaultVehicleID";
   public static final int DEFAULT_VEHICLE_TYPE = Property.TYPE_LONG;
-  public static final char STATUS_ACTIVE='A';
-  public static final char STATUS_RETIRED='R';
+  public static final String STATUS_ACTIVE="A";
+  public static final String STATUS_RETIRED="R";
 
   private static final SparseArray<Vehicle> sVehicleList = new SparseArray<>(12);
 
@@ -36,7 +36,7 @@ public class Vehicle extends DataHolder {
   private String mModel;
   private String mVIN;
   private String mLicensePlate;
-  private char mStatus;   // either active (A) or retired (R)
+  private String mStatus;   // either active (A) or retired (R)
 
   /**
    * Constructor. This version should be used when creating a new instance from the user
@@ -64,7 +64,7 @@ public class Vehicle extends DataHolder {
    * @param lastUpdated  the last time the record was updated
    */
   public Vehicle(int id, String name, int year, String color, String model, String vin,
-                 String licensePlate, char status, Date lastUpdated) {
+                 String licensePlate, String status, Date lastUpdated) {
     mVehicleID = id;
     mName = name;
     mYear = year;
@@ -73,7 +73,7 @@ public class Vehicle extends DataHolder {
     mVIN = vin;
     mLicensePlate = licensePlate;
 
-    if (status == STATUS_RETIRED)   // If the status value is anything but 'R' we default to Active
+    if (status.equals(STATUS_RETIRED))   // If status is anything but 'R' we default to Active
       setRetired();
     else
       setActive();
@@ -301,7 +301,7 @@ public class Vehicle extends DataHolder {
    * Getter for the car's status.
    * @return A if the vehicle is Active, R if it is Retired.
    */
-  public char getStatus() {
+  public String getVehicleStatus() {
     return mStatus;
   }
 
@@ -309,7 +309,7 @@ public class Vehicle extends DataHolder {
    * Setter for mStatus. Sets status to Active, if it isn't already Active.
    */
   public void setActive() {
-    if (mStatus != STATUS_ACTIVE) {
+    if (!mStatus.equals(STATUS_ACTIVE)) {
       mStatus = STATUS_ACTIVE;
       touch();
     }
@@ -319,7 +319,7 @@ public class Vehicle extends DataHolder {
    * Setter for mStatus. Sets status to Retired, if it isn't already Retired.
    */
   public void setRetired() {
-    if (mStatus != STATUS_RETIRED) {
+    if (!mStatus.equals(STATUS_RETIRED)) {
       mStatus = STATUS_RETIRED;
       touch();
     }
@@ -330,7 +330,7 @@ public class Vehicle extends DataHolder {
    * @return True, if the vehicle is Active
    */
   public boolean isActive() {
-    return mStatus == STATUS_ACTIVE;
+    return mStatus.equals(STATUS_ACTIVE);
   }
 
   /**
@@ -338,7 +338,7 @@ public class Vehicle extends DataHolder {
    * @return True, if the vehicle is Retired
    */
   public boolean isRetired() {
-    return mStatus == STATUS_RETIRED;
+    return mStatus.equals(STATUS_RETIRED);
   }
 
 
@@ -364,7 +364,7 @@ public class Vehicle extends DataHolder {
     if (!this.mModel.equalsIgnoreCase(other.mModel)) return false;
     if (!this.mVIN.equalsIgnoreCase(other.mVIN)) return false;
     if (!this.mLicensePlate.equalsIgnoreCase(other.mLicensePlate)) return false;
-    if (this.mStatus != other.mStatus) return false;
+    if (!this.mStatus.equals(other.mStatus)) return false;
     if (!getLastUpdated().equals(other.getLastUpdated())) return false;
 
     return true;
