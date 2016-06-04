@@ -24,7 +24,11 @@ import static com.ctoddcook.CGenTools.CTools.longToInt;
 public class Vehicle extends DataHolder {
   public static final String DEFAULT_VEHICLE_KEY = "com.ctoddcook.auto_log.DefaultVehicleID";
   public static final int DEFAULT_VEHICLE_TYPE = Property.TYPE_LONG;
+  public static final char STATUS_ACTIVE='A';
+  public static final char STATUS_RETIRED='R';
+
   private static final SparseArray<Vehicle> sVehicleList = new SparseArray<>(12);
+
   private int mVehicleID;
   private String mName;
   private int mYear;
@@ -32,16 +36,18 @@ public class Vehicle extends DataHolder {
   private String mModel;
   private String mVIN;
   private String mLicensePlate;
+  private char mStatus;   // either active (A) or retired (R)
 
   /**
    * Constructor. This version should be used when creating a new instance from the user
    * interface. It does not setup any fields directly, though DataHolder.mStatus defaults
-   * to NEW.
+   * to NEW. We default the status to Active.
    * <p>
    * Note: Creating a new, empty instance does not cause it to be added to the sVehicleList
    * SparseArray, as the user might cancel the operation, leaving an empty instance in the list.
    */
   public Vehicle() {
+    mStatus = STATUS_ACTIVE;
   }
 
   /**
@@ -54,9 +60,11 @@ public class Vehicle extends DataHolder {
    * @param model        the vehicle model
    * @param vin          the vehicle VIN
    * @param licensePlate the vehicle license plate
+   * @param status       the status of the vehicle, either A or R
    * @param lastUpdated  the last time the record was updated
    */
-  public Vehicle(int id, String name, int year, String color, String model, String vin, String licensePlate, Date lastUpdated) {
+  public Vehicle(int id, String name, int year, String color, String model, String vin,
+                 String licensePlate, char status, Date lastUpdated) {
     mVehicleID = id;
     mName = name;
     mYear = year;
@@ -64,6 +72,12 @@ public class Vehicle extends DataHolder {
     mModel = model;
     mVIN = vin;
     mLicensePlate = licensePlate;
+
+    if (status == STATUS_RETIRED)   // If the status value is anything but 'R' we default to Active
+      setRetired();
+    else
+      setActive();
+
     mLastUpdated = lastUpdated;
     setCurrent();
     addVehicle(this);
@@ -284,6 +298,57 @@ public class Vehicle extends DataHolder {
   }
 
   /**
+   * Getter for the car's status.
+   * @return A if the vehicle is Active, R if it is Retired.
+   */
+  public char getStatus() {
+    return mStatus;
+  }
+
+  /**
+   * Setter for mStatus. Sets status to Active, if it isn't already Active.
+   */
+  public void setActive() {
+    if (mStatus != STATUS_ACTIVE) {
+      mStatus = STATUS_ACTIVE;
+      touch();
+    }
+  }
+
+  /**
+   * Setter for mStatus. Sets status to Retired, if it isn't already Retired.
+   */
+  public void setRetired() {
+    if (mStatus != STATUS_RETIRED) {
+      mStatus = STATUS_RETIRED;
+      touch();
+    }
+  }
+
+  /**
+   * Returns true or false indicating whether mStatus is set to Active
+   * @return True, if the vehicle is Active
+   */
+  public boolean isActive() {
+    return mStatus == STATUS_ACTIVE;
+  }
+
+  /**
+   * Returns true or false indicating whether mStatus is set to Retired
+   * @return True, if the vehicle is Retired
+   */
+  public boolean isRetired() {
+    return mStatus == STATUS_RETIRED;
+  }
+
+
+
+
+
+
+
+
+  /**
    * Determines whether this and another (provided) instance are equal. Excludes the ID and
    * LastUpdated fields. Case is ignored, so "gray" and "GRAY" are equal.
    *
@@ -299,6 +364,7 @@ public class Vehicle extends DataHolder {
     if (!this.mModel.equalsIgnoreCase(other.mModel)) return false;
     if (!this.mVIN.equalsIgnoreCase(other.mVIN)) return false;
     if (!this.mLicensePlate.equalsIgnoreCase(other.mLicensePlate)) return false;
+    if (this.mStatus != other.mStatus) return false;
     if (!getLastUpdated().equals(other.getLastUpdated())) return false;
 
     return true;
