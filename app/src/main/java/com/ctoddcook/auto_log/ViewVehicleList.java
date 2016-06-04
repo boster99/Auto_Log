@@ -7,6 +7,9 @@ package com.ctoddcook.auto_log;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -25,8 +28,7 @@ import java.util.ArrayList;
  * then go on to edit the vehicle).
  */
 
-public class ViewVehicleList extends AppCompatActivity implements AdapterView
-    .OnItemClickListener, AdapterView.OnItemLongClickListener {
+public class ViewVehicleList extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
   private static final String TAG = "ViewVehicleList";
 
@@ -37,8 +39,6 @@ public class ViewVehicleList extends AppCompatActivity implements AdapterView
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_view_vehicle_list);
     showVehicles();
-    Toast.makeText(this, "Long-press a vehicle to make it your default vehicle",
-        Toast.LENGTH_LONG).show();
   }
 
   /**
@@ -52,7 +52,7 @@ public class ViewVehicleList extends AppCompatActivity implements AdapterView
       sVehicleListView = (ListView) findViewById(R.id.Vehicle_ListView);
       if (sVehicleListView != null) {
         sVehicleListView.setOnItemClickListener(this);
-        sVehicleListView.setOnItemLongClickListener(this);
+        registerForContextMenu(sVehicleListView);
       }
     }
 
@@ -78,38 +78,84 @@ public class ViewVehicleList extends AppCompatActivity implements AdapterView
   }
 
   /**
+   * Called when a context menu for the {@code view} is about to be shown.
+   * Unlike onCreateOptionsMenu(Menu), this will be called every
+   * time the context menu is about to be shown and should be populated for
+   * the view (or item inside the view for {@link AdapterView} subclasses,
+   * this can be found in the {@code menuInfo})).
+   * <p>
+   * Use {@link #onContextItemSelected(MenuItem)} to know when an
+   * item has been selected.
+   * <p>
+   * It is not safe to hold onto the context menu after this method returns.
+   *
+   * @param menu The menu which is being built
+   * @param v The view for which the menu is being built
+   * @param menuInfo Additional information about the the item for which the context menu will be
+   *                 shown. Since we only have one ListView shown, and only one context menu,
+   *                 this can be ignored.
+   */
+  @Override
+  public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+    super.onCreateContextMenu(menu, v, menuInfo);
+    MenuInflater inflater = getMenuInflater();
+    inflater.inflate(R.menu.vehicle_popup_menu, menu);
+  }
+
+  /**
+   * Called when the user selects one of the options on the context menu.
+   * @param item The menu item which was selected
+   * @return True if we can identify which menu item was clicked and respond to it appropriately
+   */
+  @Override
+  public boolean onContextItemSelected(MenuItem item) {
+    AdapterView.AdapterContextMenuInfo info =
+        (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
+    Vehicle vehicle = (Vehicle) sVehicleListView.getItemAtPosition((int) info.id);
+    int vehicleID = vehicle.getID();
+
+    switch (item.getItemId()) {
+      case R.id.vehicle_edit:
+        editVehicle(vehicleID);
+        return true;
+      case R.id.vehicle_delete:
+//        deleteVehicle(vehicleID);
+        return true;
+      case R.id.vehicle_make_default:
+        makeDefaultVehicle(vehicleID);
+        return true;
+      case R.id.vehicle_retire:
+//        retireVehicle(vehicleID);
+        return true;
+      default:
+        return super.onContextItemSelected(item);
+    }
+  }
+
+  /**
    * Callback method to be invoked when an item in this view has been
    * clicked and held.
    * <p>
    * Implementers can call getItemAtPosition(position) if they need to access
    * the data associated with the selected item.
    *
-   * @param parent   The AbsListView where the click happened
-   * @param view     The view within the AbsListView that was clicked
-   * @param pos      The position of the view in the list
-   * @param id       The row id of the item that was clicked (not reliable in this instance)
-   * @return true if the callback consumed the long click, false otherwise
+   * @param vehicleID The position of the view in the list
    */
-  @Override
-  public boolean onItemLongClick(AdapterView<?> parent, View view, int pos, long id) {
+
+  public void makeDefaultVehicle(int vehicleID) {
     PropertiesHelper ph = PropertiesHelper.getInstance();
     int defaultVehID = (int) ph.getLongValue(Vehicle.DEFAULT_VEHICLE_KEY);
 
-    if (view instanceof LinearLayout) {
-      Vehicle vehicle = (Vehicle) parent.getItemAtPosition(pos);
-      int vehID = vehicle.getID();
-      if (vehID != defaultVehID && Vehicle.getVehicle(vehID) != null) {
-        ph.put(new Property(Vehicle.DEFAULT_VEHICLE_KEY, vehID));
-      }
+    if (vehicleID != defaultVehID && Vehicle.getVehicle(vehicleID) != null) {
+      ph.put(new Property(Vehicle.DEFAULT_VEHICLE_KEY, vehicleID));
     }
 
     showVehicles();
-
-    return true;
   }
 
   /**
-   * Called by the floating action button. Opens the activity for adding a new vechile. We're
+   * Opens the activity for adding/editing a vechile, indicating ADD mode. We're
    * passing a 0 for requestCode, so we won't get a meaningful requestCode passed back to
    * onActivityResult(); that's okay because there's only one activity we start for result from
    * this activity.
@@ -122,9 +168,23 @@ public class ViewVehicleList extends AppCompatActivity implements AdapterView
   }
 
   /**
+   * Opens the activity for adding/editing a vechile, indicating EDIT mode. We're
+   * passing a 0 for requestCode, so we won't get a meaningful requestCode passed back to
+   * onActivityResult(); that's okay because there's only one activity we start for result from
+   * this activity.
+   * @param vehicleID The id of the vehicle to be edited
+   */
+  public void editVehicle(int vehicleID) {
+    Intent intent = new Intent(this, Activity_AddEditVehicle.class);
+    intent.putExtra(Activity_AddEditVehicle.KEY_ADD_EDIT_MODE, Activity_AddEditVehicle.MODE_EDIT);
+    intent.putExtra(Activity_AddEditVehicle.KEY_VEHICLE_ID, vehicleID);
+    startActivityForResult(intent, 0);
+  }
+
+  /**
    * Called when the Activity_AddEditVehicle class closes, so we can refresh our list of
    * displayed vechicles.
-   * @param requestCode Would indicate which activity called this, except that we pass a 0 above
+   * @param requestCode Would indicate which activity called this, but in this case we ignore it
    * @param resultCode whether the user clicked "save" or "cancel"; doesn't matter, we refresh
    *                   the list regardless
    * @param data any data we might want to process (there's none we want to process)
