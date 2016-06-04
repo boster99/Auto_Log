@@ -105,7 +105,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     SQLiteDatabase db = this.getWritableDatabase();
     ArrayList<Vehicle> vehicleList = new ArrayList<>();
     int id, year;
-    String name, color, model, vin, licensePlate;
+    String name, color, model, vin, licensePlate, status;
     Date lastUpdated;
     Vehicle vehicle;
 
@@ -121,9 +121,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
       model = cursor.getString(VehicleDBMap.COLUMN_NBR_MODEL);
       vin = cursor.getString(VehicleDBMap.COLUMN_NBR_VIN);
       licensePlate = cursor.getString(VehicleDBMap.COLUMN_NBR_LICENSE_PLATE);
+      status = cursor.getString(VehicleDBMap.COLUMN_NBR_STATUS);
       lastUpdated = new Date(cursor.getInt(VehicleDBMap.COLUMN_NBR_LAST_UPDATED));
 
-      vehicle = new Vehicle(id, name, year, color, model, vin, licensePlate, lastUpdated);
+      vehicle = new Vehicle(id, name, year, color, model, vin, licensePlate, status, lastUpdated);
 
       vehicleList.add(vehicle);
     }
@@ -167,6 +168,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     cv.put(VehicleDBMap.COLUMN_NAME_MODEL, vehicle.getModel());
     cv.put(VehicleDBMap.COLUMN_NAME_VIN, vehicle.getVIN());
     cv.put(VehicleDBMap.COLUMN_NAME_LICENSE_PLATE, vehicle.getLicensePlate());
+    cv.put(VehicleDBMap.COLUMN_NAME_STATUS, vehicle.getVehicleStatus());
     cv.put(VehicleDBMap.COLUMN_NAME_LAST_UPDATED, vehicle.getLastUpdated().getTime());
 
     int newID = (int) db.insert(VehicleDBMap.TABLE_NAME, null, cv);
@@ -220,6 +222,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     cv.put(VehicleDBMap.COLUMN_NAME_MODEL, vehicle.getModel());
     cv.put(VehicleDBMap.COLUMN_NAME_VIN, vehicle.getVIN());
     cv.put(VehicleDBMap.COLUMN_NAME_LICENSE_PLATE, vehicle.getLicensePlate());
+    cv.put(VehicleDBMap.COLUMN_NAME_STATUS, vehicle.getVehicleStatus());
     cv.put(VehicleDBMap.COLUMN_NAME_LAST_UPDATED, vehicle.getLastUpdated().getTime());
 
     int rowsUpdated = db.update(VehicleDBMap.TABLE_NAME, cv, VehicleDBMap.WHERE_ID_CLAUSE, whereArgs);
