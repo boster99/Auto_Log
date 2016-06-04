@@ -13,14 +13,15 @@ import android.provider.BaseColumns;
  * ctodd@ctoddcook.com
  */
 public class VehicleDBMap extends AutoLogDataMap implements BaseColumns {
-    public static final String TABLE_NAME;
-    public static final String COLUMN_NAME_NAME;
-    public static final String COLUMN_NAME_YEAR;
-    public static final String COLUMN_NAME_COLOR;
-    public static final String COLUMN_NAME_MODEL;
-    public static final String COLUMN_NAME_VIN;
-    public static final String COLUMN_NAME_LICENSE_PLATE;
-    public static final String COLUMN_NAME_LAST_UPDATED;
+    public static final String TABLE_NAME = "vehicle";
+    public static final String COLUMN_NAME_NAME = "vehicle_name";
+    public static final String COLUMN_NAME_YEAR = "vehicle_year";
+    public static final String COLUMN_NAME_COLOR = "vehicle_color";
+    public static final String COLUMN_NAME_MODEL = "model";
+    public static final String COLUMN_NAME_VIN = "vin";
+    public static final String COLUMN_NAME_LICENSE_PLATE = "license_plate";
+    public static final String COLUMN_NAME_STATUS = "status";
+    public static final String COLUMN_NAME_LAST_UPDATED = "last_updated";
 
     // These column numbers must match the order in the CREATE TABLE and SELECT statements
     public static final int COLUMN_NBR_ID = 0;
@@ -30,18 +31,8 @@ public class VehicleDBMap extends AutoLogDataMap implements BaseColumns {
     public static final int COLUMN_NBR_MODEL = 4;
     public static final int COLUMN_NBR_VIN = 5;
     public static final int COLUMN_NBR_LICENSE_PLATE = 6;
-    public static final int COLUMN_NBR_LAST_UPDATED = 7;
-
-    static {
-        TABLE_NAME = "vehicle";
-        COLUMN_NAME_NAME = "vehicle_name";
-        COLUMN_NAME_YEAR = "vehicle_year";
-        COLUMN_NAME_COLOR = "vehicle_color";
-        COLUMN_NAME_MODEL = "model";
-        COLUMN_NAME_VIN = "vin";
-        COLUMN_NAME_LICENSE_PLATE = "license_plate";
-        COLUMN_NAME_LAST_UPDATED = "last_updated";
-    }
+    public static final int COLUMN_NBR_STATUS = 7;
+    public static final int COLUMN_NBR_LAST_UPDATED = 8;
 
     public static final String SQL_CREATE_TABLE =
             CREATE_TABLE_PHRASE + TABLE_NAME + " (" +
@@ -52,14 +43,24 @@ public class VehicleDBMap extends AutoLogDataMap implements BaseColumns {
                     COLUMN_NAME_MODEL + STRING_TYPE + NOT_NULL + COMMA_SEP +
                     COLUMN_NAME_VIN + STRING_TYPE + NOT_NULL + COMMA_SEP +
                     COLUMN_NAME_LICENSE_PLATE + STRING_TYPE + NOT_NULL + COMMA_SEP +
+                    COLUMN_NAME_STATUS + STRING_TYPE + NOT_NULL + COMMA_SEP +
                     COLUMN_NAME_LAST_UPDATED + DATETIME_TYPE + " )";
 
     public static final String SQL_DROP_TABLE =
             DROP_TABLE_PHRASE + TABLE_NAME;
 
     public static final String SQL_SELECT_ALL =
-            SELECT_PHRASE + "*" + FROM_PHRASE +
-                    TABLE_NAME + ORDER_BY_PHRASE + _ID;
+            SELECT_PHRASE +
+                _ID + COMMA_SEP +
+                COLUMN_NAME_NAME + COMMA_SEP +
+                COLUMN_NAME_YEAR + COMMA_SEP +
+                COLUMN_NAME_COLOR + COMMA_SEP +
+                COLUMN_NAME_MODEL + COMMA_SEP +
+                COLUMN_NAME_VIN + COMMA_SEP +
+                COLUMN_NAME_LICENSE_PLATE + COMMA_SEP +
+                COLUMN_NAME_STATUS +
+            FROM_PHRASE + TABLE_NAME +
+            ORDER_BY_PHRASE + _ID;
 
     public static final String SQL_SELECT_SIMPLE =
             SELECT_PHRASE + _ID + COMMA_SEP + COLUMN_NAME_NAME + FROM_PHRASE + TABLE_NAME;
