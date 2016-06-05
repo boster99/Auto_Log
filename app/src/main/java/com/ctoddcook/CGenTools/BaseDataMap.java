@@ -27,6 +27,7 @@ public abstract class BaseDataMap {
   public static final String FROM_PHRASE = " FROM ";
   public static final String ORDER_BY_PHRASE = " ORDER BY ";
   public static final String WHERE_ID_CLAUSE = BaseColumns._ID + "=?";
+  public static final String WHERE_CLAUSE = " WHERE ";
   public static final String DELETE_SQL = "DELETE FROM %1$s WHERE %2$s = %3$s";
   public static final String DELETE_ALL_SQL = "DELETE FROM %1$s";
   public static final String SELECT_SQL = "SELECT * FROM %1$s WHERE %2$s = %3$s";
