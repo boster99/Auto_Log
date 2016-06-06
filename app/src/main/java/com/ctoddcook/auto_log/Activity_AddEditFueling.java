@@ -7,13 +7,13 @@ package com.ctoddcook.auto_log;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteCursor;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -126,15 +126,15 @@ public class Activity_AddEditFueling extends AppCompatActivity
    */
   private void setupVehicleSpinner() {
     // get a cursor providing IDs and NAMEs for each vehicle
-    Cursor cursor = sDatabaseHelper.fetchSimpleVehicleListCursor();
+    Cursor cursor = sDatabaseHelper.fetchSimpleVehicleListCursor(false);
 
-    // if the cursor has no results, open the AddEditVehicleActivity, then try again
+    // if the cursor has no results, open the Activity_AddEditVehicle, then try again
     if (cursor.getCount() < 1) {
-      Intent intent = new Intent(this, AddEditVehicleActivity.class);
-      intent.putExtra(AddEditVehicleActivity.KEY_ADD_EDIT_MODE, AddEditVehicleActivity
+      Intent intent = new Intent(this, Activity_AddEditVehicle.class);
+      intent.putExtra(Activity_AddEditVehicle.KEY_ADD_EDIT_MODE, Activity_AddEditVehicle
           .MODE_ADD);
       startActivity(intent);
-      cursor = sDatabaseHelper.fetchSimpleVehicleListCursor();
+      cursor = sDatabaseHelper.fetchSimpleVehicleListCursor(false);
     }
 
     // make an adapter from the cursor
@@ -159,11 +159,12 @@ public class Activity_AddEditFueling extends AppCompatActivity
       selected.
        */
       if (mVehicle != null) {
-        String name = mVehicle.getName();
         int pos = 0;
 
         for (int i = 0; i < spinner.getCount(); i++) {
-          if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(name)) {
+          SQLiteCursor row = ((SQLiteCursor)spinner.getItemAtPosition(i));
+          int spinnerItemId = row.getInt(row.getColumnIndex("_id"));
+          if (spinnerItemId == mVehicle.getID()) {
             pos = i;
             break;
           }
@@ -232,14 +233,9 @@ public class Activity_AddEditFueling extends AppCompatActivity
    */
   public void onItemSelected(AdapterView<?> parent, View v, int pos, long id) {
     mVehicle = Vehicle.getVehicle(id);
-    Log.i(TAG, "onItemSelected: value of int pos is " + pos);
-    Log.i(TAG, "onItemSelected: value of long id is " + id);
-    //TODO I MIGHT BE MIS-USING THE ID PARAMETER ...
-    // IT MIGHT BE GIVING A POSITION IN THE LIST, AND NOT THE DATABASE RECORD ID
   }
 
 
-  //TODO Figure out what I'm supposed to do with onNothingSelected()
   public void onNothingSelected(AdapterView<?> parent) {
     // Another interface callback
   }
