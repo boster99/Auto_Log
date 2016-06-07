@@ -7,10 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.ctoddcook.CGenTools.BaseDataMap;
+
 import java.util.ArrayList;
 import java.util.Date;
-
-// todo implement singleton pattern with synchronized getInstance(Context) method
 
 /**
  * Created by C. Todd Cook on 4/17/2016.
@@ -20,7 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
   private static final String TAG = "DatabaseHelper";
   private static DatabaseHelper sInstance;
-  public static final int DATABASE_VERSION = 2;
+  public static final int DATABASE_VERSION = 3;
 
 
   private DatabaseHelper(Context context) {
@@ -79,6 +79,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         https://thebhwgroup.com/blog/how-android-sqlite-onupgrade
 
         */
+
+    switch (oldVersion) {
+      case 1:   // version 1 was never put into production
+      case 2:
+        upgradeToVersion3(db);
+        break;
+      default:
+        throw new IllegalStateException("onUpgrade() with unknown oldVersion" + oldVersion);
+    }
   }
 
 
@@ -140,10 +149,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
    *
    * @return a cursor pointing to the Vehicle table
    */
-  public Cursor fetchSimpleVehicleListCursor() {
+  public Cursor fetchSimpleVehicleListCursor(boolean includeRetired) {
     SQLiteDatabase db = this.getWritableDatabase();
 
-    return db.rawQuery(VehicleDBMap.SQL_SELECT_SIMPLE, null);
+    String sql = (includeRetired ? VehicleDBMap.SQL_SELECT_SIMPLE : VehicleDBMap
+        .SQL_SELECT_SIMPLE_EXCLUDE_RETIRED);
+
+    return db.rawQuery(sql, null);
   }
 
   /**
@@ -182,7 +194,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
   }
 
   /**
-   * Deletes the database row with the ID (prime key) of the Vehicle instance.
+   * Deletes the database row with the ID (prime key) of the Vehicle instance, after deleting any
+   * rows from the fueling table which point to that Vehicle ID.
    *
    * @param vehicle the instance to be deleted
    * @return true if the number of rows deleted is exactly 1
@@ -195,9 +208,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     SQLiteDatabase db = this.getWritableDatabase();
     String[] whereArgs = new String[]{String.valueOf(vehicle.getID())};
 
-    int rowsDeleted = db.delete(VehicleDBMap.TABLE_NAME, VehicleDBMap.WHERE_ID_CLAUSE, whereArgs);
+    int rowsDeleted = 0;
 
-    return (rowsDeleted == 1);
+    db.beginTransaction();
+    try {
+      rowsDeleted = db.delete(FuelingDBMap.TABLE_NAME, FuelingDBMap.WHERE_VEHICLE_ID, whereArgs);
+      rowsDeleted += db.delete(VehicleDBMap.TABLE_NAME, VehicleDBMap.WHERE_ID_CLAUSE, whereArgs);
+      db.setTransactionSuccessful();
+    } finally {
+      db.endTransaction();
+    }
+
+    return (rowsDeleted > 1);
   }
 
   /**
@@ -419,5 +441,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     return result;
+  }
+
+
+
+
+  /*
+  **
+  ** Following are methods for upgrading database schemas
+  **
+   */
+
+
+  /**
+   * To get from 2 to 3, we add the column "status" to the table "vehicle". Fill the column with
+   * "A" (meaning "active") for all existing rows.
+   */
+  private void upgradeToVersion3(SQLiteDatabase db) {
+    String sqlAlter = "ALTER TABLE " + VehicleDBMap.TABLE_NAME + " ADD COLUMN " +
+        VehicleDBMap.COLUMN_NAME_STATUS + " " + BaseDataMap.STRING_TYPE;
+    String sqlUpdate = "UPDATE " + VehicleDBMap.TABLE_NAME + " SET " + VehicleDBMap
+        .COLUMN_NAME_STATUS + " = '" + Vehicle.STATUS_ACTIVE + "'";
+
+    db.beginTransaction();
+    try {
+      db.execSQL(sqlAlter);
+      db.execSQL(sqlUpdate);
+      db.setTransactionSuccessful();
+    } finally {
+      db.endTransaction();
+    }
+
+    String hello = "hello";
   }
 }

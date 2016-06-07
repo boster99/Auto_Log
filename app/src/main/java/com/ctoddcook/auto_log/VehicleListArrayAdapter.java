@@ -27,10 +27,12 @@ import java.util.ArrayList;
  */
 public class VehicleListArrayAdapter extends ArrayAdapter<Vehicle> {
   private static final String TAG = "VehicleListArrayAdapter";
-  private static final String DEFAULT_SUFFIX = " *";
   private final Context mContext;
   private final ArrayList<Vehicle> mList;
   private final int mDefaultVehicleID;
+  private static final int IS_NEITHER = 0;
+  private static final int IS_RETIRED = 1;
+  private static final int IS_DEFAULT = 2;
 
   /**
    * Required constructor.
@@ -56,14 +58,31 @@ public class VehicleListArrayAdapter extends ArrayAdapter<Vehicle> {
    */
   static class ViewHolder {
     public TextView tvName;
-    public ImageView ivBadge;
+    public ImageView ivInfoIcon;
 
     public void setName(String name) {
       tvName.setText(name);
     }
 
-    public void showBadge(boolean show) {
-      ivBadge.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
+    /*
+    An icon will be displayed if the vehicle is the default, or if it is retired.
+    */
+    public void showInfoIcon(int version) {
+      switch (version) {
+        case IS_NEITHER:
+          ivInfoIcon.setVisibility(View.INVISIBLE);
+          break;
+        case IS_RETIRED:
+          ivInfoIcon.setVisibility(View.VISIBLE);
+          ivInfoIcon.setImageResource(R.drawable.ic_retirement);
+          break;
+        case IS_DEFAULT:
+          ivInfoIcon.setVisibility(View.VISIBLE);
+          ivInfoIcon.setImageResource(R.drawable.ic_blue_badge);
+          break;
+        default:
+          throw new IllegalArgumentException("Illegal value passed to showInfoIcon(): " + version);
+      }
     }
   }
 
@@ -83,7 +102,7 @@ public class VehicleListArrayAdapter extends ArrayAdapter<Vehicle> {
     View rowView = convertView;
     Vehicle vehicle = mList.get(pos);
 
-        /*
+    /*
     Reuse views. Only create a rowView from scratch if the call to this method did not give us
     an old (no longer visible) view we could reuse. This makes memory-use more efficient, and
     makes scrolling smoother.
@@ -95,14 +114,21 @@ public class VehicleListArrayAdapter extends ArrayAdapter<Vehicle> {
 
       ViewHolder newHolder = new ViewHolder();
       newHolder.tvName = (TextView) rowView.findViewById(R.id.vehilce_name);
-      newHolder.ivBadge = (ImageView) rowView.findViewById(R.id.vehicle_badge);
+      newHolder.ivInfoIcon = (ImageView) rowView.findViewById(R.id.vehicle_info_icon);
       rowView.setTag(newHolder);
     }
 
     ViewHolder holder = (ViewHolder) rowView.getTag();
 
     holder.setName(vehicle.getName());
-    holder.showBadge(vehicle.getID() == mDefaultVehicleID);
+
+    // Show the right information icon, if any
+    if (vehicle.isRetired())
+      holder.showInfoIcon(IS_RETIRED);
+    else if (vehicle.getID() == mDefaultVehicleID)
+      holder.showInfoIcon(IS_DEFAULT);
+    else
+      holder.showInfoIcon(IS_NEITHER);
 
     return rowView;
   }

@@ -4,7 +4,9 @@
 
 package com.ctoddcook.auto_log;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -14,7 +16,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.ctoddcook.CGenTools.PropertiesHelper;
 import com.ctoddcook.CGenTools.Property;
@@ -22,7 +23,7 @@ import com.ctoddcook.CGenTools.Property;
 import java.util.ArrayList;
 
 /**
- * Builds presentation UI for a simeple list of Vehicles. Sets up the root ViewGroup (a LiewView)
+ * Builds presentation UI for a simple list of Vehicles. Sets up the root ViewGroup (a ListView)
  * and gives it an ArrayAdapter which handles display of individual rows. When a row is touched,
  * a new activity is started to view the selected vehicle with greater detail (the user might
  * then go on to edit the vehicle).
@@ -33,11 +34,15 @@ public class ViewVehicleList extends AppCompatActivity implements AdapterView.On
   private static final String TAG = "ViewVehicleList";
 
   private static ListView sVehicleListView;
+  private DatabaseHelper sDB;
+  private Vehicle mVehicleToDelete = null;
+  private Vehicle mVehicleToRetire = null;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_view_vehicle_list);
+    sDB = DatabaseHelper.getInstance(this);
     showVehicles();
   }
 
@@ -46,7 +51,7 @@ public class ViewVehicleList extends AppCompatActivity implements AdapterView.On
    */
   private void showVehicles() {
     ArrayList<Vehicle> mVehicleList;
-    mVehicleList = DatabaseHelper.getInstance(this).fetchVehicleList();
+    mVehicleList = sDB.fetchVehicleList();
 
     if (sVehicleListView == null) {
       sVehicleListView = (ListView) findViewById(R.id.Vehicle_ListView);
@@ -61,7 +66,7 @@ public class ViewVehicleList extends AppCompatActivity implements AdapterView.On
 
   /**
    * Handler for when the user touches an item on the ListView of Vehicles. Opens
-   * Activity_ViewDetail class and tells it to display vehicle ddetails.
+   * Activity_ViewDetail class and tells it to display vehicle details.
    * @param parent the parent Adapter, see VehicleListArrayAdapter class
    * @param view the UI item that was touched
    * @param pos the position in the list that was touched
@@ -99,7 +104,18 @@ public class ViewVehicleList extends AppCompatActivity implements AdapterView.On
   public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
     super.onCreateContextMenu(menu, v, menuInfo);
     MenuInflater inflater = getMenuInflater();
-    inflater.inflate(R.menu.vehicle_popup_menu, menu);
+    int position = ((AdapterView.AdapterContextMenuInfo) menuInfo).position;
+    Vehicle vehicle = (Vehicle) sVehicleListView.getItemAtPosition(position);
+
+    /*
+    Always display the base menu for vehicles (EDIT and DELETE). Add additional menu items based
+    on whether the vehicle is ACTIVE or RETIRED.
+     */
+    inflater.inflate(R.menu.vehicle_popup_base_menu, menu);
+    if (vehicle.isActive())
+      inflater.inflate(R.menu.vehicle_popup_active_menu, menu);
+    else
+      inflater.inflate(R.menu.vehicle_popup_retired_menu, menu);
   }
 
   /**
@@ -120,13 +136,16 @@ public class ViewVehicleList extends AppCompatActivity implements AdapterView.On
         editVehicle(vehicleID);
         return true;
       case R.id.vehicle_delete:
-//        deleteVehicle(vehicleID);
+        deleteVehicle(vehicleID);
         return true;
       case R.id.vehicle_make_default:
         makeDefaultVehicle(vehicleID);
         return true;
       case R.id.vehicle_retire:
-//        retireVehicle(vehicleID);
+        retireVehicle(vehicleID);
+        return true;
+      case R.id.vehicle_unretire:
+        unretireVehicle(vehicleID);
         return true;
       default:
         return super.onContextItemSelected(item);
@@ -143,7 +162,7 @@ public class ViewVehicleList extends AppCompatActivity implements AdapterView.On
    * @param vehicleID The position of the view in the list
    */
 
-  public void makeDefaultVehicle(int vehicleID) {
+  private void makeDefaultVehicle(int vehicleID) {
     PropertiesHelper ph = PropertiesHelper.getInstance();
     int defaultVehID = (int) ph.getLongValue(Vehicle.DEFAULT_VEHICLE_KEY);
 
@@ -155,7 +174,7 @@ public class ViewVehicleList extends AppCompatActivity implements AdapterView.On
   }
 
   /**
-   * Opens the activity for adding/editing a vechile, indicating ADD mode. We're
+   * Opens the activity for adding/editing a vehicle, indicating ADD mode. We're
    * passing a 0 for requestCode, so we won't get a meaningful requestCode passed back to
    * onActivityResult(); that's okay because there's only one activity we start for result from
    * this activity.
@@ -168,13 +187,13 @@ public class ViewVehicleList extends AppCompatActivity implements AdapterView.On
   }
 
   /**
-   * Opens the activity for adding/editing a vechile, indicating EDIT mode. We're
+   * Opens the activity for adding/editing a vehicle, indicating EDIT mode. We're
    * passing a 0 for requestCode, so we won't get a meaningful requestCode passed back to
    * onActivityResult(); that's okay because there's only one activity we start for result from
    * this activity.
    * @param vehicleID The id of the vehicle to be edited
    */
-  public void editVehicle(int vehicleID) {
+  private void editVehicle(int vehicleID) {
     Intent intent = new Intent(this, Activity_AddEditVehicle.class);
     intent.putExtra(Activity_AddEditVehicle.KEY_ADD_EDIT_MODE, Activity_AddEditVehicle.MODE_EDIT);
     intent.putExtra(Activity_AddEditVehicle.KEY_VEHICLE_ID, vehicleID);
@@ -182,8 +201,102 @@ public class ViewVehicleList extends AppCompatActivity implements AdapterView.On
   }
 
   /**
+   * Gets confirmation from the user that s/he really wants to retire the vehicle, and if the
+   * user's response is affirmative, we go ahead and retire it.
+   * @param vehicleID The id of the vehicle to retire
+   */
+  private void retireVehicle(int vehicleID) {
+    // Note the vehicle which is to be retired
+    mVehicleToRetire = Vehicle.getVehicle(vehicleID);
+    if (mVehicleToRetire == null || mVehicleToRetire.isRetired()) return;
+
+    // Setup the listeners which will respond to the user's response to the dialog
+    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick(DialogInterface dialog, int which) {
+        switch (which){
+          // If the user clicks "YES" then we retire the vehicle
+          case DialogInterface.BUTTON_POSITIVE:
+            mVehicleToRetire.setRetired();
+            sDB.updateVehicle(mVehicleToRetire);
+            mVehicleToRetire = null;
+            showVehicles();
+            break;
+
+          // If the user clicks "NO" then we clean up and get out of here
+          case DialogInterface.BUTTON_NEGATIVE:
+            mVehicleToRetire = null;
+            break;
+        }
+      }
+    };
+
+    // Set up and display the dialog to get the user's confirmation that the vehicle should be
+    // retired.
+    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    builder.setTitle("Retire " + mVehicleToRetire.getName());
+    builder.setMessage("Retiring a vehicle means you can still view its fueling data, but you can" +
+        " no longer add new fuelings for that vehicle. Retiring a vehicle can be reversed" +
+        ".\n\nWould you like to do this?")
+        .setPositiveButton("Yes, retire it", dialogClickListener)
+        .setNegativeButton("No, keep it active", dialogClickListener).show();
+  }
+
+  /**
+   * Changes a vehicle's status to ACTIVE and updates the database.
+   * @param vehicleID The id of the vehicle to unretire
+   */
+  private void unretireVehicle(int vehicleID) {
+    Vehicle vehicle = Vehicle.getVehicle(vehicleID);
+    if (vehicle.isRetired()) {
+      vehicle.setActive();
+      sDB.updateVehicle(vehicle);
+      showVehicles();
+    }
+  }
+
+  /**
+   * Gets confirmation from the user that s/he really wants to delete the vehicle, and if the
+   * user responds affirmative we go ahead and delete the vehicle.
+   * @param vehicleID The id of the vehicle to delete
+   */
+  private void deleteVehicle(int vehicleID) {
+    // Note the vehicle which is to be deleted
+    mVehicleToDelete = Vehicle.getVehicle(vehicleID);
+    if (mVehicleToDelete == null) return;
+
+    // Setup the listeners which will respond to the user's response to the dialog
+    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick(DialogInterface dialog, int which) {
+        switch (which){
+          // If the user clicks "YES" then we delete the vehicle
+          case DialogInterface.BUTTON_POSITIVE:
+            mVehicleToDelete.setDeleted();
+            sDB.deleteVehicle(mVehicleToDelete);
+            mVehicleToDelete = null;
+            break;
+
+          // If the user clicks "NO" then we clean up and get out of here
+          case DialogInterface.BUTTON_NEGATIVE:
+            mVehicleToDelete = null;
+            break;
+        }
+      }
+    };
+
+    // Set up and display the dialog to get the user's confirmation that the vehicle should be
+    // deleted.
+    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    builder.setTitle("Delete " + mVehicleToDelete.getName());
+    builder.setMessage("Deleting a vehicle cannot be undone. Are you sure you want to do this?")
+        .setPositiveButton("Yes, delete it", dialogClickListener)
+        .setNegativeButton("No, never mind", dialogClickListener).show();
+  }
+
+  /**
    * Called when the Activity_AddEditVehicle class closes, so we can refresh our list of
-   * displayed vechicles.
+   * displayed vehicles.
    * @param requestCode Would indicate which activity called this, but in this case we ignore it
    * @param resultCode whether the user clicked "save" or "cancel"; doesn't matter, we refresh
    *                   the list regardless

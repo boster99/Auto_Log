@@ -30,6 +30,9 @@ public class Activity_AddEditVehicle extends AppCompatActivity {
   private int mode;
   private Vehicle mVehicle;
 
+  EditText mNameET, mColorET, mYearET, mModelET, mLicPlateET, mVinET;
+
+
   /**
    * When the activity is created, apart from the standard actions, we retrieve the type of
    * user action (add or edit a mVehicle) and if the mode is EDIT. If the mode is to add a new
@@ -48,6 +51,13 @@ public class Activity_AddEditVehicle extends AppCompatActivity {
 
     sDatabaseHelper = DatabaseHelper.getInstance(this);
 
+    mNameET = (EditText) findViewById(R.id.vehicle_edit_name);
+    mColorET = (EditText) findViewById(R.id.vehicle_edit_color);
+    mYearET = (EditText) findViewById(R.id.vehicle_edit_year);
+    mModelET = (EditText) findViewById(R.id.vehicle_edit_model);
+    mLicPlateET = (EditText) findViewById(R.id.vehicle_edit_license_plate);
+    mVinET = (EditText) findViewById(R.id.vehicle_edit_vin);
+
     mode = getIntent().getIntExtra(KEY_ADD_EDIT_MODE, 0);
 
     switch (mode) {
@@ -60,12 +70,24 @@ public class Activity_AddEditVehicle extends AppCompatActivity {
           throw new IllegalArgumentException("In edit mode, a Vehicle ID must be provided");
 
         mVehicle = Vehicle.getVehicle(vehicleID);
+        populateFromVehicle();
         break;
       default:
         throw new IllegalArgumentException("Calling process must specify add/edit mode");
     }
   }
 
+  /**
+   * Populates the display with details from the current vehicle.
+   */
+  private void populateFromVehicle() {
+    mNameET.setText(mVehicle.getName());
+    mColorET.setText(mVehicle.getColor());
+    mYearET.setText(Integer.toString(mVehicle.getYear()));
+    mModelET.setText(mVehicle.getModel());
+    mLicPlateET.setText(mVehicle.getLicensePlate());
+    mVinET.setText(mVehicle.getVIN());
+  }
 
   /**
    * When the user touches "Save", extract all of the entered details, and then--depending on
@@ -100,27 +122,20 @@ public class Activity_AddEditVehicle extends AppCompatActivity {
    * @return true if all the user-provided details are usable, or false if the user screwed up
    */
   private boolean extractDetails() {
-    String name = null, color = null, model = null, vin = null, licPlate = null;
+    String name, color, model, vin, licPlate;
     int year = 0;
 
-    EditText nameET = (EditText) findViewById(R.id.vehicle_edit_name);
-    EditText yearET = (EditText) findViewById(R.id.vehicle_edit_year);
-    EditText colorET = (EditText) findViewById(R.id.vehicle_edit_color);
-    EditText modelET = (EditText) findViewById(R.id.vehicle_edit_model);
-    EditText vinET = (EditText) findViewById(R.id.vehicle_edit_vin);
-    EditText licPlateET = (EditText) findViewById(R.id.vehicle_edit_license_plate);
-
-    if (nameET != null) name = nameET.getText().toString().trim();
-    if (colorET != null) color = colorET.getText().toString().trim();
-    if (modelET != null) model = modelET.getText().toString().trim();
-    if (vinET != null) vin = vinET.getText().toString().trim();
-    if (licPlateET != null) licPlate = licPlateET.getText().toString().trim().toUpperCase();
+    name = mNameET.getText().toString().trim();
+    color = mColorET.getText().toString().trim();
+    model = mModelET.getText().toString().trim();
+    vin = mVinET.getText().toString().trim();
+    licPlate = mLicPlateET.getText().toString().trim().toUpperCase();
 
     try {
-      if (yearET != null) year = Integer.parseInt(yearET.getText().toString());
+      year = Integer.parseInt(mYearET.getText().toString());
     } catch (NumberFormatException e) {
       Log.e(TAG, "extractDetails: mVehicle year EditText value is: "
-          + yearET.getText().toString(), e);
+          + mYearET.getText().toString(), e);
     }
 
         /*
@@ -137,9 +152,8 @@ public class Activity_AddEditVehicle extends AppCompatActivity {
         /*
         If the user has not provided a name, make one out of the color, year and model
          */
-    if (name == null || name.length() < 1) {
-      if ((color == null || color.length() < 1) || (model == null || model.length() < 1) ||
-          year == 0) {
+    if (name.length() < 1) {
+      if (color.length() < 1 || model.length() < 1 || year == 0) {
         Toast.makeText(this, "Uh oh! If you don't supply a name, you must supply a " +
             "color, year and model", Toast.LENGTH_LONG).show();
         return false;
@@ -182,6 +196,7 @@ public class Activity_AddEditVehicle extends AppCompatActivity {
    * @return the user's decision whether to save a duplicate
    */
   private boolean userWantsDuplicate() {
+    // fixme I think this will not work. Look at use of AlertDialog in ViewVehicleList.
     AlertDialog.Builder b = new AlertDialog.Builder(this);
     b.setMessage("There is already a Vehicle with the same Color, Year and Model, or with the" +
         " same name. Do you want to save this as a duplicate?");

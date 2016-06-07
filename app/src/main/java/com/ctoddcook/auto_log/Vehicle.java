@@ -309,7 +309,7 @@ public class Vehicle extends DataHolder {
    * Setter for mStatus. Sets status to Active, if it isn't already Active.
    */
   public void setActive() {
-    if (!mStatus.equals(STATUS_ACTIVE)) {
+    if (mStatus == null || !mStatus.equals(STATUS_ACTIVE)) {
       mStatus = STATUS_ACTIVE;
       touch();
     }
@@ -319,7 +319,7 @@ public class Vehicle extends DataHolder {
    * Setter for mStatus. Sets status to Retired, if it isn't already Retired.
    */
   public void setRetired() {
-    if (!mStatus.equals(STATUS_RETIRED)) {
+    if (mStatus == null || !mStatus.equals(STATUS_RETIRED)) {
       mStatus = STATUS_RETIRED;
       touch();
     }
