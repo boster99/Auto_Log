@@ -33,6 +33,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+// TODO Organize this mess
+
 /**
  * Activity provides the UI and functions needed to ad a new Fueling Event or edit an
  * existing one.
@@ -60,6 +62,9 @@ public class Activity_AddEditFueling extends AppCompatActivity
   private Location mGPSLocation;
   private int mYear, mMonth, mDay, mHour, mMinute;
 
+  private EditText mDistanceET, mVolumeET, mPricePaidDT, mLocationET, mOdometerET;
+
+
   /**
    * When the activity is created, apart from the standard actions, we retrieve the type of
    * user action (add or edit a mFueling) and if the mode is EDIT. If the mode is to add a new
@@ -80,6 +85,12 @@ public class Activity_AddEditFueling extends AppCompatActivity
 
     GregorianCalendar gc = new GregorianCalendar();
 
+    mDistanceET = (EditText) findViewById(R.id.fueling_edit_distance);
+    mVolumeET = (EditText) findViewById(R.id.edit_volume);
+    mPricePaidDT = (EditText) findViewById(R.id.fueling_edit_total_price_paid);
+    mLocationET = (EditText) findViewById(R.id.fueling_edit_location);
+    mOdometerET = (EditText) findViewById(R.id.fueling_edit_odometer);
+
     mode = getIntent().getIntExtra(KEY_ADD_EDIT_MODE, -1);
 
     switch (mode) {
@@ -95,6 +106,13 @@ public class Activity_AddEditFueling extends AppCompatActivity
 
         mFueling = Fueling.getFueling(fuelingID);
         gc.setTimeInMillis(mFueling.getDateOfFill().getTime());
+
+        mDistanceET.setText(FormatHandler.formatDistanceRaw(mFueling.getDistance()));
+        mVolumeET.setText(FormatHandler.formatVolumeRaw(mFueling.getVolume()));
+        mPricePaidDT.setText(FormatHandler.formatPriceRaw(mFueling.getPricePaid()));
+        mLocationET.setText(mFueling.getLocation());
+        mOdometerET.setText(Float.toString(mFueling.getOdometer()));
+
         break;
       default:
         throw new IllegalArgumentException("Calling process must specify add/edit mode");
@@ -264,7 +282,8 @@ public class Activity_AddEditFueling extends AppCompatActivity
 
     Intent intent = new Intent();
     intent.putExtra(Vehicle.DEFAULT_VEHICLE_KEY, mVehicle.getID());
-    setResult(RESULT_OK, intent);
+    DataUpdateController.getInstance().dispatchDataUpdateEvent(
+        DataUpdateController.DataUpdateEvent.FUELING_LIST_UPDATED, intent);
     this.finish();
   }
 
@@ -297,25 +316,20 @@ public class Activity_AddEditFueling extends AppCompatActivity
 
     date = mDateOfFill;
 
-    EditText distET = (EditText) findViewById(R.id.fueling_edit_distance);
-    if (distET != null && distET.getText() != null && !distET.getText().toString().isEmpty())
-      distance = Float.parseFloat(distET.getText().toString());
+    if (mDistanceET.getText() != null && !mDistanceET.getText().toString().isEmpty())
+      distance = Float.parseFloat(mDistanceET.getText().toString());
 
-    EditText volET = (EditText) findViewById(R.id.edit_volume);
-    if (volET != null && volET.getText() != null && !volET.getText().toString().isEmpty())
-      volume = Float.parseFloat(volET.getText().toString());
+    if (mVolumeET.getText() != null && !mVolumeET.getText().toString().isEmpty())
+      volume = Float.parseFloat(mVolumeET.getText().toString());
 
-    EditText paidET = (EditText) findViewById(R.id.fueling_edit_total_price_paid);
-    if (paidET != null && paidET.getText() != null && !paidET.getText().toString().isEmpty())
-      pricePaid = Float.parseFloat(paidET.getText().toString());
+    if (mPricePaidDT.getText() != null && !mPricePaidDT.getText().toString().isEmpty())
+      pricePaid = Float.parseFloat(mPricePaidDT.getText().toString());
 
-    EditText locET = (EditText) findViewById(R.id.fueling_edit_location);
-    if (locET != null && locET.getText() != null)
-      location = locET.getText().toString().trim();
+    if (mLocationET.getText() != null)
+      location = mLocationET.getText().toString().trim();
 
-    EditText odoET = (EditText) findViewById(R.id.fueling_edit_odometer);
-    if (odoET != null && odoET.getText() != null && !odoET.getText().toString().isEmpty())
-      odometer = Float.parseFloat(odoET.getText().toString());
+    if (mOdometerET.getText() != null && !mOdometerET.getText().toString().isEmpty())
+      odometer = Float.parseFloat(mOdometerET.getText().toString());
 
     if (date == null) {
       Toast.makeText(this, "Uh oh ... a Date and Time are needed for this to work", Toast
@@ -362,7 +376,6 @@ public class Activity_AddEditFueling extends AppCompatActivity
    * @param v The View which triggered this method call
    */
   public void cancelAddFueling(View v) {
-    setResult(RESULT_CANCELED);
     this.finish();
   }
 
@@ -374,6 +387,7 @@ public class Activity_AddEditFueling extends AppCompatActivity
    * @return the user's decision whether to save a duplicate
    */
   private boolean userWantsDuplicate() {
+    // fixme ... this won't work in an asyncrhonous environment
     AlertDialog.Builder b = new AlertDialog.Builder(this);
     b.setMessage("There is already a Fueling with the same Vehicle, Date, Distance, Volume " +
         "and Price Paid. Do you want to save this as a duplicate?");
