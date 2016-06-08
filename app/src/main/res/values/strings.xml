@@ -12,8 +12,8 @@
   <string name="Main_DistanceLabel">Dist</string>
   <string name="Main_VolumeLabel">Vol</string>
   <string name="Main_EfficiencyLabel">MPG</string>
-  <string name="Main_AveragesLabel">Averages</string>
-  <string name="Main_HistoricalsLabel">Historical</string>
+  <string name="Main_AveragesLabel">Averages for </string>
+  <string name="Main_HistoricalsLabel">Individual Fuelings</string>
   <string name="Main_PeriodLabel">Period</string>
   <string name="Main_StartupDataDisplay">---</string>
   <string name="Main_FirstAverageLabel">3 months</string>
@@ -60,19 +60,22 @@
   <string name="Vehicle_ModelLabel">Model</string>
   <string name="Vehicle_VINLabel">VIN</string>
   <string name="Vehicle_LicenseLabel">License Plate</string>
-    <string name="Vehicle_NameEntryHint">
-        HINT: You can enter your own descriptive \"Name\" for this vehicle. Or, if you leave
-        it blank, the vehicle\'s color, year and model will be used to create a name for you.
-    </string>
+  <string name="Vehicle_NameEntryHint">
+     HINT: You can enter your own descriptive \"Name\" for this vehicle. Or, if you leave
+     it blank, the vehicle\'s color, year and model will be used to create a name for you.
+  </string>
 
   <!-- For re-used buttons -->
   <string name="SaveButton">Save</string>
   <string name="CancelButton">Cancel</string>
-  <string name="EditButton">Edit</string>
-  <string name="DeleteButton">Delete</string>
+  <string name="Edit">Edit</string>
+  <string name="Delete">Delete</string>
 
   <!-- For Fueling data display formatting -->
-  <string name="Fueling_CurrencyForm">¤ 0.000</string>
+  <string name="Fueling_CurrencyForm">¤ 0.00</string>
+  <string name="Fueling_CurrencyFormRaw">0.00</string>
+  <string name="Fueling_CurrencyLongForm">¤ 0.000</string>
+  <string name="Fueling_CurrencyLongFormRaw">0.000</string>
   <string name="Fueling_SingleDecimalPointForm">0.0</string>
   <string name="Fueling_DataPattern">%1$s %2$s</string>
   <string name="Fueling_DistanceAbbrev">m</string>
@@ -88,5 +91,13 @@
   <string name="main_drawer_open">Drawer Opening</string>
   <string name="main_drawer_close">Drawer Closing</string>
   <string name="vehicle_list_activity_title">Vehicle List</string>
+  <string name="make_default">Make Default</string>
+  <string name="retire">Retire</string>
+  <string name="unretire">Un-retire</string>
+  <string name="duplicate_vehicle">
+    There is already a Vehicle with the same Color, Year and Model, or with the same name. Do you
+    want to save this as a duplicate?
+  </string>
+  <string name="view">View</string>
 
 </resources>
