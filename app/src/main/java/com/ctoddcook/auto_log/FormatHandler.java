@@ -31,6 +31,9 @@ import java.util.Locale;
  */
 public class FormatHandler {
   private static DecimalFormat mCurrencyForm = null;
+  private static DecimalFormat mCurrencyFormRaw = null;
+  private static DecimalFormat mCurrencyLongForm = null;
+  private static DecimalFormat mCurrencyLongFormRaw = null;
   private static DecimalFormat mDistanceForm = null;
   private static DecimalFormat mVolumeForm = null;
   private static DecimalFormat mEfficiencyForm = null;
@@ -86,11 +89,23 @@ public class FormatHandler {
     efficiencyAbbrev = res.getString(R.string.Fueling_EfficiencyAbbrev);
 
     String currency = res.getString(R.string.Fueling_CurrencyForm);
+    String currencyRaw = res.getString(R.string.Fueling_CurrencyFormRaw);
+    String currencyLong = res.getString(R.string.Fueling_CurrencyLongForm);
+    String currencyLongRaw = res.getString(R.string.Fueling_CurrencyLongFormRaw);
     String singleDec = res.getString(R.string.Fueling_SingleDecimalPointForm);
 
     // Create shared/static formatting objects which will be used over and over
     mCurrencyForm = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
     mCurrencyForm.applyLocalizedPattern(currency);
+
+    mCurrencyFormRaw = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
+    mCurrencyFormRaw.applyLocalizedPattern(currencyRaw);
+
+    mCurrencyLongForm = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
+    mCurrencyLongForm.applyLocalizedPattern(currencyLong);
+
+    mCurrencyLongFormRaw = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
+    mCurrencyLongFormRaw.applyLocalizedPattern(currencyLongRaw);
 
     mDistanceForm = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
     mDistanceForm.applyLocalizedPattern(singleDec);
@@ -245,7 +260,7 @@ public class FormatHandler {
 
   /**
    * Returns proper, localized formatting for the price paid per unit (i.e., price per gallon or
-   * per litre). Used by populateSelf() and available to other methods.
+   * per litre).
    * @param price the price paid per unit
    * @return a localized currency value, such as $ 1.899.
    */
@@ -257,8 +272,47 @@ public class FormatHandler {
   }
 
   /**
-   * Returns a formatted String version of the provided distance. Called by populateSelf() and
-   * available to other methods, too.
+   * Returns proper, localized formatting for the price paid per unit (i.e., price per gallon or
+   * per litre). This version excludes a currency symbol.
+   * @param price the price paid per unit
+   * @return a localized currency value, such as $ 1.899.
+   */
+  public static String formatPriceRaw(float price) {
+    if (!hasBeenSetup)
+      throw new UnsupportedOperationException("FormatHandler has not been initialized");
+
+    return mCurrencyFormRaw.format(price);
+  }
+
+  /**
+   * Returns proper, localized formatting for the price paid per unit (i.e., price per gallon or
+   * per litre). This version (unlike <code>formatCurrency()</code>) includes 3 decimal places.
+   * @param price the price paid per unit
+   * @return a localized currency value, such as $ 1.899.
+   */
+  public static String formatPriceLong(float price) {
+    if (!hasBeenSetup)
+      throw new UnsupportedOperationException("FormatHandler has not been initialized");
+
+    return mCurrencyLongForm.format(price);
+  }
+
+  /**
+   * Returns proper, localized formatting for the price paid per unit (i.e., price per gallon or
+   * per litre). This version (unlike <code>formatCurrency()</code>) includes 3 decimal places,
+   * and excludes a currency symbol.
+   * @param price the price paid per unit
+   * @return a localized currency value, such as $ 1.899.
+   */
+  public static String formatPriceLongRaw(float price) {
+    if (!hasBeenSetup)
+      throw new UnsupportedOperationException("FormatHandler has not been initialized");
+
+    return mCurrencyLongFormRaw.format(price);
+  }
+
+  /**
+   * Returns a formatted String version of the provided distance.
    * @param dist the distance covered in a tank of fuel
    * @return a formatted String
    */
@@ -270,8 +324,19 @@ public class FormatHandler {
   }
 
   /**
-   * Returns a formatted String version of the provided volume. Used by populateSelf(), but
-   * available to outside methods as well.
+   * Returns a formatted String version of the provided distance, without a unit abbreviation.
+   * @param dist the distance covered in a tank of fuel
+   * @return a formatted String
+   */
+  public static String formatDistanceRaw(float dist) {
+    if (!hasBeenSetup)
+      throw new UnsupportedOperationException("FormatHandler has not been initialized");
+
+    return mDistanceForm.format(dist);
+  }
+
+  /**
+   * Returns a formatted String version of the provided volume.
    * @param vol the volume to convert to formatted String
    * @return a formatted String
    */
@@ -283,8 +348,19 @@ public class FormatHandler {
   }
 
   /**
-   * Returns a formatted String version of the provided efficiency value. Used by populateSelf(),
-   * but available to outside methods as well.
+   * Returns a formatted String version of the provided volume, without a unit abbreviation.
+   * @param vol the volume to convert to formatted String
+   * @return a formatted String
+   */
+  public static String formatVolumeRaw(float vol) {
+    if (!hasBeenSetup)
+      throw new UnsupportedOperationException("FormatHandler has not been initialized");
+
+    return mVolumeForm.format(vol);
+  }
+
+  /**
+   * Returns a formatted String version of the provided efficiency value.
    * @param eff the efficiency to be converted to String
    * @return the formatted String
    */
