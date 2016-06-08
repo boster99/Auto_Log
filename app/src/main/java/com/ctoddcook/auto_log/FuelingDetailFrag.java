@@ -93,10 +93,10 @@ public class FuelingDetailFrag extends Fragment {
     tvMPG.setText(FormatHandler.formatEfficiency(mFueling.getEfficiency()));
 
     TextView tvPPG = (TextView) layoutView.findViewById(R.id.fueling_detail_price_per_unit);
-    tvPPG.setText(FormatHandler.formatPrice(mFueling.getPricePerUnit()));
+    tvPPG.setText(FormatHandler.formatPriceLong(mFueling.getPricePerUnit()));
 
     TextView tvPPM = (TextView) layoutView.findViewById(R.id.fueling_detail_price_per_distance);
-    tvPPM.setText(FormatHandler.formatPrice(mFueling.getPricePerDistance()));
+    tvPPM.setText(FormatHandler.formatPriceLong(mFueling.getPricePerDistance()));
 
     TextView tvGPS = (TextView) layoutView.findViewById(R.id.fueling_detail_coordinates);
     tvGPS.setText(mFueling.getGeoURI());
