@@ -60,6 +60,17 @@ public class Property extends DataHolder {
   }
 
   /**
+   * Constructor providing a property name and a boolean value
+   * @param name the name of the property
+   * @param value the value
+   */
+  public Property(String name, boolean value) {
+    super();
+    setName(name);
+    setValue(value);
+  }
+
+  /**
    * Constructor providing a property name and a long value
    * @param name the name of the property
    * @param value the value
