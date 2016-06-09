@@ -172,8 +172,16 @@ public class Property extends DataHolder {
   }
 
   /**
+   * Accessor to set a boolean value (which is converted to Long)
+   * @param value the boolean value
+   */
+  public void setValue(boolean value) {
+    setValue(value ? 1L : 0L);
+  }
+
+  /**
    * Accessor to set the long value of this property.
-   * @param value the int value
+   * @param value the long value
    */
   public void setValue(long value) {
     mType = TYPE_LONG;
@@ -280,10 +288,18 @@ public class Property extends DataHolder {
   }
 
   /**
+   * Accessor to mLongVal converted to boolean.
+   * @return the boolean value
+   */
+  public boolean getBooleanValue() {
+    return (mLongVal != 0);
+  }
+
+  /**
    * Accessor to the int value of the property
    * @return the int value
    */
-  public long getIntValue() {
+  public long getLongValue() {
     return mLongVal;
   }
 
@@ -380,7 +396,7 @@ public class Property extends DataHolder {
   }
 
   /**
-   * Upates this Property based on the values of another Property.
+   * Updates this Property based on the values of another Property.
    * @param other the Property with the new values to use
    */
   public void update(Property other) {
