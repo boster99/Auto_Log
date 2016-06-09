@@ -1,9 +1,9 @@
 package com.ctoddcook.auto_log;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -17,9 +17,9 @@ import static android.support.v4.app.ActivityCompat.startActivity;
  */
 public class Listener_NavDrawer_Main implements NavigationView.OnNavigationItemSelectedListener {
   private DrawerLayout mDrawerLayout;
-  private Activity mActivity;
+  private AppCompatActivity mActivity;
 
-  public Listener_NavDrawer_Main(Activity a) {
+  public Listener_NavDrawer_Main(AppCompatActivity a) {
     mActivity = a;
     mDrawerLayout = (DrawerLayout) mActivity.findViewById(R.id.drawer_layout);
   }
@@ -37,8 +37,7 @@ public class Listener_NavDrawer_Main implements NavigationView.OnNavigationItemS
     switch (item.getItemId()) {
       case R.id.action_vehicles:
         Intent intent = new Intent(mActivity, ViewVehicleList.class);
-        intent.putExtra(AddEditVehicleActivity.KEY_ADD_EDIT_MODE, AddEditVehicleActivity.MODE_ADD);
-        startActivity(mActivity, intent, null);
+        mActivity.startActivity(intent);
         break;
       case R.id.action_backup:
         Toast.makeText(mActivity, "Sorry ... backup is not yet implemented", Toast.LENGTH_LONG).show();
