@@ -25,8 +25,8 @@ import android.widget.Toast;
 import com.ctoddcook.cGenTools.CLocationTools;
 import com.ctoddcook.cGenTools.CLocationWaiter;
 import com.ctoddcook.cGenTools.PropertiesHelper;
-import com.ctoddcook.cUiTools.DatePickerFragment;
-import com.ctoddcook.cUiTools.TimePickerFragment;
+import com.ctoddcook.cUiTools.Fragment_DatePicker;
+import com.ctoddcook.cUiTools.Fragment_TimePicker;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -43,8 +43,8 @@ import java.util.NoSuchElementException;
  * ctodd@ctoddcook.com
  */
 public class Activity_EditFueling extends AppCompatActivity
-    implements AdapterView.OnItemSelectedListener, DatePickerFragment.DatePickerCaller,
-    TimePickerFragment.TimePickerCaller, CLocationWaiter.locationCaller {
+    implements AdapterView.OnItemSelectedListener, Fragment_DatePicker.DatePickerCaller,
+    Fragment_TimePicker.TimePickerCaller, CLocationWaiter.locationCaller {
 
   private static final String TAG = "Activity_EditFueling";
   private static DatabaseHelper sDatabaseHelper;
@@ -408,7 +408,7 @@ public class Activity_EditFueling extends AppCompatActivity
    * @param v the view which called this message
    */
   public void showDatePickerDialog(View v) {
-    DialogFragment datePicker = DatePickerFragment.newInstance(mDateOfFill.getTime());
+    DialogFragment datePicker = Fragment_DatePicker.newInstance(mDateOfFill.getTime());
     datePicker.show(getSupportFragmentManager(), "datePicker");
   }
 
@@ -435,7 +435,7 @@ public class Activity_EditFueling extends AppCompatActivity
    * @param v the View which called this method
    */
   public void showTimePickerDialog(View v) {
-    DialogFragment timePicker = TimePickerFragment.newInstance(mDateOfFill.getTime());
+    DialogFragment timePicker = Fragment_TimePicker.newInstance(mDateOfFill.getTime());
     timePicker.show(getSupportFragmentManager(), "timePicker");
   }
 
