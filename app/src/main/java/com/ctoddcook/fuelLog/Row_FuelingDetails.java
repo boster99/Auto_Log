@@ -31,7 +31,7 @@ public class Row_FuelingDetails extends ArrayAdapter<Model_Fueling> {
    * @param fList a list of Fuelings to be displayed
    */
   public Row_FuelingDetails(Context c, ArrayList<Model_Fueling> fList) {
-    super(c, R.layout.fueling_row_layout, fList);
+    super(c, R.layout.row_fueling_details, fList);
     context = c;
     mFuelingsList = fList;
   }
@@ -97,7 +97,7 @@ public class Row_FuelingDetails extends ArrayAdapter<Model_Fueling> {
     if (row == null) {
       LayoutInflater inflater = (LayoutInflater) context
           .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-      row = inflater.inflate(R.layout.fueling_row_layout, parent, false);
+      row = inflater.inflate(R.layout.row_fueling_details, parent, false);
 
       ViewHolder newHolder = new ViewHolder();
       newHolder.tvDate = (TextView) row.findViewById(R.id.fueling_row_date);

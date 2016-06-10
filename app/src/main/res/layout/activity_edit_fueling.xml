@@ -26,6 +26,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_add_edit_fueling"/>
+    <include layout="@layout/content_edit_fueling"/>
 
 </android.support.design.widget.CoordinatorLayout>

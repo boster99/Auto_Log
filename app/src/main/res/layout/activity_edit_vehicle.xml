@@ -26,6 +26,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_add_edit_vehicle"/>
+    <include layout="@layout/content_edit_vehicle"/>
 
 </android.support.design.widget.CoordinatorLayout>
