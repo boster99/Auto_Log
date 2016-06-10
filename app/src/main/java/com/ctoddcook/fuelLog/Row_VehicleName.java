@@ -40,7 +40,7 @@ public class Row_VehicleName extends ArrayAdapter<Model_Vehicle> {
    * @param vList a list of Vehicles
    */
   public Row_VehicleName(Context c, ArrayList<Model_Vehicle> vList) {
-    super(c, R.layout.vehicle_list_row, vList);
+    super(c, R.layout.row_vehicle_name, vList);
     mContext = c;
     mList = vList;
 
@@ -110,7 +110,7 @@ public class Row_VehicleName extends ArrayAdapter<Model_Vehicle> {
     if (rowView == null) {
       LayoutInflater inflater = (LayoutInflater) mContext
           .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-      rowView = inflater.inflate(R.layout.vehicle_list_row, parent, false);
+      rowView = inflater.inflate(R.layout.row_vehicle_name, parent, false);
 
       ViewHolder newHolder = new ViewHolder();
       newHolder.tvName = (TextView) rowView.findViewById(R.id.vehilce_name);
