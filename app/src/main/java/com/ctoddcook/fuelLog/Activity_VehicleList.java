@@ -185,8 +185,8 @@ public class Activity_VehicleList extends AppCompatActivity implements AdapterVi
    * @param v the button that was clicked
    */
   public void addVehicle(View v) {
-    Intent intent = new Intent(this, Activity_AddEditVehicle.class);
-    intent.putExtra(Activity_AddEditVehicle.KEY_ADD_EDIT_MODE, Activity_AddEditVehicle.MODE_ADD);
+    Intent intent = new Intent(this, Activity_EditVehicle.class);
+    intent.putExtra(Activity_EditVehicle.KEY_ADD_EDIT_MODE, Activity_EditVehicle.MODE_ADD);
     startActivity(intent);
   }
 
@@ -195,9 +195,9 @@ public class Activity_VehicleList extends AppCompatActivity implements AdapterVi
    * @param vehicleID The id of the vehicle to be edited
    */
   private void editVehicle(int vehicleID) {
-    Intent intent = new Intent(this, Activity_AddEditVehicle.class);
-    intent.putExtra(Activity_AddEditVehicle.KEY_ADD_EDIT_MODE, Activity_AddEditVehicle.MODE_EDIT);
-    intent.putExtra(Activity_AddEditVehicle.KEY_VEHICLE_ID, vehicleID);
+    Intent intent = new Intent(this, Activity_EditVehicle.class);
+    intent.putExtra(Activity_EditVehicle.KEY_ADD_EDIT_MODE, Activity_EditVehicle.MODE_EDIT);
+    intent.putExtra(Activity_EditVehicle.KEY_VEHICLE_ID, vehicleID);
     startActivity(intent);
   }
 
@@ -300,7 +300,7 @@ public class Activity_VehicleList extends AppCompatActivity implements AdapterVi
   }
 
   /**
-   * When the Activity_AddEditVehicle class adds or edits a vehicle, it will post this event. We
+   * When the Activity_EditVehicle class adds or edits a vehicle, it will post this event. We
    * use it to know when/if to refresh the display.
    *
    * @param event Indicates the type of data updated

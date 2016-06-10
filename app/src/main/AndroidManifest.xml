@@ -37,7 +37,7 @@
           android:value="com.ctoddcook.fuelLog.Activity_Main"/>
     </activity>
     <activity
-        android:name="com.ctoddcook.fuelLog.Activity_AddEditVehicle"
+        android:name=".Activity_EditVehicle"
         android:label="@string/title_activity_add_vehicle"
         android:parentActivityName="com.ctoddcook.fuelLog.Activity_Main"
         android:theme="@style/AppTheme.NoActionBar">

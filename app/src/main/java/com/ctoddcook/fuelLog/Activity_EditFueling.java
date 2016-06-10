@@ -150,10 +150,10 @@ public class Activity_EditFueling extends AppCompatActivity
     // get a cursor providing IDs and NAMEs for each vehicle
     Cursor cursor = sDatabaseHelper.fetchSimpleVehicleListCursor(false);
 
-    // if the cursor has no results, open the Activity_AddEditVehicle, then try again
+    // if the cursor has no results, open the Activity_EditVehicle, then try again
     if (cursor.getCount() < 1) {
-      Intent intent = new Intent(this, Activity_AddEditVehicle.class);
-      intent.putExtra(Activity_AddEditVehicle.KEY_ADD_EDIT_MODE, Activity_AddEditVehicle
+      Intent intent = new Intent(this, Activity_EditVehicle.class);
+      intent.putExtra(Activity_EditVehicle.KEY_ADD_EDIT_MODE, Activity_EditVehicle
           .MODE_ADD);
       startActivity(intent);
       cursor = sDatabaseHelper.fetchSimpleVehicleListCursor(false);
