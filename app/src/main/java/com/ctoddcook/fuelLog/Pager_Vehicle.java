@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public class Pager_Vehicle extends FragmentStatePagerAdapter {
   private static final String TAG = "Pager_Vehicle";
-  private final ArrayList<Vehicle> mVehicles;
+  private final ArrayList<Model_Vehicle> mVehicles;
 
   /**
    * Constructor passes a FragmentManager up the chain to a parent class, and stores a reference
@@ -22,7 +22,7 @@ public class Pager_Vehicle extends FragmentStatePagerAdapter {
    * @param fragmentManager the manager overseeing this adapter
    * @param vehicles a list of vehicles, from which details will be retrieved for display
    */
-  public Pager_Vehicle(FragmentManager fragmentManager, ArrayList<Vehicle> vehicles) {
+  public Pager_Vehicle(FragmentManager fragmentManager, ArrayList<Model_Vehicle> vehicles) {
     super(fragmentManager);
     mVehicles = vehicles;
   }

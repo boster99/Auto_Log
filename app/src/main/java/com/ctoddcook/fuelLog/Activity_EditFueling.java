@@ -58,7 +58,7 @@ public class Activity_EditFueling extends AppCompatActivity
 
   private int mode;
   private Model_Fueling mFueling;
-  private Vehicle mVehicle;
+  private Model_Vehicle mVehicle;
   private Date mDateOfFill;
   private Location mGPSLocation;
   private int mYear, mMonth, mDay, mHour, mMinute;
@@ -122,9 +122,9 @@ public class Activity_EditFueling extends AppCompatActivity
         throw new IllegalArgumentException("Calling process must specify add/edit mode");
     }
 
-    int vehicleID = getIntent().getIntExtra(Vehicle.DEFAULT_VEHICLE_KEY, -1);
+    int vehicleID = getIntent().getIntExtra(Model_Vehicle.DEFAULT_VEHICLE_KEY, -1);
     if (vehicleID > 0) {
-      mVehicle = Vehicle.getVehicle(vehicleID);
+      mVehicle = Model_Vehicle.getVehicle(vehicleID);
     }
     setupVehicleSpinner();
 
@@ -254,7 +254,7 @@ public class Activity_EditFueling extends AppCompatActivity
   }
 
   /**
-   * When a user selects a Vehicle from the spinner, update the mVehicle field with the correct
+   * When a user selects a Model_Vehicle from the spinner, update the mVehicle field with the correct
    * vehicle object.
    *
    * @param parent the parent spinner, in effect
@@ -263,7 +263,7 @@ public class Activity_EditFueling extends AppCompatActivity
    * @param id     the row ID of the item that is selected
    */
   public void onItemSelected(AdapterView<?> parent, View v, int pos, long id) {
-    mVehicle = Vehicle.getVehicle(id);
+    mVehicle = Model_Vehicle.getVehicle(id);
   }
 
 
@@ -386,7 +386,7 @@ public class Activity_EditFueling extends AppCompatActivity
     }
 
     Intent intent = new Intent();
-    intent.putExtra(Vehicle.DEFAULT_VEHICLE_KEY, mVehicle.getID());
+    intent.putExtra(Model_Vehicle.DEFAULT_VEHICLE_KEY, mVehicle.getID());
     DataUpdateController.getInstance().dispatchDataUpdateEvent(
         DataUpdateController.DataUpdateEvent.FUELING_LIST_UPDATED, intent);
     this.finish();

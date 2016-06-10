@@ -69,7 +69,7 @@ public class Fragment_FuelingDetail extends Fragment {
     View layoutView = inflater.inflate(R.layout.fueling_details_layout, container, false);
 
     TextView tvVehicle = (TextView) layoutView.findViewById(R.id.fueling_detail_vehicle);
-    tvVehicle.setText(Vehicle.getVehicle(mFueling.getVehicleID()).getName());
+    tvVehicle.setText(Model_Vehicle.getVehicle(mFueling.getVehicleID()).getName());
 
     TextView tvDate = (TextView) layoutView.findViewById(R.id.fueling_detail_date);
     tvDate.setText(FormatHandler.formatLongDateShortTime(mFueling.getDateOfFill()));

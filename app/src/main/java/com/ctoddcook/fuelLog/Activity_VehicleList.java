@@ -39,8 +39,8 @@ public class Activity_VehicleList extends AppCompatActivity implements AdapterVi
 
   private static ListView sVehicleListView;
   private DatabaseHelper sDB;
-  private Vehicle mVehicleToDelete = null;
-  private Vehicle mVehicleToRetire = null;
+  private Model_Vehicle mVehicleToDelete = null;
+  private Model_Vehicle mVehicleToRetire = null;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +56,7 @@ public class Activity_VehicleList extends AppCompatActivity implements AdapterVi
    * Fetches the list of vehicles from the database and displays them as a list
    */
   private void showVehicles() {
-    ArrayList<Vehicle> mVehicleList;
+    ArrayList<Model_Vehicle> mVehicleList;
     mVehicleList = sDB.fetchVehicleList();
 
     sVehicleListView = (ListView) findViewById(R.id.Vehicle_ListView);
@@ -86,7 +86,7 @@ public class Activity_VehicleList extends AppCompatActivity implements AdapterVi
    */
   public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
     if (view instanceof LinearLayout) {
-      Vehicle vehicle = (Vehicle) parent.getItemAtPosition(pos);
+      Model_Vehicle vehicle = (Model_Vehicle) parent.getItemAtPosition(pos);
       Intent intent = new Intent(this, Activity_DetailFrame.class);
       intent.putExtra(Activity_DetailFrame.ARG_TYPE, Activity_DetailFrame.TYPE_VEHICLE);
       intent.putExtra(Activity_DetailFrame.ARG_ITEM_ID, vehicle.getID());
@@ -117,7 +117,7 @@ public class Activity_VehicleList extends AppCompatActivity implements AdapterVi
     super.onCreateContextMenu(menu, v, menuInfo);
     MenuInflater inflater = getMenuInflater();
     int position = ((AdapterView.AdapterContextMenuInfo) menuInfo).position;
-    Vehicle vehicle = (Vehicle) sVehicleListView.getItemAtPosition(position);
+    Model_Vehicle vehicle = (Model_Vehicle) sVehicleListView.getItemAtPosition(position);
 
     /*
     Always display the base menu for vehicles (EDIT and DELETE). Add additional menu items based
@@ -140,7 +140,7 @@ public class Activity_VehicleList extends AppCompatActivity implements AdapterVi
     AdapterView.AdapterContextMenuInfo info =
         (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
-    Vehicle vehicle = (Vehicle) sVehicleListView.getItemAtPosition((int) info.id);
+    Model_Vehicle vehicle = (Model_Vehicle) sVehicleListView.getItemAtPosition((int) info.id);
     int vehicleID = vehicle.getID();
 
     switch (item.getItemId()) {
@@ -171,10 +171,10 @@ public class Activity_VehicleList extends AppCompatActivity implements AdapterVi
 
   private void makeDefaultVehicle(int vehicleID) {
     PropertiesHelper ph = PropertiesHelper.getInstance();
-    int defaultVehID = (int) ph.getLongValue(Vehicle.DEFAULT_VEHICLE_KEY);
+    int defaultVehID = (int) ph.getLongValue(Model_Vehicle.DEFAULT_VEHICLE_KEY);
 
-    if (vehicleID != defaultVehID && Vehicle.getVehicle(vehicleID) != null) {
-      ph.put(Vehicle.DEFAULT_VEHICLE_KEY, vehicleID);
+    if (vehicleID != defaultVehID && Model_Vehicle.getVehicle(vehicleID) != null) {
+      ph.put(Model_Vehicle.DEFAULT_VEHICLE_KEY, vehicleID);
     }
 
     showVehicles();
@@ -208,7 +208,7 @@ public class Activity_VehicleList extends AppCompatActivity implements AdapterVi
    */
   private void retireVehicle(int vehicleID) {
     // Note the vehicle which is to be retired
-    mVehicleToRetire = Vehicle.getVehicle(vehicleID);
+    mVehicleToRetire = Model_Vehicle.getVehicle(vehicleID);
     if (mVehicleToRetire == null || mVehicleToRetire.isRetired()) return;
 
     // Setup the listeners which will respond to the user's response to the dialog
@@ -250,7 +250,7 @@ public class Activity_VehicleList extends AppCompatActivity implements AdapterVi
    * @param vehicleID The id of the vehicle to unretire
    */
   private void unretireVehicle(int vehicleID) {
-    Vehicle vehicle = Vehicle.getVehicle(vehicleID);
+    Model_Vehicle vehicle = Model_Vehicle.getVehicle(vehicleID);
     if (vehicle.isRetired()) {
       vehicle.setActive();
       sDB.updateVehicle(vehicle);
@@ -265,7 +265,7 @@ public class Activity_VehicleList extends AppCompatActivity implements AdapterVi
    */
   private void deleteVehicle(int vehicleID) {
     // Note the vehicle which is to be deleted
-    mVehicleToDelete = Vehicle.getVehicle(vehicleID);
+    mVehicleToDelete = Model_Vehicle.getVehicle(vehicleID);
     if (mVehicleToDelete == null) return;
 
     // Setup the listeners which will respond to the user's response to the dialog

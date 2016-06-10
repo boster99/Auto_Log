@@ -18,7 +18,7 @@ import android.widget.TextView;
 public class Fragment_VehicleDetail extends Fragment {
   private static final String TAG = "Fragment_VehicleDetail";
   private static final String VEHICLE_ID = "VehicleID";
-  private Vehicle mVehicle;
+  private Model_Vehicle mVehicle;
 
   /**
    * Android does not want parameters passed through a constructor; they only want parameters
@@ -47,7 +47,7 @@ public class Fragment_VehicleDetail extends Fragment {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     int vehID = (getArguments() != null ? getArguments().getInt(VEHICLE_ID) : -1);
-    mVehicle = Vehicle.getVehicle(vehID);
+    mVehicle = Model_Vehicle.getVehicle(vehID);
   }
 
   /**

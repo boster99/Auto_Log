@@ -18,17 +18,17 @@ import java.util.ArrayList;
 
 /**
  * ArrayAdapter customization, for displaying a simple list of Vehicles. The NAME of each vehicle
- * is the only data displayed here. When a Vehicle in the list is touched, it will open a new
+ * is the only data displayed here. When a Model_Vehicle in the list is touched, it will open a new
  * activity displaying the details of that activity. When a vehicle is long-touched, the menu
  * will offer to retire a vehicle, or make it the default vehicle.
  * <p>
  * Created by C. Todd Cook on 5/22/2016.<br>
  * ctodd@ctoddcook.com
  */
-public class Row_VehicleNameList extends ArrayAdapter<Vehicle> {
+public class Row_VehicleNameList extends ArrayAdapter<Model_Vehicle> {
   private static final String TAG = "Row_VehicleNameList";
   private final Context mContext;
-  private final ArrayList<Vehicle> mList;
+  private final ArrayList<Model_Vehicle> mList;
   private final int mDefaultVehicleID;
   private static final int IS_NEITHER = 0;
   private static final int IS_RETIRED = 1;
@@ -39,12 +39,12 @@ public class Row_VehicleNameList extends ArrayAdapter<Vehicle> {
    * @param c the context in which this will be displayed
    * @param vList a list of Vehicles
    */
-  public Row_VehicleNameList(Context c, ArrayList<Vehicle> vList) {
+  public Row_VehicleNameList(Context c, ArrayList<Model_Vehicle> vList) {
     super(c, R.layout.vehicle_list_row, vList);
     mContext = c;
     mList = vList;
 
-    mDefaultVehicleID = (int) PropertiesHelper.getInstance().getLongValue(Vehicle
+    mDefaultVehicleID = (int) PropertiesHelper.getInstance().getLongValue(Model_Vehicle
         .DEFAULT_VEHICLE_KEY);
   }
 
@@ -100,7 +100,7 @@ public class Row_VehicleNameList extends ArrayAdapter<Vehicle> {
   @Override
   public View getView(int pos, View convertView, ViewGroup parent) {
     View rowView = convertView;
-    Vehicle vehicle = mList.get(pos);
+    Model_Vehicle vehicle = mList.get(pos);
 
     /*
     Reuse views. Only create a rowView from scratch if the call to this method did not give us

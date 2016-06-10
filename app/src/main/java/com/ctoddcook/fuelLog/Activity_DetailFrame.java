@@ -28,7 +28,7 @@ public class Activity_DetailFrame extends AppCompatActivity {
   public static final int TYPE_AVERAGE = 103;
   public static final String ARG_POSITION = "Position";
   public static final String ARG_ITEM_ID = "ItemID";
-  public static final String ARG_VEHICLE = "Vehicle";
+  public static final String ARG_VEHICLE = "Model_Vehicle";
 
   private static ViewPager mPager;
   private Fragment mCurrentFragment;
@@ -66,7 +66,7 @@ public class Activity_DetailFrame extends AppCompatActivity {
     switch (type) {
       case TYPE_VEHICLE:
         Pager_Vehicle pagerVehicle = new Pager_Vehicle(getSupportFragmentManager(),
-            Vehicle.getVehicleList());
+            Model_Vehicle.getVehicleList());
         mPager.setAdapter(pagerVehicle);
         mPager.setCurrentItem(position);
         showVehicleSwipeHint();

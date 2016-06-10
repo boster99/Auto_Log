@@ -15,7 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 /**
- * This activity is used for adding a new, or editing an existing Vehicle.
+ * This activity is used for adding a new, or editing an existing Model_Vehicle.
  */
 public class Activity_EditVehicle extends AppCompatActivity {
   private static final String TAG = "Activity_EditVehicle";
@@ -27,7 +27,7 @@ public class Activity_EditVehicle extends AppCompatActivity {
   public static final int MODE_ADD = 1;
   public static final int MODE_EDIT = 2;
   private int mMode;
-  private Vehicle mVehicle;
+  private Model_Vehicle mVehicle;
 
   EditText mNameET, mColorET, mYearET, mModelET, mLicensePlateET, mVinET;
   String mName, mColor, mModel, mVin, mLicensePlate;
@@ -63,14 +63,14 @@ public class Activity_EditVehicle extends AppCompatActivity {
 
     switch (mMode) {
       case MODE_ADD:
-        mVehicle = new Vehicle();
+        mVehicle = new Model_Vehicle();
         break;
       case MODE_EDIT:
         int vehicleID = getIntent().getIntExtra(KEY_VEHICLE_ID, -1);
         if (vehicleID < 0)
-          throw new IllegalArgumentException("In edit mMode, a Vehicle ID must be provided");
+          throw new IllegalArgumentException("In edit mMode, a Model_Vehicle ID must be provided");
 
-        mVehicle = Vehicle.getVehicle(vehicleID);
+        mVehicle = Model_Vehicle.getVehicle(vehicleID);
         populateFromVehicle();
         break;
       default:
@@ -159,10 +159,10 @@ public class Activity_EditVehicle extends AppCompatActivity {
    */
   private boolean duplicateChecksPass() {
     /*
-    Check existing Vehicle instances for same Color, Year and Model, or with the same mName.
+    Check existing Model_Vehicle instances for same Color, Year and Model, or with the same mName.
     If a similar mVehicle is found, ask the user if this duplicate should be saved.
      */
-    for (Vehicle each : Vehicle.getVehicleList()) {
+    for (Model_Vehicle each : Model_Vehicle.getVehicleList()) {
       if (each == mVehicle) continue;
       if (each.isDuplicate(mName, mColor, mYear, mModel, mVin, mLicensePlate)) {
         promptUserForDuplicate();

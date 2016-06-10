@@ -883,7 +883,7 @@ class Model_Fueling extends DataHolder {
    * Determines whether another, provided Model_Fueling instance has the same key fields as
    * this one. Fields checked are mVehicleID, mDateOfFill, mDistance, mVolume, and mPricePaid.
    *
-   * @param vehID      Vehicle ID to be compared against
+   * @param vehID      Model_Vehicle ID to be compared against
    * @param dateOfFill Date of Fill to be compared against
    * @param distance   Distance to be compared against
    * @param volume     Volume to be compared against
