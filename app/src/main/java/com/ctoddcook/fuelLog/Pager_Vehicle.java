@@ -43,7 +43,7 @@ public class Pager_Vehicle extends FragmentStatePagerAdapter {
   @Override
   public Fragment getItem(int position) {
     if (position >= 0 && position < mVehicles.size())
-      return VehicleDetailFrag.getInstance(mVehicles.get(position).getID());
+      return Fragment_VehicleDetail.getInstance(mVehicles.get(position).getID());
 
     return null; // remove this when fragments above are taken care of
   }
