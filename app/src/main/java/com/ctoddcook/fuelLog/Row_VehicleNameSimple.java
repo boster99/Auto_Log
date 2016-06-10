@@ -10,8 +10,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-// fixme Have not been able to make this work with Activity_Main.setupVehicleSpinner() and vehicle_name_array_adapter.xml
-/**
+// fixme Have not been able to make this work with Activity_Main.setupVehicleSpinner() and row_vehicle_name_simple.xml*
  * Array adapter for filling out spinners with vehicle lists
  * <p/>
  * Created by C. Todd Cook on 5/26/2016.<br>
@@ -23,7 +22,7 @@ public class Row_VehicleNameSimple extends ArrayAdapter<Model_Vehicle> {
   private final ArrayList<Model_Vehicle> mVehicles;
 
   public Row_VehicleNameSimple(Context c, ArrayList<Model_Vehicle> vList){
-    super(c,R.layout.vehicle_name_array_adapter,vList);
+    super(c,R.layout.row_vehicle_name_simple,vList);
     mContext = c;
     mVehicles = vList;
   }
@@ -83,7 +82,7 @@ public class Row_VehicleNameSimple extends ArrayAdapter<Model_Vehicle> {
     if (row == null) {
       LayoutInflater inflater = (LayoutInflater) mContext
           .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-      row = inflater.inflate(R.layout.vehicle_name_array_adapter, parent, false);
+      row = inflater.inflate(R.layout.row_vehicle_name_simple, parent, false);
 
       ViewHolder newHolder = new ViewHolder();
       newHolder.tvName = (TextView) row.findViewById(R.id.spinner_vehicle_name);
