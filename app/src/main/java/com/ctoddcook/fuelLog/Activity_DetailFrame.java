@@ -11,7 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
-import com.ctoddcook.cUiTools.UIHelper;
+import com.ctoddcook.cUiTools.Handler_UserHints;
 
 /**
  * This activity is reusable, and will show one of three fragments to display vehicle details,
@@ -95,7 +95,7 @@ public class Activity_DetailFrame extends AppCompatActivity {
    * Displays a one-time hint for how to swipe from record to record.
    */
   private void showVehicleSwipeHint() {
-    UIHelper.showHint(this, Constants_Central.VEHICLE_DETAIL_HINT_KEY, null,
+    Handler_UserHints.showHint(this, Constants_Central.VEHICLE_DETAIL_HINT_KEY, null,
         getString(R.string.vehicle_swipe_hint));
   }
 
@@ -103,7 +103,7 @@ public class Activity_DetailFrame extends AppCompatActivity {
    * Displays a one-time hint for how to swipe from record to record.
    */
   private void showFuelingSwipeHint() {
-    UIHelper.showHint(this, Constants_Central.FUELING_DETAIL_HINT_KEY, null,
+    Handler_UserHints.showHint(this, Constants_Central.FUELING_DETAIL_HINT_KEY, null,
         getString(R.string.fueling_swipe_hint));
   }
 
@@ -111,7 +111,7 @@ public class Activity_DetailFrame extends AppCompatActivity {
    * Displays a one-time hint for how to swipe from record to record.
    */
   private void showAveragesSwipeHint() {
-    UIHelper.showHint(this, Constants_Central.AVERAGES_DETAIL_HINT_KEY, null,
+    Handler_UserHints.showHint(this, Constants_Central.AVERAGES_DETAIL_HINT_KEY, null,
         getString(R.string.averages_swipe_hint));
   }
 

@@ -18,7 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.ctoddcook.cGenTools.PropertiesHelper;
-import com.ctoddcook.cUiTools.UIHelper;
+import com.ctoddcook.cUiTools.Handler_UserHints;
 
 import java.util.ArrayList;
 
@@ -73,7 +73,7 @@ public class Activity_VehicleList extends AppCompatActivity implements AdapterVi
    * screen (or after HINT settings have been reset).
    */
   private void showHint() {
-    UIHelper.showHint(this, Constants_Central.VEHICLE_LIST_HINT_KEY, null, getString(R.string.vehicle_list_hint));
+    Handler_UserHints.showHint(this, Constants_Central.VEHICLE_LIST_HINT_KEY, null, getString(R.string.vehicle_list_hint));
   }
 
   /**
