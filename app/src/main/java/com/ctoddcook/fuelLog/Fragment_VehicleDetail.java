@@ -65,7 +65,7 @@ public class Fragment_VehicleDetail extends Fragment {
   @Nullable
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    View layoutView = inflater.inflate(R.layout.vehicle_details_layout, container, false);
+    View layoutView = inflater.inflate(R.layout.fragment_vehicle_detail, container, false);
     TextView tvName = (TextView) layoutView.findViewById(R.id.vehicle_detail_name);
     tvName.setText(mVehicle.getName());
 

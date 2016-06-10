@@ -68,7 +68,7 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main_nav_drawer);
+    setContentView(R.layout.nav_drawer);
     mToolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(mToolbar);
 
@@ -110,7 +110,7 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
 
   // todo make the spinner work with a custom adapter
   private void setupVehicleSpinner() {
-//    ArrayAdapter adapter = new ArrayAdapter(this, R.layout.vehicle_name_array_adapter,
+//    ArrayAdapter adapter = new ArrayAdapter(this, R.layout.row_vehicle_name_simple,
 //        R.id.spinner_vehicle_name, mVehicles);
 //    Spinner spinner = (Spinner) findViewById(R.id.main_vehicle_spinner);
 //    if (spinner != null)

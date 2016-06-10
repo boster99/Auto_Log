@@ -32,7 +32,7 @@
   <string name="Fueling_LocationLabel">Location</string>
   <string name="Fueling_OdometerLabel">Odometer</string>
 
-  <!-- Following are used in the span_ fueling_ and vehicle_details_layout.xmls -->
+  <!-- Following are used in the span_ fueling_ and fragment_vehicle_detail.xmls -->
   <string name="Fueling_DateTimeLabel">Date and Time</string>
   <string name="Fueling_EfficiencyLabel">Miles/Gallon</string>
   <string name="Fueling_PriceEfficiencyLabel">Price/Mile</string>
