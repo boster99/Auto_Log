@@ -25,8 +25,8 @@ import java.util.ArrayList;
  * Created by C. Todd Cook on 5/22/2016.<br>
  * ctodd@ctoddcook.com
  */
-public class Row_VehicleNameList extends ArrayAdapter<Model_Vehicle> {
-  private static final String TAG = "Row_VehicleNameList";
+public class Row_VehicleName extends ArrayAdapter<Model_Vehicle> {
+  private static final String TAG = "Row_VehicleName";
   private final Context mContext;
   private final ArrayList<Model_Vehicle> mList;
   private final int mDefaultVehicleID;
@@ -39,7 +39,7 @@ public class Row_VehicleNameList extends ArrayAdapter<Model_Vehicle> {
    * @param c the context in which this will be displayed
    * @param vList a list of Vehicles
    */
-  public Row_VehicleNameList(Context c, ArrayList<Model_Vehicle> vList) {
+  public Row_VehicleName(Context c, ArrayList<Model_Vehicle> vList) {
     super(c, R.layout.vehicle_list_row, vList);
     mContext = c;
     mList = vList;

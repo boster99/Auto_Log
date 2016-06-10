@@ -65,7 +65,7 @@ public class Activity_VehicleList extends AppCompatActivity implements AdapterVi
       registerForContextMenu(sVehicleListView);
     }
 
-    sVehicleListView.setAdapter(new Row_VehicleNameList(this, mVehicleList));
+    sVehicleListView.setAdapter(new Row_VehicleName(this, mVehicleList));
   }
 
   /**
@@ -79,7 +79,7 @@ public class Activity_VehicleList extends AppCompatActivity implements AdapterVi
   /**
    * Handler for when the user touches an item on the ListView of Vehicles. Opens
    * Activity_DetailFrame class and tells it to display vehicle details.
-   * @param parent the parent Adapter, see Row_VehicleNameList class
+   * @param parent the parent Adapter, see Row_VehicleName class
    * @param view the UI item that was touched
    * @param pos the position in the list that was touched
    * @param id the id of the touched item

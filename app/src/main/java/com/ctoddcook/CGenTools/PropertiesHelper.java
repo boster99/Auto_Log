@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.ctoddcook.fuelLog.FuelingDBMap;
+import com.ctoddcook.fuelLog.DatabaseMap_Fueling;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -351,7 +351,7 @@ public class PropertiesHelper {
 
     String[] whereArgs = new String[]{String.valueOf(p.getID())};
 
-    int rowsDeleted = sDatabase.delete(FuelingDBMap.TABLE_NAME, FuelingDBMap.WHERE_ID_CLAUSE,
+    int rowsDeleted = sDatabase.delete(DatabaseMap_Fueling.TABLE_NAME, DatabaseMap_Fueling.WHERE_ID_CLAUSE,
         whereArgs);
 
     return (rowsDeleted == 1);

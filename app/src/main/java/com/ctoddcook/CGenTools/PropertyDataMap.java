@@ -7,14 +7,14 @@ package com.ctoddcook.cGenTools;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
-import com.ctoddcook.fuelLog.FuelLogDataMap;
+import com.ctoddcook.fuelLog.DatabaseMap_FuelLog;
 
 /**
  * Provides SQL specifications (table name, column names and types) etc for the Property class.
  * <p>Created by C. Todd Cook on 5/18/2016.<br>
  * ctodd@ctoddcook.com
  */
-public class PropertyDataMap extends FuelLogDataMap implements BaseColumns {
+public class PropertyDataMap extends DatabaseMap_FuelLog implements BaseColumns {
   public static final String TABLE_NAME = "properties";
   public static final String COLUMN_NAME_NAME = "name";
   public static final String COLUMN_NAME_TYPE = "type";
