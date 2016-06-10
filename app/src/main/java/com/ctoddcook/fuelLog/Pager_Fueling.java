@@ -43,7 +43,7 @@ public class Pager_Fueling extends FragmentStatePagerAdapter {
   @Override
   public Fragment getItem(int position) {
     if (position >= 0 && position < mFuelings.size())
-      return FuelingDetailFrag.getInstance(mFuelings.get(position).getID());
+      return Fragment_FuelingDetail.getInstance(mFuelings.get(position).getID());
 
     return null;
   }
