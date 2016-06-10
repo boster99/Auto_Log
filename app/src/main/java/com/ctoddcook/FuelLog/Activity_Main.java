@@ -2,7 +2,7 @@
  * Copyright (c) 2016 C. Todd Cook. All rights reserved.
  */
 
-package com.ctoddcook.FuelLog;
+package com.ctoddcook.fuelLog;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,9 +28,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ctoddcook.CGenTools.PropertiesHelper;
-import com.ctoddcook.CGenTools.Property;
-import com.ctoddcook.CUITools.UIHelper;
+import com.ctoddcook.cGenTools.PropertiesHelper;
+import com.ctoddcook.cGenTools.Property;
+import com.ctoddcook.cUiTools.Handler_UserHints;
 
 import java.util.ArrayList;
 
@@ -49,7 +49,7 @@ import java.util.ArrayList;
  */
 public class Activity_Main extends AppCompatActivity implements AdapterView.OnItemClickListener,
     View.OnClickListener, AdapterView.OnItemSelectedListener,
-    DataUpdateController.DataUpdateListener {
+    Handler_DataEvents.DataUpdateListener {
   private static final String TAG = "Activity_Main";
   private static final int PROGRESS = 0x1;
   private static PropertiesHelper sPH;
@@ -59,7 +59,7 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
   private DrawerLayout mDrawerLayout;
   private Toolbar mToolbar;
   private ListView mDrawerList;
-  private Fueling mFuelingToDelete;
+  private Model_Fueling mFuelingToDelete;
 
   /**
    * Called by the system when the UI elements of the activity are created.
@@ -74,13 +74,13 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
 
     mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-    FormatHandler.init(this);
+    Handler_Format.init(this);
 
     sDatabaseHelper = DatabaseHelper.getInstance(this);
     PropertiesHelper.setDatabaseHelper(sDatabaseHelper);
     sPH = PropertiesHelper.getInstance();
 
-    DataUpdateController.getInstance().setOnDataUpdatedListener(this);
+    Handler_DataEvents.getInstance().setOnDataUpdatedListener(this);
     setupDrawer();
 
     populateScreen();
@@ -91,9 +91,9 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
 //      DatabaseToXmlExporter d2x = DatabaseToXmlExporter.getInstance(sDatabaseHelper, baos);
 //      d2x.writeTable(PropertyDataMap.TABLE_NAME, PropertyDataMap._ID);
 //      String p = baos.toString();
-//      d2x.writeTable(FuelingDBMap.TABLE_NAME, FuelingDBMap._ID);
+//      d2x.writeTable(DatabaseMap_Fueling.TABLE_NAME, DatabaseMap_Fueling._ID);
 //      String f = baos.toString();
-//      d2x.writeTable(VehicleDBMap.TABLE_NAME, VehicleDBMap._ID);
+//      d2x.writeTable(DatabaseMap_Vehicle.TABLE_NAME, DatabaseMap_Vehicle._ID);
 //      String v = baos.toString();
 //    } catch (IOException e) {
 //      e.printStackTrace();
@@ -105,7 +105,7 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
    * screen (or after HINT settings have been reset).
    */
   private void showHint() {
-    UIHelper.showHint(this, Hints.FUELING_LIST_HINT_KEY, null, getString(R.string.fueling_list_hint));
+    Handler_UserHints.showHint(this, Constants_Central.FUELING_LIST_HINT_KEY, null, getString(R.string.fueling_list_hint));
   }
 
   // todo make the spinner work with a custom adapter
@@ -125,7 +125,7 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
 //      int pos = 0;
 //
 //      for (int i = 0; i < spinner.getCount(); i++) {
-//        int spinnerItemID = ((Vehicle)spinner.getItemAtPosition(i)).getID();
+//        int spinnerItemID = ((Model_Vehicle)spinner.getItemAtPosition(i)).getID();
 //        if (spinnerItemID == mCurrentVehicleID) {
 //          pos = i;
 //          break;
@@ -139,17 +139,17 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
     // get a cursor providing IDs and NAMEs for each vehicle (include retired vehicles)
     Cursor cursor = sDatabaseHelper.fetchSimpleVehicleListCursor(true);
 
-    // if the cursor has no results, open the Activity_AddEditVehicle, then try again
+    // if the cursor has no results, open the Activity_EditVehicle, then try again
     if (cursor.getCount() < 1) {
-      Intent intent = new Intent(this, Activity_AddEditVehicle.class);
-      intent.putExtra(Activity_AddEditVehicle.KEY_ADD_EDIT_MODE, Activity_AddEditVehicle
+      Intent intent = new Intent(this, Activity_EditVehicle.class);
+      intent.putExtra(Activity_EditVehicle.KEY_ADD_EDIT_MODE, Activity_EditVehicle
           .MODE_ADD);
       startActivity(intent);
       cursor = sDatabaseHelper.fetchSimpleVehicleListCursor(true);
     }
 
     // make an adapter from the cursor
-    String[] from = new String[]{VehicleDBMap.COLUMN_NAME_NAME};
+    String[] from = new String[]{DatabaseMap_Vehicle.COLUMN_NAME_NAME};
     int[] to = new int[]{android.R.id.text1};
     SimpleCursorAdapter sca = new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item,
         cursor, from, to, 0);
@@ -233,7 +233,7 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
     AdapterView.AdapterContextMenuInfo info =
         (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
-    Fueling fueling = (Fueling) mHistoricalsList.getItemAtPosition(info.position);
+    Model_Fueling fueling = (Model_Fueling) mHistoricalsList.getItemAtPosition(info.position);
     int fuelingID = fueling.getID();
 
     switch (item.getItemId()) {
@@ -266,7 +266,7 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
    */
   @Override
   public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-    if (mCurrentVehicleID != id && Vehicle.getVehicle(id) != null) {
+    if (mCurrentVehicleID != id && Model_Vehicle.getVehicle(id) != null) {
       mCurrentVehicleID = (int) id;
       loadFuelings(mCurrentVehicleID);
     }
@@ -277,14 +277,14 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
    * @param event The type of data updated
    * @param data Extra information if needed
    */
-  public void onDataUpdated(DataUpdateController.DataUpdateEvent event, Intent data) {
+  public void onDataUpdated(Handler_DataEvents.DataUpdateEvent event, Intent data) {
     switch (event) {
       case VEHICLE_LIST_UPDATED:
         loadVehicles();
 
         break;
       case FUELING_LIST_UPDATED:
-        int id = (data != null ? data.getIntExtra(Vehicle.DEFAULT_VEHICLE_KEY, 0) :
+        int id = (data != null ? data.getIntExtra(Model_Vehicle.DEFAULT_VEHICLE_KEY, 0) :
             mCurrentVehicleID);
         if (id > 0 && id != mCurrentVehicleID) {
           mCurrentVehicleID = id;
@@ -322,7 +322,7 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
     NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
     if (navView == null) return;
 
-    navView.setNavigationItemSelectedListener(new Listener_NavDrawer_Main(this));
+    navView.setNavigationItemSelectedListener(new Listener_NavDrawer(this));
 
     /*
     The ActionBarDrawerToggle puts the menu (aka, "hamburger") icon on the action bar for opening
@@ -363,15 +363,15 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
   }
 
   /**
-   * Gets the default Vehicle, then fetches all the Vehicles from the database, and sets up the
+   * Gets the default Model_Vehicle, then fetches all the Vehicles from the database, and sets up the
    * vehicle spinner.
    */
   private void loadVehicles() {
-    ArrayList<Vehicle> vehicles;
+    ArrayList<Model_Vehicle> vehicles;
 
-    // Get the default Vehicle
-    if (mCurrentVehicleID == 0 && sPH.doesNameExist(Vehicle.DEFAULT_VEHICLE_KEY))
-      mCurrentVehicleID = (int) sPH.getLongValue(Vehicle.DEFAULT_VEHICLE_KEY);
+    // Get the default Model_Vehicle
+    if (mCurrentVehicleID == 0 && sPH.doesNameExist(Model_Vehicle.DEFAULT_VEHICLE_KEY))
+      mCurrentVehicleID = (int) sPH.getLongValue(Model_Vehicle.DEFAULT_VEHICLE_KEY);
 
     // Fetch the list of vehicles into memory
     vehicles = sDatabaseHelper.fetchVehicleList();
@@ -383,13 +383,13 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
      */
 
     if (vehicles.isEmpty()) {
-      Intent intent = new Intent(this, Activity_AddEditVehicle.class);
-      intent.putExtra(Activity_AddEditVehicle.KEY_ADD_EDIT_MODE, Activity_AddEditVehicle.MODE_ADD);
+      Intent intent = new Intent(this, Activity_EditVehicle.class);
+      intent.putExtra(Activity_EditVehicle.KEY_ADD_EDIT_MODE, Activity_EditVehicle.MODE_ADD);
       startActivity(intent);
     } else {
       if (mCurrentVehicleID == 0) {
         mCurrentVehicleID = vehicles.get(0).getID();
-        Property p = new Property(Vehicle.DEFAULT_VEHICLE_KEY, mCurrentVehicleID);
+        Property p = new Property(Model_Vehicle.DEFAULT_VEHICLE_KEY, mCurrentVehicleID);
         sPH.put(p);
       }
     }
@@ -402,14 +402,14 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
    * @param pos The position in the list of fuelings which holds the fueling to view
    */
   private void viewFueling(int pos) {
-    Intent intent = new Intent(this, Activity_ViewDetail.class);
-    intent.putExtra(Activity_ViewDetail.ARG_TYPE, Activity_ViewDetail.TYPE_FUELING);
-    intent.putExtra(Activity_ViewDetail.ARG_POSITION, pos);
+    Intent intent = new Intent(this, Activity_DetailFrame.class);
+    intent.putExtra(Activity_DetailFrame.ARG_TYPE, Activity_DetailFrame.TYPE_FUELING);
+    intent.putExtra(Activity_DetailFrame.ARG_POSITION, pos);
     startActivity(intent);
   }
 
   /**
-   * Creates an Intent of type Activity_AddEditFueling, tells it we're in ADD mode (rather than
+   * Creates an Intent of type Activity_EditFueling, tells it we're in ADD mode (rather than
    * EDIT mode) and tells it the default vehicle ID, and opens the Intent. When the intent is
    * closed, we re-fetch the list of fuelings and redisplay averages and historicals.
    * @param v The View (a button) which called this method (required by the framework, since this
@@ -422,33 +422,33 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
       return;
     }
 
-    if (Vehicle.getVehicle(mCurrentVehicleID).isRetired()) {
+    if (Model_Vehicle.getVehicle(mCurrentVehicleID).isRetired()) {
       Toast.makeText(this, "Uhm, this vehicle is retired. Please choose an" +
           " active vehicle, and then try again", Toast.LENGTH_LONG).show();
       return;
     }
 
-    Intent intent = new Intent(this, Activity_AddEditFueling.class);
+    Intent intent = new Intent(this, Activity_EditFueling.class);
 
     // Tell the new activity whether we're in ADD mode
-    intent.putExtra(Activity_AddEditFueling.KEY_ADD_EDIT_MODE, Activity_AddEditFueling.MODE_ADD);
+    intent.putExtra(Activity_EditFueling.KEY_ADD_EDIT_MODE, Activity_EditFueling.MODE_ADD);
 
     // Tell the new activity what the default vehicle is
-    intent.putExtra(Vehicle.DEFAULT_VEHICLE_KEY, mCurrentVehicleID);
+    intent.putExtra(Model_Vehicle.DEFAULT_VEHICLE_KEY, mCurrentVehicleID);
     startActivity(intent);
   }
 
   /**
-   * Opens the Add/Edit Fueling activity, put it in EDIT mode, and give it the fueling id to edit.
+   * Opens the Add/Edit Model_Fueling activity, put it in EDIT mode, and give it the fueling id to edit.
    * @param fuelingID The ID of the fueling to edit
    */
   private void editFueling(int fuelingID) {
-    Intent intent = new Intent(this, Activity_AddEditFueling.class);
+    Intent intent = new Intent(this, Activity_EditFueling.class);
 
     // Tell the new activity whether we're in EDIT mode, and which fueling is to be edited
-    intent.putExtra(Activity_AddEditFueling.KEY_ADD_EDIT_MODE, Activity_AddEditFueling.MODE_EDIT);
-    intent.putExtra(Activity_AddEditFueling.KEY_FUELING_ID, fuelingID);
-    intent.putExtra(Vehicle.DEFAULT_VEHICLE_KEY, mCurrentVehicleID);
+    intent.putExtra(Activity_EditFueling.KEY_ADD_EDIT_MODE, Activity_EditFueling.MODE_EDIT);
+    intent.putExtra(Activity_EditFueling.KEY_FUELING_ID, fuelingID);
+    intent.putExtra(Model_Vehicle.DEFAULT_VEHICLE_KEY, mCurrentVehicleID);
 
     startActivity(intent);
   }
@@ -460,7 +460,7 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
    */
   private void deleteFueling(int fuelingID) {
     // Note the vehicle which is to be deleted
-    mFuelingToDelete = Fueling.getFueling(fuelingID);
+    mFuelingToDelete = Model_Fueling.getFueling(fuelingID);
     if (mFuelingToDelete == null) return;
 
     // Setup the listeners which will respond to the user's response to the dialog
@@ -473,8 +473,8 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
             mFuelingToDelete.setDeleted();
             sDatabaseHelper.deleteFueling(mFuelingToDelete);
             mFuelingToDelete = null;
-            DataUpdateController.getInstance().dispatchDataUpdateEvent(
-                DataUpdateController.DataUpdateEvent.FUELING_LIST_UPDATED, null);
+            Handler_DataEvents.getInstance().dispatchDataUpdateEvent(
+                Handler_DataEvents.DataUpdateEvent.FUELING_LIST_UPDATED, null);
             break;
 
           // If the user clicks "NO" then we clean up and get out of here
@@ -488,18 +488,18 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
     // Set up and display the dialog to get the user's confirmation that the fueling should be
     // deleted.
     AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    builder.setTitle("Delete Fueling");
+    builder.setTitle("Delete Model_Fueling");
     builder.setMessage("Deleting a fueling cannot be undone. Are you sure you want to do this?")
         .setPositiveButton("Yes, delete it", dialogClickListener)
         .setNegativeButton("No, never mind", dialogClickListener).show();
   }
 
   /**
-   * Handler for loading Vehicle data for a specified id.
-   * @param id the id for the desired Vehicle.
+   * Handler for loading Model_Vehicle data for a specified id.
+   * @param id the id for the desired Model_Vehicle.
    */
   private void loadFuelings(int id) {
-    ArrayList<Fueling> fList = sDatabaseHelper.fetchFuelingData(id);
+    ArrayList<Model_Fueling> fList = sDatabaseHelper.fetchFuelingData(id);
 
     if (fList.isEmpty()) {
       addFueling(null);
@@ -510,10 +510,10 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
   }
 
   /**
-   * Handler for loading historical Fueling data into the scrolling ListView.
-   * @param fList the complete list of Fuelings for the current Vehicle.
+   * Handler for loading historical Model_Fueling data into the scrolling ListView.
+   * @param fList the complete list of Fuelings for the current Model_Vehicle.
    */
-  private void loadHistoricalFuelingsList(ArrayList<Fueling> fList) {
+  private void loadHistoricalFuelingsList(ArrayList<Model_Fueling> fList) {
     if (mHistoricalsList == null) {
       mHistoricalsList = (ListView) findViewById(R.id.Main_HistoricalsList);
       if (mHistoricalsList != null) {
@@ -522,7 +522,7 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
       }
     }
 
-    mHistoricalsList.setAdapter(new FuelingArrayAdapter(this, fList));
+    mHistoricalsList.setAdapter(new Row_FuelingDetails(this, fList));
   }
 
   /**
@@ -541,23 +541,23 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
      */
     tv = (TextView) findViewById(R.id.first_average_row_price);
     if (tv != null)
-      tv.setText(FormatHandler.formatPrice(Fueling.getAvgPricePerUnitOverSpan(
-          Fueling.SPAN_3_MONTHS)));
+      tv.setText(Handler_Format.formatPrice(Model_Fueling.getAvgPricePerUnitOverSpan(
+          Model_Fueling.SPAN_3_MONTHS)));
 
     tv = (TextView) findViewById(R.id.first_average_row_dist);
     if (tv != null)
-      tv.setText(FormatHandler.formatDistance(Fueling.getAvgDistanceOverSpan(
-          Fueling.SPAN_3_MONTHS)));
+      tv.setText(Handler_Format.formatDistance(Model_Fueling.getAvgDistanceOverSpan(
+          Model_Fueling.SPAN_3_MONTHS)));
 
     tv = (TextView) findViewById(R.id.first_average_row_vol);
     if (tv != null)
-      tv.setText(FormatHandler.formatVolumeShort(Fueling.getAvgVolumeOverSpan(
-          Fueling.SPAN_3_MONTHS)));
+      tv.setText(Handler_Format.formatVolumeShort(Model_Fueling.getAvgVolumeOverSpan(
+          Model_Fueling.SPAN_3_MONTHS)));
 
     tv = (TextView) findViewById(R.id.first_average_row_efficiency);
     if (tv != null)
-      tv.setText(FormatHandler.formatEfficiency(Fueling.getAvgEfficiencyOverSpan(
-          Fueling.SPAN_3_MONTHS)));
+      tv.setText(Handler_Format.formatEfficiency(Model_Fueling.getAvgEfficiencyOverSpan(
+          Model_Fueling.SPAN_3_MONTHS)));
 
     ll = (LinearLayout) findViewById(R.id.averages_first_row);
     if (ll != null) ll.setOnClickListener(this);
@@ -569,23 +569,23 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
      */
     tv = (TextView) findViewById(R.id.second_average_row_price);
     if (tv != null)
-      tv.setText(FormatHandler.formatPrice(Fueling.getAvgPricePerUnitOverSpan(
-          Fueling.SPAN_6_MONTHS)));
+      tv.setText(Handler_Format.formatPrice(Model_Fueling.getAvgPricePerUnitOverSpan(
+          Model_Fueling.SPAN_6_MONTHS)));
 
     tv = (TextView) findViewById(R.id.second_average_row_dist);
     if (tv != null)
-      tv.setText(FormatHandler.formatDistance(Fueling.getAvgDistanceOverSpan(
-          Fueling.SPAN_6_MONTHS)));
+      tv.setText(Handler_Format.formatDistance(Model_Fueling.getAvgDistanceOverSpan(
+          Model_Fueling.SPAN_6_MONTHS)));
 
     tv = (TextView) findViewById(R.id.second_average_row_vol);
     if (tv != null)
-      tv.setText(FormatHandler.formatVolumeShort(Fueling.getAvgVolumeOverSpan(
-          Fueling.SPAN_6_MONTHS)));
+      tv.setText(Handler_Format.formatVolumeShort(Model_Fueling.getAvgVolumeOverSpan(
+          Model_Fueling.SPAN_6_MONTHS)));
 
     tv = (TextView) findViewById(R.id.second_average_row_efficiency);
     if (tv != null)
-      tv.setText(FormatHandler.formatEfficiency(Fueling.getAvgEfficiencyOverSpan(
-          Fueling.SPAN_6_MONTHS)));
+      tv.setText(Handler_Format.formatEfficiency(Model_Fueling.getAvgEfficiencyOverSpan(
+          Model_Fueling.SPAN_6_MONTHS)));
 
     ll = (LinearLayout) findViewById(R.id.averages_second_row);
     if (ll != null) ll.setOnClickListener(this);
@@ -597,23 +597,23 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
      */
     tv = (TextView) findViewById(R.id.third_average_row_price);
     if (tv != null)
-      tv.setText(FormatHandler.formatPrice(Fueling.getAvgPricePerUnitOverSpan(
-          Fueling.SPAN_ONE_YEAR)));
+      tv.setText(Handler_Format.formatPrice(Model_Fueling.getAvgPricePerUnitOverSpan(
+          Model_Fueling.SPAN_ONE_YEAR)));
 
     tv = (TextView) findViewById(R.id.third_average_row_dist);
     if (tv != null)
-      tv.setText(FormatHandler.formatDistance(Fueling.getAvgDistanceOverSpan(
-          Fueling.SPAN_ONE_YEAR)));
+      tv.setText(Handler_Format.formatDistance(Model_Fueling.getAvgDistanceOverSpan(
+          Model_Fueling.SPAN_ONE_YEAR)));
 
     tv = (TextView) findViewById(R.id.third_average_row_vol);
     if (tv != null)
-      tv.setText(FormatHandler.formatVolumeShort(Fueling.getAvgVolumeOverSpan(
-          Fueling.SPAN_ONE_YEAR)));
+      tv.setText(Handler_Format.formatVolumeShort(Model_Fueling.getAvgVolumeOverSpan(
+          Model_Fueling.SPAN_ONE_YEAR)));
 
     tv = (TextView) findViewById(R.id.third_average_row_efficiency);
     if (tv != null)
-      tv.setText(FormatHandler.formatEfficiency(Fueling.getAvgEfficiencyOverSpan(
-          Fueling.SPAN_ONE_YEAR)));
+      tv.setText(Handler_Format.formatEfficiency(Model_Fueling.getAvgEfficiencyOverSpan(
+          Model_Fueling.SPAN_ONE_YEAR)));
 
     ll = (LinearLayout) findViewById(R.id.averages_third_row);
     if (ll != null) ll.setOnClickListener(this);
@@ -625,23 +625,23 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
      */
     tv = (TextView) findViewById(R.id.fourth_average_row_price);
     if (tv != null)
-      tv.setText(FormatHandler.formatPrice(Fueling.getAvgPricePerUnitOverSpan(
-          Fueling.SPAN_ALL_TIME)));
+      tv.setText(Handler_Format.formatPrice(Model_Fueling.getAvgPricePerUnitOverSpan(
+          Model_Fueling.SPAN_ALL_TIME)));
 
     tv = (TextView) findViewById(R.id.fourth_average_row_dist);
     if (tv != null)
-      tv.setText(FormatHandler.formatDistance(Fueling.getAvgDistanceOverSpan(
-          Fueling.SPAN_ALL_TIME)));
+      tv.setText(Handler_Format.formatDistance(Model_Fueling.getAvgDistanceOverSpan(
+          Model_Fueling.SPAN_ALL_TIME)));
 
     tv = (TextView) findViewById(R.id.fourth_average_row_vol);
     if (tv != null)
-      tv.setText(FormatHandler.formatVolumeShort(Fueling.getAvgVolumeOverSpan(
-          Fueling.SPAN_ALL_TIME)));
+      tv.setText(Handler_Format.formatVolumeShort(Model_Fueling.getAvgVolumeOverSpan(
+          Model_Fueling.SPAN_ALL_TIME)));
 
     tv = (TextView) findViewById(R.id.fourth_average_row_efficiency);
     if (tv != null)
-      tv.setText(FormatHandler.formatEfficiency(Fueling.getAvgEfficiencyOverSpan(
-          Fueling.SPAN_ALL_TIME)));
+      tv.setText(Handler_Format.formatEfficiency(Model_Fueling.getAvgEfficiencyOverSpan(
+          Model_Fueling.SPAN_ALL_TIME)));
 
     ll = (LinearLayout) findViewById(R.id.averages_fourth_row);
     if (ll != null) ll.setOnClickListener(this);
@@ -679,10 +679,10 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
             "onClick(). toString(): " + v.toString());
     }
 
-    Intent intent = new Intent(this, Activity_ViewDetail.class);
-    intent.putExtra(Activity_ViewDetail.ARG_TYPE, Activity_ViewDetail.TYPE_AVERAGE);
-    intent.putExtra(Activity_ViewDetail.ARG_POSITION, pos);
-    intent.putExtra(Activity_ViewDetail.ARG_VEHICLE, Vehicle.getVehicle(mCurrentVehicleID)
+    Intent intent = new Intent(this, Activity_DetailFrame.class);
+    intent.putExtra(Activity_DetailFrame.ARG_TYPE, Activity_DetailFrame.TYPE_AVERAGE);
+    intent.putExtra(Activity_DetailFrame.ARG_POSITION, pos);
+    intent.putExtra(Activity_DetailFrame.ARG_VEHICLE, Model_Vehicle.getVehicle(mCurrentVehicleID)
         .getName());
     startActivity(intent);
   }
@@ -690,7 +690,7 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
 
   /**
    * Handler for when the user touches an item on the ListView of historical Fuelings.
-   * @param parent the parent Adapter, see FuelingArrayAdapter class
+   * @param parent the parent Adapter, see Row_FuelingDetails class
    * @param v the UI item that was touched
    * @param pos the position in the list that was touched
    * @param id the id of the touched item

@@ -1,4 +1,4 @@
-package com.ctoddcook.FuelLog;
+package com.ctoddcook.fuelLog;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
-import com.ctoddcook.CGenTools.PropertiesHelper;
+import com.ctoddcook.cGenTools.PropertiesHelper;
 
 import java.util.NoSuchElementException;
 
@@ -39,17 +39,17 @@ public class Activity_Settings extends AppCompatActivity {
     boolean gpsAllowed;
 
     try {
-      gpsAllowed = sPropertiesHelper.getBooleanValue(Activity_AddEditFueling.KEY_USER_ALLOWS_GPS);
+      gpsAllowed = sPropertiesHelper.getBooleanValue(Activity_EditFueling.KEY_USER_ALLOWS_GPS);
     } catch (NoSuchElementException e) {
       gpsAllowed = true;
-      sPropertiesHelper.put(Activity_AddEditFueling.KEY_USER_ALLOWS_GPS, gpsAllowed);
+      sPropertiesHelper.put(Activity_EditFueling.KEY_USER_ALLOWS_GPS, gpsAllowed);
     }
 
     sGPSSwitch.setChecked(gpsAllowed);
     sGPSSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
       @Override
       public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        sPropertiesHelper.put(Activity_AddEditFueling.KEY_USER_ALLOWS_GPS, isChecked);
+        sPropertiesHelper.put(Activity_EditFueling.KEY_USER_ALLOWS_GPS, isChecked);
       }
     });
   }
@@ -60,7 +60,7 @@ public class Activity_Settings extends AppCompatActivity {
    * @param v The view which called this method
    */
   public void resetHints(View v) {
-    for (String each : Hints.hintList) {
+    for (String each : Constants_Central.hintList) {
       sPropertiesHelper.put(each, false);
     }
   }

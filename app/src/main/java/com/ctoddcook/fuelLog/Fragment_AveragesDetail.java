@@ -68,7 +68,7 @@ public class Fragment_AveragesDetail extends Fragment {
   @Nullable
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.span_details_layout, container, false);
+    View view = inflater.inflate(R.layout.fragment_averages, container, false);
 
     TextView tvVehicle = (TextView) view.findViewById(R.id.span_detail_vehicle);
     tvVehicle.setText(mVehicleName);
