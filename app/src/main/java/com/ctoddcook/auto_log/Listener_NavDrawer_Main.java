@@ -33,14 +33,20 @@ public class Listener_NavDrawer_Main implements NavigationView.OnNavigationItemS
   @Override
   public boolean onNavigationItemSelected(MenuItem item) {
     mDrawerLayout.closeDrawers();
+    Intent intent;
 
     switch (item.getItemId()) {
       case R.id.action_vehicles:
-        Intent intent = new Intent(mActivity, ViewVehicleList.class);
+        intent = new Intent(mActivity, ViewVehicleList.class);
         mActivity.startActivity(intent);
         break;
       case R.id.action_backup:
         Toast.makeText(mActivity, "Sorry ... backup is not yet implemented", Toast.LENGTH_LONG).show();
+        break;
+      case R.id.action_settings:
+        intent = new Intent(mActivity, Activity_Settings.class);
+        mActivity.startActivity(intent);
+        break;
     }
 
     return true;
