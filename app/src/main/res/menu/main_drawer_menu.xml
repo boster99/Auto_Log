@@ -4,16 +4,16 @@
   <item
       android:id="@+id/action_vehicles"
       android:icon="@drawable/ic_car"
-      android:title="@string/menu_item_vehicles"/>
+      android:title="@string/menu_vehicle_label"/>
 
   <item
       android:id="@+id/action_backup"
       android:icon="@drawable/ic_backup"
-      android:title="@string/menu_item_backup"/>
+      android:title="@string/menu_back_label"/>
 
   <item
       android:id="@+id/action_settings"
       android:icon="@drawable/ic_settings"
-      android:title="@string/settings"/>
+      android:title="@string/menu_settings_label"/>
 
 </menu>

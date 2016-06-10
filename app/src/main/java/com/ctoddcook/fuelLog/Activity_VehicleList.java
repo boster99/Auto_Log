@@ -45,7 +45,7 @@ public class Activity_VehicleList extends AppCompatActivity implements AdapterVi
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_view_vehicle_list);
+    setContentView(R.layout.activity_vehicle_list);
     sDB = DatabaseHelper.getInstance(this);
     Handler_DataEvents.getInstance().setOnDataUpdatedListener(this);
     showVehicles();

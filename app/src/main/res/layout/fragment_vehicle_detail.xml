@@ -15,7 +15,7 @@
         <TextView
             style="@style/DetailLabelStyle"
             android:paddingBottom="8dp"
-            android:text="@string/Vehicle_NameLabel"
+            android:text="@string/edit_vehicle_name_label"
             android:textColor="#000000"/>
 
         <TextView
@@ -29,7 +29,7 @@
 
         <TextView
             style="@style/DetailLabelStyle"
-            android:text="@string/Vehicle_ColorLabel"/>
+            android:text="@string/edit_vehicle_color_label"/>
 
         <TextView
             android:id="@+id/vehicle_detail_color"
@@ -43,7 +43,7 @@
 
         <TextView
             style="@style/DetailLabelStyle"
-            android:text="@string/Vehicle_YearLabel"/>
+            android:text="@string/edit_vehicle_model_year_label"/>
 
         <TextView
             android:id="@+id/vehicle_detail_year"
@@ -56,7 +56,7 @@
 
         <TextView
             style="@style/DetailLabelStyle"
-            android:text="@string/Vehicle_ModelLabel"/>
+            android:text="@string/edit_vehicle_model_label"/>
 
         <TextView
             android:id="@+id/vehicle_detail_model"
@@ -69,7 +69,7 @@
 
         <TextView
             style="@style/DetailLabelStyle"
-            android:text="@string/Vehicle_LicenseLabel"/>
+            android:text="@string/edit_vehicle_license_plate_label"/>
 
         <TextView
             android:id="@+id/vehicle_detail_license_plate"
@@ -82,7 +82,7 @@
 
         <TextView
             style="@style/DetailLabelStyle"
-            android:text="@string/Vehicle_VINLabel"/>
+            android:text="@string/edit_vehicle_vin_label"/>
 
         <TextView
             android:id="@+id/vehicle_detail_vin"

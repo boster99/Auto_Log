@@ -5,10 +5,10 @@
 
   <item
       android:id="@+id/vehicle_edit"
-      android:title="@string/Edit"/>
+      android:title="@string/btn_edit_label"/>
 
   <item
       android:id="@+id/vehicle_delete"
-      android:title="@string/Delete"/>
+      android:title="@string/btn_delete_label"/>
 
 </menu>

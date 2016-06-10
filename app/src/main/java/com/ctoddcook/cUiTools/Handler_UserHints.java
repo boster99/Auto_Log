@@ -39,7 +39,7 @@ public class Handler_UserHints {
       AlertDialog.Builder builder = new AlertDialog.Builder(context);
       builder.setTitle(hintTitle);
       builder.setMessage(hintMessage);
-      builder.setNeutralButton(context.getString(R.string.hint_okay_button_label),
+      builder.setNeutralButton(context.getString(R.string.hint_btn_okay_label),
           new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

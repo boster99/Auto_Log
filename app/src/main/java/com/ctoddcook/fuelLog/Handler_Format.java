@@ -84,17 +84,17 @@ public class Handler_Format {
 
     // Read some @string resources
     Resources res = context.getResources();
-    displayPattern = res.getString(R.string.Fueling_DataPattern);
-    distanceAbbrev = res.getString(R.string.Fueling_DistanceAbbrev);
-    volumeAbbrev = res.getString(R.string.Fueling_VolumeAbbrev);
-    efficiencyAbbrev = res.getString(R.string.Fueling_EfficiencyAbbrev);
+    displayPattern = res.getString(R.string.format_data_pattern);
+    distanceAbbrev = res.getString(R.string.format_distance_label);
+    volumeAbbrev = res.getString(R.string.format_volume_label);
+    efficiencyAbbrev = res.getString(R.string.format_fuel_efficiency_label);
 
-    String currency = res.getString(R.string.Fueling_CurrencyForm);
-    String currencyRaw = res.getString(R.string.Fueling_CurrencyFormRaw);
-    String currencyLong = res.getString(R.string.Fueling_CurrencyLongForm);
-    String currencyLongRaw = res.getString(R.string.Fueling_CurrencyLongFormRaw);
-    String oneDec = res.getString(R.string.Fueling_OneDecimalPointForm);
-    String threeDec = res.getString(R.string.Fueling_ThreeDecimalPointForm);
+    String currency = res.getString(R.string.format_currency);
+    String currencyRaw = res.getString(R.string.format_currency_raw);
+    String currencyLong = res.getString(R.string.format_currency_long);
+    String currencyLongRaw = res.getString(R.string.format_currency_long_raw);
+    String oneDec = res.getString(R.string.format_one_decimal_place);
+    String threeDec = res.getString(R.string.format_three_decimal_places);
 
     // Create shared/static formatting objects which will be used over and over
     mCurrencyForm = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());

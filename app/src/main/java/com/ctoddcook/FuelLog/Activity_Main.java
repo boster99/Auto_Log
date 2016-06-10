@@ -105,7 +105,7 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
    * screen (or after HINT settings have been reset).
    */
   private void showHint() {
-    Handler_UserHints.showHint(this, Constants_Central.FUELING_LIST_HINT_KEY, null, getString(R.string.fueling_list_hint));
+    Handler_UserHints.showHint(this, Constants_Central.FUELING_LIST_HINT_KEY, null, getString(R.string.main_fuelings_hint));
   }
 
   // todo make the spinner work with a custom adapter
@@ -329,7 +329,7 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
      the navigation drawer.
      */
     ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-        mToolbar, R.string.main_drawer_open, R.string.main_drawer_close) {
+        mToolbar, R.string.nav_drawer_open_description, R.string.nav_drawer_close_description) {
 
       @Override
       public void onDrawerClosed(View drawerView) {

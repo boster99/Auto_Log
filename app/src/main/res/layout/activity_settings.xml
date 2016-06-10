@@ -12,7 +12,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_gravity="right"
-      android:text="@string/allow_gps"
+      android:text="@string/settings_switch_allow_gps_description"
       android:textSize="16sp"/>
 
   <TextView
@@ -28,7 +28,7 @@
         android:layout_height="60dp"
         android:layout_weight="4"
         android:gravity="center_vertical"
-        android:text="@string/reset_hints"
+        android:text="@string/settings_btn_reset_hints_description"
         android:textColor="@android:color/black"
         android:textSize="16sp"/>
 
@@ -38,7 +38,7 @@
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
         android:onClick="resetHints"
-        android:text="@string/reset"/>
+        android:text="@string/settings_btn_reset_hints_label"/>
   </LinearLayout>
 
 </LinearLayout>

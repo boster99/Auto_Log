@@ -96,7 +96,7 @@ public class Activity_DetailFrame extends AppCompatActivity {
    */
   private void showVehicleSwipeHint() {
     Handler_UserHints.showHint(this, Constants_Central.VEHICLE_DETAIL_HINT_KEY, null,
-        getString(R.string.vehicle_swipe_hint));
+        getString(R.string.pager_vehicle_swipe_hint));
   }
 
   /**
@@ -104,7 +104,7 @@ public class Activity_DetailFrame extends AppCompatActivity {
    */
   private void showFuelingSwipeHint() {
     Handler_UserHints.showHint(this, Constants_Central.FUELING_DETAIL_HINT_KEY, null,
-        getString(R.string.fueling_swipe_hint));
+        getString(R.string.pager_fueling_swipe_hint));
   }
 
   /**
@@ -112,7 +112,7 @@ public class Activity_DetailFrame extends AppCompatActivity {
    */
   private void showAveragesSwipeHint() {
     Handler_UserHints.showHint(this, Constants_Central.AVERAGES_DETAIL_HINT_KEY, null,
-        getString(R.string.averages_swipe_hint));
+        getString(R.string.pager_averages_swipe_hint));
   }
 
 

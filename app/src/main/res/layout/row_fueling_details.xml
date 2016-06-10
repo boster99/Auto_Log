@@ -19,21 +19,21 @@
     <TextView
         android:id="@+id/fueling_row_price"
         style="@style/NarrowLightDataTextStyle"
-        android:text="@string/Main_StartupDataDisplay"/>
+        android:text="@string/main_blank_value"/>
 
     <TextView
         android:id="@+id/fueling_row_dist"
         style="@style/WideLightDataTextStyle"
-        android:text="@string/Main_StartupDataDisplay"/>
+        android:text="@string/main_blank_value"/>
 
     <TextView
         android:id="@+id/fueling_row_vol"
         style="@style/NarrowLightDataTextStyle"
-        android:text="@string/Main_StartupDataDisplay"/>
+        android:text="@string/main_blank_value"/>
 
     <TextView
         android:id="@+id/fueling_row_efficiency"
         style="@style/WideLightDataTextStyle"
-        android:text="@string/Main_StartupDataDisplay"/>
+        android:text="@string/main_blank_value"/>
 
 </LinearLayout>

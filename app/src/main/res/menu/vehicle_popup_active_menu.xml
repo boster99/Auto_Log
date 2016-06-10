@@ -3,10 +3,10 @@
 
   <item
       android:id="@+id/vehicle_make_default"
-      android:title="@string/make_default"/>
+      android:title="@string/menu_make_default_label"/>
 
   <item
       android:id="@+id/vehicle_retire"
-      android:title="@string/retire"/>
+      android:title="@string/menu_retire_label"/>
 
 </menu>

@@ -25,12 +25,12 @@
 
             <TextView
                 style="@style/DetailLabelStyle"
-                android:text="@string/Vehicle_NameLabel"/>
+                android:text="@string/edit_vehicle_name_label"/>
 
             <EditText
                 android:id="@+id/vehicle_edit_name"
                 style="@style/EditDetailStyle"
-                android:hint="@string/Vehicle_NameLabel"
+                android:hint="@string/edit_vehicle_name_label"
                 android:inputType="text|textCapWords|textAutoComplete"
                 android:imeOptions="actionNext"/>
 
@@ -41,12 +41,12 @@
 
             <TextView
                 style="@style/DetailLabelStyle"
-                android:text="@string/Vehicle_ColorLabel"/>
+                android:text="@string/edit_vehicle_color_label"/>
 
             <EditText
                 android:id="@+id/vehicle_edit_color"
                 style="@style/EditDetailStyle"
-                android:hint="@string/Vehicle_ColorLabel"
+                android:hint="@string/edit_vehicle_color_label"
                 android:inputType="text|textCapWords|textAutoComplete"
                 android:imeOptions="actionNext"/>
 
@@ -57,12 +57,12 @@
 
             <TextView
                 style="@style/DetailLabelStyle"
-                android:text="@string/Vehicle_YearLabel"/>
+                android:text="@string/edit_vehicle_model_year_label"/>
 
             <EditText
                 android:id="@+id/vehicle_edit_year"
                 style="@style/EditDetailStyle"
-                android:hint="@string/Vehicle_YearLabel"
+                android:hint="@string/edit_vehicle_model_year_label"
                 android:inputType="number"
                 android:imeOptions="actionNext"/>
 
@@ -73,12 +73,12 @@
 
             <TextView
                 style="@style/DetailLabelStyle"
-                android:text="@string/Vehicle_ModelLabel"/>
+                android:text="@string/edit_vehicle_model_label"/>
 
             <EditText
                 android:id="@+id/vehicle_edit_model"
                 style="@style/EditDetailStyle"
-                android:hint="@string/Vehicle_ModelLabel"
+                android:hint="@string/edit_vehicle_model_label"
                 android:inputType="text|textCapWords|textAutoComplete"
                 android:imeOptions="actionNext"/>
 
@@ -89,12 +89,12 @@
 
             <TextView
                 style="@style/DetailLabelStyle"
-                android:text="@string/Vehicle_LicenseLabel"/>
+                android:text="@string/edit_vehicle_license_plate_label"/>
 
             <EditText
                 android:id="@+id/vehicle_edit_license_plate"
                 style="@style/EditDetailStyle"
-                android:hint="@string/Vehicle_LicenseLabel"
+                android:hint="@string/edit_vehicle_license_plate_label"
                 android:inputType="text|textCapCharacters|textNoSuggestions"
                 android:imeOptions="actionNext"/>
 
@@ -105,12 +105,12 @@
 
             <TextView
                 style="@style/DetailLabelStyle"
-                android:text="@string/Vehicle_VINLabel"/>
+                android:text="@string/edit_vehicle_vin_label"/>
 
             <EditText
                 android:id="@+id/vehicle_edit_vin"
                 style="@style/EditDetailStyle"
-                android:hint="@string/Vehicle_VINLabel"
+                android:hint="@string/edit_vehicle_vin_label"
                 android:inputType="text|textCapCharacters|textNoSuggestions"
                 android:imeOptions="actionDone"/>
 
@@ -123,7 +123,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/vehicle_details_layout"
         android:padding="8dp"
-        android:text="@string/Vehicle_NameEntryHint"
+        android:text="@string/edit_vehicle_hint"
         android:textSize="16sp"/>
 
     <LinearLayout

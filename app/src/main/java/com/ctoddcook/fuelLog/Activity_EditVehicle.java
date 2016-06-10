@@ -227,7 +227,7 @@ public class Activity_EditVehicle extends AppCompatActivity {
     // saved despite the duplication of data.
     AlertDialog.Builder builder = new AlertDialog.Builder(this);
     builder.setTitle("Duplicate?");
-    builder.setMessage(getString(R.string.duplicate_vehicle));
+    builder.setMessage(getString(R.string.edit_vehicle_duplicate_warning));
     builder.setPositiveButton("Yes, Save Duplicate", dialogClickListener);
     builder.setNegativeButton("No thank you", dialogClickListener);
     builder.show();

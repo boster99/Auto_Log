@@ -15,7 +15,7 @@
         <TextView
             style="@style/DetailLabelStyle"
             android:paddingBottom="8dp"
-            android:text="@string/Span_VehicleLabel"
+            android:text="@string/all_vehicle_label"
             android:textColor="#000000"/>
 
         <TextView
@@ -29,7 +29,7 @@
 
         <TextView
             style="@style/DetailLabelStyle"
-            android:text="@string/Span_PeriodLabel"/>
+            android:text="@string/all_period_label"/>
 
         <TextView
             android:id="@+id/span_detail_period"
@@ -43,7 +43,7 @@
 
         <TextView
             style="@style/DetailLabelStyle"
-            android:text="@string/Span_DistanceLabel"/>
+            android:text="@string/averages_distance_label"/>
 
         <TextView
             android:id="@+id/span_detail_distance"
@@ -56,7 +56,7 @@
 
         <TextView
             style="@style/DetailLabelStyle"
-            android:text="@string/Span_VolumeLabel"/>
+            android:text="@string/averages_volume_label"/>
 
         <TextView
             android:id="@+id/span_detail_volume"
@@ -69,7 +69,7 @@
 
         <TextView
             style="@style/DetailLabelStyle"
-            android:text="@string/Span_TotalPriceLabel"/>
+            android:text="@string/averages_total_price_paid_label"/>
 
         <TextView
             android:id="@+id/span_detail_total_price_paid"
@@ -82,7 +82,7 @@
 
         <TextView
             style="@style/DetailLabelStyle"
-            android:text="@string/Span_EfficiencyLabel"/>
+            android:text="@string/averages_fuel_efficiency_label"/>
 
         <TextView
             android:id="@+id/span_detail_efficiency"
@@ -95,7 +95,7 @@
 
         <TextView
             style="@style/DetailLabelStyle"
-            android:text="@string/Span_PricePerUnitLabel"/>
+            android:text="@string/averages_unit_price_label"/>
 
         <TextView
             android:id="@+id/span_detail_price_per_unit"
@@ -108,7 +108,7 @@
 
         <TextView
             style="@style/DetailLabelStyle"
-            android:text="@string/Span_PricePerDistanceLabel"/>
+            android:text="@string/averages_cost_efficiency_label"/>
 
         <TextView
             android:id="@+id/span_detail_price_per_distance"

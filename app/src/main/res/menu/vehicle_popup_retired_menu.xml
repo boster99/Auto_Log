@@ -3,6 +3,6 @@
 
   <item
       android:id="@+id/vehicle_unretire"
-      android:title="@string/unretire"/>
+      android:title="@string/menu_unretire_label"/>
 
 </menu>

@@ -15,7 +15,7 @@
         <TextView
             style="@style/DetailLabelStyle"
             android:paddingBottom="8dp"
-            android:text="@string/Fueling_VehicleLabel"
+            android:text="@string/all_vehicle_label"
             android:textColor="#000000"/>
 
         <TextView
@@ -29,7 +29,7 @@
 
         <TextView
             style="@style/DetailLabelStyle"
-            android:text="@string/Fueling_DateTimeLabel"/>
+            android:text="@string/all_datetime_label"/>
 
         <TextView
             android:id="@+id/fueling_detail_date"
@@ -43,7 +43,7 @@
 
         <TextView
             style="@style/DetailLabelStyle"
-            android:text="@string/Fueling_DistanceLabel"/>
+            android:text="@string/edit_fueling_distance_label"/>
 
         <TextView
             android:id="@+id/fueling_detail_distance"
@@ -56,7 +56,7 @@
 
         <TextView
             style="@style/DetailLabelStyle"
-            android:text="@string/Fueling_VolumeLabel"/>
+            android:text="@string/edit_fueling_volume_label"/>
 
         <TextView
             android:id="@+id/fueling_detail_volume"
@@ -69,7 +69,7 @@
 
         <TextView
             style="@style/DetailLabelStyle"
-            android:text="@string/Fueling_TotalPricePaidLabel"/>
+            android:text="@string/edit_fueling_total_price_paid_label"/>
 
         <TextView
             android:id="@+id/fueling_detail_total_price_paid"
@@ -82,7 +82,7 @@
 
         <TextView
             style="@style/DetailLabelStyle"
-            android:text="@string/Fueling_LocationLabel"/>
+            android:text="@string/edit_fueling_location_label"/>
 
         <TextView
             android:id="@+id/fueling_detail_location"
@@ -95,7 +95,7 @@
 
         <TextView
             style="@style/DetailLabelStyle"
-            android:text="@string/Fueling_OdometerLabel"/>
+            android:text="@string/edit_fueling_odometer_label"/>
 
         <TextView
             android:id="@+id/fueling_detail_odometer"
@@ -126,7 +126,7 @@
 
         <TextView
             style="@style/DetailLabelStyle"
-            android:text="@string/Fueling_EfficiencyLabel"/>
+            android:text="@string/all_fuel_efficiency_label"/>
 
         <TextView
             android:id="@+id/fueling_detail_efficiency"
@@ -139,7 +139,7 @@
 
         <TextView
             style="@style/DetailLabelStyle"
-            android:text="@string/Fueling_PricePerUnitLabel"/>
+            android:text="@string/all_unit_price_label"/>
 
         <TextView
             android:id="@+id/fueling_detail_price_per_unit"
@@ -152,7 +152,7 @@
 
         <TextView
             style="@style/DetailLabelStyle"
-            android:text="@string/Fueling_PriceEfficiencyLabel"/>
+            android:text="@string/all_cost_efficiency_label"/>
 
         <TextView
             android:id="@+id/fueling_detail_price_per_distance"
@@ -165,7 +165,7 @@
 
         <TextView
             style="@style/DetailLabelStyle"
-            android:text="@string/Fueling_LatitudeLongitude"/>
+            android:text="@string/row_fueling_details_coordinates"/>
 
         <TextView
             android:id="@+id/fueling_detail_coordinates"
@@ -179,7 +179,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:text="@string/Fueling_GPSHint"
+        android:text="@string/edit_fueling_gps_hint"
         android:textColor="#000000"
         android:textSize="13sp"/>
 
