@@ -64,7 +64,7 @@
           android:value="com.ctoddcook.fuelLog.Activity_Main"/>
     </activity>
     <activity
-        android:name="com.ctoddcook.fuelLog.Activity_ViewDetail"
+        android:name=".Activity_DetailFrame"
         android:label="View Details"
         android:theme="@style/AppTheme.NoActionBar">
     </activity>

@@ -78,7 +78,7 @@ public class Activity_VehicleList extends AppCompatActivity implements AdapterVi
 
   /**
    * Handler for when the user touches an item on the ListView of Vehicles. Opens
-   * Activity_ViewDetail class and tells it to display vehicle details.
+   * Activity_DetailFrame class and tells it to display vehicle details.
    * @param parent the parent Adapter, see Row_VehicleNameList class
    * @param view the UI item that was touched
    * @param pos the position in the list that was touched
@@ -87,9 +87,9 @@ public class Activity_VehicleList extends AppCompatActivity implements AdapterVi
   public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
     if (view instanceof LinearLayout) {
       Vehicle vehicle = (Vehicle) parent.getItemAtPosition(pos);
-      Intent intent = new Intent(this, Activity_ViewDetail.class);
-      intent.putExtra(Activity_ViewDetail.ARG_TYPE, Activity_ViewDetail.TYPE_VEHICLE);
-      intent.putExtra(Activity_ViewDetail.ARG_ITEM_ID, vehicle.getID());
+      Intent intent = new Intent(this, Activity_DetailFrame.class);
+      intent.putExtra(Activity_DetailFrame.ARG_TYPE, Activity_DetailFrame.TYPE_VEHICLE);
+      intent.putExtra(Activity_DetailFrame.ARG_ITEM_ID, vehicle.getID());
       startActivity(intent);
     }
   }
