@@ -43,7 +43,7 @@ public class Activity_DetailFrame extends AppCompatActivity {
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.frag_view_detail);
+    setContentView(R.layout.activity_detail_frame);
     setSupportActionBar((Toolbar) findViewById(R.id.toolbar));// ACTION BAR
 
     mPager = (ViewPager) findViewById(R.id.Details_Pager);
