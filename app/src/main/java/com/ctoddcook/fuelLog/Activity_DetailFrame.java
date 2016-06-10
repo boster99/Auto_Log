@@ -74,7 +74,7 @@ public class Activity_DetailFrame extends AppCompatActivity {
 
       case TYPE_FUELING:
         Pager_Fueling pagerFueling = new Pager_Fueling(getSupportFragmentManager(),
-            Fueling.getFuelingList());
+            Model_Fueling.getFuelingList());
         mPager.setAdapter(pagerFueling);
         mPager.setCurrentItem(position);
         showFuelingSwipeHint();

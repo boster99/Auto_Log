@@ -36,7 +36,7 @@ import java.util.NoSuchElementException;
 // TODO Organize this mess
 
 /**
- * Activity provides the UI and functions needed to ad a new Fueling Event or edit an
+ * Activity provides the UI and functions needed to ad a new Model_Fueling Event or edit an
  * existing one.
  * <p>
  * Created by C. Todd Cook on 5/11/2016.<br>
@@ -57,7 +57,7 @@ public class Activity_EditFueling extends AppCompatActivity
   public static boolean dupeCheckResult;
 
   private int mode;
-  private Fueling mFueling;
+  private Model_Fueling mFueling;
   private Vehicle mVehicle;
   private Date mDateOfFill;
   private Location mGPSLocation;
@@ -99,16 +99,16 @@ public class Activity_EditFueling extends AppCompatActivity
 
     switch (mode) {
       case MODE_ADD:
-        mFueling = new Fueling();
+        mFueling = new Model_Fueling();
         getInitialLocation();
         break;
       case MODE_EDIT:
         int fuelingID = getIntent().getIntExtra(KEY_FUELING_ID, -1);
         if (fuelingID < 0)
-          throw new IllegalArgumentException("In edit mode, a Fueling ID must be " +
+          throw new IllegalArgumentException("In edit mode, a Model_Fueling ID must be " +
               "provided");
 
-        mFueling = Fueling.getFueling(fuelingID);
+        mFueling = Model_Fueling.getFueling(fuelingID);
         gc.setTimeInMillis(mFueling.getDateOfFill().getTime());
 
         mDistanceET.setText(FormatHandler.formatDistanceRaw(mFueling.getDistance()));
@@ -222,7 +222,7 @@ public class Activity_EditFueling extends AppCompatActivity
    * coordinates. We use those coordinates to find the city and state, and provide that in the
    * "Location" field as a help to the user.
    * <p>
-   * Note this should only be called when we are adding a new Fueling instance only, so we
+   * Note this should only be called when we are adding a new Model_Fueling instance only, so we
    * don't overwrite a location description the user has already provided.
    * @param gpsLocation the location retrieved by CLocationWaiter
    */
@@ -284,10 +284,10 @@ public class Activity_EditFueling extends AppCompatActivity
 
   /**
    * Extracts data from the UI fields -- i.e., entered by the user -- and puts them into the
-   * Fueling object which will be saved to the database.
+   * Model_Fueling object which will be saved to the database.
    * <p>
    * <strong>Note:</strong> We do not do anything with Location (GPS) data here.
-   * GPS-based (or network-based) location data is gathered when a new Fueling object is
+   * GPS-based (or network-based) location data is gathered when a new Model_Fueling object is
    * created by this activity, and is used to initialize the "Location" field for the user. While
    * we keep (and save to the database) the system-provided location information, we don't give
    * the user a means to update it. The idea is that the user can updated their descriptive
@@ -455,7 +455,7 @@ public class Activity_EditFueling extends AppCompatActivity
   }
 
   /**
-   * Present the working DateOfFill (not yet stored into a Fueling object, though it may
+   * Present the working DateOfFill (not yet stored into a Model_Fueling object, though it may
    * have come from one if we're in EDIT mode). Splits the information into separate Date and
    * Time components, so Date Picker and Time Picker dialogs may be used to update these fields.
    */

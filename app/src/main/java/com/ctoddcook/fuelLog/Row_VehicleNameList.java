@@ -52,7 +52,7 @@ public class Row_VehicleNameList extends ArrayAdapter<Vehicle> {
    * Inner class for making memory-usage more efficient and making scrolling smoother. The
    * ViewHolder retains references to TextViews. Also, when a row (which includes a ViewHolder)
    * scrolls off the screen, it is passed back to the getView() method (in the convertView
-   * parameter) so it can be re-used. This way, a Fueling which is coming into view can reuse
+   * parameter) so it can be re-used. This way, a Model_Fueling which is coming into view can reuse
    * references to TextViews, instead of every time having to look up their details in the XML
    * file and building them from scratch.
    */

@@ -19,7 +19,7 @@ import android.widget.TextView;
 public class Fragment_FuelingDetail extends Fragment {
   private static final String TAG = "Fragment_FuelingDetail";
   private static final String FUELING_ID = "FuelingID";
-  private Fueling mFueling;
+  private Model_Fueling mFueling;
 
   /**
    * Android does not want parameters passed through a constructor; they only want parameters
@@ -48,7 +48,7 @@ public class Fragment_FuelingDetail extends Fragment {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     int fuelingID = (getArguments() != null ? getArguments().getInt(FUELING_ID) : -1);
-    mFueling = Fueling.getFueling(fuelingID);
+    mFueling = Model_Fueling.getFueling(fuelingID);
   }
 
   /**

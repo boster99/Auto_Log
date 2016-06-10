@@ -37,10 +37,10 @@ public class Pager_Averages extends FragmentStatePagerAdapter {
    * Return the Fragment associated with a specified position. The position is assumed to be
    * equivalent to the span needed, as indicated by the values for:
    * <ul>
-   * <li>Fueling.SPAN_3_MONTHS</li>
-   * <li>Fueling.SPAN_6_MONTHS</li>
-   * <li>Fueling.SPAN_ONE_YEAR</li>
-   * <li>Fueling.SPAN_ALL_TIME</li>
+   * <li>Model_Fueling.SPAN_3_MONTHS</li>
+   * <li>Model_Fueling.SPAN_6_MONTHS</li>
+   * <li>Model_Fueling.SPAN_ONE_YEAR</li>
+   * <li>Model_Fueling.SPAN_ALL_TIME</li>
    * </ul>
    *
    * @param position the position of the row that is to be displayed

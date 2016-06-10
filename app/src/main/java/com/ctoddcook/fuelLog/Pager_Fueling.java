@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public class Pager_Fueling extends FragmentStatePagerAdapter {
   private static final String TAG = "Pager_Fueling";
-  private final ArrayList<Fueling> mFuelings;
+  private final ArrayList<Model_Fueling> mFuelings;
 
   /**
    * Constructor passes a FragmentManager up the chain to a parent class, and stores a reference
@@ -22,7 +22,7 @@ public class Pager_Fueling extends FragmentStatePagerAdapter {
    * @param fragmentManager the manager overseeing this adapter
    * @param fuelings a list of fuelings, from which details will be retrieved for display
    */
-  public Pager_Fueling(FragmentManager fragmentManager, ArrayList<Fueling> fuelings) {
+  public Pager_Fueling(FragmentManager fragmentManager, ArrayList<Model_Fueling> fuelings) {
     super(fragmentManager);
     mFuelings = fuelings;
   }

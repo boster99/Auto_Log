@@ -15,32 +15,32 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * ArrayAdapter customization, for displaying Fueling in a ListView.
+ * ArrayAdapter customization, for displaying Model_Fueling in a ListView.
  * <p/>
  * Created by C. Todd Cook on 5/20/2016.<br>
  * ctodd@ctoddcook.com
  */
-public class Row_FuelingDetails extends ArrayAdapter<Fueling> {
+public class Row_FuelingDetails extends ArrayAdapter<Model_Fueling> {
   private static final String TAG = "Row_FuelingDetails";
   private final Context context;
-  private final ArrayList<Fueling> fuelingsList;
+  private final ArrayList<Model_Fueling> mFuelingsList;
 
   /**
    * Required constructor.
    * @param c Context instantiating this adapter
    * @param fList a list of Fuelings to be displayed
    */
-  public Row_FuelingDetails(Context c, ArrayList<Fueling> fList) {
+  public Row_FuelingDetails(Context c, ArrayList<Model_Fueling> fList) {
     super(c, R.layout.fueling_row_layout, fList);
     context = c;
-    fuelingsList = fList;
+    mFuelingsList = fList;
   }
 
   /**
    * Inner class for making memory-usage more efficient and making scrolling smoother. The
    * ViewHolder retains references to TextViews. Also, when a row (which includes a ViewHolder)
    * scrolls off the screen, it is passed back to the getView() method (in the convertView
-   * parameter) so it can be re-used. This way, a Fueling which is coming into view can reuse
+   * parameter) so it can be re-used. This way, a Model_Fueling which is coming into view can reuse
    * references to TextViews, instead of every time having to look up their details in the XML
    * file and building them from scratch.
    */
@@ -87,7 +87,7 @@ public class Row_FuelingDetails extends ArrayAdapter<Fueling> {
   public View getView(int pos, View convertView, ViewGroup parent) {
 
     View row = convertView;
-    Fueling fd = fuelingsList.get(pos);
+    Model_Fueling fd = mFuelingsList.get(pos);
 
     /*
     Reuse views. Only create a row from scratch if the call to this method did not give us

@@ -3,7 +3,7 @@
   ~ Copyright (c) 2016 C. Todd Cook. All rights reserved.
 
   This layout is associated with Activity_DetailFrame, and provides ViewPager functionality for
-  multiple fragments: Vehicle Details, Fueling Details, and Averages Details.
+  multiple fragments: Vehicle Details, Model_Fueling Details, and Averages Details.
   -->
 
 <!-- Update value in tools:context -->
