@@ -2,7 +2,7 @@
  * Copyright (c) 2016 C. Todd Cook. All rights reserved.
  */
 
-package com.ctoddcook.CGenTools;
+package com.ctoddcook.cGenTools;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.ctoddcook.FuelLog.FuelingDBMap;
+import com.ctoddcook.fuelLog.FuelingDBMap;
 
 import java.text.ParseException;
 import java.util.ArrayList;

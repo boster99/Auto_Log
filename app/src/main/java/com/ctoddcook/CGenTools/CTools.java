@@ -2,7 +2,7 @@
  * Copyright (c) 2016 C. Todd Cook. All rights reserved.
  */
 
-package com.ctoddcook.CGenTools;
+package com.ctoddcook.cGenTools;
 
 import java.math.BigDecimal;
 

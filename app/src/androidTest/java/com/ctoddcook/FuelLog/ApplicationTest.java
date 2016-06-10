@@ -1,4 +1,4 @@
-package com.ctoddcook.FuelLog;
+package com.ctoddcook.fuelLog;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

@@ -1,4 +1,4 @@
-package com.ctoddcook.CGenTools;
+package com.ctoddcook.cGenTools;
 
 /**
  * Base class for XML importer and exporter.

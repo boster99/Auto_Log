@@ -1,8 +1,5 @@
 
 todo Figure out how to backup data
-todo In strings.xml, change app_name to Fueling Log
-todo Change database to fuelinglog.db (in AutoLogDataMap.java)
-todo Refactor auto_log package to fueling_log
 todo Refactor class names
 todo Refactor layout resource names
 todo Refactor menu resource names

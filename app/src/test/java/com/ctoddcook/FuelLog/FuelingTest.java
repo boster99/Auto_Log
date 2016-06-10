@@ -2,7 +2,7 @@
  * Copyright (c) 2016 C. Todd Cook. All rights reserved.
  */
 
-package com.ctoddcook.FuelLog;
+package com.ctoddcook.fuelLog;
 
 import junit.framework.Assert;
 

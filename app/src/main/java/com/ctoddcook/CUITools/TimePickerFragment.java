@@ -2,7 +2,7 @@
  * Copyright (c) 2016 C. Todd Cook. All rights reserved.
  */
 
-package com.ctoddcook.CUITools;
+package com.ctoddcook.cUiTools;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;

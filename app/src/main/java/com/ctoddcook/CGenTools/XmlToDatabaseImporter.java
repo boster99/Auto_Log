@@ -1,4 +1,4 @@
-package com.ctoddcook.CGenTools;
+package com.ctoddcook.cGenTools;
 
 import android.content.ContentValues;
 import android.content.Context;
