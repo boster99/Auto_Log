@@ -33,7 +33,7 @@ import java.util.ArrayList;
  */
 
 public class Activity_VehicleList extends AppCompatActivity implements AdapterView.OnItemClickListener,
-    DataUpdateController.DataUpdateListener {
+    Handler_DataEvents.DataUpdateListener {
 
   private static final String TAG = "Activity_VehicleList";
 
@@ -47,7 +47,7 @@ public class Activity_VehicleList extends AppCompatActivity implements AdapterVi
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_view_vehicle_list);
     sDB = DatabaseHelper.getInstance(this);
-    DataUpdateController.getInstance().setOnDataUpdatedListener(this);
+    Handler_DataEvents.getInstance().setOnDataUpdatedListener(this);
     showVehicles();
     showHint();
   }
@@ -221,8 +221,8 @@ public class Activity_VehicleList extends AppCompatActivity implements AdapterVi
             mVehicleToRetire.setRetired();
             sDB.updateVehicle(mVehicleToRetire);
             mVehicleToRetire = null;
-            DataUpdateController.getInstance().dispatchDataUpdateEvent(
-                DataUpdateController.DataUpdateEvent.VEHICLE_LIST_UPDATED, null);
+            Handler_DataEvents.getInstance().dispatchDataUpdateEvent(
+                Handler_DataEvents.DataUpdateEvent.VEHICLE_LIST_UPDATED, null);
             showVehicles();
             break;
 
@@ -278,8 +278,8 @@ public class Activity_VehicleList extends AppCompatActivity implements AdapterVi
             mVehicleToDelete.setDeleted();
             sDB.deleteVehicle(mVehicleToDelete);
             mVehicleToDelete = null;
-            DataUpdateController.getInstance().dispatchDataUpdateEvent(
-                DataUpdateController.DataUpdateEvent.VEHICLE_LIST_UPDATED, null);
+            Handler_DataEvents.getInstance().dispatchDataUpdateEvent(
+                Handler_DataEvents.DataUpdateEvent.VEHICLE_LIST_UPDATED, null);
             break;
 
           // If the user clicks "NO" then we clean up and get out of here
@@ -307,7 +307,7 @@ public class Activity_VehicleList extends AppCompatActivity implements AdapterVi
    * @param data  Extra information, if needed
    */
   @Override
-  public void onDataUpdated(DataUpdateController.DataUpdateEvent event, Intent data) {
-    if (event == DataUpdateController.DataUpdateEvent.VEHICLE_LIST_UPDATED) showVehicles();
+  public void onDataUpdated(Handler_DataEvents.DataUpdateEvent event, Intent data) {
+    if (event == Handler_DataEvents.DataUpdateEvent.VEHICLE_LIST_UPDATED) showVehicles();
   }
 }

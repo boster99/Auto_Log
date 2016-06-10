@@ -387,8 +387,8 @@ public class Activity_EditFueling extends AppCompatActivity
 
     Intent intent = new Intent();
     intent.putExtra(Model_Vehicle.DEFAULT_VEHICLE_KEY, mVehicle.getID());
-    DataUpdateController.getInstance().dispatchDataUpdateEvent(
-        DataUpdateController.DataUpdateEvent.FUELING_LIST_UPDATED, intent);
+    Handler_DataEvents.getInstance().dispatchDataUpdateEvent(
+        Handler_DataEvents.DataUpdateEvent.FUELING_LIST_UPDATED, intent);
     this.finish();
   }
 

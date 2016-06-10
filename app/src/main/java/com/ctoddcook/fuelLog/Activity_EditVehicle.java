@@ -196,8 +196,8 @@ public class Activity_EditVehicle extends AppCompatActivity {
             "indicate either ADD or EDIT");
     }
 
-    DataUpdateController.getInstance().dispatchDataUpdateEvent(
-        DataUpdateController.DataUpdateEvent.VEHICLE_LIST_UPDATED, null);
+    Handler_DataEvents.getInstance().dispatchDataUpdateEvent(
+        Handler_DataEvents.DataUpdateEvent.VEHICLE_LIST_UPDATED, null);
     this.finish();
   }
 
