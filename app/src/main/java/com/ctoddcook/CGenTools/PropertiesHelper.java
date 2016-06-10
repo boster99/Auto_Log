@@ -31,7 +31,7 @@ public class PropertiesHelper {
 
   private static HashMap<String, Property> sPropertyMap = new HashMap<>(10);
   private static PropertiesHelper sInstance;
-  private static SQLiteDatabase sDB;
+  private static SQLiteDatabase sDatabase;
 
 
   /**
@@ -44,7 +44,7 @@ public class PropertiesHelper {
    */
   public static synchronized PropertiesHelper getInstance() {
     // Make sure a database helper has already been provided
-    if (sDB == null)
+    if (sDatabase == null)
       throw new UnsupportedOperationException("Whoa. setDatabaseHelper() must be called before " +
           "this method is called.");
 
@@ -66,7 +66,7 @@ public class PropertiesHelper {
     if (db == null)
       throw new IllegalArgumentException("Provided SQLiteOpenHelper argument is null. Bad.");
 
-    sDB = db.getWritableDatabase();
+    sDatabase = db.getWritableDatabase();
   }
 
   /**
@@ -85,6 +85,51 @@ public class PropertiesHelper {
       pExisting.update(pNew);
       updateProperty(pExisting);
     }
+  }
+
+  /**
+   * Convenience method so caller does not have to construct a new Property object.
+   * @param name The name of the value
+   * @param value The value
+   */
+  public void put(String name, boolean value) {
+    put(new Property(name, value));
+  }
+
+  /**
+   * Convenience method so caller does not have to construct a new Property object.
+   * @param name The name of the value
+   * @param value The value
+   */
+  public void put(String name, long value) {
+    put(new Property(name, value));
+  }
+
+  /**
+   * Convenience method so caller does not have to construct a new Property object.
+   * @param name The name of the value
+   * @param value The value
+   */
+  public void put(String name, int value) {
+    put(new Property(name, value));
+  }
+
+  /**
+   * Convenience method so caller does not have to construct a new Property object.
+   * @param name The name of the value
+   * @param value The value
+   */
+  public void put(String name, Date value) {
+    put(new Property(name, value));
+  }
+
+  /**
+   * Convenience method so caller does not have to construct a new Property object.
+   * @param name The name of the value
+   * @param value The value
+   */
+  public void put(String name, String value) {
+    put(new Property(name, value));
   }
 
   /**
@@ -133,7 +178,7 @@ public class PropertiesHelper {
   }
 
   /**
-   * Returns the int value for a property
+   * Returns the long value for a property
    * @param forName the name of the desired property
    * @return the int value
    */
@@ -143,7 +188,21 @@ public class PropertiesHelper {
     if (p == null)
       throw new NoSuchElementException("No property found for name: " + forName);
 
-    return p.getIntValue();
+    return p.getLongValue();
+  }
+
+  /**
+   * Returns the boolean value for a property. A boolean is stored as a 1 or 0 long value.
+   * @param forName the name of the desired property
+   * @return the boolean value
+   */
+  public boolean getBooleanValue(String forName) {
+    forName = forName.trim().toLowerCase();
+    Property p = sPropertyMap.get(forName);
+    if (p == null)
+      throw new NoSuchElementException("No property found for name: " + forName);
+
+    return (p.getLongValue() != 0);
   }
 
   /**
@@ -176,8 +235,8 @@ public class PropertiesHelper {
    * retrieval.
    */
   private void fetchProperties() {
-    if (!PropertyDataMap.tableExists(sDB))
-      sDB.execSQL(PropertyDataMap.SQL_CREATE_TABLE);
+    if (!PropertyDataMap.tableExists(sDatabase))
+      sDatabase.execSQL(PropertyDataMap.SQL_CREATE_TABLE);
 
     int id, type;
     String name, value;
@@ -186,7 +245,7 @@ public class PropertiesHelper {
 
     String sql = PropertyDataMap.SQL_SELECT_ALL;
 
-    Cursor cursor = sDB.rawQuery(sql, null);
+    Cursor cursor = sDatabase.rawQuery(sql, null);
 
     while (cursor.moveToNext()) {
       id = cursor.getInt(PropertyDataMap.COLUMN_NBR_ID);
@@ -244,7 +303,7 @@ public class PropertiesHelper {
     cv.put(PropertyDataMap.COLUMN_NAME_VALUE, p.getValueAsString());
     cv.put(PropertyDataMap.COLUMN_NAME_LAST_UPDATED, p.getLastUpdated().getTime());
 
-    int rowsUpdated = sDB.update(PropertyDataMap.TABLE_NAME, cv, PropertyDataMap.WHERE_ID_CLAUSE,
+    int rowsUpdated = sDatabase.update(PropertyDataMap.TABLE_NAME, cv, PropertyDataMap.WHERE_ID_CLAUSE,
         whereArgs);
 
     if (rowsUpdated == 1)
@@ -271,7 +330,7 @@ public class PropertiesHelper {
     cv.put(PropertyDataMap.COLUMN_NAME_VALUE, p.getValueAsString());
     cv.put(PropertyDataMap.COLUMN_NAME_LAST_UPDATED, p.getLastUpdated().getTime());
 
-    int newID = (int) sDB.insert(PropertyDataMap.TABLE_NAME, null, cv);
+    int newID = (int) sDatabase.insert(PropertyDataMap.TABLE_NAME, null, cv);
 
     if (newID > 0) {
       p.setID(newID);
@@ -292,7 +351,7 @@ public class PropertiesHelper {
 
     String[] whereArgs = new String[]{String.valueOf(p.getID())};
 
-    int rowsDeleted = sDB.delete(FuelingDBMap.TABLE_NAME, FuelingDBMap.WHERE_ID_CLAUSE,
+    int rowsDeleted = sDatabase.delete(FuelingDBMap.TABLE_NAME, FuelingDBMap.WHERE_ID_CLAUSE,
         whereArgs);
 
     return (rowsDeleted == 1);
