@@ -21,7 +21,7 @@ public class UIHelper {
    * Displays an instructional hint to the user. Only shown the first time the uesr sees this
    * screen (or after HINT settings have been reset).
    */
-  private static void showHint(final Context context, final String propertyKey, String hintTitle,
+  public static void showHint(final Context context, final String propertyKey, String hintTitle,
                                final String hintMessage) {
     PropertiesHelper ph = PropertiesHelper.getInstance();
     boolean hintAlreadyShown;
@@ -46,6 +46,7 @@ public class UIHelper {
               dialog.dismiss();
             }
           });
+      builder.show();
 
       // Note that the hint has now been shown.
       ph.put(propertyKey, true);
