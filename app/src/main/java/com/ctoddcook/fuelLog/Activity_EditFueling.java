@@ -160,7 +160,7 @@ public class Activity_EditFueling extends AppCompatActivity
     }
 
     // make an adapter from the cursor
-    String[] from = new String[]{VehicleDBMap.COLUMN_NAME_NAME};
+    String[] from = new String[]{DatabaseMap_Vehicle.COLUMN_NAME_NAME};
     int[] to = new int[]{android.R.id.text1};
     SimpleCursorAdapter sca = new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item,
         cursor, from, to, 0);
