@@ -10,7 +10,7 @@ import android.provider.BaseColumns;
  * Created by C. Todd Cook on 4/12/2016.<br>
  * ctodd@ctoddcook.com
  */
-public final class DatabaseMap_Fueling extends FuelLogDataMap implements BaseColumns {
+public final class DatabaseMap_Fueling extends DatabaseMap_FuelLog implements BaseColumns {
   // To prevent someone from accidentally instantiating this class, here is
   // an empty constructor.
   private DatabaseMap_Fueling() {
