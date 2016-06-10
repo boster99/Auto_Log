@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * Created by C. Todd Cook on 6/9/2016.<br>
  * ctodd@ctoddcook.com
  */
-public class Handler_UserHints {
+public class Constants_Central {
   public static final String VEHICLE_LIST_HINT_KEY = "FUELING_LIST_HINT_SHOWN";
   public static final String FUELING_LIST_HINT_KEY = "VEHICLE_LIST_HINT_SHOWN";
   public static final String VEHICLE_DETAIL_HINT_KEY = "VEHICLE_SWIPE_HINT_SHOWN";
