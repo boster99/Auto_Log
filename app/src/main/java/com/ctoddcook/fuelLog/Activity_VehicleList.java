@@ -73,7 +73,7 @@ public class Activity_VehicleList extends AppCompatActivity implements AdapterVi
    * screen (or after HINT settings have been reset).
    */
   private void showHint() {
-    UIHelper.showHint(this, Hints.VEHICLE_LIST_HINT_KEY, null, getString(R.string.vehicle_list_hint));
+    UIHelper.showHint(this, Handler_UserHints.VEHICLE_LIST_HINT_KEY, null, getString(R.string.vehicle_list_hint));
   }
 
   /**

@@ -95,7 +95,7 @@ public class Activity_DetailFrame extends AppCompatActivity {
    * Displays a one-time hint for how to swipe from record to record.
    */
   private void showVehicleSwipeHint() {
-    UIHelper.showHint(this, Hints.VEHICLE_DETAIL_HINT_KEY, null,
+    UIHelper.showHint(this, Handler_UserHints.VEHICLE_DETAIL_HINT_KEY, null,
         getString(R.string.vehicle_swipe_hint));
   }
 
@@ -103,7 +103,7 @@ public class Activity_DetailFrame extends AppCompatActivity {
    * Displays a one-time hint for how to swipe from record to record.
    */
   private void showFuelingSwipeHint() {
-    UIHelper.showHint(this, Hints.FUELING_DETAIL_HINT_KEY, null,
+    UIHelper.showHint(this, Handler_UserHints.FUELING_DETAIL_HINT_KEY, null,
         getString(R.string.fueling_swipe_hint));
   }
 
@@ -111,7 +111,7 @@ public class Activity_DetailFrame extends AppCompatActivity {
    * Displays a one-time hint for how to swipe from record to record.
    */
   private void showAveragesSwipeHint() {
-    UIHelper.showHint(this, Hints.AVERAGES_DETAIL_HINT_KEY, null,
+    UIHelper.showHint(this, Handler_UserHints.AVERAGES_DETAIL_HINT_KEY, null,
         getString(R.string.averages_swipe_hint));
   }
 
