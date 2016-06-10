@@ -28,7 +28,7 @@
       </intent-filter>
     </activity>
     <activity
-        android:name="com.ctoddcook.fuelLog.Activity_AddEditFueling"
+        android:name=".Activity_EditFueling"
         android:label="@string/title_activity_enter_fueling_data"
         android:parentActivityName="com.ctoddcook.fuelLog.Activity_Main"
         android:theme="@style/AppTheme.NoActionBar">
