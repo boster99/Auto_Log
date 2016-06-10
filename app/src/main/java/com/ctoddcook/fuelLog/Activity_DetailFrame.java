@@ -65,9 +65,9 @@ public class Activity_DetailFrame extends AppCompatActivity {
   public void showFragment(int type, int position) {
     switch (type) {
       case TYPE_VEHICLE:
-        VehiclePagerAdapter vehiclePagerAdapter = new VehiclePagerAdapter(getSupportFragmentManager(),
+        Pager_Vehicle pagerVehicle = new Pager_Vehicle(getSupportFragmentManager(),
             Vehicle.getVehicleList());
-        mPager.setAdapter(vehiclePagerAdapter);
+        mPager.setAdapter(pagerVehicle);
         mPager.setCurrentItem(position);
         showVehicleSwipeHint();
         break;
@@ -82,9 +82,9 @@ public class Activity_DetailFrame extends AppCompatActivity {
 
       case TYPE_AVERAGE:
         String vehicleName = getIntent().getStringExtra(ARG_VEHICLE);
-        SpanPagerAdapter spanPagerAdapter = new SpanPagerAdapter(getSupportFragmentManager(),
+        Pager_Averages pagerAverages = new Pager_Averages(getSupportFragmentManager(),
             vehicleName);
-        mPager.setAdapter(spanPagerAdapter);
+        mPager.setAdapter(pagerAverages);
         mPager.setCurrentItem(position);
         showAveragesSwipeHint();
         break;
