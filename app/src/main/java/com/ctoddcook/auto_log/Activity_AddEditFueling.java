@@ -4,14 +4,12 @@
 
 package com.ctoddcook.auto_log;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCursor;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -26,12 +24,14 @@ import android.widget.Toast;
 
 import com.ctoddcook.CGenTools.CLocationTools;
 import com.ctoddcook.CGenTools.CLocationWaiter;
+import com.ctoddcook.CGenTools.PropertiesHelper;
 import com.ctoddcook.CUITools.DatePickerFragment;
 import com.ctoddcook.CUITools.TimePickerFragment;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.NoSuchElementException;
 
 // TODO Organize this mess
 
@@ -51,6 +51,7 @@ public class Activity_AddEditFueling extends AppCompatActivity
 
   public static final String KEY_ADD_EDIT_MODE = "com.ctoddcook.auto_log.ADD_EDIT_MODE";
   public static final String KEY_FUELING_ID = "com.ctoddcook.auto_log.FUELING_ID";
+  public static final String KEY_USER_ALLOWS_GPS = "com.ctoddcook.auto_log.GPS_ALLOWED";
   public static final int MODE_ADD = 1;
   public static final int MODE_EDIT = 2;
   public static boolean dupeCheckResult;
@@ -61,6 +62,9 @@ public class Activity_AddEditFueling extends AppCompatActivity
   private Date mDateOfFill;
   private Location mGPSLocation;
   private int mYear, mMonth, mDay, mHour, mMinute;
+  float mDistance = 0f, mVolume = 0f, mPricePaid = 0f, mOdometer = 0f;
+  String mLocation = null;
+
 
   private EditText mDistanceET, mVolumeET, mPricePaidDT, mLocationET, mOdometerET;
 
@@ -108,7 +112,7 @@ public class Activity_AddEditFueling extends AppCompatActivity
         gc.setTimeInMillis(mFueling.getDateOfFill().getTime());
 
         mDistanceET.setText(FormatHandler.formatDistanceRaw(mFueling.getDistance()));
-        mVolumeET.setText(FormatHandler.formatVolumeRaw(mFueling.getVolume()));
+        mVolumeET.setText(FormatHandler.formatVolumeLongRaw(mFueling.getVolume()));
         mPricePaidDT.setText(FormatHandler.formatPriceRaw(mFueling.getPricePaid()));
         mLocationET.setText(mFueling.getLocation());
         mOdometerET.setText(Float.toString(mFueling.getOdometer()));
@@ -140,7 +144,7 @@ public class Activity_AddEditFueling extends AppCompatActivity
 
   /**
    * Puts together a spinner with a list of all of the vehicles in the database. Each record's
-   * "name" is used for the list items display.
+   * "mName" is used for the list items display.
    */
   private void setupVehicleSpinner() {
     // get a cursor providing IDs and NAMEs for each vehicle
@@ -201,7 +205,16 @@ public class Activity_AddEditFueling extends AppCompatActivity
     Whichever comes first, it will then call setLocation() in this class to provide that location
     information.
     */
-    new CLocationWaiter(this, maxDelay);
+    boolean gpsAllowed;
+
+    try {
+      gpsAllowed = PropertiesHelper.getInstance().getBooleanValue(KEY_USER_ALLOWS_GPS);
+    } catch (NoSuchElementException e) {
+      gpsAllowed = true;
+      PropertiesHelper.getInstance().put(KEY_USER_ALLOWS_GPS, gpsAllowed);
+    }
+
+    if (gpsAllowed) new CLocationWaiter(this, maxDelay);
   }
 
   /**
@@ -259,32 +272,14 @@ public class Activity_AddEditFueling extends AppCompatActivity
   }
 
   /**
-   * When the user touches "Save", extract all of the entered details, and then--depending on
-   * whether we're in ADD or EDIT mode, insert a new fueling or update an existing one in the
-   * database.
-   *
-   * @param v the view which triggered this method call
+   * Called in response to the user touching the "Save" button. Manages extracting the user's
+   * data from the edit fields, checking for appropriate data, and saving the data to the database.
+   * @param v The view (the SAVE button) which called this method
    */
-  public void saveFueling(View v) {
-    if (extractDetails()) {
-      switch (mode) {
-        case MODE_ADD:
-          sDatabaseHelper.insertFueling(mFueling);
-          break;
-        case MODE_EDIT:
-          sDatabaseHelper.updateFueling(mFueling);
-          break;
-        default:
-          throw new IllegalArgumentException("Member field mode does not " +
-              "indicate either ADD or EDIT");
-      }
-    }
-
-    Intent intent = new Intent();
-    intent.putExtra(Vehicle.DEFAULT_VEHICLE_KEY, mVehicle.getID());
-    DataUpdateController.getInstance().dispatchDataUpdateEvent(
-        DataUpdateController.DataUpdateEvent.FUELING_LIST_UPDATED, intent);
-    this.finish();
+  public void processEdits(View v) {
+    extractDetails();
+    if (sanityChecksPass())
+      saveFueling();
   }
 
   /**
@@ -299,7 +294,29 @@ public class Activity_AddEditFueling extends AppCompatActivity
    * "Location" field if they want to, but it would be troublesome for a user to enter correct
    * GPS coordinates.
    * <p>
-   * Sanity Checks:
+   */
+  public void extractDetails() {
+    Date date = mDateOfFill;
+
+    if (mDistanceET.getText() != null && !mDistanceET.getText().toString().isEmpty())
+      mDistance = Float.parseFloat(mDistanceET.getText().toString());
+
+    if (mVolumeET.getText() != null && !mVolumeET.getText().toString().isEmpty())
+      mVolume = Float.parseFloat(mVolumeET.getText().toString());
+
+    if (mPricePaidDT.getText() != null && !mPricePaidDT.getText().toString().isEmpty())
+      mPricePaid = Float.parseFloat(mPricePaidDT.getText().toString());
+
+    if (mLocationET.getText() != null)
+      mLocation = mLocationET.getText().toString().trim();
+
+    if (mOdometerET.getText() != null && !mOdometerET.getText().toString().isEmpty())
+      mOdometer = Float.parseFloat(mOdometerET.getText().toString());
+  }
+
+
+  /**
+   * Sanity Checks on the data entered by the user:
    * <ul>
    *   <li>A valid date must be provided</li>
    *   <li>The distance must be greater than 0</li>
@@ -307,68 +324,74 @@ public class Activity_AddEditFueling extends AppCompatActivity
    *   <li>The price paid doesn't have to be provided, but if it's provided it can't be
    *   negative</li>
    * </ul>
-   * @return true if no problems were encountered, and no sanity checks failed
+   * @return True or false, whether the data passes the tests
    */
-  public boolean extractDetails() {
-    Date date;
-    float distance = 0f, volume = 0f, pricePaid = 0f, odometer = 0f;
-    String location = null;
-
-    date = mDateOfFill;
-
-    if (mDistanceET.getText() != null && !mDistanceET.getText().toString().isEmpty())
-      distance = Float.parseFloat(mDistanceET.getText().toString());
-
-    if (mVolumeET.getText() != null && !mVolumeET.getText().toString().isEmpty())
-      volume = Float.parseFloat(mVolumeET.getText().toString());
-
-    if (mPricePaidDT.getText() != null && !mPricePaidDT.getText().toString().isEmpty())
-      pricePaid = Float.parseFloat(mPricePaidDT.getText().toString());
-
-    if (mLocationET.getText() != null)
-      location = mLocationET.getText().toString().trim();
-
-    if (mOdometerET.getText() != null && !mOdometerET.getText().toString().isEmpty())
-      odometer = Float.parseFloat(mOdometerET.getText().toString());
-
-    if (date == null) {
+  private boolean sanityChecksPass() {
+    if (mDateOfFill == null) {
       Toast.makeText(this, "Uh oh ... a Date and Time are needed for this to work", Toast
           .LENGTH_LONG).show();
       return false;
     }
 
-    if (distance <= 0f) {
+    if (mDistance <= 0f) {
       Toast.makeText(this, "Dang! A valid Distance is required", Toast.LENGTH_LONG).show();
       return false;
     }
 
-    if (volume <= 0f) {
+    if (mVolume <= 0f) {
       Toast.makeText(this, "Mmm, uhm, gonna have to have a good Volume", Toast.LENGTH_LONG)
           .show();
       return false;
     }
 
-    if (pricePaid < 0f) {
+    if (mPricePaid < 0f) {
       Toast.makeText(this, ("Well...you don't HAVE to provide a price paid, but it can't be " +
           "negative"), Toast.LENGTH_LONG).show();
       return false;
     }
 
+    // If we've made it this far then the data has passed the tests
+    return true;
+  }
+
+  /**
+   * When the user touches "Save", extract all of the entered details, and then--depending on
+   * whether we're in ADD or EDIT mode, insert a new fueling or update an existing one in the
+   * database.
+   */
+  private void saveFueling() {
     mFueling.setVehicleID(mVehicle.getID());
     mFueling.setDateOfFill(mDateOfFill);
-    mFueling.setDistance(distance);
-    mFueling.setVolume(volume);
-    mFueling.setPricePaid(pricePaid);
-    mFueling.setOdometer(odometer);
-    mFueling.setLocation(location);
+    mFueling.setDistance(mDistance);
+    mFueling.setVolume(mVolume);
+    mFueling.setPricePaid(mPricePaid);
+    mFueling.setOdometer(mOdometer);
+    mFueling.setLocation(mLocation);
 
     if (mGPSLocation != null) {
       mFueling.setLatitude((float)mGPSLocation.getLatitude());
       mFueling.setLongitude((float)mGPSLocation.getLongitude());
     }
 
-    return true;
+    switch (mode) {
+      case MODE_ADD:
+        sDatabaseHelper.insertFueling(mFueling);
+        break;
+      case MODE_EDIT:
+        sDatabaseHelper.updateFueling(mFueling);
+        break;
+      default:
+        throw new IllegalArgumentException("Member field mode does not " +
+            "indicate either ADD or EDIT");
+    }
+
+    Intent intent = new Intent();
+    intent.putExtra(Vehicle.DEFAULT_VEHICLE_KEY, mVehicle.getID());
+    DataUpdateController.getInstance().dispatchDataUpdateEvent(
+        DataUpdateController.DataUpdateEvent.FUELING_LIST_UPDATED, intent);
+    this.finish();
   }
+
 
   /**
    * User has touched "Cancel". Just get out of here.
@@ -378,33 +401,6 @@ public class Activity_AddEditFueling extends AppCompatActivity
   public void cancelAddFueling(View v) {
     this.finish();
   }
-
-
-  /**
-   * Let the user know we've found a duplicate of the data just entered, and ask her if
-   * she wants to save it anyway. Return an affirmative or negative to the calling method.
-   *
-   * @return the user's decision whether to save a duplicate
-   */
-  private boolean userWantsDuplicate() {
-    // fixme ... this won't work in an asyncrhonous environment
-    AlertDialog.Builder b = new AlertDialog.Builder(this);
-    b.setMessage("There is already a Fueling with the same Vehicle, Date, Distance, Volume " +
-        "and Price Paid. Do you want to save this as a duplicate?");
-    b.setPositiveButton("Yes, Save Duplicate", new DialogInterface.OnClickListener() {
-      public void onClick(DialogInterface d, int id) {
-        Activity_AddEditFueling.dupeCheckResult = true;
-      }
-    });
-    b.setNegativeButton("No thank you", new DialogInterface.OnClickListener() {
-      public void onClick(DialogInterface d, int id) {
-        Activity_AddEditFueling.dupeCheckResult = false;
-      }
-    });
-
-    return Activity_AddEditFueling.dupeCheckResult;
-  }
-
 
   /**
    * Opens a Date Picker dialog for the user to change the date of fill
@@ -419,7 +415,7 @@ public class Activity_AddEditFueling extends AppCompatActivity
   /**
    * Used by the Date Picker dialog to pass back the date indicated by the user
    *
-   * @param year  the year selected by the user
+   * @param year  the mYear selected by the user
    * @param month the month selected by the user
    * @param day   the day selected by the user
    */

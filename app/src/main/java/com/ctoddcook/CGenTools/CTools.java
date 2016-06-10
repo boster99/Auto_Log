@@ -88,5 +88,19 @@ public class CTools {
       throw new RuntimeException("assertion failed: expected '" + expected + "', found '" + found
           + "'");
   }
+
+
+  /**
+   * Tests where two int values are equal. If they are, nothing happens. If they are different a
+   * RuntimeExpcetion is thrown.
+   *
+   * @param expected value 1 to compare
+   * @param found    value 2 to compare
+   */
+  public static void assertEquals(final int expected, final int found) {
+    if (expected != found)
+      throw new RuntimeException("assertion failed: expected '" + expected + "', found '" + found
+          + "'");
+  }
 }
 

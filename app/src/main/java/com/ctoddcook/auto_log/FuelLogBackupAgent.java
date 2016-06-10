@@ -21,7 +21,7 @@ import java.util.Properties;
  * Created by C. Todd Cook on 5/26/2016.<br>
  * ctodd@ctoddcook.com
  */
-public class AutoLogBackupAgent extends BackupAgent {
+public class FuelLogBackupAgent extends BackupAgent {
 
   private static final String LAST_BACKUP_KEY = "LastBackupDT";
 

@@ -16,7 +16,7 @@ import java.util.Date;
 import static com.ctoddcook.CGenTools.CTools.round;
 
 /**
- * This is a model class, used to hold all of the data pertaining to a single instance of filling
+ * This is a mModel class, used to hold all of the data pertaining to a single instance of filling
  * a gas tank. It also includes some methods for calculating numbers such as miles per gallon,
  * and price per mile.
  * <p/>
@@ -59,7 +59,7 @@ class Fueling extends DataHolder {
     DATE_THRESHOLDS[SPAN_6_MONTHS] = sixMonthsAgo.getTime();
 
     Calendar oneYearAgo = Calendar.getInstance();
-    oneYearAgo.add(Calendar.YEAR, -1);                  // Calculate one year before today
+    oneYearAgo.add(Calendar.YEAR, -1);                  // Calculate one mYear before today
     DATE_THRESHOLDS[SPAN_ONE_YEAR] = oneYearAgo.getTime();
   }
 
@@ -398,7 +398,7 @@ class Fueling extends DataHolder {
   }
 
   /**
-   * Provides the count of fills in the "last year" list
+   * Provides the count of fills in the "last mYear" list
    *
    * @return the size of the sOneYearSpan array
    */
@@ -467,7 +467,7 @@ class Fueling extends DataHolder {
   /**
    * This will add (or remove) the instance to (from) the static lists of fill records
    * based on date. If the fill date (mDateOfFill) is within the last 3 or 6 months or
-   * last year, this instance will get added to at least one of those lists.
+   * last mYear, this instance will get added to at least one of those lists.
    * <p/>
    * Care is taken not to add the instance to a list if it is already there. Likewise, if the
    * instance should NOT be in a list, it is removed from that list if it is found to be present.
@@ -492,7 +492,7 @@ class Fueling extends DataHolder {
         sSixMonthSpan.remove(this);       //     If so, remove from the list
     }
 
-    if (mDateOfFill.after(DATE_THRESHOLDS[SPAN_ONE_YEAR])) {     // Should be in one-year list?
+    if (mDateOfFill.after(DATE_THRESHOLDS[SPAN_ONE_YEAR])) {     // Should be in one-mYear list?
       if (!sOneYearSpan.contains(this))   //   Are we already there?
         sOneYearSpan.add(this);         //     If not, add to the list
     } else {                                    // Otherwise, we should NOT be in the list

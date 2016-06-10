@@ -163,13 +163,13 @@
     <style name="EditButton">
         <item name="android:layout_width">96dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:text">@string/EditButton</item>
+        <item name="android:text">@string/Edit</item>
     </style>
 
     <style name="DeleteButton">
         <item name="android:layout_width">96dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:text">@string/DeleteButton</item>
+        <item name="android:text">@string/Delete</item>
     </style>
 
 </resources>

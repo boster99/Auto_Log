@@ -54,10 +54,10 @@ public class Vehicle extends DataHolder {
    * This constructor should be used when retrieving records from the database.
    *
    * @param id           the vehicle id, generated automatically by the database (prime key)
-   * @param name         the user-provided name of the record
-   * @param year         the vehicle year
-   * @param color        the vehicle color
-   * @param model        the vehicle model
+   * @param name         the user-provided mName of the record
+   * @param year         the vehicle mYear
+   * @param color        the vehicle mColor
+   * @param model        the vehicle mModel
    * @param vin          the vehicle VIN
    * @param licensePlate the vehicle license plate
    * @param status       the status of the vehicle, either A or R
@@ -208,26 +208,26 @@ public class Vehicle extends DataHolder {
    * Setter for mYear field
    *
    * @param year new value for Year
-   * @throws IllegalArgumentException if the year is outside 1900-2100
+   * @throws IllegalArgumentException if the mYear is outside 1900-2100
    */
   public void setYear(int year) throws IllegalArgumentException {
     if (year < 1900 || year > 2100)
-      throw new IllegalArgumentException("The year must be between 1900 and 2100");
+      throw new IllegalArgumentException("The mYear must be between 1900 and 2100");
     mYear = year;
     touch();
   }
 
   /**
-   * Getter for color
+   * Getter for mColor
    *
-   * @return the color of the car
+   * @return the mColor of the car
    */
   public String getColor() {
     return mColor;
   }
 
   /**
-   * Setter for color
+   * Setter for mColor
    *
    * @param color of the car
    */
@@ -238,18 +238,18 @@ public class Vehicle extends DataHolder {
   }
 
   /**
-   * Getter for the car's model
+   * Getter for the car's mModel
    *
-   * @return the car's model
+   * @return the car's mModel
    */
   public String getModel() {
     return mModel;
   }
 
   /**
-   * Setter for the car's model
+   * Setter for the car's mModel
    *
-   * @param model the car's model
+   * @param model the car's mModel
    */
   public void setModel(String model) {
     mModel = model;
@@ -374,9 +374,9 @@ public class Vehicle extends DataHolder {
    * Determines whether the Color, Model and Year of another instance of Vehicle are
    * the same as this instance's. Case is ignored, so "gray" is the same as "GRAY".
    *
-   * @param color the color of the other vehicle
-   * @param year  the year of the other vehicle
-   * @param model the model of the other vehicle
+   * @param color the mColor of the other vehicle
+   * @param year  the mYear of the other vehicle
+   * @param model the mModel of the other vehicle
    * @return true if the Color, Year and Model are the same
    */
   public boolean isSimilar(String color, int year, String model) {
@@ -389,17 +389,17 @@ public class Vehicle extends DataHolder {
 
   /**
    * Check for possible indications of duplication. Tests are:
-   * -- name
-   * -- color, year and model together
-   * -- vin
+   * -- mName
+   * -- mColor, mYear and mModel together
+   * -- mVin
    * -- license plate
    * Empty values (or 0 in the case of YEAR) are not considered valid for consideration
-   * of duplicates. So, if this instance has an empty name, and the incoming name is empty,
+   * of duplicates. So, if this instance has an empty mName, and the incoming mName is empty,
    * that is not considered a duplicate.
    *
-   * @param name         name of the other vehicle
-   * @param color        color of the other vehicle
-   * @param year         year of the other vehicle
+   * @param name         mName of the other vehicle
+   * @param color        mColor of the other vehicle
+   * @param year         mYear of the other vehicle
    * @param model        of the other vehicle
    * @param vin          of the other vehicle
    * @param licensePlate of the other vehicle
@@ -411,7 +411,7 @@ public class Vehicle extends DataHolder {
     if (mName.length() > 0 && mName.equalsIgnoreCase(name))
       return true;
 
-    // Check for color, year and model as a set. If all 3 are duplicates, return true
+    // Check for mColor, mYear and mModel as a set. If all 3 are duplicates, return true
     if ((mColor.length() > 0 && mColor.equalsIgnoreCase(color)) &&
         (mYear != 0 && mYear == year) &&
         (mModel.length() > 0 && mModel.equalsIgnoreCase(model)))

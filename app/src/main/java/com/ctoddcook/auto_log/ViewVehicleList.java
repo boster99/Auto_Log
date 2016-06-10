@@ -18,9 +18,12 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.ctoddcook.CGenTools.PropertiesHelper;
-import com.ctoddcook.CGenTools.Property;
+import com.ctoddcook.CUITools.UIHelper;
 
 import java.util.ArrayList;
+
+
+// TODO organize this mess
 
 /**
  * Builds presentation UI for a simple list of Vehicles. Sets up the root ViewGroup (a ListView)
@@ -29,7 +32,8 @@ import java.util.ArrayList;
  * then go on to edit the vehicle).
  */
 
-public class ViewVehicleList extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class ViewVehicleList extends AppCompatActivity implements AdapterView.OnItemClickListener,
+    DataUpdateController.DataUpdateListener {
 
   private static final String TAG = "ViewVehicleList";
 
@@ -43,7 +47,9 @@ public class ViewVehicleList extends AppCompatActivity implements AdapterView.On
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_view_vehicle_list);
     sDB = DatabaseHelper.getInstance(this);
+    DataUpdateController.getInstance().setOnDataUpdatedListener(this);
     showVehicles();
+    showHint();
   }
 
   /**
@@ -53,15 +59,21 @@ public class ViewVehicleList extends AppCompatActivity implements AdapterView.On
     ArrayList<Vehicle> mVehicleList;
     mVehicleList = sDB.fetchVehicleList();
 
-    if (sVehicleListView == null) {
-      sVehicleListView = (ListView) findViewById(R.id.Vehicle_ListView);
-      if (sVehicleListView != null) {
-        sVehicleListView.setOnItemClickListener(this);
-        registerForContextMenu(sVehicleListView);
-      }
+    sVehicleListView = (ListView) findViewById(R.id.Vehicle_ListView);
+    if (sVehicleListView != null) {
+      sVehicleListView.setOnItemClickListener(this);
+      registerForContextMenu(sVehicleListView);
     }
 
     sVehicleListView.setAdapter(new VehicleListArrayAdapter(this, mVehicleList));
+  }
+
+  /**
+   * Displays an instructional hint to the user. Only shown the first time the uesr sees this
+   * screen (or after HINT settings have been reset).
+   */
+  private void showHint() {
+    UIHelper.showHint(this, Hints.VEHICLE_LIST_HINT_KEY, null, getString(R.string.vehicle_list_hint));
   }
 
   /**
@@ -153,12 +165,7 @@ public class ViewVehicleList extends AppCompatActivity implements AdapterView.On
   }
 
   /**
-   * Callback method to be invoked when an item in this view has been
-   * clicked and held.
-   * <p>
-   * Implementers can call getItemAtPosition(position) if they need to access
-   * the data associated with the selected item.
-   *
+   * Callback method to be invoked when an item in this view has been set as the default vehicle.
    * @param vehicleID The position of the view in the list
    */
 
@@ -167,37 +174,31 @@ public class ViewVehicleList extends AppCompatActivity implements AdapterView.On
     int defaultVehID = (int) ph.getLongValue(Vehicle.DEFAULT_VEHICLE_KEY);
 
     if (vehicleID != defaultVehID && Vehicle.getVehicle(vehicleID) != null) {
-      ph.put(new Property(Vehicle.DEFAULT_VEHICLE_KEY, vehicleID));
+      ph.put(Vehicle.DEFAULT_VEHICLE_KEY, vehicleID);
     }
 
     showVehicles();
   }
 
   /**
-   * Opens the activity for adding/editing a vehicle, indicating ADD mode. We're
-   * passing a 0 for requestCode, so we won't get a meaningful requestCode passed back to
-   * onActivityResult(); that's okay because there's only one activity we start for result from
-   * this activity.
+   * Opens the activity for adding/editing a vehicle, indicating ADD mode.
    * @param v the button that was clicked
    */
   public void addVehicle(View v) {
     Intent intent = new Intent(this, Activity_AddEditVehicle.class);
     intent.putExtra(Activity_AddEditVehicle.KEY_ADD_EDIT_MODE, Activity_AddEditVehicle.MODE_ADD);
-    startActivityForResult(intent, 0);
+    startActivity(intent);
   }
 
   /**
-   * Opens the activity for adding/editing a vehicle, indicating EDIT mode. We're
-   * passing a 0 for requestCode, so we won't get a meaningful requestCode passed back to
-   * onActivityResult(); that's okay because there's only one activity we start for result from
-   * this activity.
+   * Opens the activity for adding/editing a vehicle, indicating EDIT mode.
    * @param vehicleID The id of the vehicle to be edited
    */
   private void editVehicle(int vehicleID) {
     Intent intent = new Intent(this, Activity_AddEditVehicle.class);
     intent.putExtra(Activity_AddEditVehicle.KEY_ADD_EDIT_MODE, Activity_AddEditVehicle.MODE_EDIT);
     intent.putExtra(Activity_AddEditVehicle.KEY_VEHICLE_ID, vehicleID);
-    startActivityForResult(intent, 0);
+    startActivity(intent);
   }
 
   /**
@@ -220,6 +221,8 @@ public class ViewVehicleList extends AppCompatActivity implements AdapterView.On
             mVehicleToRetire.setRetired();
             sDB.updateVehicle(mVehicleToRetire);
             mVehicleToRetire = null;
+            DataUpdateController.getInstance().dispatchDataUpdateEvent(
+                DataUpdateController.DataUpdateEvent.VEHICLE_LIST_UPDATED, null);
             showVehicles();
             break;
 
@@ -275,6 +278,8 @@ public class ViewVehicleList extends AppCompatActivity implements AdapterView.On
             mVehicleToDelete.setDeleted();
             sDB.deleteVehicle(mVehicleToDelete);
             mVehicleToDelete = null;
+            DataUpdateController.getInstance().dispatchDataUpdateEvent(
+                DataUpdateController.DataUpdateEvent.VEHICLE_LIST_UPDATED, null);
             break;
 
           // If the user clicks "NO" then we clean up and get out of here
@@ -295,16 +300,14 @@ public class ViewVehicleList extends AppCompatActivity implements AdapterView.On
   }
 
   /**
-   * Called when the Activity_AddEditVehicle class closes, so we can refresh our list of
-   * displayed vehicles.
-   * @param requestCode Would indicate which activity called this, but in this case we ignore it
-   * @param resultCode whether the user clicked "save" or "cancel"; doesn't matter, we refresh
-   *                   the list regardless
-   * @param data any data we might want to process (there's none we want to process)
+   * When the Activity_AddEditVehicle class adds or edits a vehicle, it will post this event. We
+   * use it to know when/if to refresh the display.
+   *
+   * @param event Indicates the type of data updated
+   * @param data  Extra information, if needed
    */
   @Override
-  public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    super.onActivityResult(requestCode, resultCode, data);
-    showVehicles();
+  public void onDataUpdated(DataUpdateController.DataUpdateEvent event, Intent data) {
+    if (event == DataUpdateController.DataUpdateEvent.VEHICLE_LIST_UPDATED) showVehicles();
   }
 }

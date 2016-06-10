@@ -42,7 +42,7 @@ public class FuelingTest {
      *    sFillsInLast120 and sFillsInLastYear.
      * -- 3 more objects are in the past 120 days but not in the past 60, so they should be in both
      *    sFillsInLast60 and sFillsInLastYear.
-     * -- 3 objects are in the last year, but not in the last 120 days, so they should be in only
+     * -- 3 objects are in the last mYear, but not in the last 120 days, so they should be in only
      *    the sFillsInLastYear array.
      * -- 1 final object which is setup to be 400 days old, so it should be in none of the arrays.
      *

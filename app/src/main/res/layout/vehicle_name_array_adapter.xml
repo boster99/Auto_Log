@@ -6,7 +6,7 @@
               android:layout_height="wrap_content">
 
   <TextView
-      android:id="@+id/spinnter_vehicle_name"
+      android:id="@+id/spinner_vehicle_name"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"/>
 

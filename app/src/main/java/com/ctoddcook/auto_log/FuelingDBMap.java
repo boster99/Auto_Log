@@ -5,12 +5,12 @@ import android.provider.BaseColumns;
 
 /**
  * This provides Database/SQL information for the table which holds Fueling data. Includes column
- * names, types, ordinal numbers, table name, create table statement, select all, etc.
+ * names, types, ordinal numbers, table mName, create table statement, select all, etc.
  * <p>
  * Created by C. Todd Cook on 4/12/2016.<br>
  * ctodd@ctoddcook.com
  */
-public final class FuelingDBMap extends AutoLogDataMap implements BaseColumns {
+public final class FuelingDBMap extends FuelLogDataMap implements BaseColumns {
   // To prevent someone from accidentally instantiating this class, here is
   // an empty constructor.
   private FuelingDBMap() {
@@ -76,6 +76,8 @@ public final class FuelingDBMap extends AutoLogDataMap implements BaseColumns {
   public static final String SQL_SELECT_ALL =
       SELECT_PHRASE + "*" + FROM_PHRASE +
           TABLE_NAME + ORDER_BY_PHRASE + COLUMN_NAME_DATE_OF_FILL + " DESC";
+
+  public static final String WHERE_VEHICLE_ID = COLUMN_NAME_VEHICLE_ID + EQUAL + "?";
 
   public static boolean tableExists(SQLiteDatabase db) {
     return tableExists(db, TABLE_NAME);

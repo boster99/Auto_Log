@@ -4,17 +4,21 @@
 
 package com.ctoddcook.auto_log;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCursor;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,9 +30,12 @@ import android.widget.Toast;
 
 import com.ctoddcook.CGenTools.PropertiesHelper;
 import com.ctoddcook.CGenTools.Property;
+import com.ctoddcook.CUITools.UIHelper;
 
 import java.util.ArrayList;
 
+
+// TODO Reorganize this mess
 
 /**
  * The Main activity for this app. This displays a split screen:
@@ -41,11 +48,10 @@ import java.util.ArrayList;
  * ctodd@ctoddcook.com
  */
 public class Activity_Main extends AppCompatActivity implements AdapterView.OnItemClickListener,
-    View.OnClickListener, AdapterView.OnItemSelectedListener {
+    View.OnClickListener, AdapterView.OnItemSelectedListener,
+    DataUpdateController.DataUpdateListener {
   private static final String TAG = "Activity_Main";
   private static final int PROGRESS = 0x1;
-  private static final int ADD_FIRST_VEHICLE = 755;
-  private static final int ADD_FUELING = 442;
   private static PropertiesHelper sPH;
   private static DatabaseHelper sDatabaseHelper;
   private int mCurrentVehicleID = 0;
@@ -53,7 +59,7 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
   private DrawerLayout mDrawerLayout;
   private Toolbar mToolbar;
   private ListView mDrawerList;
-  private ArrayList<Vehicle> mVehicles;
+  private Fueling mFuelingToDelete;
 
   /**
    * Called by the system when the UI elements of the activity are created.
@@ -74,11 +80,35 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
     PropertiesHelper.setDatabaseHelper(sDatabaseHelper);
     sPH = PropertiesHelper.getInstance();
 
+    DataUpdateController.getInstance().setOnDataUpdatedListener(this);
     setupDrawer();
 
     populateScreen();
+    showHint();
+
+//    ByteArrayOutputStream baos = new ByteArrayOutputStream(1024);
+//    try {
+//      DatabaseToXmlExporter d2x = DatabaseToXmlExporter.getInstance(sDatabaseHelper, baos);
+//      d2x.writeTable(PropertyDataMap.TABLE_NAME, PropertyDataMap._ID);
+//      String p = baos.toString();
+//      d2x.writeTable(FuelingDBMap.TABLE_NAME, FuelingDBMap._ID);
+//      String f = baos.toString();
+//      d2x.writeTable(VehicleDBMap.TABLE_NAME, VehicleDBMap._ID);
+//      String v = baos.toString();
+//    } catch (IOException e) {
+//      e.printStackTrace();
+//    }
   }
 
+  /**
+   * Displays an instructional hint to the user. Only shown the first time the uesr sees this
+   * screen (or after HINT settings have been reset).
+   */
+  private void showHint() {
+    UIHelper.showHint(this, Hints.FUELING_LIST_HINT_KEY, null, getString(R.string.fueling_list_hint));
+  }
+
+  // todo make the spinner work with a custom adapter
   private void setupVehicleSpinner() {
 //    ArrayAdapter adapter = new ArrayAdapter(this, R.layout.vehicle_name_array_adapter,
 //        R.id.spinner_vehicle_name, mVehicles);
@@ -106,8 +136,8 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
 //    }
 //  }
 //
-    // get a cursor providing IDs and NAMEs for each vehicle
-    Cursor cursor = sDatabaseHelper.fetchSimpleVehicleListCursor();
+    // get a cursor providing IDs and NAMEs for each vehicle (include retired vehicles)
+    Cursor cursor = sDatabaseHelper.fetchSimpleVehicleListCursor(true);
 
     // if the cursor has no results, open the Activity_AddEditVehicle, then try again
     if (cursor.getCount() < 1) {
@@ -115,7 +145,7 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
       intent.putExtra(Activity_AddEditVehicle.KEY_ADD_EDIT_MODE, Activity_AddEditVehicle
           .MODE_ADD);
       startActivity(intent);
-      cursor = sDatabaseHelper.fetchSimpleVehicleListCursor();
+      cursor = sDatabaseHelper.fetchSimpleVehicleListCursor(true);
     }
 
     // make an adapter from the cursor
@@ -140,7 +170,7 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
       selected.
        */
       if (mCurrentVehicleID != 0) {
-        int pos = 0;
+        int pos = -1;
 
         for (int i = 0; i < spinner.getCount(); i++) {
           SQLiteCursor row = ((SQLiteCursor)spinner.getItemAtPosition(i));
@@ -151,11 +181,74 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
           }
         }
 
+        /*
+        If we did not find mCurrentVehicleID in the spinner, then it most likely was deleted. In
+        that case, set the spinner and mCurrentVehicleID to the first one in the list.
+         */
+        if (pos < 0) {
+          SQLiteCursor row = ((SQLiteCursor)spinner.getItemAtPosition(0));
+          mCurrentVehicleID = row.getInt(row.getColumnIndex("_id"));
+          pos = 0;
+        }
         spinner.setSelection(pos);
       }
     }
-
   }
+
+  /**
+   * Called when a context menu for the {@code view} is about to be shown.
+   * Unlike onCreateOptionsMenu(Menu), this will be called every
+   * time the context menu is about to be shown and should be populated for
+   * the view (or item inside the view for {@link AdapterView} subclasses,
+   * this can be found in the {@code menuInfo})).
+   * <p>
+   * Use {@link #onContextItemSelected(MenuItem)} to know when an
+   * item has been selected.
+   * <p>
+   * It is not safe to hold onto the context menu after this method returns.
+   *
+   * @param menu The menu which is being built
+   * @param v The view for which the menu is being built
+   * @param menuInfo Additional information about the the item for which the context menu will be
+   *                 shown. Since we only have one ListView shown, and only one context menu,
+   *                 this can be ignored.
+   */
+  @Override
+  public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+    super.onCreateContextMenu(menu, v, menuInfo);
+
+    if (v.getId() != R.id.Main_HistoricalsList) return;  // Context menu ONLY for fuelings
+
+    MenuInflater inflater = getMenuInflater();
+    inflater.inflate(R.menu.fueling_popup_menu, menu);
+  }
+
+  /**
+   * Called when the user selects one of the options on the context menu.
+   * @param item The menu item which was selected
+   * @return True if we can identify which menu item was clicked and respond to it appropriately
+   */
+  @Override
+  public boolean onContextItemSelected(MenuItem item) {
+    AdapterView.AdapterContextMenuInfo info =
+        (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
+    Fueling fueling = (Fueling) mHistoricalsList.getItemAtPosition(info.position);
+    int fuelingID = fueling.getID();
+
+    switch (item.getItemId()) {
+      case R.id.fueling_edit:
+        editFueling(fuelingID);
+        return true;
+      case R.id.fueling_delete:
+        deleteFueling(fuelingID);
+        return true;
+      default:
+        return super.onContextItemSelected(item);
+    }
+  }
+
+
 
   /**
    * <p>Callback method to be invoked when an item in this view has been
@@ -163,7 +256,7 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
    * position is different from the previously selected position or if
    * there was no selected item.</p>
    * <p/>
-   * Impelmenters can call getItemAtPosition(position) if they need to access the
+   * Implementers can call getItemAtPosition(position) if they need to access the
    * data associated with the selected item.
    *
    * @param parent   The AdapterView where the selection happened
@@ -175,8 +268,31 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
   public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
     if (mCurrentVehicleID != id && Vehicle.getVehicle(id) != null) {
       mCurrentVehicleID = (int) id;
-      loadFuelingsForVehicle(mCurrentVehicleID);
+      loadFuelings(mCurrentVehicleID);
     }
+  }
+
+  /**
+   * If the list of vehicles or fuelings gets changed, refresh the display as needed.
+   * @param event The type of data updated
+   * @param data Extra information if needed
+   */
+  public void onDataUpdated(DataUpdateController.DataUpdateEvent event, Intent data) {
+    switch (event) {
+      case VEHICLE_LIST_UPDATED:
+        loadVehicles();
+
+        break;
+      case FUELING_LIST_UPDATED:
+        int id = (data != null ? data.getIntExtra(Vehicle.DEFAULT_VEHICLE_KEY, 0) :
+            mCurrentVehicleID);
+        if (id > 0 && id != mCurrentVehicleID) {
+          mCurrentVehicleID = id;
+        }
+        loadFuelings(mCurrentVehicleID);
+        break;
+    }
+
   }
 
   /**
@@ -192,10 +308,8 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
     if (spinner.getCount() > 0) {
       spinner.setSelection(0);
       SQLiteCursor row = ((SQLiteCursor)spinner.getItemAtPosition(0));
-      int spinnerItemId = row.getInt(row.getColumnIndex("_id"));
-
-      mCurrentVehicleID = spinnerItemId;
-      prepareVehicles();
+      mCurrentVehicleID = row.getInt(row.getColumnIndex("_id"));
+      loadVehicles();
     }
   }
 
@@ -212,7 +326,7 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
 
     /*
     The ActionBarDrawerToggle puts the menu (aka, "hamburger") icon on the action bar for opening
-     the navication drawer.
+     the navigation drawer.
      */
     ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
         mToolbar, R.string.main_drawer_open, R.string.main_drawer_close) {
@@ -243,22 +357,24 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
    * for that vehicle.
    */
   private void populateScreen() {
-    prepareVehicles();
-    setupVehicleSpinner();
+    loadVehicles();
     if (mCurrentVehicleID > 0)
-      loadFuelingsForVehicle(mCurrentVehicleID);
+      loadFuelings(mCurrentVehicleID);
   }
 
   /**
-   * Gets the default Vehicle, then fetches all the Vehicles from the database
+   * Gets the default Vehicle, then fetches all the Vehicles from the database, and sets up the
+   * vehicle spinner.
    */
-  private void prepareVehicles() {
+  private void loadVehicles() {
+    ArrayList<Vehicle> vehicles;
+
     // Get the default Vehicle
     if (mCurrentVehicleID == 0 && sPH.doesNameExist(Vehicle.DEFAULT_VEHICLE_KEY))
       mCurrentVehicleID = (int) sPH.getLongValue(Vehicle.DEFAULT_VEHICLE_KEY);
 
     // Fetch the list of vehicles into memory
-    mVehicles = sDatabaseHelper.fetchVehicleList();
+    vehicles = sDatabaseHelper.fetchVehicleList();
 
     /*
     If no vehicles were found in the database, we open the activity to add at least one vehicle.
@@ -266,80 +382,127 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
     vehicle as the Default, and add that default to properties.
      */
 
-    if (mVehicles.isEmpty()) {
+    if (vehicles.isEmpty()) {
       Intent intent = new Intent(this, Activity_AddEditVehicle.class);
       intent.putExtra(Activity_AddEditVehicle.KEY_ADD_EDIT_MODE, Activity_AddEditVehicle.MODE_ADD);
-      startActivityForResult(intent, ADD_FIRST_VEHICLE);
+      startActivity(intent);
     } else {
       if (mCurrentVehicleID == 0) {
-        mCurrentVehicleID = mVehicles.get(0).getID();
+        mCurrentVehicleID = vehicles.get(0).getID();
         Property p = new Property(Vehicle.DEFAULT_VEHICLE_KEY, mCurrentVehicleID);
         sPH.put(p);
       }
     }
+
+    setupVehicleSpinner();
   }
 
   /**
-   * Dispatch incoming result to the correct fragment.
-   *
-   * @param requestCode the code passed by this activity when starting another one
-   * @param resultCode the result (Okay or Cancelled)
-   * @param data data returned by the other activity/fragment
+   * Starts the activity for viewing details of a fueling.
+   * @param pos The position in the list of fuelings which holds the fueling to view
    */
-  @Override
-  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    super.onActivityResult(requestCode, resultCode, data);
-    switch (requestCode) {
-      case ADD_FIRST_VEHICLE:
-        if (resultCode == RESULT_OK)
-          prepareVehicles();
-        break;
-      case ADD_FUELING:
-        if (resultCode == RESULT_OK) {
-          int id = data.getIntExtra(Vehicle.DEFAULT_VEHICLE_KEY, 0);
-          if (id > 0) {
-            mCurrentVehicleID = id;
-            loadFuelingsForVehicle(mCurrentVehicleID);
-          }
-        }
-        break;
-    }
-  }
-
-  /**
-   * Used by UI to respond to a button touch
-   * @param v The View (a button) which called this method
-   */
-  public void addFueling(View v) {
-    addFueling();
+  private void viewFueling(int pos) {
+    Intent intent = new Intent(this, Activity_ViewDetail.class);
+    intent.putExtra(Activity_ViewDetail.ARG_TYPE, Activity_ViewDetail.TYPE_FUELING);
+    intent.putExtra(Activity_ViewDetail.ARG_POSITION, pos);
+    startActivity(intent);
   }
 
   /**
    * Creates an Intent of type Activity_AddEditFueling, tells it we're in ADD mode (rather than
    * EDIT mode) and tells it the default vehicle ID, and opens the Intent. When the intent is
    * closed, we re-fetch the list of fuelings and redisplay averages and historicals.
+   * @param v The View (a button) which called this method (required by the framework, since this
+   *          method is referenced in the menu xml onClick entry, but not used here)
    */
-  private void addFueling() {
+  public void addFueling(@Nullable View v) {
+    if (mCurrentVehicleID < 1) {
+      Toast.makeText(this, "Oops! Please select a vehicle before adding a fueling to it.",
+          Toast.LENGTH_LONG).show();
+      return;
+    }
+
+    if (Vehicle.getVehicle(mCurrentVehicleID).isRetired()) {
+      Toast.makeText(this, "Uhm, this vehicle is retired. Please choose an" +
+          " active vehicle, and then try again", Toast.LENGTH_LONG).show();
+      return;
+    }
+
     Intent intent = new Intent(this, Activity_AddEditFueling.class);
 
-    // Tell the new activity whether we're in ADD mode or EDIT mode
+    // Tell the new activity whether we're in ADD mode
     intent.putExtra(Activity_AddEditFueling.KEY_ADD_EDIT_MODE, Activity_AddEditFueling.MODE_ADD);
 
     // Tell the new activity what the default vehicle is
     intent.putExtra(Vehicle.DEFAULT_VEHICLE_KEY, mCurrentVehicleID);
-    startActivityForResult(intent, ADD_FUELING);
+    startActivity(intent);
+  }
+
+  /**
+   * Opens the Add/Edit Fueling activity, put it in EDIT mode, and give it the fueling id to edit.
+   * @param fuelingID The ID of the fueling to edit
+   */
+  private void editFueling(int fuelingID) {
+    Intent intent = new Intent(this, Activity_AddEditFueling.class);
+
+    // Tell the new activity whether we're in EDIT mode, and which fueling is to be edited
+    intent.putExtra(Activity_AddEditFueling.KEY_ADD_EDIT_MODE, Activity_AddEditFueling.MODE_EDIT);
+    intent.putExtra(Activity_AddEditFueling.KEY_FUELING_ID, fuelingID);
+    intent.putExtra(Vehicle.DEFAULT_VEHICLE_KEY, mCurrentVehicleID);
+
+    startActivity(intent);
+  }
+
+  /**
+   * Get confirmation from the user that s/he really wants to delete the selected fueling, then
+   * delete it (or cancel).
+   * @param fuelingID The id of the fueling to be deleted.
+   */
+  private void deleteFueling(int fuelingID) {
+    // Note the vehicle which is to be deleted
+    mFuelingToDelete = Fueling.getFueling(fuelingID);
+    if (mFuelingToDelete == null) return;
+
+    // Setup the listeners which will respond to the user's response to the dialog
+    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick(DialogInterface dialog, int which) {
+        switch (which){
+          // If the user clicks "YES" then we delete the vehicle
+          case DialogInterface.BUTTON_POSITIVE:
+            mFuelingToDelete.setDeleted();
+            sDatabaseHelper.deleteFueling(mFuelingToDelete);
+            mFuelingToDelete = null;
+            DataUpdateController.getInstance().dispatchDataUpdateEvent(
+                DataUpdateController.DataUpdateEvent.FUELING_LIST_UPDATED, null);
+            break;
+
+          // If the user clicks "NO" then we clean up and get out of here
+          case DialogInterface.BUTTON_NEGATIVE:
+            mFuelingToDelete = null;
+            break;
+        }
+      }
+    };
+
+    // Set up and display the dialog to get the user's confirmation that the fueling should be
+    // deleted.
+    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    builder.setTitle("Delete Fueling");
+    builder.setMessage("Deleting a fueling cannot be undone. Are you sure you want to do this?")
+        .setPositiveButton("Yes, delete it", dialogClickListener)
+        .setNegativeButton("No, never mind", dialogClickListener).show();
   }
 
   /**
    * Handler for loading Vehicle data for a specified id.
    * @param id the id for the desired Vehicle.
    */
-  private void loadFuelingsForVehicle(int id) {
-    //todo add a spinning-circle progress bar
+  private void loadFuelings(int id) {
     ArrayList<Fueling> fList = sDatabaseHelper.fetchFuelingData(id);
 
     if (fList.isEmpty()) {
-      addFueling();
+      addFueling(null);
     } else {
       loadAverages();
       loadHistoricalFuelingsList(fList);
@@ -353,7 +516,10 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
   private void loadHistoricalFuelingsList(ArrayList<Fueling> fList) {
     if (mHistoricalsList == null) {
       mHistoricalsList = (ListView) findViewById(R.id.Main_HistoricalsList);
-      if (mHistoricalsList != null) mHistoricalsList.setOnItemClickListener(this);
+      if (mHistoricalsList != null) {
+        mHistoricalsList.setOnItemClickListener(this);
+        registerForContextMenu(mHistoricalsList);
+      }
     }
 
     mHistoricalsList.setAdapter(new FuelingArrayAdapter(this, fList));
@@ -364,7 +530,7 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
    * Averages portion of the main screen. This should only be called after a fetch of all of the
    * rows for a particular vehicle.
    *
-   * @see #loadFuelingsForVehicle(int id)
+   * @see #loadFuelings(int id)
    */
   private void loadAverages() {
     TextView tv;
@@ -385,7 +551,7 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
 
     tv = (TextView) findViewById(R.id.first_average_row_vol);
     if (tv != null)
-      tv.setText(FormatHandler.formatVolume(Fueling.getAvgVolumeOverSpan(
+      tv.setText(FormatHandler.formatVolumeShort(Fueling.getAvgVolumeOverSpan(
           Fueling.SPAN_3_MONTHS)));
 
     tv = (TextView) findViewById(R.id.first_average_row_efficiency);
@@ -413,7 +579,7 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
 
     tv = (TextView) findViewById(R.id.second_average_row_vol);
     if (tv != null)
-      tv.setText(FormatHandler.formatVolume(Fueling.getAvgVolumeOverSpan(
+      tv.setText(FormatHandler.formatVolumeShort(Fueling.getAvgVolumeOverSpan(
           Fueling.SPAN_6_MONTHS)));
 
     tv = (TextView) findViewById(R.id.second_average_row_efficiency);
@@ -441,7 +607,7 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
 
     tv = (TextView) findViewById(R.id.third_average_row_vol);
     if (tv != null)
-      tv.setText(FormatHandler.formatVolume(Fueling.getAvgVolumeOverSpan(
+      tv.setText(FormatHandler.formatVolumeShort(Fueling.getAvgVolumeOverSpan(
           Fueling.SPAN_ONE_YEAR)));
 
     tv = (TextView) findViewById(R.id.third_average_row_efficiency);
@@ -469,7 +635,7 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
 
     tv = (TextView) findViewById(R.id.fourth_average_row_vol);
     if (tv != null)
-      tv.setText(FormatHandler.formatVolume(Fueling.getAvgVolumeOverSpan(
+      tv.setText(FormatHandler.formatVolumeShort(Fueling.getAvgVolumeOverSpan(
           Fueling.SPAN_ALL_TIME)));
 
     tv = (TextView) findViewById(R.id.fourth_average_row_efficiency);
@@ -495,7 +661,7 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
 
     int pos;
 
-    switch (((LinearLayout)v).getId()) {
+    switch (v.getId()) {
       case R.id.averages_first_row:
         pos = 0;
         break;
@@ -531,79 +697,7 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
    */
   public void onItemClick(AdapterView<?> parent, View v, int pos, long id) {
     if (v instanceof LinearLayout) {
-      Fueling fd = (Fueling) parent.getItemAtPosition(pos);
-      Intent intent = new Intent(this, Activity_ViewDetail.class);
-      intent.putExtra(Activity_ViewDetail.ARG_TYPE, Activity_ViewDetail.TYPE_FUELING);
-      intent.putExtra(Activity_ViewDetail.ARG_POSITION, pos);
-      startActivity(intent);
+      viewFueling(pos);
     }
   }
-
-
-
-
-
-
-
-  /*
-  ** FOLLOWING ARE METHODS I *MIGHT* HAVE TO DEAL WITH. RESEARCH IS NEEDED.
-   */
-  // todo DO I need an appbar menu on main screen?
-
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    // Inflate the menu; this adds items to the action bar if it is present.
-    getMenuInflater().inflate(R.menu.main_appbar_menu, menu);
-    return true;
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    // Handle action bar item clicks here. The action bar will
-    // automatically handle clicks on the Home/Up button, so long
-    // as you specify a parent activity in AndroidManifest.xml.
-    int id = item.getItemId();
-
-    // This responds to touches on items on the appbar menu
-    if (id == R.id.action_settings) {
-      return true;
-    }
-
-    return super.onOptionsItemSelected(item);
-  }
-
-  @Override
-  public void onPause() {
-    super.onPause();
-
-    // TODO: Temporary save of entered/edited data.
-    // Use onPause() for quick, light operations. Use onStop() for heavier, more-permanent
-    // shut-down procedures.
-  }
-
-  @Override
-  protected void onResume() {
-    super.onResume();
-
-    // TODO: Retrieve data from temporary storage
-  }
-
-  @Override
-  protected void onStop() {
-    super.onStop();
-
-    // TODO: Save data.
-    // Maybe don't need this; maybe onPause() is enough.
-  }
-
-  @Override
-  protected void onStart() {
-    super.onStart();
-
-    // TODO: Retrieve temp data to recover entered-but-not-saved data
-    // Maybe don't need this. Maybe onResume() is enough.
-    // Use onPause() for quick, light operations. Use onStop() for heavier, more-permanent
-    // shut-down procedures.
-  }
-
 }

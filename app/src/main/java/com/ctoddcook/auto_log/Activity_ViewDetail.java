@@ -1,18 +1,17 @@
 package com.ctoddcook.auto_log;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.widget.TextView;
+
+import com.ctoddcook.CUITools.UIHelper;
 
 /**
  * This activity is reusable, and will show one of three fragments to display vehicle details,
@@ -34,9 +33,13 @@ public class Activity_ViewDetail extends AppCompatActivity {
   private static ViewPager mPager;
   private Fragment mCurrentFragment;
   private int mArgType;
-  private int mMode;
 
 
+  /**
+   * Setup work when the activity is created. Gathers incoming details about the record type and
+   * list position to be displayed, and passes them to the method which handles the display.
+   * @param savedInstanceState Information about the state of the activity if it was stopped
+   */
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -44,25 +47,29 @@ public class Activity_ViewDetail extends AppCompatActivity {
     setSupportActionBar((Toolbar) findViewById(R.id.toolbar));// ACTION BAR
 
     mPager = (ViewPager) findViewById(R.id.Details_Pager);
-    int mode = getIntent().getIntExtra(ARG_TYPE, -1);
+    int type = getIntent().getIntExtra(ARG_TYPE, -1);
 
-    if (mode != TYPE_AVERAGE && mode != TYPE_FUELING && mode != TYPE_VEHICLE)
-      throw new IllegalArgumentException("Invalid argument value supplied for ARG_TYPE");
+    if (type != TYPE_AVERAGE && type != TYPE_FUELING && type != TYPE_VEHICLE)
+      throw new IllegalArgumentException("Invalid argument value supplied for ARG_TYPE: " + type);
 
     int position = getIntent().getIntExtra(ARG_POSITION, -1);
 
-    showFragment(mode, position);
+    showFragment(type, position);
   }
 
-  public void showFragment(int mode, int position) {
-    mMode = mode;
-
-    switch (mode) {
+  /**
+   * Displays the appropriate fragment for viewing details of a record.
+   * @param type The type of record to be displayed
+   * @param position The position in the list of records to display first
+   */
+  public void showFragment(int type, int position) {
+    switch (type) {
       case TYPE_VEHICLE:
         VehiclePagerAdapter vehiclePagerAdapter = new VehiclePagerAdapter(getSupportFragmentManager(),
             Vehicle.getVehicleList());
         mPager.setAdapter(vehiclePagerAdapter);
         mPager.setCurrentItem(position);
+        showVehicleSwipeHint();
         break;
 
       case TYPE_FUELING:
@@ -70,6 +77,7 @@ public class Activity_ViewDetail extends AppCompatActivity {
             Fueling.getFuelingList());
         mPager.setAdapter(fuelingPagerAdapter);
         mPager.setCurrentItem(position);
+        showFuelingSwipeHint();
         break;
 
       case TYPE_AVERAGE:
@@ -78,61 +86,48 @@ public class Activity_ViewDetail extends AppCompatActivity {
             vehicleName);
         mPager.setAdapter(spanPagerAdapter);
         mPager.setCurrentItem(position);
+        showAveragesSwipeHint();
         break;
     }
   }
 
-  // fixme Cannot get buttons to work
-  private void toggleButtonsForMode() {
-    Button btn;
-
-    switch (mMode) {
-      case TYPE_VEHICLE:
-      case TYPE_FUELING:
-        btn = (Button) findViewById(R.id.delete_item);
-        if (btn != null) btn.setVisibility(Button.VISIBLE);
-        btn = (Button) findViewById(R.id.edit_item);
-        if (btn != null) btn.setVisibility(Button.VISIBLE);
-        break;
-
-      case TYPE_AVERAGE:
-        btn = (Button) findViewById(R.id.delete_item);
-        if (btn != null) btn.setVisibility(Button.INVISIBLE);
-        btn = (Button) findViewById(R.id.edit_item);
-        if (btn != null) btn.setVisibility(Button.INVISIBLE);
-        break;
-    }
+  /**
+   * Displays a one-time hint for how to swipe from record to record.
+   */
+  private void showVehicleSwipeHint() {
+    UIHelper.showHint(this, Hints.VEHICLE_DETAIL_HINT_KEY, null,
+        getString(R.string.vehicle_swipe_hint));
   }
 
-  public void deleteDetail(View v) {
-    switch (mMode) {
-      case TYPE_VEHICLE:
-        Toast.makeText(this, "Delete VEHICLE", Toast.LENGTH_LONG).show();
-        break;
-
-      case TYPE_FUELING:
-        Toast.makeText(this, "Delete FUELING", Toast.LENGTH_LONG).show();
-        break;
-
-      case TYPE_AVERAGE:
-        Toast.makeText(this, "Delete ... uh oh", Toast.LENGTH_LONG).show();
-        break;
-    }
+  /**
+   * Displays a one-time hint for how to swipe from record to record.
+   */
+  private void showFuelingSwipeHint() {
+    UIHelper.showHint(this, Hints.FUELING_DETAIL_HINT_KEY, null,
+        getString(R.string.fueling_swipe_hint));
   }
 
-  public void editDetail(View v) {
-    switch (mMode) {
-      case TYPE_VEHICLE:
-        Toast.makeText(this, "Edit VEHICLE", Toast.LENGTH_LONG).show();
-        break;
+  /**
+   * Displays a one-time hint for how to swipe from record to record.
+   */
+  private void showAveragesSwipeHint() {
+    UIHelper.showHint(this, Hints.AVERAGES_DETAIL_HINT_KEY, null,
+        getString(R.string.averages_swipe_hint));
+  }
 
-      case TYPE_FUELING:
-        Toast.makeText(this, "Edit FUELING", Toast.LENGTH_LONG).show();
-        break;
 
-      case TYPE_AVERAGE:
-        Toast.makeText(this, "Edit ... uh oh", Toast.LENGTH_LONG).show();
-        break;
-    }
+  /**
+   * Show a map (Google Maps) of the location indicated by GPS coordinates.
+   * @param v the TextView which was touched to generate a call to this method
+   */
+  public void showMap(View v) {
+    TextView tvGPS = (TextView) v;
+    String uri;
+
+    if (tvGPS.toString() == null || tvGPS.toString().isEmpty()) return;
+
+    uri = tvGPS.getText().toString().trim();
+    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+    startActivity(intent);
   }
 }

@@ -26,17 +26,18 @@ public class Activity_AddEditVehicle extends AppCompatActivity {
   public static final String KEY_VEHICLE_ID = "com.ctoddcook.auto_log.VEHICLE_ID";
   public static final int MODE_ADD = 1;
   public static final int MODE_EDIT = 2;
-  public static boolean dupeCheckResult;
-  private int mode;
+  private int mMode;
   private Vehicle mVehicle;
 
-  EditText mNameET, mColorET, mYearET, mModelET, mLicPlateET, mVinET;
+  EditText mNameET, mColorET, mYearET, mModelET, mLicensePlateET, mVinET;
+  String mName, mColor, mModel, mVin, mLicensePlate;
+  int mYear = 0;
 
 
   /**
    * When the activity is created, apart from the standard actions, we retrieve the type of
-   * user action (add or edit a mVehicle) and if the mode is EDIT. If the mode is to add a new
-   * vehicle, we create a new one and assign it to the mVehicle field; if the mode is to edit
+   * user action (add or edit a mVehicle) and if the mMode is EDIT. If the mMode is to add a new
+   * vehicle, we create a new one and assign it to the mVehicle field; if the mMode is to edit
    * an existing vehicle, we retrieve that vehicle and assign it to mVehicle.
    *
    * @param savedInstanceState data saved from prior shut down (probably null)
@@ -55,25 +56,25 @@ public class Activity_AddEditVehicle extends AppCompatActivity {
     mColorET = (EditText) findViewById(R.id.vehicle_edit_color);
     mYearET = (EditText) findViewById(R.id.vehicle_edit_year);
     mModelET = (EditText) findViewById(R.id.vehicle_edit_model);
-    mLicPlateET = (EditText) findViewById(R.id.vehicle_edit_license_plate);
+    mLicensePlateET = (EditText) findViewById(R.id.vehicle_edit_license_plate);
     mVinET = (EditText) findViewById(R.id.vehicle_edit_vin);
 
-    mode = getIntent().getIntExtra(KEY_ADD_EDIT_MODE, 0);
+    mMode = getIntent().getIntExtra(KEY_ADD_EDIT_MODE, 0);
 
-    switch (mode) {
+    switch (mMode) {
       case MODE_ADD:
         mVehicle = new Vehicle();
         break;
       case MODE_EDIT:
         int vehicleID = getIntent().getIntExtra(KEY_VEHICLE_ID, -1);
         if (vehicleID < 0)
-          throw new IllegalArgumentException("In edit mode, a Vehicle ID must be provided");
+          throw new IllegalArgumentException("In edit mMode, a Vehicle ID must be provided");
 
         mVehicle = Vehicle.getVehicle(vehicleID);
         populateFromVehicle();
         break;
       default:
-        throw new IllegalArgumentException("Calling process must specify add/edit mode");
+        throw new IllegalArgumentException("Calling process must specify add/edit mMode");
     }
   }
 
@@ -85,133 +86,151 @@ public class Activity_AddEditVehicle extends AppCompatActivity {
     mColorET.setText(mVehicle.getColor());
     mYearET.setText(Integer.toString(mVehicle.getYear()));
     mModelET.setText(mVehicle.getModel());
-    mLicPlateET.setText(mVehicle.getLicensePlate());
+    mLicensePlateET.setText(mVehicle.getLicensePlate());
     mVinET.setText(mVehicle.getVIN());
   }
 
   /**
-   * When the user touches "Save", extract all of the entered details, and then--depending on
-   * whether we're in ADD or EDIT mode, insert a new vehicle or update an existing one in the
-   * database.
-   *
-   * @param v the view which triggered this method call
+   * Manages the extraction of data from the text fields, sanity checks, and saving the record to
+   * the database.
+   * @param v The view (a button) that called this method
    */
-  public void saveVehicle(View v) {
-    if (extractDetails()) {
-      switch (mode) {
-        case MODE_ADD:
-          sDatabaseHelper.insertVehicle(mVehicle);
-          break;
-        case MODE_EDIT:
-          sDatabaseHelper.updateVehicle(mVehicle);
-          break;
-        default:
-          throw new IllegalArgumentException("Member field mode does not " +
-              "indicate either ADD or EDIT");
-      }
-    }
-
-    setResult(RESULT_OK);
-    this.finish();
+  public void processEdits(View v) {
+    extractDetails();
+    if (sanityChecksPass() && duplicateChecksPass())
+      saveVehicle();
   }
 
   /**
    * Extract the details entered by the user and use them to fill out or update the mVehicle
-   * member field. Also do a little bit of sanity checking on the data. Also, check
-   *
-   * @return true if all the user-provided details are usable, or false if the user screwed up
+   * member field.
    */
-  private boolean extractDetails() {
-    String name, color, model, vin, licPlate;
-    int year = 0;
-
-    name = mNameET.getText().toString().trim();
-    color = mColorET.getText().toString().trim();
-    model = mModelET.getText().toString().trim();
-    vin = mVinET.getText().toString().trim();
-    licPlate = mLicPlateET.getText().toString().trim().toUpperCase();
+  private void extractDetails() {
+    mName = mNameET.getText().toString().trim();
+    mColor = mColorET.getText().toString().trim();
+    mModel = mModelET.getText().toString().trim();
+    mVin = mVinET.getText().toString().trim();
+    mLicensePlate = mLicensePlateET.getText().toString().trim().toUpperCase();
 
     try {
-      year = Integer.parseInt(mYearET.getText().toString());
+      mYear = Integer.parseInt(mYearET.getText().toString());
     } catch (NumberFormatException e) {
-      Log.e(TAG, "extractDetails: mVehicle year EditText value is: "
+      Log.e(TAG, "extractDetails: mVehicle mYear EditText value is: "
           + mYearET.getText().toString(), e);
     }
 
-        /*
-        Sanity-check the year. We accept 0 (i.e., user chooses not to provide a year)
-        but otherwise require a year between 1900 and 2100 (think anyone will be using
-        this in 2100?)
-         */
-    if (year != 0 && (year < 1900 || year > 2100)) {
-      Toast.makeText(this, "Whoops! " + year + " is not a valid model year",
+    // If the user has not provided a mName, make one out of the mColor, mYear and mModel
+    if (mName.length() < 1) {
+      if (mColor.length() < 1 || mModel.length() < 1 || mYear == 0) {
+        Toast.makeText(this, "Uh oh! If you don't supply a mName, you must supply a " +
+            "mColor, mYear and mModel", Toast.LENGTH_LONG).show();
+        return;
+      }
+
+      mName = mColor + " " + mYear + " " + mModel;
+    }
+  }
+
+  /**
+   * Sanity-check the data provided by the user. If something is not acceptable, we let the user
+   * know about it.
+   * @return Yes or no, did the data pass sanity checks
+   */
+  private boolean sanityChecksPass() {
+    /*
+    Sanity-check the model year. We accept 0 (i.e., user chooses not to provide a year)
+    but otherwise require a value between 1900 and 2100 (think anyone will be using
+    this in 2100?)
+     */
+    if (mYear != 0 && (mYear < 1900 || mYear > 2100)) {
+      Toast.makeText(this, "Whoops! " + mYear + " is not a valid mModel mYear",
           Toast.LENGTH_LONG).show();
       return false;
     }
-
-        /*
-        If the user has not provided a name, make one out of the color, year and model
-         */
-    if (name.length() < 1) {
-      if (color.length() < 1 || model.length() < 1 || year == 0) {
-        Toast.makeText(this, "Uh oh! If you don't supply a name, you must supply a " +
-            "color, year and model", Toast.LENGTH_LONG).show();
-        return false;
-      }
-
-      name = color + " " + year + " " + model;
-    }
-
-        /*
-        Check existing Vehicle instances for same Color, Year and Model, or with the same name.
-        If a similar mVehicle is found, ask the user if this duplicate should be saved.
-         */
-    for (Vehicle each : Vehicle.getVehicleList()) {
-      if (each == mVehicle) continue;
-      if (each.isDuplicate(name, color, year, model, vin, licPlate)) {
-        if (!userWantsDuplicate())
-          return false;
-      }
-    }
-
-        /*
-        If we've gotten here, then the data looks good, and either there are no duplicates or the
-         user wants to save it even if it is a duplicate. Store the screen-entered details into
-         the vehicle to be saved, and return an affirmative to the calling method.
-         */
-    mVehicle.setName(name);
-    mVehicle.setYear(year);
-    mVehicle.setColor(color);
-    mVehicle.setModel(model);
-    mVehicle.setVIN(vin);
-    mVehicle.setLicensePlate(licPlate);
 
     return true;
   }
 
   /**
-   * Let the user know we've found a duplicate of the data just entered, and ask her if
-   * she wants to save it anyway. Return an affirmative or negative to the calling method.
-   *
-   * @return the user's decision whether to save a duplicate
+   * Compares the user-provided details to see if they appear to duplicate those of another
+   * vehicle. If they do look like a duplicate, we ask the user if s/he wants to save the edits
+   * anyway.
+   * @return True or false, does the data duplicate that of an existing vehicle
    */
-  private boolean userWantsDuplicate() {
-    // fixme I think this will not work. Look at use of AlertDialog in ViewVehicleList.
-    AlertDialog.Builder b = new AlertDialog.Builder(this);
-    b.setMessage("There is already a Vehicle with the same Color, Year and Model, or with the" +
-        " same name. Do you want to save this as a duplicate?");
-    b.setPositiveButton("Yes, Save Duplicate", new DialogInterface.OnClickListener() {
-      public void onClick(DialogInterface d, int id) {
-        Activity_AddEditVehicle.dupeCheckResult = true;
+  private boolean duplicateChecksPass() {
+    /*
+    Check existing Vehicle instances for same Color, Year and Model, or with the same mName.
+    If a similar mVehicle is found, ask the user if this duplicate should be saved.
+     */
+    for (Vehicle each : Vehicle.getVehicleList()) {
+      if (each == mVehicle) continue;
+      if (each.isDuplicate(mName, mColor, mYear, mModel, mVin, mLicensePlate)) {
+        promptUserForDuplicate();
+        return false;
       }
-    });
-    b.setNegativeButton("No thank you", new DialogInterface.OnClickListener() {
-      public void onClick(DialogInterface d, int id) {
-        Activity_AddEditVehicle.dupeCheckResult = false;
-      }
-    });
+    }
 
-    return Activity_AddEditVehicle.dupeCheckResult;
+    return true;
+  }
+
+  /**
+   * Place the user-provided details into the vehicle instance and save it to the database.
+   */
+  public void saveVehicle() {
+    mVehicle.setName(mName);
+    mVehicle.setYear(mYear);
+    mVehicle.setColor(mColor);
+    mVehicle.setModel(mModel);
+    mVehicle.setVIN(mVin);
+    mVehicle.setLicensePlate(mLicensePlate);
+
+    switch (mMode) {
+      case MODE_ADD:
+        sDatabaseHelper.insertVehicle(mVehicle);
+        break;
+      case MODE_EDIT:
+        sDatabaseHelper.updateVehicle(mVehicle);
+        break;
+      default:
+        throw new IllegalArgumentException("Member field mMode does not " +
+            "indicate either ADD or EDIT");
+    }
+
+    DataUpdateController.getInstance().dispatchDataUpdateEvent(
+        DataUpdateController.DataUpdateEvent.VEHICLE_LIST_UPDATED, null);
+    this.finish();
+  }
+
+  /**
+   * Let the user know we've found a duplicate of the data just entered, and ask if s/he
+   * wants to save it anyway. If yse, we call the method to save the vehicle to the database.
+   */
+  private void promptUserForDuplicate() {
+    // Setup the listener which will respond to the user's response to the dialog
+    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick(DialogInterface dialog, int which) {
+        switch (which){
+          // If the user clicks "YES" then save the duplicate vehicle
+          case DialogInterface.BUTTON_POSITIVE:
+            saveVehicle();
+            break;
+
+          // If the user clicks "NO" then we return to the edit screen
+          case DialogInterface.BUTTON_NEGATIVE:
+            break;
+        }
+      }
+    };
+
+    // Set up and display the dialog to get the user's confirmation that the vehicle should be
+    // saved despite the duplication of data.
+    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    builder.setTitle("Duplicate?");
+    builder.setMessage(getString(R.string.duplicate_vehicle));
+    builder.setPositiveButton("Yes, Save Duplicate", dialogClickListener);
+    builder.setNegativeButton("No thank you", dialogClickListener);
+    builder.show();
   }
 
 
@@ -221,7 +240,6 @@ public class Activity_AddEditVehicle extends AppCompatActivity {
    * @param v the view that called this method
    */
   public void cancelAddVehicle(View v) {
-    setResult(RESULT_CANCELED);
     this.finish();
   }
 }

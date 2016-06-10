@@ -3,50 +3,71 @@
           package="com.ctoddcook.auto_log"
           android:installLocation="auto">
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
-    <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+  <application
+      android:allowBackup="true"
+      android:backupAgent=".FuelLogBackupAgent"
+      android:icon="@mipmap/ic_launcher"
+      android:label="@string/app_name"
+      android:supportsRtl="true"
+      android:theme="@style/AppTheme">
+    <meta-data
+        android:name="com.google.android.backup.api_key"
+        android:value="AEdPqrEAAAAIb-BiRXByuUb68aLEWFtVk8-Zp3xpG_enh2P3KQ"/>
+
+    <activity
+        android:name=".Activity_Main"
         android:label="@string/app_name"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity
-            android:name=".Activity_Main"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+        android:theme="@style/AppTheme.NoActionBar">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".Activity_AddEditFueling"
-            android:label="@string/title_activity_enter_fueling_data"
-            android:parentActivityName=".Activity_Main"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Activity_Main"/>
-        </activity>
-        <activity
-            android:name=".Activity_AddEditVehicle"
-            android:label="@string/title_activity_add_vehicle"
-            android:parentActivityName=".Activity_Main"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Activity_Main"/>
-        </activity>
-        <activity android:name=".ViewVehicleList">
-        </activity>
-        <activity
-            android:name=".Activity_ViewDetail"
-            android:label="View Details"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-    </application>
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+    </activity>
+    <activity
+        android:name=".Activity_AddEditFueling"
+        android:label="@string/title_activity_enter_fueling_data"
+        android:parentActivityName=".Activity_Main"
+        android:theme="@style/AppTheme.NoActionBar">
+      <meta-data
+          android:name="android.support.PARENT_ACTIVITY"
+          android:value=".Activity_Main"/>
+    </activity>
+    <activity
+        android:name=".Activity_AddEditVehicle"
+        android:label="@string/title_activity_add_vehicle"
+        android:parentActivityName=".Activity_Main"
+        android:theme="@style/AppTheme.NoActionBar">
+      <meta-data
+          android:name="android.support.PARENT_ACTIVITY"
+          android:value=".Activity_Main"/>
+    </activity>
+    <activity
+        android:name=".ViewVehicleList"
+        android:label="View Vehicle List"
+        android:parentActivityName=".Activity_Main"
+        android:theme="@style/AppTheme.NoActionBar">
+      <meta-data
+          android:name="android.support.PARENT_ACTIVITY"
+          android:value=".Activity_Main"/>
+    </activity>
+    <activity
+        android:name=".Activity_Settings"
+        android:label="Edit Settings"
+        android:parentActivityName=".Activity_Main"
+        android:theme="@style/AppTheme.NoActionBar">
+      <meta-data
+          android:name="android.support.PARENT_ACTIVITY"
+          android:value=".Activity_Main"/>
+    </activity>
+    <activity
+        android:name=".Activity_ViewDetail"
+        android:label="View Details"
+        android:theme="@style/AppTheme.NoActionBar">
+    </activity>
+  </application>
 
 </manifest>

@@ -4,8 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import java.util.ArrayList;
-
 /**
  * Presents details for one span of averages at a time
  * <p>
@@ -20,7 +18,7 @@ public class SpanPagerAdapter extends FragmentStatePagerAdapter {
    * Constructor passes a FragmentManager up the chain to a parent class, and stores a reference
    * to the list of Fuelings to be displayed.
    * @param fragmentManager the manager overseeing this adapter
-   * @param vehicleName the name of the vehicle represented in the averages data
+   * @param vehicleName the mName of the vehicle represented in the averages data
    */
   public SpanPagerAdapter(FragmentManager fragmentManager, String vehicleName) {
     super(fragmentManager);

@@ -1,6 +1,5 @@
 package com.ctoddcook.auto_log;
 
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -81,7 +80,7 @@ public class SpanDetailFrag extends Fragment {
     tvDist.setText(FormatHandler.formatDistance(Fueling.getAvgDistanceOverSpan(mSpan)));
 
     TextView tvVol = (TextView) view.findViewById(R.id.span_detail_volume);
-    tvVol.setText(FormatHandler.formatVolume(Fueling.getAvgVolumeOverSpan(mSpan)));
+    tvVol.setText(FormatHandler.formatVolumeShort(Fueling.getAvgVolumeOverSpan(mSpan)));
 
     TextView tvPrice = (TextView) view.findViewById(R.id.span_detail_total_price_paid);
     tvPrice.setText(FormatHandler.formatPrice(Fueling.getAvgPricePaidOverSpan(mSpan)));

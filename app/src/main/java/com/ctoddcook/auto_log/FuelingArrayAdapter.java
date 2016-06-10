@@ -64,7 +64,7 @@ public class FuelingArrayAdapter extends ArrayAdapter<Fueling> {
     }
 
     public void setVolume(float vol) {
-      tvVol.setText(FormatHandler.formatVolume(vol));
+      tvVol.setText(FormatHandler.formatVolumeShort(vol));
     }
 
     public void setEfficiency(float eff) {

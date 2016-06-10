@@ -78,7 +78,7 @@ public class FuelingDetailFrag extends Fragment {
     tvDist.setText(FormatHandler.formatDistance(mFueling.getDistance()));
 
     TextView tvVol = (TextView) layoutView.findViewById(R.id.fueling_detail_volume);
-    tvVol.setText(FormatHandler.formatVolume(mFueling.getVolume()));
+    tvVol.setText(FormatHandler.formatVolumeLong(mFueling.getVolume()));
 
     TextView tvPrice = (TextView) layoutView.findViewById(R.id.fueling_detail_total_price_paid);
     tvPrice.setText(FormatHandler.formatPrice(mFueling.getPricePaid()));

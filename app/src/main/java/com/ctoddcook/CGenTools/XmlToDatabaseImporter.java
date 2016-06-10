@@ -38,7 +38,8 @@ public class XmlToDatabaseImporter extends XmlBase {
     }
   }
 
-  public static void importData(final Context ctx, final InputStream is, final boolean overwrite) throws IOException {
+  public static void importData(final Context ctx, final InputStream is, final boolean overwrite)
+      throws IOException {
     final InputStreamReader isr = new InputStreamReader(is, "UTF8");
     try {
       final XmlPullParser p = Xml.newPullParser();
@@ -50,8 +51,23 @@ public class XmlToDatabaseImporter extends XmlBase {
 
       // I've commented out the next 2 lines so I can get the app to compile, but otherwise I
       // have not changed them.
-//      final LongSparseArray<Long> tagIDRemapping = importTable(mDB, p, DBHelper.TAG_TABLE_NAME, overwrite, null, null, DBHelper.TAG_TAG);
-//      importTable(mDB, p, DBHelper.TODO_TABLE_NAME, overwrite, DBHelper.TODO_TAG_ID, tagIDRemapping, DBHelper.TODO_TAG_ID, DBHelper.TODO_SUMMARY);
+//      final LongSparseArray<Long> tagIDRemapping = importTable(
+//          mDB,
+//          p,
+//          DBHelper.TAG_TABLE_NAME,
+//          overwrite,
+//          null,
+//          null,
+//          DBHelper.TAG_TAG);
+//      importTable(
+//          mDB,
+//          p,
+//          DBHelper.TODO_TABLE_NAME,
+//          overwrite,
+//          DBHelper.TODO_TAG_ID,
+//          tagIDRemapping,
+//          DBHelper.TODO_TAG_ID,
+//          DBHelper.TODO_SUMMARY);
     } catch (XmlPullParserException e) {
       Log.e(TAG, "error parsing backup file", e);
     } finally {
@@ -106,8 +122,9 @@ public class XmlToDatabaseImporter extends XmlBase {
                                 final String pkColumn,
                                 final LongSparseArray<Long> pkRemapping, //we fill pkRemapping
                                 @Nullable final String fkColumn,
-                                @Nullable final LongSparseArray<Long> fkRemapping, //we use fkRemapping
-                                final Set<String> mergeByColumn) throws IOException, XmlPullParserException {
+                                @Nullable final LongSparseArray<Long> fkRemapping, //we use
+                                final Set<String> mergeByColumn)
+        throws IOException, XmlPullParserException {
     final ContentValues cv = new ContentValues();
     int mergeCnt = 0;
     final StringBuilder mergeCond = new StringBuilder();
@@ -171,7 +188,8 @@ public class XmlToDatabaseImporter extends XmlBase {
       }
       if (updated == 1) {
         if (pkRemapping != null) {
-          final Cursor cursor = db.query(tableName, new String[]{pkColumn}, mergeCondStr, mergeArgs, null, null, null);
+          final Cursor cursor = db.query(tableName, new String[]{pkColumn}, mergeCondStr,
+              mergeArgs, null, null, null);
           final int cnt = cursor.getCount();
           if (cnt != 1)
             Log.w(TAG, "Can't do PK remapping, error finding updated row; cnt=" + cnt);
@@ -196,7 +214,8 @@ public class XmlToDatabaseImporter extends XmlBase {
       pkRemapping.put(oldPK, pk);
   }
 
-  private static void readTag(final XmlPullParser p, final String expectedName, final boolean closing) throws IOException, XmlPullParserException {
+  private static void readTag(final XmlPullParser p, final String expectedName,
+                              final boolean closing) throws IOException, XmlPullParserException {
     p.nextTag();
     p.require(closing ? XmlPullParser.END_TAG : XmlPullParser.START_TAG, null, expectedName);
   }

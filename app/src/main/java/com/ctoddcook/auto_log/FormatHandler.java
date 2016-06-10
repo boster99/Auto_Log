@@ -35,7 +35,8 @@ public class FormatHandler {
   private static DecimalFormat mCurrencyLongForm = null;
   private static DecimalFormat mCurrencyLongFormRaw = null;
   private static DecimalFormat mDistanceForm = null;
-  private static DecimalFormat mVolumeForm = null;
+  private static DecimalFormat mVolumeShortForm = null;
+  private static DecimalFormat mVolumeLongForm = null;
   private static DecimalFormat mEfficiencyForm = null;
 
   private static final DateFormat mShortDateForm =
@@ -92,7 +93,8 @@ public class FormatHandler {
     String currencyRaw = res.getString(R.string.Fueling_CurrencyFormRaw);
     String currencyLong = res.getString(R.string.Fueling_CurrencyLongForm);
     String currencyLongRaw = res.getString(R.string.Fueling_CurrencyLongFormRaw);
-    String singleDec = res.getString(R.string.Fueling_SingleDecimalPointForm);
+    String oneDec = res.getString(R.string.Fueling_OneDecimalPointForm);
+    String threeDec = res.getString(R.string.Fueling_ThreeDecimalPointForm);
 
     // Create shared/static formatting objects which will be used over and over
     mCurrencyForm = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
@@ -108,13 +110,16 @@ public class FormatHandler {
     mCurrencyLongFormRaw.applyLocalizedPattern(currencyLongRaw);
 
     mDistanceForm = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
-    mDistanceForm.applyLocalizedPattern(singleDec);
+    mDistanceForm.applyLocalizedPattern(oneDec);
 
-    mVolumeForm = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
-    mVolumeForm.applyLocalizedPattern(singleDec);
+    mVolumeShortForm = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
+    mVolumeShortForm.applyLocalizedPattern(oneDec);
+
+    mVolumeLongForm = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
+    mVolumeLongForm.applyLocalizedPattern(oneDec);
 
     mEfficiencyForm = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
-    mEfficiencyForm.applyLocalizedPattern(singleDec);
+    mEfficiencyForm.applyLocalizedPattern(oneDec);
 
     // note that setup does not have to be performed again
     hasBeenSetup = true;
@@ -340,11 +345,11 @@ public class FormatHandler {
    * @param vol the volume to convert to formatted String
    * @return a formatted String
    */
-  public static String formatVolume(float vol) {
+  public static String formatVolumeShort(float vol) {
     if (!hasBeenSetup)
       throw new UnsupportedOperationException("FormatHandler has not been initialized");
 
-    return String.format(displayPattern, mVolumeForm.format(vol), volumeAbbrev);
+    return String.format(displayPattern, mVolumeShortForm.format(vol), volumeAbbrev);
   }
 
   /**
@@ -352,11 +357,35 @@ public class FormatHandler {
    * @param vol the volume to convert to formatted String
    * @return a formatted String
    */
-  public static String formatVolumeRaw(float vol) {
+  public static String formatVolumeShortRaw(float vol) {
     if (!hasBeenSetup)
       throw new UnsupportedOperationException("FormatHandler has not been initialized");
 
-    return mVolumeForm.format(vol);
+    return mVolumeShortForm.format(vol);
+  }
+
+  /**
+   * Returns a formatted String version of the provided volume.
+   * @param vol the volume to convert to formatted String
+   * @return a formatted String
+   */
+  public static String formatVolumeLong(float vol) {
+    if (!hasBeenSetup)
+      throw new UnsupportedOperationException("FormatHandler has not been initialized");
+
+    return String.format(displayPattern, mVolumeLongForm.format(vol), volumeAbbrev);
+  }
+
+  /**
+   * Returns a formatted String version of the provided volume, without a unit abbreviation.
+   * @param vol the volume to convert to formatted String
+   * @return a formatted String
+   */
+  public static String formatVolumeLongRaw(float vol) {
+    if (!hasBeenSetup)
+      throw new UnsupportedOperationException("FormatHandler has not been initialized");
+
+    return mVolumeLongForm.format(vol);
   }
 
   /**

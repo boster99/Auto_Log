@@ -162,7 +162,7 @@
 
         <Button
             style="@style/SaveButton"
-            android:onClick="saveFueling"/>
+            android:onClick="processEdits"/>
     </LinearLayout>
 </RelativeLayout>
 

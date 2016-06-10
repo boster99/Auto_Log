@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.ctoddcook.CGenTools.BaseDataMap;
 
@@ -24,7 +23,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
   private DatabaseHelper(Context context) {
-    super(context, AutoLogDataMap.DATABASE_NAME, null, DATABASE_VERSION);
+    super(context, FuelLogDataMap.DATABASE_NAME, null, DATABASE_VERSION);
   }
 
 

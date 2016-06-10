@@ -1,5 +1,5 @@
 <resources>
-  <string name="app_name">Auto Log</string>
+  <string name="app_name">Fuel Log</string>
 
   <string name="navigation_drawer_open">Open navigation drawer</string>
   <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -38,9 +38,6 @@
   <string name="Fueling_PriceEfficiencyLabel">Price/Mile</string>
   <string name="Fueling_PricePerUnitLabel">Price/Gallon</string>
   <string name="Fueling_LatitudeLongitude">GPS Coordinates</string>
-    <string name="Fueling_GPSHint">
-        HINT: Touch the coordinates, and a map will show the location.
-    </string>
 
   <string name="Span_VehicleLabel">Vehicle</string>
   <string name="Span_PeriodLabel">Period</string>
@@ -60,9 +57,9 @@
   <string name="Vehicle_ModelLabel">Model</string>
   <string name="Vehicle_VINLabel">VIN</string>
   <string name="Vehicle_LicenseLabel">License Plate</string>
-  <string name="Vehicle_NameEntryHint">
-     HINT: You can enter your own descriptive \"Name\" for this vehicle. Or, if you leave
-     it blank, the vehicle\'s color, year and model will be used to create a name for you.
+  <string name="duplicate_vehicle">
+    There is already a Vehicle with the same Color, Year and Model, the same Name, the same VIN,
+    or the same License Plate.\n\nDo you want to save this as a duplicate?
   </string>
 
   <!-- For re-used buttons -->
@@ -76,7 +73,9 @@
   <string name="Fueling_CurrencyFormRaw">0.00</string>
   <string name="Fueling_CurrencyLongForm">¤ 0.000</string>
   <string name="Fueling_CurrencyLongFormRaw">0.000</string>
-  <string name="Fueling_SingleDecimalPointForm">0.0</string>
+  <string name="Fueling_OneDecimalPointForm">0.0</string>
+  <string name="Fueling_TwoDecimalPointForm">0.00</string>
+  <string name="Fueling_ThreeDecimalPointForm">0.000</string>
   <string name="Fueling_DataPattern">%1$s %2$s</string>
   <string name="Fueling_DistanceAbbrev">m</string>
   <string name="Fueling_VolumeAbbrev">g</string>
@@ -94,10 +93,48 @@
   <string name="make_default">Make Default</string>
   <string name="retire">Retire</string>
   <string name="unretire">Un-retire</string>
-  <string name="duplicate_vehicle">
-    There is already a Vehicle with the same Color, Year and Model, or with the same name. Do you
-    want to save this as a duplicate?
-  </string>
   <string name="view">View</string>
+  <string name="allow_gps">Allow GPS/Network Services search to identify fueling location</string>
+  <string name="reset">Reset</string>
+
+
+  <!-- Hint messages -->
+  <string name="Vehicle_NameEntryHint">
+    HINT: You can enter your own descriptive \"Name\" for this vehicle. Or, if you leave
+    it blank, the vehicle\'s color, year and model will be used to create a name for you.
+  </string>
+
+  <string name="Fueling_GPSHint">
+    HINT: Touch the coordinates, and a map will show the location.
+  </string>
+
+  <string name="vehicle_swipe_hint">
+    If you have more than one vehicle, on this screen you can swipe left or right to view
+    the prior or next vehicle\'s details.
+  </string>
+
+  <string name="fueling_swipe_hint">
+    If you have more than one fueling, on this screen you can swipe left or right to view
+    the prior or next fueing\'s details.
+  </string>
+
+  <string name="averages_swipe_hint">
+    Swipe left or right to view the prior or next set of averages.
+  </string>
+
+  <string name="vehicle_list_hint">
+    Touch a vehicle on this screen to be shown more details about that vehicle. Long-touch
+    a vehicle to open a context menu of options available for that vehicle.
+  </string>
+
+  <string name="fueling_list_hint">
+    Touch a row of averages to view more detail about that row.\n\nTouch a fueling to view
+    more detail about that fueling, or long-touch a fueling to open a context menu of options
+    available for that fueling.
+  </string>
+  <string name="hint_title">Hint</string>
+  <string name="hint_okay_button_label">Got it</string>
+  <string name="reset_hints">Reset first-time hints (to show them again)</string>
+  <string name="settings">Settings</string>
 
 </resources>

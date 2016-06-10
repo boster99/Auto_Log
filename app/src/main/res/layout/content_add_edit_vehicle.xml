@@ -139,7 +139,7 @@
 
         <Button
             style="@style/SaveButton"
-            android:onClick="saveVehicle"/>
+            android:onClick="processEdits"/>
     </LinearLayout>
 
 

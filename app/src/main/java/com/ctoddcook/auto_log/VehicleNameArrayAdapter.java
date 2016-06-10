@@ -6,14 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 // fixme Have not been able to make this work with Activity_Main.setupVehicleSpinner() and vehicle_name_array_adapter.xml
 /**
- * TODO: Add a class header comment
+ * Array adapter for filling out spinners with vehicle lists
  * <p/>
  * Created by C. Todd Cook on 5/26/2016.<br>
  * ctodd@ctoddcook.com
@@ -87,7 +86,7 @@ public class VehicleNameArrayAdapter extends ArrayAdapter<Vehicle> {
       row = inflater.inflate(R.layout.vehicle_name_array_adapter, parent, false);
 
       ViewHolder newHolder = new ViewHolder();
-      newHolder.tvName = (TextView) row.findViewById(R.id.spinnter_vehicle_name);
+      newHolder.tvName = (TextView) row.findViewById(R.id.spinner_vehicle_name);
       row.setTag(newHolder);
     }
 
