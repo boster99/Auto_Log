@@ -77,22 +77,22 @@ public class Fragment_AveragesDetail extends Fragment {
     tvPeriod.setText(Model_Fueling.getSpanPeriod(mSpan));
 
     TextView tvDist = (TextView) view.findViewById(R.id.span_detail_distance);
-    tvDist.setText(FormatHandler.formatDistance(Model_Fueling.getAvgDistanceOverSpan(mSpan)));
+    tvDist.setText(Handler_Format.formatDistance(Model_Fueling.getAvgDistanceOverSpan(mSpan)));
 
     TextView tvVol = (TextView) view.findViewById(R.id.span_detail_volume);
-    tvVol.setText(FormatHandler.formatVolumeShort(Model_Fueling.getAvgVolumeOverSpan(mSpan)));
+    tvVol.setText(Handler_Format.formatVolumeShort(Model_Fueling.getAvgVolumeOverSpan(mSpan)));
 
     TextView tvPrice = (TextView) view.findViewById(R.id.span_detail_total_price_paid);
-    tvPrice.setText(FormatHandler.formatPrice(Model_Fueling.getAvgPricePaidOverSpan(mSpan)));
+    tvPrice.setText(Handler_Format.formatPrice(Model_Fueling.getAvgPricePaidOverSpan(mSpan)));
 
     TextView tvMPG = (TextView) view.findViewById(R.id.span_detail_efficiency);
-    tvMPG.setText(FormatHandler.formatEfficiency(Model_Fueling.getAvgEfficiencyOverSpan(mSpan)));
+    tvMPG.setText(Handler_Format.formatEfficiency(Model_Fueling.getAvgEfficiencyOverSpan(mSpan)));
 
     TextView tvPPG = (TextView) view.findViewById(R.id.span_detail_price_per_unit);
-    tvPPG.setText(FormatHandler.formatPrice(Model_Fueling.getAvgPricePerUnitOverSpan(mSpan)));
+    tvPPG.setText(Handler_Format.formatPrice(Model_Fueling.getAvgPricePerUnitOverSpan(mSpan)));
 
     TextView tvPPM = (TextView) view.findViewById(R.id.span_detail_price_per_distance);
-    tvPPM.setText(FormatHandler.formatPrice(Model_Fueling.getAvgPricePerDistanceOverSpan(mSpan)));
+    tvPPM.setText(Handler_Format.formatPrice(Model_Fueling.getAvgPricePerDistanceOverSpan(mSpan)));
 
     return view;
   }

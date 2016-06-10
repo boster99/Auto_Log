@@ -52,23 +52,23 @@ public class Row_FuelingDetails extends ArrayAdapter<Model_Fueling> {
     public TextView tvEff;
 
     public void setDate(Date date) {
-      tvDate.setText(FormatHandler.formatShortDate(date));
+      tvDate.setText(Handler_Format.formatShortDate(date));
     }
 
     public void setPrice(float price) {
-      tvPrice.setText(FormatHandler.formatPrice(price));
+      tvPrice.setText(Handler_Format.formatPrice(price));
     }
 
     public void setDistance(float dist) {
-      tvDist.setText(FormatHandler.formatDistance(dist));
+      tvDist.setText(Handler_Format.formatDistance(dist));
     }
 
     public void setVolume(float vol) {
-      tvVol.setText(FormatHandler.formatVolumeShort(vol));
+      tvVol.setText(Handler_Format.formatVolumeShort(vol));
     }
 
     public void setEfficiency(float eff) {
-      tvEff.setText(FormatHandler.formatEfficiency(eff));
+      tvEff.setText(Handler_Format.formatEfficiency(eff));
     }
   }
 

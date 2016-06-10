@@ -111,9 +111,9 @@ public class Activity_EditFueling extends AppCompatActivity
         mFueling = Model_Fueling.getFueling(fuelingID);
         gc.setTimeInMillis(mFueling.getDateOfFill().getTime());
 
-        mDistanceET.setText(FormatHandler.formatDistanceRaw(mFueling.getDistance()));
-        mVolumeET.setText(FormatHandler.formatVolumeLongRaw(mFueling.getVolume()));
-        mPricePaidDT.setText(FormatHandler.formatPriceRaw(mFueling.getPricePaid()));
+        mDistanceET.setText(Handler_Format.formatDistanceRaw(mFueling.getDistance()));
+        mVolumeET.setText(Handler_Format.formatVolumeLongRaw(mFueling.getVolume()));
+        mPricePaidDT.setText(Handler_Format.formatPriceRaw(mFueling.getPricePaid()));
         mLocationET.setText(mFueling.getLocation());
         mOdometerET.setText(Float.toString(mFueling.getOdometer()));
 

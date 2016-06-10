@@ -72,16 +72,16 @@ public class Fragment_FuelingDetail extends Fragment {
     tvVehicle.setText(Model_Vehicle.getVehicle(mFueling.getVehicleID()).getName());
 
     TextView tvDate = (TextView) layoutView.findViewById(R.id.fueling_detail_date);
-    tvDate.setText(FormatHandler.formatLongDateShortTime(mFueling.getDateOfFill()));
+    tvDate.setText(Handler_Format.formatLongDateShortTime(mFueling.getDateOfFill()));
 
     TextView tvDist = (TextView) layoutView.findViewById(R.id.fueling_detail_distance);
-    tvDist.setText(FormatHandler.formatDistance(mFueling.getDistance()));
+    tvDist.setText(Handler_Format.formatDistance(mFueling.getDistance()));
 
     TextView tvVol = (TextView) layoutView.findViewById(R.id.fueling_detail_volume);
-    tvVol.setText(FormatHandler.formatVolumeLong(mFueling.getVolume()));
+    tvVol.setText(Handler_Format.formatVolumeLong(mFueling.getVolume()));
 
     TextView tvPrice = (TextView) layoutView.findViewById(R.id.fueling_detail_total_price_paid);
-    tvPrice.setText(FormatHandler.formatPrice(mFueling.getPricePaid()));
+    tvPrice.setText(Handler_Format.formatPrice(mFueling.getPricePaid()));
 
     TextView tvLocation = (TextView) layoutView.findViewById(R.id.fueling_detail_location);
     tvLocation.setText(mFueling.getLocation());
@@ -90,13 +90,13 @@ public class Fragment_FuelingDetail extends Fragment {
     tvOdometer.setText(Float.toString(mFueling.getOdometer()));
 
     TextView tvMPG = (TextView) layoutView.findViewById(R.id.fueling_detail_efficiency);
-    tvMPG.setText(FormatHandler.formatEfficiency(mFueling.getEfficiency()));
+    tvMPG.setText(Handler_Format.formatEfficiency(mFueling.getEfficiency()));
 
     TextView tvPPG = (TextView) layoutView.findViewById(R.id.fueling_detail_price_per_unit);
-    tvPPG.setText(FormatHandler.formatPriceLong(mFueling.getPricePerUnit()));
+    tvPPG.setText(Handler_Format.formatPriceLong(mFueling.getPricePerUnit()));
 
     TextView tvPPM = (TextView) layoutView.findViewById(R.id.fueling_detail_price_per_distance);
-    tvPPM.setText(FormatHandler.formatPriceLong(mFueling.getPricePerDistance()));
+    tvPPM.setText(Handler_Format.formatPriceLong(mFueling.getPricePerDistance()));
 
     TextView tvGPS = (TextView) layoutView.findViewById(R.id.fueling_detail_coordinates);
     tvGPS.setText(mFueling.getGeoURI());
