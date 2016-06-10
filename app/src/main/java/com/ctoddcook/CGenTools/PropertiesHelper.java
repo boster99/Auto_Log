@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.ctoddcook.auto_log.FuelingDBMap;
+import com.ctoddcook.FuelLog.FuelingDBMap;
 
 import java.text.ParseException;
 import java.util.ArrayList;

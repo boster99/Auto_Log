@@ -7,7 +7,7 @@ package com.ctoddcook.CGenTools;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
-import com.ctoddcook.auto_log.FuelLogDataMap;
+import com.ctoddcook.FuelLog.FuelLogDataMap;
 
 /**
  * Provides SQL specifications (table name, column names and types) etc for the Property class.

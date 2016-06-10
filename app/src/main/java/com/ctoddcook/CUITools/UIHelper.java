@@ -5,7 +5,7 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 
 import com.ctoddcook.CGenTools.PropertiesHelper;
-import com.ctoddcook.auto_log.R;
+import com.ctoddcook.FuelLog.R;
 
 import java.util.NoSuchElementException;
 
