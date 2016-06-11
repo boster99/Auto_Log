@@ -85,6 +85,7 @@ public class CLocationWaiter implements LocationListener,
       mLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
       gpsAllowed = true;
     } catch(SecurityException ex) {
+      Log.e(TAG, "CLocationWaiter: ", ex);
       /*
       Do nothing. This means we aren't allowed to get gps-provided location data. We might be
       able to get network-provided location data, so we'll try that next.

@@ -37,8 +37,11 @@ public class Activity_Settings extends AppCompatActivity {
     setContentView(R.layout.activity_settings);
 
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_settings);
-    setSupportActionBar(toolbar);
-    if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    if (toolbar != null) {
+      setSupportActionBar(toolbar);
+      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+      toolbar.setLogo(R.drawable.ic_settings);
+    }
 
     // Get the current setting for whether gps is allowed, and set the switch accordingly
     sGPSSwitch = (Switch) findViewById(R.id.gps_allowed);

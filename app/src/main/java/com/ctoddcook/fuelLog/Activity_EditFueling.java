@@ -81,9 +81,13 @@ public class Activity_EditFueling extends AppCompatActivity
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_edit_fueling);
+
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_edit_fueling);
-    setSupportActionBar(toolbar);
-    if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    if (toolbar != null) {
+      setSupportActionBar(toolbar);
+      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+      toolbar.setLogo(R.drawable.ic_gas_pump);
+    }
 
     sDatabaseHelper = DatabaseHelper.getInstance(this);
 

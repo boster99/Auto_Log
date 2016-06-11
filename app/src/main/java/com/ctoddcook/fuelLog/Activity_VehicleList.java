@@ -49,8 +49,12 @@ public class Activity_VehicleList extends AppCompatActivity implements AdapterVi
     setContentView(R.layout.activity_vehicle_list);
 
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_vehicle_list);
-    setSupportActionBar(toolbar);
-    if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    if (toolbar != null) {
+      setSupportActionBar(toolbar);
+      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+      toolbar.setLogo(R.drawable.ic_car);
+    }
+
 
     sDB = DatabaseHelper.getInstance(this);
     Handler_DataEvents.getInstance().setOnDataUpdatedListener(this);
