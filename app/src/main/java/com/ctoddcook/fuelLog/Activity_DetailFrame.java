@@ -33,6 +33,7 @@ public class Activity_DetailFrame extends AppCompatActivity {
   private static ViewPager mPager;
   private Fragment mCurrentFragment;
   private int mArgType;
+  private Toolbar mToolbar;
 
 
   /**
@@ -43,8 +44,11 @@ public class Activity_DetailFrame extends AppCompatActivity {
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
     setContentView(R.layout.activity_detail_frame);
-    setSupportActionBar((Toolbar) findViewById(R.id.toolbar_detail_frame));// ACTION BAR
+    mToolbar = (Toolbar) findViewById(R.id.toolbar_detail_frame);
+    setSupportActionBar(mToolbar);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     mPager = (ViewPager) findViewById(R.id.Details_Pager);
     int type = getIntent().getIntExtra(ARG_TYPE, -1);
@@ -69,6 +73,8 @@ public class Activity_DetailFrame extends AppCompatActivity {
             Model_Vehicle.getVehicleList());
         mPager.setAdapter(pagerVehicle);
         mPager.setCurrentItem(position);
+        mToolbar.setLogo(R.drawable.ic_car);
+        setTitle(R.string.vehicle_details_title);
         showVehicleSwipeHint();
         break;
 
@@ -77,6 +83,8 @@ public class Activity_DetailFrame extends AppCompatActivity {
             Model_Fueling.getFuelingList());
         mPager.setAdapter(pagerFueling);
         mPager.setCurrentItem(position);
+        mToolbar.setLogo(R.drawable.ic_gas_pump);
+        setTitle(R.string.fueling_details_title);
         showFuelingSwipeHint();
         break;
 
@@ -86,6 +94,8 @@ public class Activity_DetailFrame extends AppCompatActivity {
             vehicleName);
         mPager.setAdapter(pagerAverages);
         mPager.setCurrentItem(position);
+        mToolbar.setLogo(R.drawable.ic_bar_chart);
+        setTitle(R.string.averages_detail_title);
         showAveragesSwipeHint();
         break;
     }

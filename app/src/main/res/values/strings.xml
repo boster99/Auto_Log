@@ -36,6 +36,7 @@
   <string name="row_fueling_details_coordinates">GPS Coordinates</string>
 
   <!-- Following are used in fragment_averages_detail.xml -->
+  <string name="averages_detail_title">Averages Details</string>
   <string name="averages_distance_label">Avg Distance</string>
   <string name="averages_volume_label">Avg Volume</string>
   <string name="averages_total_price_paid_label">Avg Price</string>
@@ -85,6 +86,8 @@
   <string name="menu_view_label">View</string>
 
   <!-- Miscellaneous -->
+  <string name="fueling_details_title">Fueling Details</string>
+  <string name="vehicle_details_title">Vehicle Details</string>
   <string name="detail_frame_title">View Details</string>
   <string name="nav_drawer_open_description">Drawer Opening</string>
   <string name="nav_drawer_close_description">Drawer Closing</string>

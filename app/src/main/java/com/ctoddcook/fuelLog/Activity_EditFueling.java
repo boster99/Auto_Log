@@ -83,9 +83,9 @@ public class Activity_EditFueling extends AppCompatActivity
     setContentView(R.layout.activity_edit_fueling);
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_edit_fueling);
     setSupportActionBar(toolbar);
-    sDatabaseHelper = DatabaseHelper.getInstance(this);
-
     if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+    sDatabaseHelper = DatabaseHelper.getInstance(this);
 
     GregorianCalendar gc = new GregorianCalendar();
 
