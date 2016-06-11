@@ -1,44 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:padding="8dp"
-              tools:context=".Activity_Settings">
+<!--
+  ~ Copyright (c) 2016 C. Todd Cook. All rights reserved.
+  -->
 
-  <Switch
-      android:id="@+id/gps_allowed"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="right"
-      android:text="@string/settings_switch_allow_gps_description"
-      android:textSize="16sp"/>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".Activity_Settings">
 
-  <TextView
-      android:layout_width="match_parent"
-      android:layout_height="20dp"/>
-
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content">
-
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_weight="4"
-        android:gravity="center_vertical"
-        android:text="@string/settings_btn_reset_hints_description"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"/>
-
-    <Button
-        android:layout_width="0dp"
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="1"
-        android:onClick="resetHints"
-        android:text="@string/settings_btn_reset_hints_label"/>
-  </LinearLayout>
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-</LinearLayout>
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_settings"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/content_settings"/>
+
+</android.support.design.widget.CoordinatorLayout>

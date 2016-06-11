@@ -4,7 +4,6 @@
           android:installLocation="auto">
 
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
   <application
       android:allowBackup="true"
@@ -23,7 +22,6 @@
         android:theme="@style/AppTheme.NoActionBar">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
-
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
@@ -47,7 +45,7 @@
     </activity>
     <activity
         android:name=".Activity_VehicleList"
-        android:label="View Vehicle List"
+        android:label="@string/vehicle_list_title"
         android:parentActivityName="com.ctoddcook.fuelLog.Activity_Main"
         android:theme="@style/AppTheme.NoActionBar">
       <meta-data
@@ -56,7 +54,7 @@
     </activity>
     <activity
         android:name="com.ctoddcook.fuelLog.Activity_Settings"
-        android:label="Edit Settings"
+        android:label="@string/settings_title"
         android:parentActivityName="com.ctoddcook.fuelLog.Activity_Main"
         android:theme="@style/AppTheme.NoActionBar">
       <meta-data
@@ -65,7 +63,7 @@
     </activity>
     <activity
         android:name=".Activity_DetailFrame"
-        android:label="View Details"
+        android:label="@string/detail_frame_title"
         android:theme="@style/AppTheme.NoActionBar">
     </activity>
   </application>

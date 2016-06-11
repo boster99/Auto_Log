@@ -78,6 +78,8 @@ public class CLocationWaiter implements LocationListener,
     granted by the user we get a SecurityException thrown in our face.
     */
 
+    // fixme I'm no longer able to get location info
+
     try {
       mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
       mLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);

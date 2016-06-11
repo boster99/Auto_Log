@@ -44,7 +44,7 @@ public class Activity_DetailFrame extends AppCompatActivity {
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_detail_frame);
-    setSupportActionBar((Toolbar) findViewById(R.id.toolbar));// ACTION BAR
+    setSupportActionBar((Toolbar) findViewById(R.id.toolbar_detail_frame));// ACTION BAR
 
     mPager = (ViewPager) findViewById(R.id.Details_Pager);
     int type = getIntent().getIntExtra(ARG_TYPE, -1);

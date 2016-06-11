@@ -151,25 +151,15 @@
     <style name="SaveButton">
         <item name="android:layout_width">96dp</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">8dp</item>
         <item name="android:text">@string/btn_save_label</item>
     </style>
 
     <style name="CancelButton">
         <item name="android:layout_width">96dp</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">8dp</item>
         <item name="android:text">@string/btn_cancel_label</item>
-    </style>
-
-    <style name="EditButton">
-        <item name="android:layout_width">96dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:text">@string/btn_edit_label</item>
-    </style>
-
-    <style name="DeleteButton">
-        <item name="android:layout_width">96dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:text">@string/btn_delete_label</item>
     </style>
 
 </resources>

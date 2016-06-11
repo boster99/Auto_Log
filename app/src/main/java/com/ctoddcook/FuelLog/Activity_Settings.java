@@ -3,6 +3,7 @@ package com.ctoddcook.fuelLog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
@@ -32,7 +33,11 @@ public class Activity_Settings extends AppCompatActivity {
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_settings);
+    setContentView(R.layout.content_settings);
+
+    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_settings);
+    setSupportActionBar(toolbar);
+    if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     // Get the current setting for whether gps is allowed, and set the switch accordingly
     sGPSSwitch = (Switch) findViewById(R.id.gps_allowed);

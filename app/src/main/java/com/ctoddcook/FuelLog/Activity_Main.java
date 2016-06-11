@@ -69,7 +69,7 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.nav_drawer);
-    mToolbar = (Toolbar) findViewById(R.id.toolbar);
+    mToolbar = (Toolbar) findViewById(R.id.toolbar_main);
     setSupportActionBar(mToolbar);
 
     mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -46,6 +47,11 @@ public class Activity_VehicleList extends AppCompatActivity implements AdapterVi
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_vehicle_list);
+
+    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_vehicle_list);
+    setSupportActionBar(toolbar);
+    if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     sDB = DatabaseHelper.getInstance(this);
     Handler_DataEvents.getInstance().setOnDataUpdatedListener(this);
     showVehicles();

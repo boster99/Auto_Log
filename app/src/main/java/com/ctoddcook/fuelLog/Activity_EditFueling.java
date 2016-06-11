@@ -81,7 +81,7 @@ public class Activity_EditFueling extends AppCompatActivity
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_edit_fueling);
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_edit_fueling);
     setSupportActionBar(toolbar);
     sDatabaseHelper = DatabaseHelper.getInstance(this);
 
