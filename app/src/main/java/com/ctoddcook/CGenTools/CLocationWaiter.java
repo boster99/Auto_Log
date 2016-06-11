@@ -4,6 +4,7 @@
 
 package com.ctoddcook.cGenTools;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -14,8 +15,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.ctoddcook.cUiTools.SimpleDialog;
+import com.ctoddcook.fuelLog.R;
 
 /**
  * This class provides a service: getting the current location of the user/phone. The Android
@@ -42,12 +47,14 @@ public class CLocationWaiter implements LocationListener,
     ActivityCompat.OnRequestPermissionsResultCallback {
 
   private static final String TAG = "CLocationWaiter";
+  private static final int LOCATION_PERMISSION_REQUEST = 323;
   private Activity mActivity;
   private locationCaller mCaller;
   private Location mLocation;
   private LocationManager mLocationManager;
   private Handler mTimerHandler;
   private Runnable mRunnable;
+  private int mMaxDelayMillis;
 
 
   /**
@@ -67,18 +74,59 @@ public class CLocationWaiter implements LocationListener,
    */
   public CLocationWaiter(Activity a, int maxDelayMillis) {
     mActivity = a;
-    mCaller = (locationCaller) a;
+    mMaxDelayMillis = maxDelayMillis;
+
+    if (gpsIsAllowed())
+      setLocation();
+  }
+
+  /**
+   * Check to see whether we have system permission to access location services. If we don't,
+   * then we'll ask the system whether we should explain to the user why we want location
+   * access, and provide that explanation if so. Finally, we request the permission if we don't
+   * have it.
+   * @return True if we already have permission
+   */
+  private boolean gpsIsAllowed() {
+
+    // Do we already have permission?
+    if (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_FINE_LOCATION)
+        != PackageManager.PERMISSION_GRANTED) {
+
+      // Should we show an explanation?
+      if (ActivityCompat.shouldShowRequestPermissionRationale(mActivity,
+          Manifest.permission.ACCESS_FINE_LOCATION)) {
+        SimpleDialog.showSimpleMessage(mActivity,
+            mActivity.getString(R.string.location_request_explanation_title),
+            mActivity.getString(R.string.location_request_explanation_message),
+            null);
+      }
+
+      // Request permission
+      ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission
+          .ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST);
+
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
+   * This should be called only after we've established that we have permissions to access
+   * location services.
+   */
+  private void setLocation() {
+    mCaller = (locationCaller) mActivity;
     boolean gpsAllowed = false, networkAllowed = false;
 
-    mLocationManager = (LocationManager) a.getSystemService(Context.LOCATION_SERVICE);
+    mLocationManager = (LocationManager) mActivity.getSystemService(Context.LOCATION_SERVICE);
 
     /*
     Try to get fine-grained location information updates (gps-based), or, if that's not
     available, try to get course-grained location information updates. When permissions are not
     granted by the user we get a SecurityException thrown in our face.
     */
-
-    // fixme I'm no longer able to get location info
 
     try {
       mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
@@ -98,8 +146,8 @@ public class CLocationWaiter implements LocationListener,
         mLocation = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         networkAllowed = true;
       } catch(SecurityException ex) {
-        Toast.makeText(a, "We do not have permission to get either gps-based OR " +
-            "network-based location information", Toast.LENGTH_LONG).show();
+        Toast.makeText(mActivity, R.string.service_not_allowed_1, Toast.LENGTH_LONG).show();
+        Toast.makeText(mActivity, R.string.service_not_allowed_2, Toast.LENGTH_LONG).show();
       }
     }
 
@@ -112,7 +160,7 @@ public class CLocationWaiter implements LocationListener,
       return;
     }
 
-    startTimer(maxDelayMillis);
+    startTimer(mMaxDelayMillis);
   }
 
   /**
@@ -124,19 +172,20 @@ public class CLocationWaiter implements LocationListener,
    * and results arrays which should be treated as a cancellation.
    * </p>
    *
-   * @param requestCode  The request code passed in requestPermissions(Activity, String[], int)}
+   * @param requestCode  The request code passed in requestPermissions(Activity, String[], int)}.
    * @param permissions  The requested permissions. Never null.
    * @param grantResults The grant results for the corresponding permissions
    *                     which is either {@link PackageManager#PERMISSION_GRANTED}
    *                     or {@link PackageManager#PERMISSION_DENIED}. Never null.
    */
   @Override
-  public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-    try {
-      mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
-    } catch(SecurityException ex) {
-      Log.e(TAG, "onRequestPermissionsResult: Unexpected exception", ex);
-    }
+  public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                         @NonNull int[] grantResults) {
+    if (requestCode != LOCATION_PERMISSION_REQUEST)
+      return;
+
+    if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+      setLocation();
   }
 
   /**

@@ -96,7 +96,6 @@
   <string name="settings_btn_reset_hints_label">Reset</string>
   <string name="settings_btn_reset_hints_description">Reset first-time hints (to show them again)</string>
 
-
   <!-- Hint messages -->
   <string name="edit_vehicle_hint">
     HINT: You can enter your own descriptive \"Name\" for this vehicle. Or, if you leave
@@ -133,5 +132,16 @@
   </string>
   <string name="hint_title">Hint</string>
   <string name="hint_btn_okay_label">Got it</string>
+
+
+  <!-- GPS Services Messages -->
+  <string name="location_request_explanation_title">Location Services</string>
+  <string name="location_request_explanation_message">Location Services are used to capture
+    the coordinates of your location when you get gas. These coordinates are stored, and used
+    later to show you a map of that location.</string>
+  <string name="service_not_allowed_1">We were unable to get either gps-based OR network-based
+    location information.</string>
+  <string name="service_not_allowed_2">If you don\'t want this app to try to read your location
+    (i.e., GPS coordinates), you can disable that function within this app in Settins.</string>
 
 </resources>
