@@ -95,6 +95,7 @@
   <string name="settings_switch_allow_gps_description">Allow GPS/Network Services search to identify fueling location</string>
   <string name="settings_btn_reset_hints_label">Reset</string>
   <string name="settings_btn_reset_hints_description">Reset first-time hints (to show them again)</string>
+  <string name="all_btn_okay">Okay</string>
 
   <!-- Hint messages -->
   <string name="edit_vehicle_hint">
