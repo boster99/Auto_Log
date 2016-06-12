@@ -242,7 +242,7 @@ class Model_Fueling extends DataHolder {
     for (Model_Fueling each : fillsOverSpan)
       totalVolume += each.mVolume;
 
-    return round(totalVolume / fillsOverSpan.size(), 1);
+    return round(totalVolume / fillsOverSpan.size(), 3);
   }
 
   /**

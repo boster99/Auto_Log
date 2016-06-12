@@ -7,6 +7,7 @@ package com.ctoddcook.cGenTools;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -16,6 +17,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -91,25 +93,53 @@ public class CLocationWaiter implements LocationListener,
 
     // Do we already have permission?
     if (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_FINE_LOCATION)
-        != PackageManager.PERMISSION_GRANTED) {
+        == PackageManager.PERMISSION_GRANTED)
+      return true;
 
-      // Should we show an explanation?
-      if (ActivityCompat.shouldShowRequestPermissionRationale(mActivity,
-          Manifest.permission.ACCESS_FINE_LOCATION)) {
-        SimpleDialog.showSimpleMessage(mActivity,
-            mActivity.getString(R.string.location_request_explanation_title),
-            mActivity.getString(R.string.location_request_explanation_message),
-            null);
-      }
+    // Should we show an explanation?
+    if (ActivityCompat.shouldShowRequestPermissionRationale(mActivity,
+        Manifest.permission.ACCESS_FINE_LOCATION)) {
 
-      // Request permission
-      ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission
-          .ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST);
+      // Provide an explanation. When the user clicks "Okay", we go on and request permission.
+      AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+      builder.setTitle(R.string.location_request_explanation_title);
+      builder.setMessage(R.string.location_request_explanation_message);
 
-      return false;
+      builder.setNeutralButton(R.string.all_btn_okay,
+          new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+              requestPermissions();
+            }
+          });
+
+      builder.show();
+
+    // If we aren't displaying an explanation, we just go forward with requesting permission.
+    } else {
+      requestPermissions();
     }
 
-    return true;
+    /*
+    If we did not already have permission (at the top of this method) we return false, even
+    though the user might go on to give us permission. Because the permission request managed by
+    Android is asynchronous, we can't just wait for the user's response before moving on.
+
+    Responding FALSE here will lead to the constructor (above) NOT calling setLocation().
+
+    But, if the user does give us permission, there will be an asynchronous call to
+    onRequestPermissionsResult(), which will then go on to call setLocation().
+     */
+    return false;
+  }
+
+  /**
+   * Make the request for permission to access location services. The answer to the request will
+   * be provided through the call-back method onRequestPermissionsResult() (below).
+   */
+  private void requestPermissions() {
+    ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission
+        .ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST);
   }
 
   /**
@@ -171,6 +201,7 @@ public class CLocationWaiter implements LocationListener,
    * with the user is interrupted. In this case you will receive empty permissions
    * and results arrays which should be treated as a cancellation.
    * </p>
+   * NOTE: As of June 11 2015 this is never being called, as it seems it should be.
    *
    * @param requestCode  The request code passed in requestPermissions(Activity, String[], int)}.
    * @param permissions  The requested permissions. Never null.
@@ -201,52 +232,6 @@ public class CLocationWaiter implements LocationListener,
       mLocation = location;
     wrapUp();
   }
-
-  /**
-   * Called when the provider status changes. This method is called when
-   * a provider is unable to fetch a location or if the provider has recently
-   * become available after a period of unavailability.
-   *
-   * @param provider the name of the location provider associated with this
-   *                 update.
-   * @param status   <code>LocationProvider.OUT_OF_SERVICE</code> if the
-   *                 provider is out of service, and this is not expected to change in the
-   *                 near future; <code>LocationProvider.TEMPORARILY_UNAVAILABLE</code> if
-   *                 the provider is temporarily unavailable but is expected to be available
-   *                 shortly; and <code>LocationProvider.AVAILABLE</code> if the
-   *                 provider is currently available.
-   * @param extras   an optional Bundle which will contain provider specific
-   *                 status variables.
-   *                 <p/>
-   *                 <p> A number of common key/value pairs for the extras Bundle are listed
-   *                 below. Providers that use any of the keys on this list must
-   *                 provide the corresponding value as described below.
-   *                 <p/>
-   *                 <ul>
-   *                 <li> satellites - the number of satellites used to derive the fix
-   */
-  @Override
-  public void onStatusChanged(String provider, int status, Bundle extras) { }
-
-  /**
-   * Called when the provider is enabled by the user.
-   *
-   * @param provider the name of the location provider associated with this
-   *                 update.
-   */
-  @Override
-  public void onProviderEnabled(String provider) { }
-
-  /**
-   * Called when the provider is disabled by the user. If requestLocationUpdates
-   * is called on an already disabled provider, this method is called
-   * immediately.
-   *
-   * @param provider the name of the location provider associated with this
-   *                 update.
-   */
-  @Override
-  public void onProviderDisabled(String provider) { }
 
   /**
    * Creates a one-use timer which will, after the indicated number of milliseconds, call the
@@ -291,4 +276,26 @@ public class CLocationWaiter implements LocationListener,
     // Callback to give the location to the calling Activity
     mCaller.setLocation(mLocation);
   }
+
+
+
+
+
+  /**
+   * Required by LocationListener, but not being used here.
+   */
+  @Override
+  public void onStatusChanged(String provider, int status, Bundle extras) { }
+
+  /**
+   * Required by LocationListener, but not being used here.
+   */
+  @Override
+  public void onProviderEnabled(String provider) { }
+
+  /**
+   * Required by LocationListener, but not being used here.
+   */
+  @Override
+  public void onProviderDisabled(String provider) { }
 }
