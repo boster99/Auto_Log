@@ -116,7 +116,7 @@ public class Handler_Format {
     mVolumeShortForm.applyLocalizedPattern(oneDec);
 
     mVolumeLongForm = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
-    mVolumeLongForm.applyLocalizedPattern(oneDec);
+    mVolumeLongForm.applyLocalizedPattern(threeDec);
 
     mEfficiencyForm = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
     mEfficiencyForm.applyLocalizedPattern(oneDec);
