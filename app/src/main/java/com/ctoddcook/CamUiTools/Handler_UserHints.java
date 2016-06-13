@@ -18,7 +18,7 @@ import java.util.NoSuchElementException;
 public class Handler_UserHints {
 
   /**
-   * Displays an instructional hint to the user. Only shown the first time the uesr sees this
+   * Displays an instructional hint to the user. Only shown the first time the user sees this
    * screen (or after HINT settings have been reset).
    */
   public static void showHint(final Context context, final String propertyKey, String hintTitle,
