@@ -21,6 +21,7 @@ import java.util.Date;
  * ctodd@ctoddcook.com
  */
 public class Row_FuelingDetails extends ArrayAdapter<Model_Fueling> {
+  @SuppressWarnings("unused")
   private static final String TAG = "Row_FuelingDetails";
   private final Context context;
   private final ArrayList<Model_Fueling> mFuelingsList;
@@ -34,42 +35,6 @@ public class Row_FuelingDetails extends ArrayAdapter<Model_Fueling> {
     super(c, R.layout.row_fueling_details, fList);
     context = c;
     mFuelingsList = fList;
-  }
-
-  /**
-   * Inner class for making memory-usage more efficient and making scrolling smoother. The
-   * ViewHolder retains references to TextViews. Also, when a row (which includes a ViewHolder)
-   * scrolls off the screen, it is passed back to the getView() method (in the convertView
-   * parameter) so it can be re-used. This way, a Model_Fueling which is coming into view can reuse
-   * references to TextViews, instead of every time having to look up their details in the XML
-   * file and building them from scratch.
-   */
-  static class ViewHolder {
-    public TextView tvDate;
-    public TextView tvPrice;
-    public TextView tvDist;
-    public TextView tvVol;
-    public TextView tvEff;
-
-    public void setDate(Date date) {
-      tvDate.setText(Handler_Format.formatShortDate(date));
-    }
-
-    public void setPrice(float price) {
-      tvPrice.setText(Handler_Format.formatPrice(price));
-    }
-
-    public void setDistance(float dist) {
-      tvDist.setText(Handler_Format.formatDistance(dist));
-    }
-
-    public void setVolume(float vol) {
-      tvVol.setText(Handler_Format.formatVolumeShort(vol));
-    }
-
-    public void setEfficiency(float eff) {
-      tvEff.setText(Handler_Format.formatEfficiency(eff));
-    }
   }
 
   /**
@@ -117,5 +82,41 @@ public class Row_FuelingDetails extends ArrayAdapter<Model_Fueling> {
     holder.setEfficiency(fd.getEfficiency());
 
     return row;
+  }
+
+  /**
+   * Inner class for making memory-usage more efficient and making scrolling smoother. The
+   * ViewHolder retains references to TextViews. Also, when a row (which includes a ViewHolder)
+   * scrolls off the screen, it is passed back to the getView() method (in the convertView
+   * parameter) so it can be re-used. This way, a Model_Fueling which is coming into view can reuse
+   * references to TextViews, instead of every time having to look up their details in the XML
+   * file and building them from scratch.
+   */
+  static class ViewHolder {
+    public TextView tvDate;
+    public TextView tvPrice;
+    public TextView tvDist;
+    public TextView tvVol;
+    public TextView tvEff;
+
+    public void setDate(Date date) {
+      tvDate.setText(Handler_Format.formatShortDate(date));
+    }
+
+    public void setPrice(float price) {
+      tvPrice.setText(Handler_Format.formatPrice(price));
+    }
+
+    public void setDistance(float dist) {
+      tvDist.setText(Handler_Format.formatDistance(dist));
+    }
+
+    public void setVolume(float vol) {
+      tvVol.setText(Handler_Format.formatVolumeShort(vol));
+    }
+
+    public void setEfficiency(float eff) {
+      tvEff.setText(Handler_Format.formatEfficiency(eff));
+    }
   }
 }
