@@ -3,6 +3,8 @@
   ~ Copyright (c) 2016 C. Todd Cook. All rights reserved.
   -->
 
+<!-- TODO: investigate using compound drawable and a single TextVIew, no LinearLayout -->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               style="@style/RowStyle"
               android:layout_width="match_parent"
@@ -11,12 +13,12 @@
               android:paddingTop="4dp">
 
     <TextView
-        android:id="@+id/vehilce_name"
+        android:id="@+id/vehicle_name"
         style="@style/WideDarkDataTextStyle"
-        android:textSize="24sp"
-        android:gravity="start"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:textSize="24sp"/>
 
     <ImageView
         android:id="@+id/vehicle_info_icon"
