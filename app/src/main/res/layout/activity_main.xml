@@ -29,6 +29,6 @@
         style="@style/FloatingAddButton"
         android:src="@drawable/ic_green_add"
         android:onClick="addFueling"
-        android:layout_gravity="bottom|right|end"/>
+        android:layout_gravity="bottom|end"/>
 
 </android.support.design.widget.CoordinatorLayout>
