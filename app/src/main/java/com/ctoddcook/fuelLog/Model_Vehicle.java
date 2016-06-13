@@ -7,7 +7,6 @@ package com.ctoddcook.FuelLog;
 import android.util.SparseArray;
 
 import com.ctoddcook.CamGenTools.DataHolder;
-import com.ctoddcook.CamGenTools.Property;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,7 +22,6 @@ import static com.ctoddcook.CamGenTools.CTools.longToInt;
  */
 public class Model_Vehicle extends DataHolder {
   public static final String DEFAULT_VEHICLE_KEY = "com.ctoddcook.FuelLog.DefaultVehicleID";
-  public static final int DEFAULT_VEHICLE_TYPE = Property.TYPE_LONG;
   public static final String STATUS_ACTIVE="A";
   public static final String STATUS_RETIRED="R";
 
@@ -149,16 +147,6 @@ public class Model_Vehicle extends DataHolder {
   }
 
   /**
-   * Getter for record ID
-   *
-   * @return The database ID for the record
-   */
-  @Override
-  public int getID() {
-    return getVehicleID();
-  }
-
-  /**
    * Setter for mVehicleID field. Does not allow a change to an existing (non-zero) ID, and
    * does not allow setting the ID to a number less than 1.
    *
@@ -173,6 +161,16 @@ public class Model_Vehicle extends DataHolder {
       throw new IllegalArgumentException("The Row ID cannot be less than 1");
 
     mVehicleID = vehicleID;
+  }
+
+  /**
+   * Getter for record ID
+   *
+   * @return The database ID for the record
+   */
+  @Override
+  public int getID() {
+    return getVehicleID();
   }
 
   /**
@@ -355,6 +353,7 @@ public class Model_Vehicle extends DataHolder {
    * @param other the Model_Vehicle instance to compare against
    * @return true if all member fields (except ID and LastUpdated) are the same
    */
+  @SuppressWarnings("unused")
   public boolean equals(Model_Vehicle other) {
     if (this == other) return true;
     if (getStatus() != other.getStatus()) return false;
@@ -365,6 +364,7 @@ public class Model_Vehicle extends DataHolder {
     if (!this.mVIN.equalsIgnoreCase(other.mVIN)) return false;
     if (!this.mLicensePlate.equalsIgnoreCase(other.mLicensePlate)) return false;
     if (!this.mStatus.equals(other.mStatus)) return false;
+    //noinspection RedundantIfStatement
     if (!getLastUpdated().equals(other.getLastUpdated())) return false;
 
     return true;
@@ -379,9 +379,11 @@ public class Model_Vehicle extends DataHolder {
    * @param model the mModel of the other vehicle
    * @return true if the Color, Year and Model are the same
    */
+  @SuppressWarnings("unused")
   public boolean isSimilar(String color, int year, String model) {
     if (this.mYear != year) return false;
     if (!this.mColor.equalsIgnoreCase(color)) return false;
+    //noinspection RedundantIfStatement
     if (!this.mModel.equalsIgnoreCase(model)) return false;
 
     return true;
@@ -420,6 +422,7 @@ public class Model_Vehicle extends DataHolder {
     if (mVIN.length() > 0 && mVIN.equalsIgnoreCase(vin))
       return true;
 
+    //noinspection RedundantIfStatement
     if (mLicensePlate.length() > 0 && mLicensePlate.equalsIgnoreCase(licensePlate))
       return true;
 
