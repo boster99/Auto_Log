@@ -230,7 +230,7 @@ public class CLocationTools {
       stateCode = matcher.group().trim();
     }
 
-    Log.d(TAG, "Parsed statecode: " + stateCode);
+    Log.d(TAG, "Parsed state code: " + stateCode);
 
     return stateCode;
   }
