@@ -30,6 +30,24 @@ import java.util.Locale;
  * ctodd@ctoddcook.com
  */
 public class Handler_Format {
+  private static final DateFormat mShortDateForm =
+      SimpleDateFormat.getDateInstance(DateFormat.SHORT);
+  private static final DateFormat mMediumDateForm =
+      SimpleDateFormat.getDateInstance(DateFormat.MEDIUM);
+  private static final DateFormat mLongDateForm =
+      SimpleDateFormat.getDateInstance(DateFormat.LONG);
+  private static final DateFormat mShortDateTimeForm =
+      SimpleDateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
+  private static final DateFormat mMediumDateTimeForm =
+      SimpleDateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);
+  private static final DateFormat mLongDateTimeForm =
+      SimpleDateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG);
+  private static final DateFormat mShortTimeForm =
+      SimpleDateFormat.getTimeInstance(DateFormat.SHORT);
+  private static final DateFormat mMediumTimeForm =
+      SimpleDateFormat.getTimeInstance(DateFormat.MEDIUM);
+  private static final DateFormat mLongTimeForm =
+      SimpleDateFormat.getTimeInstance(DateFormat.LONG);
   private static DecimalFormat mCurrencyForm = null;
   private static DecimalFormat mCurrencyFormRaw = null;
   private static DecimalFormat mCurrencyLongForm = null;
@@ -38,35 +56,11 @@ public class Handler_Format {
   private static DecimalFormat mVolumeShortForm = null;
   private static DecimalFormat mVolumeLongForm = null;
   private static DecimalFormat mEfficiencyForm = null;
-
-  private static final DateFormat mShortDateForm =
-      SimpleDateFormat.getDateInstance(DateFormat.SHORT);
-  private static final DateFormat mMediumDateForm =
-      SimpleDateFormat.getDateInstance(DateFormat.MEDIUM);
-  private static final DateFormat mLongDateForm =
-      SimpleDateFormat.getDateInstance(DateFormat.LONG);
-
-  private static final DateFormat mShortDateTimeForm =
-      SimpleDateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
-  private static final DateFormat mMediumDateTimeForm =
-      SimpleDateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);
-  private static final DateFormat mLongDateTimeForm =
-      SimpleDateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG);
-
-  private static final DateFormat mShortTimeForm =
-      SimpleDateFormat.getTimeInstance(DateFormat.SHORT);
-  private static final DateFormat mMediumTimeForm =
-      SimpleDateFormat.getTimeInstance(DateFormat.MEDIUM);
-  private static final DateFormat mLongTimeForm =
-      SimpleDateFormat.getTimeInstance(DateFormat.LONG);
-
   private static boolean hasBeenSetup = false;
   private static String displayPattern = null;
   private static String distanceAbbrev = null;
   private static String volumeAbbrev = null;
   private static String efficiencyAbbrev = null;
-
-  private Model_Fueling mFueling;
 
   private Handler_Format() {
     // Nothing. Not allowed.
@@ -75,54 +69,6 @@ public class Handler_Format {
   public static void init(Context c) {
     Handler_Format f = new Handler_Format();
     f.setupStaticMembers(c);
-  }
-  /**
-   * One-time setup of shared, static members of the class.
-   */
-  private void setupStaticMembers(Context context) {
-    if (hasBeenSetup) return;
-
-    // Read some @string resources
-    Resources res = context.getResources();
-    displayPattern = res.getString(R.string.format_data_pattern);
-    distanceAbbrev = res.getString(R.string.format_distance_label);
-    volumeAbbrev = res.getString(R.string.format_volume_label);
-    efficiencyAbbrev = res.getString(R.string.format_fuel_efficiency_label);
-
-    String currency = res.getString(R.string.format_currency);
-    String currencyRaw = res.getString(R.string.format_currency_raw);
-    String currencyLong = res.getString(R.string.format_currency_long);
-    String currencyLongRaw = res.getString(R.string.format_currency_long_raw);
-    String oneDec = res.getString(R.string.format_one_decimal_place);
-    String threeDec = res.getString(R.string.format_three_decimal_places);
-
-    // Create shared/static formatting objects which will be used over and over
-    mCurrencyForm = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
-    mCurrencyForm.applyLocalizedPattern(currency);
-
-    mCurrencyFormRaw = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
-    mCurrencyFormRaw.applyLocalizedPattern(currencyRaw);
-
-    mCurrencyLongForm = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
-    mCurrencyLongForm.applyLocalizedPattern(currencyLong);
-
-    mCurrencyLongFormRaw = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
-    mCurrencyLongFormRaw.applyLocalizedPattern(currencyLongRaw);
-
-    mDistanceForm = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
-    mDistanceForm.applyLocalizedPattern(oneDec);
-
-    mVolumeShortForm = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
-    mVolumeShortForm.applyLocalizedPattern(oneDec);
-
-    mVolumeLongForm = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
-    mVolumeLongForm.applyLocalizedPattern(threeDec);
-
-    mEfficiencyForm = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
-    mEfficiencyForm.applyLocalizedPattern(oneDec);
-
-    // note that setup does not have to be performed again
-    hasBeenSetup = true;
   }
 
   /**
@@ -144,6 +90,7 @@ public class Handler_Format {
    * @param date the date to be formatted in MEDIUM form
    * @return a String with the formatted date
    */
+  @SuppressWarnings("unused")
   public static String formatMediumDate(Date date) {
     if (!hasBeenSetup)
       throw new UnsupportedOperationException("Handler_Format has not been initialized");
@@ -157,6 +104,7 @@ public class Handler_Format {
    * @param date the date to be formatted in LONG form
    * @return a String with the formatted date
    */
+  @SuppressWarnings("unused")
   public static String formatLongDate(Date date) {
     if (!hasBeenSetup)
       throw new UnsupportedOperationException("Handler_Format has not been initialized");
@@ -169,6 +117,7 @@ public class Handler_Format {
    * @param date the date to be formatted in SHORT form
    * @return a String with the formatted date
    */
+  @SuppressWarnings("unused")
   public static String formatShortDateTime(Date date) {
     if (!hasBeenSetup)
       throw new UnsupportedOperationException("Handler_Format has not been initialized");
@@ -181,6 +130,7 @@ public class Handler_Format {
    * @param date the date to be formatted in MEDIUM form
    * @return a String with the formatted date
    */
+  @SuppressWarnings("unused")
   public static String formatMediumDateTime(Date date) {
     if (!hasBeenSetup)
       throw new UnsupportedOperationException("Handler_Format has not been initialized");
@@ -193,6 +143,7 @@ public class Handler_Format {
    * @param date the date to be formatted in LONG form
    * @return a String with the formatted date
    */
+  @SuppressWarnings("unused")
   public static String formatLongDateTime(Date date) {
     if (!hasBeenSetup)
       throw new UnsupportedOperationException("Handler_Format has not been initialized");
@@ -213,13 +164,13 @@ public class Handler_Format {
     return mLongDateForm.format(date) + " " + mShortTimeForm.format(date);
   }
 
-
   /**
    * Returns proper, localized formatting for a date and time. This version utilizes a MEDIUM date
    * and a SHORT time.
    * @param date the date to be formatted in LONG form
    * @return a String with the formatted date
    */
+  @SuppressWarnings("unused")
   public static String formatMediumDateShortTime(Date date) {
     if (!hasBeenSetup)
       throw new UnsupportedOperationException("Handler_Format has not been initialized");
@@ -232,6 +183,7 @@ public class Handler_Format {
    * @param date the date to be formatted in SHORT form
    * @return a String with the formatted date
    */
+  @SuppressWarnings("unused")
   public static String formatShortTime(Date date) {
     if (!hasBeenSetup)
       throw new UnsupportedOperationException("Handler_Format has not been initialized");
@@ -244,6 +196,7 @@ public class Handler_Format {
    * @param date the date to be formatted in MEDIUM form
    * @return a String with the formatted date
    */
+  @SuppressWarnings("unused")
   public static String formatMediumTime(Date date) {
     if (!hasBeenSetup)
       throw new UnsupportedOperationException("Handler_Format has not been initialized");
@@ -256,6 +209,7 @@ public class Handler_Format {
    * @param date the date to be formatted in LONG form
    * @return a String with the formatted date
    */
+  @SuppressWarnings("unused")
   public static String formatLongTime(Date date) {
     if (!hasBeenSetup)
       throw new UnsupportedOperationException("Handler_Format has not been initialized");
@@ -309,6 +263,7 @@ public class Handler_Format {
    * @param price the price paid per unit
    * @return a localized currency value, such as $ 1.899.
    */
+  @SuppressWarnings("unused")
   public static String formatPriceLongRaw(float price) {
     if (!hasBeenSetup)
       throw new UnsupportedOperationException("Handler_Format has not been initialized");
@@ -357,6 +312,7 @@ public class Handler_Format {
    * @param vol the volume to convert to formatted String
    * @return a formatted String
    */
+  @SuppressWarnings("unused")
   public static String formatVolumeShortRaw(float vol) {
     if (!hasBeenSetup)
       throw new UnsupportedOperationException("Handler_Format has not been initialized");
@@ -398,5 +354,54 @@ public class Handler_Format {
       throw new UnsupportedOperationException("Handler_Format has not been initialized");
 
     return String.format(displayPattern, mEfficiencyForm.format(eff), efficiencyAbbrev);
+  }
+
+  /**
+   * One-time setup of shared, static members of the class.
+   */
+  private void setupStaticMembers(Context context) {
+    if (hasBeenSetup) return;
+
+    // Read some @string resources
+    Resources res = context.getResources();
+    displayPattern = res.getString(R.string.format_data_pattern);
+    distanceAbbrev = res.getString(R.string.format_distance_label);
+    volumeAbbrev = res.getString(R.string.format_volume_label);
+    efficiencyAbbrev = res.getString(R.string.format_fuel_efficiency_label);
+
+    String currency = res.getString(R.string.format_currency);
+    String currencyRaw = res.getString(R.string.format_currency_raw);
+    String currencyLong = res.getString(R.string.format_currency_long);
+    String currencyLongRaw = res.getString(R.string.format_currency_long_raw);
+    String oneDec = res.getString(R.string.format_one_decimal_place);
+    String threeDec = res.getString(R.string.format_three_decimal_places);
+
+    // Create shared/static formatting objects which will be used over and over
+    mCurrencyForm = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
+    mCurrencyForm.applyLocalizedPattern(currency);
+
+    mCurrencyFormRaw = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
+    mCurrencyFormRaw.applyLocalizedPattern(currencyRaw);
+
+    mCurrencyLongForm = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
+    mCurrencyLongForm.applyLocalizedPattern(currencyLong);
+
+    mCurrencyLongFormRaw = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
+    mCurrencyLongFormRaw.applyLocalizedPattern(currencyLongRaw);
+
+    mDistanceForm = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
+    mDistanceForm.applyLocalizedPattern(oneDec);
+
+    mVolumeShortForm = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
+    mVolumeShortForm.applyLocalizedPattern(oneDec);
+
+    mVolumeLongForm = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
+    mVolumeLongForm.applyLocalizedPattern(threeDec);
+
+    mEfficiencyForm = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
+    mEfficiencyForm.applyLocalizedPattern(oneDec);
+
+    // note that setup does not have to be performed again
+    hasBeenSetup = true;
   }
 }
