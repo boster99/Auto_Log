@@ -7,7 +7,6 @@ package com.ctoddcook.CamGenTools;
 import android.util.Log;
 
 import java.text.DateFormat;
-import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Date;
 
@@ -42,7 +41,6 @@ public class Property extends DataHolder {
   private Date mDateTimeVal;
 
   private static DateFormat sDateFormat;
-  private static NumberFormat sNumberFormat;
 
   private Property() {
     // Nothing. Not allowed.
