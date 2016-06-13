@@ -36,8 +36,6 @@ import java.util.ArrayList;
 public class Activity_VehicleList extends AppCompatActivity implements AdapterView.OnItemClickListener,
     Handler_DataEvents.DataUpdateListener {
 
-  private static final String TAG = "Activity_VehicleList";
-
   private static ListView sVehicleListView;
   private DatabaseHelper sDB;
   private Model_Vehicle mVehicleToDelete = null;
@@ -79,7 +77,7 @@ public class Activity_VehicleList extends AppCompatActivity implements AdapterVi
   }
 
   /**
-   * Displays an instructional hint to the user. Only shown the first time the uesr sees this
+   * Displays an instructional hint to the user. Only shown the first time the user sees this
    * screen (or after HINT settings have been reset).
    */
   private void showHint() {
@@ -96,10 +94,9 @@ public class Activity_VehicleList extends AppCompatActivity implements AdapterVi
    */
   public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
     if (view instanceof LinearLayout) {
-      Model_Vehicle vehicle = (Model_Vehicle) parent.getItemAtPosition(pos);
       Intent intent = new Intent(this, Activity_DetailFrame.class);
       intent.putExtra(Activity_DetailFrame.ARG_TYPE, Activity_DetailFrame.TYPE_VEHICLE);
-      intent.putExtra(Activity_DetailFrame.ARG_ITEM_ID, vehicle.getID());
+      intent.putExtra(Activity_DetailFrame.ARG_POSITION, pos);
       startActivity(intent);
     }
   }
