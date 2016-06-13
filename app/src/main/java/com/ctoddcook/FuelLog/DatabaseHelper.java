@@ -17,9 +17,8 @@ import java.util.Date;
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-  private static final String TAG = "DatabaseHelper";
-  private static DatabaseHelper sInstance;
   public static final int DATABASE_VERSION = 3;
+  private static DatabaseHelper sInstance;
 
 
   private DatabaseHelper(Context context) {
@@ -470,7 +469,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     } finally {
       db.endTransaction();
     }
-
-    String hello = "hello";
   }
 }
