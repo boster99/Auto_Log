@@ -7,13 +7,12 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import java.util.ArrayList;
 
 /**
- * Presents details for one feuling at a time
+ * Presents details for one fueling at a time
  * <p>
  * Created by C. Todd Cook on 5/24/2016.<br>
  * ctodd@ctoddcook.com
  */
 public class Pager_Fueling extends FragmentStatePagerAdapter {
-  private static final String TAG = "Pager_Fueling";
   private final ArrayList<Model_Fueling> mFuelings;
 
   /**
