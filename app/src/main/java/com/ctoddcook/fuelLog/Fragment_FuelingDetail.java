@@ -1,8 +1,8 @@
 package com.ctoddcook.FuelLog;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +17,6 @@ import android.widget.TextView;
  * ctodd@ctoddcook.com
  */
 public class Fragment_FuelingDetail extends Fragment {
-  private static final String TAG = "Fragment_FuelingDetail";
   private static final String FUELING_ID = "FuelingID";
   private Model_Fueling mFueling;
 
