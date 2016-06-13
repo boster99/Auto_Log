@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
  * ctodd@ctoddcook.com
  */
 public class Pager_Averages extends FragmentStatePagerAdapter {
-  private static final String TAG = "Pager_Fueling";
   private String mVehicleName;
 
   /**
