@@ -46,7 +46,6 @@ public class Activity_EditFueling extends AppCompatActivity
     implements AdapterView.OnItemSelectedListener, Fragment_DatePicker.DatePickerCaller,
     Fragment_TimePicker.TimePickerCaller, CLocationWaiter.locationCaller {
 
-  private static final String TAG = "Activity_EditFueling";
   private static DatabaseHelper sDatabaseHelper;
 
   public static final String KEY_ADD_EDIT_MODE = "com.ctoddcook.FuelLog.ADD_EDIT_MODE";
@@ -54,7 +53,6 @@ public class Activity_EditFueling extends AppCompatActivity
   public static final String KEY_USER_ALLOWS_GPS = "com.ctoddcook.FuelLog.GPS_ALLOWED";
   public static final int MODE_ADD = 1;
   public static final int MODE_EDIT = 2;
-  public static boolean dupeCheckResult;
 
   private int mode;
   private Model_Fueling mFueling;
@@ -300,8 +298,6 @@ public class Activity_EditFueling extends AppCompatActivity
    * <p>
    */
   public void extractDetails() {
-    Date date = mDateOfFill;
-
     if (mDistanceET.getText() != null && !mDistanceET.getText().toString().isEmpty())
       mDistance = Float.parseFloat(mDistanceET.getText().toString());
 
