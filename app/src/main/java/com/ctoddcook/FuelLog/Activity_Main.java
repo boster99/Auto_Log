@@ -35,8 +35,6 @@ import com.ctoddcook.CamUiTools.Handler_UserHints;
 import java.util.ArrayList;
 
 
-// TODO Reorganize this mess
-
 /**
  * The Main activity for this app. This displays a split screen:
  * <ul>
