@@ -29,8 +29,6 @@ import static com.ctoddcook.CamGenTools.CTools.round;
  * after that the user might change that description.
  */
 class Model_Fueling extends DataHolder {
-  private static final String TAG = "Model_Fueling";
-
   public static final int SPAN_3_MONTHS = 0;
   public static final int SPAN_6_MONTHS = 1;
   public static final int SPAN_ONE_YEAR = 2;
@@ -46,6 +44,7 @@ class Model_Fueling extends DataHolder {
 
   private static final String GEO_PREFIX = "geo:";
   private static final String GEO_NOT_CAPTURED = "<not captured>";
+  private static final int INITIAL_ID = -1;
 
   static {
     DATE_THRESHOLDS = new Date[3];
@@ -62,8 +61,6 @@ class Model_Fueling extends DataHolder {
     oneYearAgo.add(Calendar.YEAR, -1);                  // Calculate one mYear before today
     DATE_THRESHOLDS[SPAN_ONE_YEAR] = oneYearAgo.getTime();
   }
-
-  private static final int INITIAL_ID = -1;
 
   private int mFuelingID = INITIAL_ID;
   private int mVehicleID = 0;
@@ -465,6 +462,48 @@ class Model_Fueling extends DataHolder {
   }
 
   /**
+   * Returns a String representation of the indicated span.
+   * @param span the desired span. The value passed must be one of:
+   *             <ul>
+   *             <li>Model_Fueling.SPAN_3_MONTHS</li>
+   *             <li>Model_Fueling.SPAN_6_MONTHS</li>
+   *             <li>Model_Fueling.SPAN_ONE_YEAR</li>
+   *             <li>Model_Fueling.SPAN_ALL_TIME</li>
+   *             </ul>
+   * @return a String representing the provided span.
+   */
+  public static String getSpanPeriod(int span) {
+    switch (span) {
+      case SPAN_3_MONTHS:
+        return "3 Months";
+      case SPAN_6_MONTHS:
+        return "6 months";
+      case SPAN_ONE_YEAR:
+        return "One Year";
+      case SPAN_ALL_TIME:
+        return "Lifetime";
+      default:
+        throw new IllegalArgumentException("Argument passed: " + span + " is not a valid span");
+    }
+  }
+
+
+
+
+
+    /*
+    The next few methods calculate values for a specific instance of Model_Fueling
+     */
+
+  /**
+   * Accessor to entire list of Fuelings
+   * @return list of all retrieved Fuelings
+   */
+  public static ArrayList<Model_Fueling> getFuelingList() {
+    return sLifetimeSpan;
+  }
+
+  /**
    * This will add (or remove) the instance to (from) the static lists of fill records
    * based on date. If the fill date (mDateOfFill) is within the last 3 or 6 months or
    * last mYear, this instance will get added to at least one of those lists.
@@ -508,14 +547,6 @@ class Model_Fueling extends DataHolder {
     addToSparseArray(this);
   }
 
-
-
-
-
-    /*
-    The next few methods calculate values for a specific instance of Model_Fueling
-     */
-
   /**
    * Returns the price per unit (price per gallon or litre) for the instance, rounded to
    * 3 decimal places
@@ -541,6 +572,12 @@ class Model_Fueling extends DataHolder {
     return round(mDistance / mVolume, 1);
   }
 
+
+
+    /*
+    Next are the accessor methods
+     */
+
   /**
    * Returns the price per distance unit traveled, rounded to 3 decimal places
    *
@@ -551,47 +588,6 @@ class Model_Fueling extends DataHolder {
       return 0;
 
     return round(mPricePaid / mDistance, 3);
-  }
-
-
-  /**
-   * Returns a String representation of the indicated span.
-   * @param span the desired span. The value passed must be one of:
-   *             <ul>
-   *             <li>Model_Fueling.SPAN_3_MONTHS</li>
-   *             <li>Model_Fueling.SPAN_6_MONTHS</li>
-   *             <li>Model_Fueling.SPAN_ONE_YEAR</li>
-   *             <li>Model_Fueling.SPAN_ALL_TIME</li>
-   *             </ul>
-   * @return a String representing the provided span.
-   */
-  public static String getSpanPeriod(int span) {
-    switch (span) {
-      case SPAN_3_MONTHS:
-        return "3 Months";
-      case SPAN_6_MONTHS:
-        return "6 months";
-      case SPAN_ONE_YEAR:
-        return "One Year";
-      case SPAN_ALL_TIME:
-        return "Lifetime";
-      default:
-        throw new IllegalArgumentException("Argument passed: " + span + " is not a valid span");
-    }
-  }
-
-
-
-    /*
-    Next are the accessor methods
-     */
-
-  /**
-   * Accessor to entire list of Fuelings
-   * @return list of all retrieved Fuelings
-   */
-  public static ArrayList<Model_Fueling> getFuelingList() {
-    return sLifetimeSpan;
   }
 
   /**
@@ -668,16 +664,6 @@ class Model_Fueling extends DataHolder {
   }
 
   /**
-   * Setter for mDateOfFill, a Date value indicating when the vehicle was filled with gas
-   *
-   * @param dateOfFill a Long value indicating the millis representation of the date
-   */
-  public void setDateOfFill(long dateOfFill) {
-    Date newDate = new Date(dateOfFill);
-    setDateOfFill(newDate);
-  }
-
-  /**
    * Setter for mDateOfFill, a Date value indicating when the vehicle was filled with gas. After
    * setting the new value, adjustLists() is called to add this instance to (or remove it from)
    * appropriate arrays of Model_Fueling objects.
@@ -689,6 +675,17 @@ class Model_Fueling extends DataHolder {
     adjustLists();
 
     touch();
+  }
+
+  /**
+   * Setter for mDateOfFill, a Date value indicating when the vehicle was filled with gas
+   *
+   * @param dateOfFill a Long value indicating the millis representation of the date
+   */
+  @SuppressWarnings("unused")
+  public void setDateOfFill(long dateOfFill) {
+    Date newDate = new Date(dateOfFill);
+    setDateOfFill(newDate);
   }
 
   /**
@@ -844,7 +841,7 @@ class Model_Fueling extends DataHolder {
    * @return a String in the form 'geo:[latitude],[longitude]'
    */
   public String getGeoURI() {
-    return (isGeoURIValid() ? "geo:" + mLatitude + "," + mLongitude : "<not captured>");
+    return (isGeoURIValid() ? GEO_PREFIX + mLatitude + "," + mLongitude : GEO_NOT_CAPTURED);
   }
 
   /**
@@ -862,6 +859,7 @@ class Model_Fueling extends DataHolder {
    * @param other the Model_Fueling instance this one is compared to
    * @return true if their data is the same
    */
+  @SuppressWarnings("unused")
   public boolean equals(Model_Fueling other) {
     if (this == other) return true;
     if (this.getStatus() != other.getStatus()) return false;
@@ -874,6 +872,7 @@ class Model_Fueling extends DataHolder {
     if (!this.mLocation.equals(other.mLocation)) return false;
     if (this.mLatitude != other.mLatitude) return false;
     if (this.mLongitude != other.mLongitude) return false;
+    //noinspection RedundantIfStatement
     if (!this.getLastUpdated().equals(other.getLastUpdated())) return false;
 
     return true;
@@ -890,12 +889,14 @@ class Model_Fueling extends DataHolder {
    * @param pricePaid  Price Paid to be compared against
    * @return true if all of the fields match
    */
+  @SuppressWarnings("unused")
   public boolean isDuplicate(int vehID, Date dateOfFill, float distance, float volume, float
       pricePaid) {
     if (this.mVehicleID != vehID) return false;
     if (!this.mDateOfFill.equals(dateOfFill)) return false;
     if (this.mDistance != distance) return false;
     if (this.mVolume != volume) return false;
+    //noinspection RedundantIfStatement
     if (this.mPricePaid != pricePaid) return false;
 
     return true;
