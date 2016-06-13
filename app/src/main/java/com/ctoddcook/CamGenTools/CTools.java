@@ -50,7 +50,7 @@ public class CTools {
 
 
   /**
-   * Safely converts/downcasts a long to an int.
+   * Safely converts/down-casts a long to an int.
    *
    * @param l the long to be downcast
    * @return the same value as an int
@@ -58,7 +58,7 @@ public class CTools {
    */
   public static int longToInt(long l) throws IllegalArgumentException {
     if (l < Integer.MIN_VALUE || l > Integer.MAX_VALUE)
-      throw new IllegalArgumentException(l + " cannot be cast to int without chaning its " +
+      throw new IllegalArgumentException(l + " cannot be cast to int without changing its " +
           "value.");
 
     return (int) l;
@@ -67,7 +67,7 @@ public class CTools {
 
   /**
    * Used to test the truth of an assumption. If it is true, nothing happens. If the assumption
-   * fails, a RuntimeException is throwh.
+   * fails, a RuntimeException is thrown.
    *
    * @param c the expression assumed to be true
    */
@@ -78,7 +78,7 @@ public class CTools {
 
   /**
    * Tests where two Strings are equal. If they are, nothing happens. If they are different a
-   * RuntimeExpcetion is thrown.
+   * RuntimeException is thrown.
    *
    * @param expected value 1 to compare
    * @param found    value 2 to compare
@@ -92,7 +92,7 @@ public class CTools {
 
   /**
    * Tests where two int values are equal. If they are, nothing happens. If they are different a
-   * RuntimeExpcetion is thrown.
+   * RuntimeException is thrown.
    *
    * @param expected value 1 to compare
    * @param found    value 2 to compare
