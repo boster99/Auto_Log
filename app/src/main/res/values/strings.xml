@@ -114,7 +114,7 @@
 
   <string name="pager_fueling_swipe_hint">
     If you have more than one fueling, on this screen you can swipe left or right to view
-    the prior or next fueing\'s details.
+    the prior or next fueling\'s details.
   </string>
 
   <string name="pager_averages_swipe_hint">
@@ -143,6 +143,6 @@
   <string name="service_not_allowed_1">We were unable to get either gps-based OR network-based
     location information.</string>
   <string name="service_not_allowed_2">If you don\'t want this app to try to read your location
-    (i.e., GPS coordinates), you can disable that function within this app in Settins.</string>
+    (i.e., GPS coordinates), you can disable that function within this app in Settings.</string>
 
 </resources>
