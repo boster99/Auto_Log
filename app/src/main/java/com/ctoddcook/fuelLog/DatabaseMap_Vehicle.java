@@ -2,7 +2,7 @@
  * Copyright (c) 2016 C. Todd Cook. All rights reserved.
  */
 
-package com.ctoddcook.fuelLog;
+package com.ctoddcook.FuelLog;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;

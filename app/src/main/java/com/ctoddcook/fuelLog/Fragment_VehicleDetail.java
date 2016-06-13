@@ -1,4 +1,4 @@
-package com.ctoddcook.fuelLog;
+package com.ctoddcook.FuelLog;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;

@@ -2,13 +2,13 @@
  * Copyright (c) 2016 C. Todd Cook. All rights reserved.
  */
 
-package com.ctoddcook.fuelLog;
+package com.ctoddcook.FuelLog;
 
 import junit.framework.Assert;
 
 import org.junit.Test;
 
-import static com.ctoddcook.cGenTools.CTools.round;
+import static com.ctoddcook.CamGenTools.CTools.round;
 
 /**
  * Created by C. Todd Cook on 4/22/2016.

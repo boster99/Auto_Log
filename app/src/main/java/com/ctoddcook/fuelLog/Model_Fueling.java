@@ -3,17 +3,17 @@
  */
 
 
-package com.ctoddcook.fuelLog;
+package com.ctoddcook.FuelLog;
 
 import android.util.SparseArray;
 
-import com.ctoddcook.cGenTools.DataHolder;
+import com.ctoddcook.CamGenTools.DataHolder;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import static com.ctoddcook.cGenTools.CTools.round;
+import static com.ctoddcook.CamGenTools.CTools.round;
 
 /**
  * This is a mModel class, used to hold all of the data pertaining to a single instance of filling

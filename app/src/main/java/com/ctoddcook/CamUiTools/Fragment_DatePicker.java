@@ -2,7 +2,7 @@
  * Copyright (c) 2016 C. Todd Cook. All rights reserved.
  */
 
-package com.ctoddcook.cUiTools;
+package com.ctoddcook.CamUiTools;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

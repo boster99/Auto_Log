@@ -2,12 +2,12 @@
  * Copyright (c) 2016 C. Todd Cook. All rights reserved.
  */
 
-package com.ctoddcook.cGenTools;
+package com.ctoddcook.CamGenTools;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
-import com.ctoddcook.fuelLog.DatabaseMap_FuelLog;
+import com.ctoddcook.FuelLog.DatabaseMap_FuelLog;
 
 /**
  * Provides SQL specifications (table name, column names and types) etc for the Property class.

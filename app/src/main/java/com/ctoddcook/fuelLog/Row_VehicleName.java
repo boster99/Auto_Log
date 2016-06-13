@@ -2,7 +2,7 @@
  * Copyright (c) 2016 C. Todd Cook. All rights reserved.
  */
 
-package com.ctoddcook.fuelLog;
+package com.ctoddcook.FuelLog;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,7 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ctoddcook.cGenTools.PropertiesHelper;
+import com.ctoddcook.CamGenTools.PropertiesHelper;
 
 import java.util.ArrayList;
 

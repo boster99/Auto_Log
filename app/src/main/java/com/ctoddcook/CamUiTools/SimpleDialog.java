@@ -1,4 +1,4 @@
-package com.ctoddcook.cUiTools;
+package com.ctoddcook.CamUiTools;
 
 import android.content.Context;
 import android.content.DialogInterface;

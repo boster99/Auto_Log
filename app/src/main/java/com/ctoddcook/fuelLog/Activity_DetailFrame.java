@@ -1,4 +1,4 @@
-package com.ctoddcook.fuelLog;
+package com.ctoddcook.FuelLog;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -11,7 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
-import com.ctoddcook.cUiTools.Handler_UserHints;
+import com.ctoddcook.CamUiTools.Handler_UserHints;
 
 /**
  * This activity is reusable, and will show one of three fragments to display vehicle details,

@@ -1,4 +1,4 @@
-package com.ctoddcook.cGenTools;
+package com.ctoddcook.CamGenTools;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;

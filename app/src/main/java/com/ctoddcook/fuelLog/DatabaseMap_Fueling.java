@@ -1,4 +1,4 @@
-package com.ctoddcook.fuelLog;
+package com.ctoddcook.FuelLog;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;

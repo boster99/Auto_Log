@@ -1,4 +1,4 @@
-package com.ctoddcook.cGenTools;
+package com.ctoddcook.CamGenTools;
 
 import android.content.Context;
 import android.util.Log;

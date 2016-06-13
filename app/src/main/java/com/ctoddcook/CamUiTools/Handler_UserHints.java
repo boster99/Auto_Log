@@ -1,11 +1,11 @@
-package com.ctoddcook.cUiTools;
+package com.ctoddcook.CamUiTools;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 
-import com.ctoddcook.cGenTools.PropertiesHelper;
-import com.ctoddcook.fuelLog.R;
+import com.ctoddcook.CamGenTools.PropertiesHelper;
+import com.ctoddcook.FuelLog.R;
 
 import java.util.NoSuchElementException;
 

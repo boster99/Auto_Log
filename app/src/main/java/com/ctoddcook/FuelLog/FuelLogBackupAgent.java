@@ -1,4 +1,4 @@
-package com.ctoddcook.fuelLog;
+package com.ctoddcook.FuelLog;
 
 import android.app.backup.BackupAgent;
 import android.app.backup.BackupDataInput;

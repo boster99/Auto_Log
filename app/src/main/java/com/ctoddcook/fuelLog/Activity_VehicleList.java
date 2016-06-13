@@ -2,7 +2,7 @@
  * Copyright (c) 2016 C. Todd Cook. All rights reserved.
  */
 
-package com.ctoddcook.fuelLog;
+package com.ctoddcook.FuelLog;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,8 +18,8 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import com.ctoddcook.cGenTools.PropertiesHelper;
-import com.ctoddcook.cUiTools.Handler_UserHints;
+import com.ctoddcook.CamGenTools.PropertiesHelper;
+import com.ctoddcook.CamUiTools.Handler_UserHints;
 
 import java.util.ArrayList;
 

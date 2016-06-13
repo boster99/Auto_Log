@@ -2,17 +2,17 @@
  * Copyright (c) 2016 C. Todd Cook. All rights reserved.
  */
 
-package com.ctoddcook.fuelLog;
+package com.ctoddcook.FuelLog;
 
 import android.util.SparseArray;
 
-import com.ctoddcook.cGenTools.DataHolder;
-import com.ctoddcook.cGenTools.Property;
+import com.ctoddcook.CamGenTools.DataHolder;
+import com.ctoddcook.CamGenTools.Property;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-import static com.ctoddcook.cGenTools.CTools.longToInt;
+import static com.ctoddcook.CamGenTools.CTools.longToInt;
 
 /**
  * Created by C. Todd Cook on 5/9/2016.

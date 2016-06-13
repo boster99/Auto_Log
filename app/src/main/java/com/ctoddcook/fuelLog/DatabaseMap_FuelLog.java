@@ -2,9 +2,9 @@
  * Copyright (c) 2016 C. Todd Cook. All rights reserved. 
  */
 
-package com.ctoddcook.fuelLog;
+package com.ctoddcook.FuelLog;
 
-import com.ctoddcook.cGenTools.DatabaseMap_Base;
+import com.ctoddcook.CamGenTools.DatabaseMap_Base;
 
 /**
  * Created by C. Todd Cook on 5/10/2016.

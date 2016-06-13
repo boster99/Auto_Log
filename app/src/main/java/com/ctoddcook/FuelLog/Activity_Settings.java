@@ -1,15 +1,14 @@
-package com.ctoddcook.fuelLog;
+package com.ctoddcook.FuelLog;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
-import com.ctoddcook.cGenTools.PropertiesHelper;
+import com.ctoddcook.CamGenTools.PropertiesHelper;
 
 import java.util.NoSuchElementException;
 

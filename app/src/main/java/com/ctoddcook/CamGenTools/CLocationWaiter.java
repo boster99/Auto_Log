@@ -2,7 +2,7 @@
  * Copyright (c) 2016 C. Todd Cook. All rights reserved.
  */
 
-package com.ctoddcook.cGenTools;
+package com.ctoddcook.CamGenTools;
 
 import android.Manifest;
 import android.app.Activity;
@@ -21,8 +21,7 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.ctoddcook.cUiTools.SimpleDialog;
-import com.ctoddcook.fuelLog.R;
+import com.ctoddcook.FuelLog.R;
 
 /**
  * This class provides a service: getting the current location of the user/phone. The Android

@@ -2,7 +2,7 @@
  * Copyright (c) 2016 C. Todd Cook. All rights reserved.
  */
 
-package com.ctoddcook.fuelLog;
+package com.ctoddcook.FuelLog;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -22,11 +22,11 @@ import android.widget.TextView;
 import android.text.format.DateUtils;
 import android.widget.Toast;
 
-import com.ctoddcook.cGenTools.CLocationTools;
-import com.ctoddcook.cGenTools.CLocationWaiter;
-import com.ctoddcook.cGenTools.PropertiesHelper;
-import com.ctoddcook.cUiTools.Fragment_DatePicker;
-import com.ctoddcook.cUiTools.Fragment_TimePicker;
+import com.ctoddcook.CamGenTools.CLocationTools;
+import com.ctoddcook.CamGenTools.CLocationWaiter;
+import com.ctoddcook.CamGenTools.PropertiesHelper;
+import com.ctoddcook.CamUiTools.Fragment_DatePicker;
+import com.ctoddcook.CamUiTools.Fragment_TimePicker;
 
 import java.util.Calendar;
 import java.util.Date;
