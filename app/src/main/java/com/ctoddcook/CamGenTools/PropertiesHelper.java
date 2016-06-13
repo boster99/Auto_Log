@@ -220,7 +220,7 @@ public class PropertiesHelper {
   }
 
   /**
-   * Simply checks for the existence of a Property with the provied name.
+   * Simply checks for the existence of a Property with the provided name.
    * @param name The name to check
    * @return true if the Property exists, false otherwise
    */
