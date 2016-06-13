@@ -26,13 +26,14 @@ import java.util.ArrayList;
  * ctodd@ctoddcook.com
  */
 public class Row_VehicleName extends ArrayAdapter<Model_Vehicle> {
+  @SuppressWarnings("unused")
   private static final String TAG = "Row_VehicleName";
-  private final Context mContext;
-  private final ArrayList<Model_Vehicle> mList;
-  private final int mDefaultVehicleID;
   private static final int IS_NEITHER = 0;
   private static final int IS_RETIRED = 1;
   private static final int IS_DEFAULT = 2;
+  private final Context mContext;
+  private final ArrayList<Model_Vehicle> mList;
+  private final int mDefaultVehicleID;
 
   /**
    * Required constructor.
@@ -46,44 +47,6 @@ public class Row_VehicleName extends ArrayAdapter<Model_Vehicle> {
 
     mDefaultVehicleID = (int) PropertiesHelper.getInstance().getLongValue(Model_Vehicle
         .DEFAULT_VEHICLE_KEY);
-  }
-
-  /**
-   * Inner class for making memory-usage more efficient and making scrolling smoother. The
-   * ViewHolder retains references to TextViews. Also, when a row (which includes a ViewHolder)
-   * scrolls off the screen, it is passed back to the getView() method (in the convertView
-   * parameter) so it can be re-used. This way, a Model_Fueling which is coming into view can reuse
-   * references to TextViews, instead of every time having to look up their details in the XML
-   * file and building them from scratch.
-   */
-  static class ViewHolder {
-    public TextView tvName;
-    public ImageView ivInfoIcon;
-
-    public void setName(String name) {
-      tvName.setText(name);
-    }
-
-    /*
-    An icon will be displayed if the vehicle is the default, or if it is retired.
-    */
-    public void showInfoIcon(int version) {
-      switch (version) {
-        case IS_NEITHER:
-          ivInfoIcon.setVisibility(View.INVISIBLE);
-          break;
-        case IS_RETIRED:
-          ivInfoIcon.setVisibility(View.VISIBLE);
-          ivInfoIcon.setImageResource(R.drawable.ic_retirement);
-          break;
-        case IS_DEFAULT:
-          ivInfoIcon.setVisibility(View.VISIBLE);
-          ivInfoIcon.setImageResource(R.drawable.ic_blue_badge);
-          break;
-        default:
-          throw new IllegalArgumentException("Illegal value passed to showInfoIcon(): " + version);
-      }
-    }
   }
 
   /**
@@ -131,5 +94,43 @@ public class Row_VehicleName extends ArrayAdapter<Model_Vehicle> {
       holder.showInfoIcon(IS_NEITHER);
 
     return rowView;
+  }
+
+  /**
+   * Inner class for making memory-usage more efficient and making scrolling smoother. The
+   * ViewHolder retains references to TextViews. Also, when a row (which includes a ViewHolder)
+   * scrolls off the screen, it is passed back to the getView() method (in the convertView
+   * parameter) so it can be re-used. This way, a Model_Fueling which is coming into view can reuse
+   * references to TextViews, instead of every time having to look up their details in the XML
+   * file and building them from scratch.
+   */
+  static class ViewHolder {
+    public TextView tvName;
+    public ImageView ivInfoIcon;
+
+    public void setName(String name) {
+      tvName.setText(name);
+    }
+
+    /*
+    An icon will be displayed if the vehicle is the default, or if it is retired.
+    */
+    public void showInfoIcon(int version) {
+      switch (version) {
+        case IS_NEITHER:
+          ivInfoIcon.setVisibility(View.INVISIBLE);
+          break;
+        case IS_RETIRED:
+          ivInfoIcon.setVisibility(View.VISIBLE);
+          ivInfoIcon.setImageResource(R.drawable.ic_retirement);
+          break;
+        case IS_DEFAULT:
+          ivInfoIcon.setVisibility(View.VISIBLE);
+          ivInfoIcon.setImageResource(R.drawable.ic_blue_badge);
+          break;
+        default:
+          throw new IllegalArgumentException("Illegal value passed to showInfoIcon(): " + version);
+      }
+    }
   }
 }
