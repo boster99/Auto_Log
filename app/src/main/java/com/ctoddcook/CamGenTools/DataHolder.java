@@ -88,7 +88,7 @@ public abstract class DataHolder {
     }
 
     /**
-     * Indicates whether the instance status indicates this is an udpated record.
+     * Indicates whether the instance status indicates this is an updated record.
      * @return whether mStatus equals STATUS_UPDATED
      */
     public boolean isUpdated() {
