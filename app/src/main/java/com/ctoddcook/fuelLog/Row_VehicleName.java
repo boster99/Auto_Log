@@ -76,7 +76,7 @@ public class Row_VehicleName extends ArrayAdapter<Model_Vehicle> {
       rowView = inflater.inflate(R.layout.row_vehicle_name, parent, false);
 
       ViewHolder newHolder = new ViewHolder();
-      newHolder.tvName = (TextView) rowView.findViewById(R.id.vehilce_name);
+      newHolder.tvName = (TextView) rowView.findViewById(R.id.vehicle_name);
       newHolder.ivInfoIcon = (ImageView) rowView.findViewById(R.id.vehicle_info_icon);
       rowView.setTag(newHolder);
     }
