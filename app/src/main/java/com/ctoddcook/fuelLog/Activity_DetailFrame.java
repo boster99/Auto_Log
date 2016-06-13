@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -21,18 +20,14 @@ import com.ctoddcook.CamUiTools.Handler_UserHints;
  * ctodd@ctoddcook.com
  */
 public class Activity_DetailFrame extends AppCompatActivity {
-  private static final String TAG = "Activity_DetailFrame";
   public static final String ARG_TYPE = "ArgType";
   public static final int TYPE_VEHICLE = 101;
   public static final int TYPE_FUELING = 102;
   public static final int TYPE_AVERAGE = 103;
   public static final String ARG_POSITION = "Position";
-  public static final String ARG_ITEM_ID = "ItemID";
   public static final String ARG_VEHICLE = "Model_Vehicle";
 
   private static ViewPager mPager;
-  private Fragment mCurrentFragment;
-  private int mArgType;
   private Toolbar mToolbar;
 
 
