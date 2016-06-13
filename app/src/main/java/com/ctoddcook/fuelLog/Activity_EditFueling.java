@@ -49,9 +49,9 @@ public class Activity_EditFueling extends AppCompatActivity
   private static final String TAG = "Activity_EditFueling";
   private static DatabaseHelper sDatabaseHelper;
 
-  public static final String KEY_ADD_EDIT_MODE = "com.ctoddcook.auto_log.ADD_EDIT_MODE";
-  public static final String KEY_FUELING_ID = "com.ctoddcook.auto_log.FUELING_ID";
-  public static final String KEY_USER_ALLOWS_GPS = "com.ctoddcook.auto_log.GPS_ALLOWED";
+  public static final String KEY_ADD_EDIT_MODE = "com.ctoddcook.FuelLog.ADD_EDIT_MODE";
+  public static final String KEY_FUELING_ID = "com.ctoddcook.FuelLog.FUELING_ID";
+  public static final String KEY_USER_ALLOWS_GPS = "com.ctoddcook.FuelLog.GPS_ALLOWED";
   public static final int MODE_ADD = 1;
   public static final int MODE_EDIT = 2;
   public static boolean dupeCheckResult;

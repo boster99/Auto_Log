@@ -22,8 +22,8 @@ public class Activity_EditVehicle extends AppCompatActivity {
 
   private static DatabaseHelper sDatabaseHelper;
 
-  public static final String KEY_ADD_EDIT_MODE = "com.ctoddcook.auto_log.ADD_EDIT_MODE";
-  public static final String KEY_VEHICLE_ID = "com.ctoddcook.auto_log.VEHICLE_ID";
+  public static final String KEY_ADD_EDIT_MODE = "com.ctoddcook.FuelLog.ADD_EDIT_MODE";
+  public static final String KEY_VEHICLE_ID = "com.ctoddcook.FuelLog.VEHICLE_ID";
   public static final int MODE_ADD = 1;
   public static final int MODE_EDIT = 2;
   private int mMode;

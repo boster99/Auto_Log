@@ -22,7 +22,7 @@ import static com.ctoddcook.cGenTools.CTools.longToInt;
  * data for different vehicles.
  */
 public class Model_Vehicle extends DataHolder {
-  public static final String DEFAULT_VEHICLE_KEY = "com.ctoddcook.auto_log.DefaultVehicleID";
+  public static final String DEFAULT_VEHICLE_KEY = "com.ctoddcook.FuelLog.DefaultVehicleID";
   public static final int DEFAULT_VEHICLE_TYPE = Property.TYPE_LONG;
   public static final String STATUS_ACTIVE="A";
   public static final String STATUS_RETIRED="R";
