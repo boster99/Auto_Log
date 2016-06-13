@@ -50,15 +50,12 @@ import java.util.ArrayList;
 public class Activity_Main extends AppCompatActivity implements AdapterView.OnItemClickListener,
     View.OnClickListener, AdapterView.OnItemSelectedListener,
     Handler_DataEvents.DataUpdateListener {
-  private static final String TAG = "Activity_Main";
-  private static final int PROGRESS = 0x1;
   private static PropertiesHelper sPH;
   private static DatabaseHelper sDatabaseHelper;
   private int mCurrentVehicleID = 0;
   private ListView mHistoricalsList;
   private DrawerLayout mDrawerLayout;
   private Toolbar mToolbar;
-  private ListView mDrawerList;
   private Model_Fueling mFuelingToDelete;
 
   /**
@@ -101,7 +98,7 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
   }
 
   /**
-   * Displays an instructional hint to the user. Only shown the first time the uesr sees this
+   * Displays an instructional hint to the user. Only shown the first time the user sees this
    * screen (or after HINT settings have been reset).
    */
   private void showHint() {
