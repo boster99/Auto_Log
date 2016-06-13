@@ -20,7 +20,6 @@ import java.util.NoSuchElementException;
  */
 public class Activity_Settings extends AppCompatActivity {
   private static final PropertiesHelper sPropertiesHelper = PropertiesHelper.getInstance();
-  private static Switch sGPSSwitch;
 
 
   /**
@@ -32,6 +31,8 @@ public class Activity_Settings extends AppCompatActivity {
    */
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
+    Switch gpsSwitch;
+
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_settings);
 
@@ -43,7 +44,7 @@ public class Activity_Settings extends AppCompatActivity {
     }
 
     // Get the current setting for whether gps is allowed, and set the switch accordingly
-    sGPSSwitch = (Switch) findViewById(R.id.gps_allowed);
+    gpsSwitch = (Switch) findViewById(R.id.gps_allowed);
     boolean gpsAllowed;
 
     try {
@@ -53,8 +54,8 @@ public class Activity_Settings extends AppCompatActivity {
       sPropertiesHelper.put(Activity_EditFueling.KEY_USER_ALLOWS_GPS, gpsAllowed);
     }
 
-    sGPSSwitch.setChecked(gpsAllowed);
-    sGPSSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+    gpsSwitch.setChecked(gpsAllowed);
+    gpsSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
       @Override
       public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         sPropertiesHelper.put(Activity_EditFueling.KEY_USER_ALLOWS_GPS, isChecked);
