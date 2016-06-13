@@ -13,7 +13,6 @@ import java.util.ArrayList;
  * ctodd@ctoddcook.com
  */
 public class Pager_Vehicle extends FragmentStatePagerAdapter {
-  private static final String TAG = "Pager_Vehicle";
   private final ArrayList<Model_Vehicle> mVehicles;
 
   /**
