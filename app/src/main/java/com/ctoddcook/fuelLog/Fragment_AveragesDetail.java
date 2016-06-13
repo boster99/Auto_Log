@@ -16,7 +16,6 @@ import android.widget.TextView;
  * ctodd@ctoddcook.com
  */
 public class Fragment_AveragesDetail extends Fragment {
-  private static final String TAG = "Fragment_AveragesDetail";
   private static final String SPAN = "Span";
   private static final String VEHICLE_NAME = "VehicleName";
   private int mSpan;
