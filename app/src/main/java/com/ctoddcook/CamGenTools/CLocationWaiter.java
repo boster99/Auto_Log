@@ -254,7 +254,7 @@ public class CLocationWaiter implements LocationListener,
    * <ol>
    *   <li>We get an updated location from the LocationManager calls
    *   {@code onLocationChanged()}. In this case, we should have received an updated
-   *   (and presumably more accurate) lcoation</li>
+   *   (and presumably more accurate) location</li>
    *   <li>At the expiration of the timer created in {@code startTimer()}</li>
    * </ol>
    * When one of these events calls this method, we cancel the timer operation, then pass the
