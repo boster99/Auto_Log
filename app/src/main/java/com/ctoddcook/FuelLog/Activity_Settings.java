@@ -69,8 +69,6 @@ public class Activity_Settings extends AppCompatActivity {
    * @param v The view which called this method
    */
   public void resetHints(View v) {
-    for (String each : Constants_Central.hintList) {
-      sPropertiesHelper.put(each, false);
-    }
+    Handler_FuelLogHints.resetHints();
   }
 }
