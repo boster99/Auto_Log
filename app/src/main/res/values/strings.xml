@@ -127,10 +127,29 @@
   </string>
 
   <string name="main_fuelings_hint">
-    Touch a row of averages to view more detail about that row.\n\nTouch a fueling to view
-    more detail about that fueling, or long-touch a fueling to open a context menu of options
-    available for that fueling.
+    This is the main screen. At the top are four rows of Averages, which will become
+    meaningful as you add more and more fuelings. Touch a row of averages to
+    view more detail about that row.\n\nEach of the individual fuelings appears in
+    the lower list (which you can scroll up and down.) Touch a fueling to view
+    more detail about that fueling, or long-touch a fueling to open a context menu of options.
+    \n\nTouch the \"Add\" button in the lower-right to provide fueling information when you fill
+    your car with gas.
   </string>
+
+  <string name="first_vehicle_hint">
+    Looks like this is your first time here. This is the screen where you add or edit vehicles. The
+    only thing you must provide is a Name—or instead provide a Color, Model and Year, in which
+    case a Name will be created from those. The License Plate and VIN fields are optional.
+  </string>
+
+  <string name="first_fueling_hint">
+    This screen is where you add (or edit) details about a particular time you filled your car
+    with gas. The app provides a date and time, but you can change them if you want to. You must
+    provide the Distance, Volume, and Total Price Paid.\n\nIf you permit the app to read your
+    location, then the location field will be filled in for you, but you are welcome to change
+    it to whatever feel like. The Odometer field is optional—use it if you want to.
+  </string>
+
   <string name="hint_title">Hint</string>
   <string name="hint_btn_okay_label">Got it</string>
 
