@@ -8,6 +8,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.ctoddcook.FuelLog.DatabaseMap_Fueling;
@@ -136,6 +137,7 @@ public class PropertiesHelper {
    * Returns all of the Properties held in memory.
    * @return all Properties
    */
+  @SuppressWarnings("unused")
   public ArrayList<Property> getListOfAll() {
     Iterator iterator = sPropertyMap.keySet().iterator();
     ArrayList<Property> list = new ArrayList<>(sPropertyMap.size());
@@ -154,6 +156,7 @@ public class PropertiesHelper {
    * @param forName the name of the desired property
    * @return the String value
    */
+  @SuppressWarnings("unused")
   public String getStringValue(String forName) {
     forName = forName.trim().toLowerCase();
     Property p = sPropertyMap.get(forName);
@@ -164,10 +167,26 @@ public class PropertiesHelper {
   }
 
   /**
+   * Returns the String value for a property
+   *
+   * @param forName      the name of the desired property
+   * @param defaultValue the value to return if no property is retrieved
+   * @return the String value, or the default value if no String was found
+   */
+  @SuppressWarnings("unused")
+  public String getStringValue(String forName, @Nullable String defaultValue) {
+    forName = forName.trim().toLowerCase();
+    Property p = sPropertyMap.get(forName);
+
+    return (p == null ? defaultValue : p.getStringValue());
+  }
+
+  /**
    * Returns the double value for a property
    * @param forName the name of the desired property
    * @return the double value
    */
+  @SuppressWarnings("unused")
   public double getDoubleValue(String forName) {
     forName = forName.trim().toLowerCase();
     Property p = sPropertyMap.get(forName);
@@ -178,9 +197,24 @@ public class PropertiesHelper {
   }
 
   /**
+   * Returns the double value for a property
+   *
+   * @param forName      the name of the desired property
+   * @param defaultValue the value to return if no property is retrieved
+   * @return the double value, or the default value if no double was found
+   */
+  @SuppressWarnings("unused")
+  public double getDoubleValue(String forName, double defaultValue) {
+    forName = forName.trim().toLowerCase();
+    Property p = sPropertyMap.get(forName);
+
+    return (p == null ? defaultValue : p.getDoubleValue());
+  }
+
+  /**
    * Returns the long value for a property
    * @param forName the name of the desired property
-   * @return the int value
+   * @return the long value
    */
   public long getLongValue(String forName) {
     forName = forName.trim().toLowerCase();
@@ -189,6 +223,20 @@ public class PropertiesHelper {
       throw new NoSuchElementException("No property found for name: " + forName);
 
     return p.getLongValue();
+  }
+
+  /**
+   * Returns the long value for a property
+   *
+   * @param forName      the name of the desired property
+   * @param defaultValue the value to return if no property is retrieved
+   * @return the long value, or the default value if no long was found
+   */
+  public long getLongValue(String forName, long defaultValue) {
+    forName = forName.trim().toLowerCase();
+    Property p = sPropertyMap.get(forName);
+
+    return (p == null ? defaultValue : p.getLongValue());
   }
 
   /**
@@ -206,10 +254,26 @@ public class PropertiesHelper {
   }
 
   /**
+   * Returns the boolean value for a property. A boolean is stored as a 1 or 0 long value.
+   *
+   * @param forName      the name of the desired property
+   * @param defaultValue the value to return if no property is found
+   * @return the boolean value retrieved, or the default if no value is retrieved
+   */
+  @SuppressWarnings("unused")
+  public boolean getBooleanValue(String forName, boolean defaultValue) {
+    forName = forName.trim().toLowerCase();
+    Property p = sPropertyMap.get(forName);
+
+    return (p == null ? defaultValue : (p.getLongValue() != 0));
+  }
+
+  /**
    * Returns the Date value of a property
    * @param forName the name of the desired property
    * @return the date value
    */
+  @SuppressWarnings("unused")
   public Date getDateValue(String forName) {
     forName = forName.trim().toLowerCase();
     Property p = sPropertyMap.get(forName);
@@ -217,6 +281,21 @@ public class PropertiesHelper {
       throw new NoSuchElementException("No property found for name: " + forName);
 
     return p.getDateTimeValue();
+  }
+
+  /**
+   * Returns the Date value of a property
+   *
+   * @param forName      the name of the desired property
+   * @param defaultValue the value to return if no property is found
+   * @return the date value, or the default if the retrieved date is null
+   */
+  @SuppressWarnings("unused")
+  public Date getDateValue(String forName, @Nullable Date defaultValue) {
+    forName = forName.trim().toLowerCase();
+    Property p = sPropertyMap.get(forName);
+
+    return (p == null ? defaultValue : p.getDateTimeValue());
   }
 
   /**
@@ -269,6 +348,7 @@ public class PropertiesHelper {
    * Iterates through all Properties. For each that is new, it is inserted into the database and
    * for each that is changed, it is updated in the database.
    */
+  @SuppressWarnings("unused")
   private void updateProperties() {
     Iterator iterator = sPropertyMap.keySet().iterator();
     String key;
@@ -345,6 +425,7 @@ public class PropertiesHelper {
    * @return true if the number of rows deleted is exactly 1
    * @throws IllegalArgumentException if the instance's state is not set to DELETED
    */
+  @SuppressWarnings("unused")
   public boolean deleteProperty(Property p) throws IllegalArgumentException {
     if (!p.isDeleted())
       throw new IllegalArgumentException("Cannot delete an object if it's state is not DELETED");

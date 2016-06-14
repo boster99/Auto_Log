@@ -81,6 +81,7 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
     setSupportActionBar(mToolbar);
 
     mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+    setupNavigationDrawer();
 
     Handler_Format.init(this);
 
@@ -89,10 +90,15 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
     sPropertiesHelper = PropertiesHelper.getInstance();
 
     Handler_DataEvents.getInstance().setOnDataUpdatedListener(this);
-    setupNavigationDrawer();
 
     populateScreen();
-    showHint();
+
+    /*
+    If we aren't going to jump straight to adding a vehicle or fueling, then show a hint.
+     */
+    if (mCurrentVehicleID != 0 && mHistoricalsList.getCount() != 0) {
+      showHint();
+    }
 
 //    ByteArrayOutputStream baos = new ByteArrayOutputStream(1024);
 //    try {
@@ -407,8 +413,7 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
     ArrayList<Model_Vehicle> vehicles;
 
     // Get the default Model_Vehicle
-    if (mCurrentVehicleID == 0 && sPropertiesHelper.doesNameExist(Model_Vehicle.DEFAULT_VEHICLE_KEY))
-      mCurrentVehicleID = (int) sPropertiesHelper.getLongValue(Model_Vehicle.DEFAULT_VEHICLE_KEY);
+    mCurrentVehicleID = (int) sPropertiesHelper.getLongValue(Model_Vehicle.DEFAULT_VEHICLE_KEY, 0);
 
     // Fetch the list of vehicles into memory
     vehicles = sDatabaseHelper.fetchVehicleList();
