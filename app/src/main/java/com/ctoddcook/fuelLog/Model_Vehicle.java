@@ -25,7 +25,7 @@ public class Model_Vehicle extends DataHolder {
   public static final String STATUS_ACTIVE="A";
   public static final String STATUS_RETIRED="R";
 
-  private static final SparseArray<Model_Vehicle> sVehicleList = new SparseArray<>(12);
+  private static final SparseArray<Model_Vehicle> sVehicleList = new SparseArray<>(40);
 
   private int mVehicleID;
   private String mName;
@@ -126,6 +126,15 @@ public class Model_Vehicle extends DataHolder {
     }
 
     return list;
+  }
+
+  /**
+   * Provides the number of vehicles stored.
+   *
+   * @return The count of vehicles
+   */
+  public static int getCount() {
+    return sVehicleList.size();
   }
 
   /**

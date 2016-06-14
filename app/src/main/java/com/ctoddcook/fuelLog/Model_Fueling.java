@@ -504,6 +504,14 @@ class Model_Fueling extends DataHolder {
   }
 
   /**
+   * Provides the number of Fuelings presently in memory (i.e., for the selected vehicle).
+   * @return The nubmer of fuelings in memory.
+   */
+  public static int getCount() {
+    return sLifetimeSpan.size();
+  }
+
+  /**
    * This will add (or remove) the instance to (from) the static lists of fill records
    * based on date. If the fill date (mDateOfFill) is within the last 3 or 6 months or
    * last mYear, this instance will get added to at least one of those lists.
@@ -664,6 +672,17 @@ class Model_Fueling extends DataHolder {
   }
 
   /**
+   * Setter for mDateOfFill, a Date value indicating when the vehicle was filled with gas
+   *
+   * @param dateOfFill a Long value indicating the millis representation of the date
+   */
+  @SuppressWarnings("unused")
+  public void setDateOfFill(long dateOfFill) {
+    Date newDate = new Date(dateOfFill);
+    setDateOfFill(newDate);
+  }
+
+  /**
    * Setter for mDateOfFill, a Date value indicating when the vehicle was filled with gas. After
    * setting the new value, adjustLists() is called to add this instance to (or remove it from)
    * appropriate arrays of Model_Fueling objects.
@@ -675,17 +694,6 @@ class Model_Fueling extends DataHolder {
     adjustLists();
 
     touch();
-  }
-
-  /**
-   * Setter for mDateOfFill, a Date value indicating when the vehicle was filled with gas
-   *
-   * @param dateOfFill a Long value indicating the millis representation of the date
-   */
-  @SuppressWarnings("unused")
-  public void setDateOfFill(long dateOfFill) {
-    Date newDate = new Date(dateOfFill);
-    setDateOfFill(newDate);
   }
 
   /**
