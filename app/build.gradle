@@ -19,6 +19,7 @@ android {
         }
         debug {
             applicationIdSuffix '.debug'
+            versionNameSuffix '-debug'
         }
     }
 }
@@ -31,10 +32,9 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     testCompile 'org.json:json:20140107'
-
     compile "com.android.support:appcompat-v7:${supportLibVersion}"
     compile "com.android.support:design:${supportLibVersion}"
     compile "com.android.support:support-vector-drawable:${supportLibVersion}" // VectorDrawableCompat
     compile "com.android.support:animated-vector-drawable:${supportLibVersion}"
-// AnimatedVectorDrawableCompat
+    // AnimatedVectorDrawableCompat
 }
