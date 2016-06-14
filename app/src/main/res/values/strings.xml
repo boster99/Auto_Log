@@ -107,25 +107,30 @@
     HINT: Touch the coordinates, and a map will show the location.
   </string>
 
-  <string name="pager_vehicle_swipe_hint">
+  <string name="pager_vehicle_hint_title">Vehicle Details</string>
+  <string name="pager_vehicle_hint">
     If you have more than one vehicle, on this screen you can swipe left or right to view
     the prior or next vehicle\'s details.
   </string>
 
-  <string name="pager_fueling_swipe_hint">
+  <string name="pager_fueling_hint_title">Fueling Details</string>
+  <string name="pager_fueling_hint">
     If you have more than one fueling, on this screen you can swipe left or right to view
     the prior or next fueling\'s details.
   </string>
 
-  <string name="pager_averages_swipe_hint">
+  <string name="pager_averages_hint_title">Averages Details</string>
+  <string name="pager_averages_hint">
     Swipe left or right to view the prior or next set of averages.
   </string>
 
+  <string name="vehicle_list_hint_title">Vehicle List</string>
   <string name="vehicle_list_hint">
     Touch a vehicle on this screen to be shown more details about that vehicle. Long-touch
     a vehicle to open a context menu of options available for that vehicle.
   </string>
 
+  <string name="main_fuelings_hint_title">Main View</string>
   <string name="main_fuelings_hint">
     This is the main screen. At the top are four rows of Averages, which will become
     meaningful as you add more and more fuelings. Touch a row of averages to
@@ -136,12 +141,14 @@
     your car with gas.
   </string>
 
+  <string name="first_vehicle_hint_title">Add or Edit a Vehicle</string>
   <string name="first_vehicle_hint">
     Looks like this is your first time here. This is the screen where you add or edit vehicles. The
     only thing you must provide is a Name—or instead provide a Color, Model and Year, in which
     case a Name will be created from those. The License Plate and VIN fields are optional.
   </string>
 
+  <string name="first_fueling_hint_title">Add or Edit a Fueling</string>
   <string name="first_fueling_hint">
     This screen is where you add (or edit) details about a particular time you filled your car
     with gas. The app provides a date and time, but you can change them if you want to. You must
