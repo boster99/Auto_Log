@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.Locale;
+
 
 /**
  * This populates the display with the details from a particular vehicle.
@@ -72,7 +74,7 @@ public class Fragment_VehicleDetail extends Fragment {
     tvColor.setText(mVehicle.getColor());
 
     TextView tvYear = (TextView) layoutView.findViewById(R.id.vehicle_detail_year);
-    tvYear.setText(Integer.toString(mVehicle.getYear()));
+    tvYear.setText(String.format(Locale.getDefault(), "%d", mVehicle.getYear()));
 
     TextView tvModel = (TextView) layoutView.findViewById(R.id.vehicle_detail_model);
     tvModel.setText(mVehicle.getModel());
