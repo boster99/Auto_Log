@@ -12,14 +12,13 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import android.text.format.DateUtils;
 import android.widget.Toast;
 
 import com.ctoddcook.CamGenTools.CLocationTools;
@@ -27,10 +26,12 @@ import com.ctoddcook.CamGenTools.CLocationWaiter;
 import com.ctoddcook.CamGenTools.PropertiesHelper;
 import com.ctoddcook.CamUiTools.Fragment_DatePicker;
 import com.ctoddcook.CamUiTools.Fragment_TimePicker;
+import com.ctoddcook.CamUiTools.Handler_Hints;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 import java.util.NoSuchElementException;
 
 // TODO Organize this mess
@@ -46,24 +47,20 @@ public class Activity_EditFueling extends AppCompatActivity
     implements AdapterView.OnItemSelectedListener, Fragment_DatePicker.DatePickerCaller,
     Fragment_TimePicker.TimePickerCaller, CLocationWaiter.locationCaller {
 
-  private static DatabaseHelper sDatabaseHelper;
-
   public static final String KEY_ADD_EDIT_MODE = "com.ctoddcook.FuelLog.ADD_EDIT_MODE";
   public static final String KEY_FUELING_ID = "com.ctoddcook.FuelLog.FUELING_ID";
   public static final String KEY_USER_ALLOWS_GPS = "com.ctoddcook.FuelLog.GPS_ALLOWED";
   public static final int MODE_ADD = 1;
   public static final int MODE_EDIT = 2;
-
+  private static DatabaseHelper sDatabaseHelper;
+  float mDistance = 0f, mVolume = 0f, mPricePaid = 0f, mOdometer = 0f;
+  String mLocation = null;
   private int mode;
   private Model_Fueling mFueling;
   private Model_Vehicle mVehicle;
   private Date mDateOfFill;
   private Location mGPSLocation;
   private int mYear, mMonth, mDay, mHour, mMinute;
-  float mDistance = 0f, mVolume = 0f, mPricePaid = 0f, mOdometer = 0f;
-  String mLocation = null;
-
-
   private EditText mDistanceET, mVolumeET, mPricePaidDT, mLocationET, mOdometerET;
 
 
@@ -117,7 +114,7 @@ public class Activity_EditFueling extends AppCompatActivity
         mVolumeET.setText(Handler_Format.formatVolumeLongRaw(mFueling.getVolume()));
         mPricePaidDT.setText(Handler_Format.formatPriceRaw(mFueling.getPricePaid()));
         mLocationET.setText(mFueling.getLocation());
-        mOdometerET.setText(Float.toString(mFueling.getOdometer()));
+        mOdometerET.setText(String.format(Locale.getDefault(), "%1.1f", mFueling.getOdometer()));
 
         break;
       default:
@@ -142,6 +139,10 @@ public class Activity_EditFueling extends AppCompatActivity
 
     // Display the date and time
     displayDateOfFill();
+
+    Handler_Hints.showHint(this, Handler_FuelLogHints.FIRST_FUELING_HINT_KEY,
+        getString(R.string.first_fueling_hint_title),
+        getString(R.string.first_fueling_hint));
   }
 
   /**

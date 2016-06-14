@@ -6,9 +6,9 @@ package com.ctoddcook.FuelLog;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
@@ -19,7 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.ctoddcook.CamGenTools.PropertiesHelper;
-import com.ctoddcook.CamUiTools.Handler_UserHints;
+import com.ctoddcook.CamUiTools.Handler_Hints;
 
 import java.util.ArrayList;
 
@@ -81,7 +81,9 @@ public class Activity_VehicleList extends AppCompatActivity implements AdapterVi
    * screen (or after HINT settings have been reset).
    */
   private void showHint() {
-    Handler_UserHints.showHint(this, Constants_Central.VEHICLE_LIST_HINT_KEY, null, getString(R.string.vehicle_list_hint));
+    Handler_Hints.showHint(this, Handler_FuelLogHints.VEHICLE_LIST_HINT_KEY,
+        getString(R.string.vehicle_list_hint_title),
+        getString(R.string.vehicle_list_hint));
   }
 
   /**

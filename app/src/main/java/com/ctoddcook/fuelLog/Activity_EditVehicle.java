@@ -14,25 +14,25 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.ctoddcook.CamUiTools.Handler_Hints;
+
+import java.util.Locale;
+
 /**
  * This activity is used for adding a new, or editing an existing Model_Vehicle.
  */
 public class Activity_EditVehicle extends AppCompatActivity {
-  private static final String TAG = "Activity_EditVehicle";
-
-  private static DatabaseHelper sDatabaseHelper;
-
   public static final String KEY_ADD_EDIT_MODE = "com.ctoddcook.FuelLog.ADD_EDIT_MODE";
   public static final String KEY_VEHICLE_ID = "com.ctoddcook.FuelLog.VEHICLE_ID";
   public static final int MODE_ADD = 1;
   public static final int MODE_EDIT = 2;
-  private int mMode;
-  private Model_Vehicle mVehicle;
-
+  private static final String TAG = "Activity_EditVehicle";
+  private static DatabaseHelper sDatabaseHelper;
   EditText mNameET, mColorET, mYearET, mModelET, mLicensePlateET, mVinET;
   String mName, mColor, mModel, mVin, mLicensePlate;
   int mYear = 0;
-
+  private int mMode;
+  private Model_Vehicle mVehicle;
 
   /**
    * When the activity is created, apart from the standard actions, we retrieve the type of
@@ -80,6 +80,12 @@ public class Activity_EditVehicle extends AppCompatActivity {
       default:
         throw new IllegalArgumentException("Calling process must specify add/edit mMode");
     }
+
+
+    Handler_Hints.showHint(this, Handler_FuelLogHints.FIRST_VEHICLE_HINT_KEY,
+        getString(R.string.first_vehicle_hint_title),
+        getString(R.string.first_vehicle_hint));
+
   }
 
   /**
@@ -88,7 +94,7 @@ public class Activity_EditVehicle extends AppCompatActivity {
   private void populateFromVehicle() {
     mNameET.setText(mVehicle.getName());
     mColorET.setText(mVehicle.getColor());
-    mYearET.setText(Integer.toString(mVehicle.getYear()));
+    mYearET.setText(String.format(Locale.getDefault(), "%d", mVehicle.getYear()));
     mModelET.setText(mVehicle.getModel());
     mLicensePlateET.setText(mVehicle.getLicensePlate());
     mVinET.setText(mVehicle.getVIN());
@@ -119,18 +125,12 @@ public class Activity_EditVehicle extends AppCompatActivity {
     try {
       mYear = Integer.parseInt(mYearET.getText().toString());
     } catch (NumberFormatException e) {
-      Log.e(TAG, "extractDetails: mVehicle mYear EditText value is: "
+      Log.e(TAG, "extractDetails: Vehicle model Year EditText value is: "
           + mYearET.getText().toString(), e);
     }
 
     // If the user has not provided a mName, make one out of the mColor, mYear and mModel
     if (mName.length() < 1) {
-      if (mColor.length() < 1 || mModel.length() < 1 || mYear == 0) {
-        Toast.makeText(this, "Uh oh! If you don't supply a mName, you must supply a " +
-            "mColor, mYear and mModel", Toast.LENGTH_LONG).show();
-        return;
-      }
-
       mName = mColor + " " + mYear + " " + mModel;
     }
   }
@@ -141,12 +141,21 @@ public class Activity_EditVehicle extends AppCompatActivity {
    * @return Yes or no, did the data pass sanity checks
    */
   private boolean sanityChecksPass() {
+    // The user must provide either a name, or color and model and year.
+    if (mName.length() < 1) {
+      if (mColor.length() < 1 || mModel.length() < 1 || mYear == 0) {
+        Toast.makeText(this, "Uh oh! If you don't supply a mName, you must supply a " +
+            "mColor, mYear and mModel", Toast.LENGTH_LONG).show();
+        return false;
+      }
+    }
+
     /*
     Sanity-check the model year. We accept 0 (i.e., user chooses not to provide a year)
     but otherwise require a value between 1900 and 2100 (think anyone will be using
     this in 2100?)
      */
-    if (mYear != 0 && (mYear < 1900 || mYear > 2100)) {
+    if (mYear != 0 && (mYear < 1970 || mYear > 2100)) {
       Toast.makeText(this, "Whoops! " + mYear + " is not a valid mModel mYear",
           Toast.LENGTH_LONG).show();
       return false;
