@@ -7,13 +7,22 @@ import android.support.v7.app.AlertDialog;
 import com.ctoddcook.CamGenTools.PropertiesHelper;
 import com.ctoddcook.FuelLog.R;
 
+import java.util.ArrayList;
+
 /**
  * Provides general convenience tools for the UI
  * <p/>
  * Created by C. Todd Cook on 6/9/2016.<br>
  * ctodd@ctoddcook.com
  */
-public class Handler_UserHints {
+public class Handler_Hints {
+  protected static final ArrayList<String> hintList = new ArrayList<>(5);
+
+  private static final PropertiesHelper sPropertiesHelper;
+
+  static {
+    sPropertiesHelper = PropertiesHelper.getInstance();
+  }
 
   /**
    * Displays an instructional hint to the user. Only shown the first time the user sees this
@@ -21,11 +30,10 @@ public class Handler_UserHints {
    */
   public static void showHint(final Context context, final String propertyKey, String hintTitle,
                                final String hintMessage) {
-    PropertiesHelper ph = PropertiesHelper.getInstance();
     boolean hintAlreadyShown;
     if (hintTitle == null) hintTitle = context.getString(R.string.hint_title);
 
-    hintAlreadyShown = ph.getBooleanValue(propertyKey, false);
+    hintAlreadyShown = sPropertiesHelper.getBooleanValue(propertyKey, false);
 
     // If the hint has not been shown, build a dialog with a single OK button and show it
     if (!hintAlreadyShown) {
@@ -42,7 +50,18 @@ public class Handler_UserHints {
       builder.show();
 
       // Note that the hint has now been shown.
-      ph.put(propertyKey, true);
+      sPropertiesHelper.put(propertyKey, true);
+    }
+  }
+
+  /**
+   * Reset the "has been shown" flag for each hint to false, which will cause them to be shown
+   * again.
+   */
+  @SuppressWarnings("unused")
+  public static void resetHints() {
+    for (String each : hintList) {
+      sPropertiesHelper.put(each, false);
     }
   }
 }

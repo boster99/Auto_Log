@@ -30,7 +30,7 @@ import android.widget.Toast;
 
 import com.ctoddcook.CamGenTools.PropertiesHelper;
 import com.ctoddcook.CamGenTools.Property;
-import com.ctoddcook.CamUiTools.Handler_UserHints;
+import com.ctoddcook.CamUiTools.Handler_Hints;
 
 import java.util.ArrayList;
 
@@ -93,12 +93,7 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
 
     populateScreen();
 
-    /*
-    If we aren't going to jump straight to adding a vehicle or fueling, then show a hint.
-     */
-    if (mCurrentVehicleID != 0 && mHistoricalsList.getCount() != 0) {
-      showHint();
-    }
+    showHint();
 
 //    ByteArrayOutputStream baos = new ByteArrayOutputStream(1024);
 //    try {
@@ -114,6 +109,16 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
 //    }
   }
 
+  /**
+   * Called after the activity is covered (for example, by another activity) and then redisplayed.
+   * <p/>
+   * {@link #onResumeFragments()}.
+   */
+  @Override
+  protected void onResume() {
+    super.onResume();
+    showHint();
+  }
 
   /**
    * Called when a context menu for the {@code view} is about to be shown.
@@ -723,7 +728,18 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
    * screen (or after HINT settings have been reset).
    */
   private void showHint() {
-    Handler_UserHints.showHint(this, Constants_Central.FUELING_LIST_HINT_KEY, null,
+    /*
+    The first time the user opens the app, this activity sends the user to the Add Vehicle
+    activity, and later the user can be sent to the Add Fueling activity. These can interfere
+    with the "first time the user sees" the main screen, and the user may never see the hint. So
+    we test to see whether we have any vehicles, and whether we have any fuelings. If we don't,
+    then we don't yet show the hint.
+     */
+    if (Model_Vehicle.getCount() < 1 || Model_Fueling.getCount() < 1)
+      return;
+
+    Handler_Hints.showHint(this, Handler_FuelLogHints.FUELING_LIST_HINT_KEY,
+        getString(R.string.main_fuelings_hint_title),
         getString(R.string.main_fuelings_hint));
   }
 

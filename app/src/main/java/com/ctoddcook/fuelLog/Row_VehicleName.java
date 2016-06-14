@@ -45,8 +45,8 @@ public class Row_VehicleName extends ArrayAdapter<Model_Vehicle> {
     mContext = c;
     mList = vList;
 
-    mDefaultVehicleID = (int) PropertiesHelper.getInstance().getLongValue(Model_Vehicle
-        .DEFAULT_VEHICLE_KEY);
+    PropertiesHelper ph = PropertiesHelper.getInstance();
+    mDefaultVehicleID = (int) ph.getLongValue(Model_Vehicle.DEFAULT_VEHICLE_KEY, 0);
   }
 
   /**
