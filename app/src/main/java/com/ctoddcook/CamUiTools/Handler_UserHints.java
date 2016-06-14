@@ -7,8 +7,6 @@ import android.support.v7.app.AlertDialog;
 import com.ctoddcook.CamGenTools.PropertiesHelper;
 import com.ctoddcook.FuelLog.R;
 
-import java.util.NoSuchElementException;
-
 /**
  * Provides general convenience tools for the UI
  * <p/>
@@ -27,12 +25,7 @@ public class Handler_UserHints {
     boolean hintAlreadyShown;
     if (hintTitle == null) hintTitle = context.getString(R.string.hint_title);
 
-    // Has the hint already been shown?
-    try {
-      hintAlreadyShown = ph.getBooleanValue(propertyKey);
-    } catch (NoSuchElementException e) {
-      hintAlreadyShown = false;
-    }
+    hintAlreadyShown = ph.getBooleanValue(propertyKey, false);
 
     // If the hint has not been shown, build a dialog with a single OK button and show it
     if (!hintAlreadyShown) {
@@ -52,6 +45,4 @@ public class Handler_UserHints {
       ph.put(propertyKey, true);
     }
   }
-
-
 }
