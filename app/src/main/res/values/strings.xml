@@ -158,8 +158,8 @@
   <string name="first_vehicle_hint_title">Add or Edit a Vehicle</string>
   <string name="first_vehicle_hint">
     Looks like this is your first time here. Welcome. We hope you find this easy and useful.
-    Let's start by adding a vehicle. (You can add more Vehicles, later, if you'd like to.)\n\n
-    This screen is where you add or edit vehicles. The only thing you MUST provide is a
+    Let\'s start by adding a vehicle. (You can add more Vehicles, later, if you\'d like
+    to.)\n\n This screen is where you add or edit vehicles. The only thing you MUST provide is a
     Vehicle Name—or instead of a Vehicle Name, provide a Color, Model and Model Year (in which
     case a Vehicle Name will be created for you). The License Plate and VIN fields are entirely
     optional.

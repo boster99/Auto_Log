@@ -29,7 +29,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ctoddcook.CamGenTools.PropertiesHelper;
-import com.ctoddcook.CamGenTools.Property;
 import com.ctoddcook.CamUiTools.Handler_Hints;
 
 import java.util.ArrayList;
@@ -48,6 +47,9 @@ import java.util.ArrayList;
 public class Activity_Main extends AppCompatActivity implements AdapterView.OnItemClickListener,
     View.OnClickListener, AdapterView.OnItemSelectedListener,
     Handler_DataEvents.DataUpdateListener {
+
+  @SuppressWarnings("unused")
+  private static final String TAG = "Activity_Main";
 
   private static PropertiesHelper sPropertiesHelper;
   private static DatabaseHelper sDatabaseHelper;
@@ -230,15 +232,6 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
     // get a cursor providing IDs and NAMEs for each vehicle (include retired vehicles)
     Cursor cursor = sDatabaseHelper.fetchSimpleVehicleListCursor(true);
 
-    // if the cursor has no results, open the Activity_EditVehicle, then try again
-    if (cursor.getCount() < 1) {
-      Intent intent = new Intent(this, Activity_EditVehicle.class);
-      intent.putExtra(Activity_EditVehicle.KEY_ADD_EDIT_MODE, Activity_EditVehicle
-          .MODE_ADD);
-      startActivity(intent);
-      cursor = sDatabaseHelper.fetchSimpleVehicleListCursor(true);
-    }
-
     // make an adapter from the cursor
     String[] from = new String[]{DatabaseMap_Vehicle.COLUMN_NAME_NAME};
     int[] to = new int[]{android.R.id.text1};
@@ -283,6 +276,55 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
         }
         spinner.setSelection(pos);
       }
+    }
+  }
+
+
+
+  /**
+   * Gets the default Model_Vehicle, then fetches all the Vehicles from the database, and sets up the
+   * vehicle spinner.
+   */
+  private void loadVehicles() {
+    ArrayList<Model_Vehicle> vehicles;
+
+    // Get the default Model_Vehicle
+    mCurrentVehicleID = (int) sPropertiesHelper.getLongValue(Model_Vehicle.DEFAULT_VEHICLE_KEY, 0);
+
+    // Fetch the list of vehicles into memory
+    vehicles = sDatabaseHelper.fetchVehicleList();
+
+    /*
+    If no vehicles were found in the database, we open the activity to add at least one vehicle.
+    Then we fetch the list again. If the list is not empty (expected) we use the newly-added
+    vehicle as the Default, and add that default to properties.
+     */
+
+    if (vehicles.isEmpty()) {
+      Intent intent = new Intent(this, Activity_EditVehicle.class);
+      intent.putExtra(Activity_EditVehicle.KEY_ADD_EDIT_MODE, Activity_EditVehicle.MODE_ADD);
+      startActivity(intent);
+    } else {
+      if (mCurrentVehicleID == 0) {
+        mCurrentVehicleID = vehicles.get(0).getID();
+        sPropertiesHelper.put(Model_Vehicle.DEFAULT_VEHICLE_KEY, mCurrentVehicleID);
+      }
+
+      setupVehicleSpinner();
+    }
+  }
+
+
+  /**
+   * Handler for loading Model_Vehicle data for a specified id.
+   * @param id the id for the desired Model_Vehicle.
+   */
+  private void loadFuelings(int id) {
+    ArrayList<Model_Fueling> fList = sDatabaseHelper.fetchFuelingData(id);
+
+    if (!fList.isEmpty()) {
+      loadAverages();
+      loadHistoricalFuelingsList(fList);
     }
   }
 
@@ -407,57 +449,6 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
 
     ll = (LinearLayout) findViewById(R.id.averages_fourth_row);
     if (ll != null) ll.setOnClickListener(this);
-  }
-
-
-  /**
-   * Gets the default Model_Vehicle, then fetches all the Vehicles from the database, and sets up the
-   * vehicle spinner.
-   */
-  private void loadVehicles() {
-    ArrayList<Model_Vehicle> vehicles;
-
-    // Get the default Model_Vehicle
-    mCurrentVehicleID = (int) sPropertiesHelper.getLongValue(Model_Vehicle.DEFAULT_VEHICLE_KEY, 0);
-
-    // Fetch the list of vehicles into memory
-    vehicles = sDatabaseHelper.fetchVehicleList();
-
-    /*
-    If no vehicles were found in the database, we open the activity to add at least one vehicle.
-    Then we fetch the list again. If the list is not empty (expected) we use the newly-added
-    vehicle as the Default, and add that default to properties.
-     */
-
-    if (vehicles.isEmpty()) {
-      Intent intent = new Intent(this, Activity_EditVehicle.class);
-      intent.putExtra(Activity_EditVehicle.KEY_ADD_EDIT_MODE, Activity_EditVehicle.MODE_ADD);
-      startActivity(intent);
-    } else {
-      if (mCurrentVehicleID == 0) {
-        mCurrentVehicleID = vehicles.get(0).getID();
-        Property p = new Property(Model_Vehicle.DEFAULT_VEHICLE_KEY, mCurrentVehicleID);
-        sPropertiesHelper.put(p);
-      }
-    }
-
-    setupVehicleSpinner();
-  }
-
-
-  /**
-   * Handler for loading Model_Vehicle data for a specified id.
-   * @param id the id for the desired Model_Vehicle.
-   */
-  private void loadFuelings(int id) {
-    ArrayList<Model_Fueling> fList = sDatabaseHelper.fetchFuelingData(id);
-
-    if (fList.isEmpty()) {
-      addFueling(null);
-    } else {
-      loadAverages();
-      loadHistoricalFuelingsList(fList);
-    }
   }
 
 
@@ -730,12 +721,11 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
   private void showHint() {
     /*
     The first time the user opens the app, this activity sends the user to the Add Vehicle
-    activity, and later the user can be sent to the Add Fueling activity. These can interfere
-    with the "first time the user sees" the main screen, and the user may never see the hint. So
-    we test to see whether we have any vehicles, and whether we have any fuelings. If we don't,
-    then we don't yet show the hint.
+    activity. This can interfere with the "first time the user sees" the main screen, and the user
+    may never see the hint. So we test to see whether we have any vehicles. If we don't, then we
+    don't yet show the hint.
      */
-    if (Model_Vehicle.getCount() < 1 || Model_Fueling.getCount() < 1)
+    if (Model_Vehicle.getCount() < 1)
       return;
 
     Handler_Hints.showHint(this, Handler_FuelLogHints.FUELING_LIST_HINT_KEY,

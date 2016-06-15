@@ -67,9 +67,11 @@ public class Activity_EditVehicle extends AppCompatActivity {
 
     switch (mMode) {
       case MODE_ADD:
+        Log.i(TAG, "onCreate: Add mode");
         mVehicle = new Model_Vehicle();
         break;
       case MODE_EDIT:
+        Log.i(TAG, "onCreate: Edit mode");
         int vehicleID = getIntent().getIntExtra(KEY_VEHICLE_ID, -1);
         if (vehicleID < 0)
           throw new IllegalArgumentException("In edit mMode, a Model_Vehicle ID must be provided");
