@@ -18,12 +18,20 @@
 
   <!-- Following are used on Edit Fueling activity -->
   <string name="edit_fueling_title">Enter Fueling Details</string>
-  <string name="edit_fueling_time_label">Time</string>
-  <string name="edit_fueling_volume_label">Volume</string>
-  <string name="edit_fueling_distance_label">Distance</string>
-  <string name="edit_fueling_total_price_paid_label">Total Price Paid</string>
+  <string name="edit_fueling_date_label">Date *</string>
+  <string name="edit_fueling_time_label">Time *</string>
+  <string name="edit_fueling_volume_label">Volume *</string>
+  <string name="edit_fueling_distance_label">Distance *</string>
+  <string name="edit_fueling_total_price_paid_label">Total Price Paid *</string>
   <string name="edit_fueling_location_label">Location</string>
   <string name="edit_fueling_odometer_label">Odometer</string>
+  <string name="edit_fueling_date_hint">Date</string>
+  <string name="edit_fueling_time_hint">Time</string>
+  <string name="edit_fueling_volume_hint">Volume</string>
+  <string name="edit_fueling_distance_hint">Distance</string>
+  <string name="edit_fueling_total_price_paid_hint">Total Price Paid</string>
+  <string name="edit_fueling_location_hint">Location</string>
+  <string name="edit_fueling_odometer_hint">Odometer</string>
 
   <!-- Following are used in multiple layouts, activities and fragments -->
   <string name="all_vehicle_label">Vehicle</string>
@@ -46,12 +54,18 @@
 
   <!-- Following are used on AddEditVehicle activity -->
   <string name="edit_vehicle_title">Enter Vehicle Details</string>
-  <string name="edit_vehicle_name_label">Name</string>
+  <string name="edit_vehicle_name_label">Vehicle Name *</string>
   <string name="edit_vehicle_model_year_label">Model Year</string>
   <string name="edit_vehicle_color_label">Color</string>
   <string name="edit_vehicle_model_label">Model</string>
   <string name="edit_vehicle_vin_label">VIN</string>
   <string name="edit_vehicle_license_plate_label">License Plate</string>
+  <string name="edit_vehicle_name_hint">Vehicle Name</string>
+  <string name="edit_vehicle_model_year_hint">Model Year</string>
+  <string name="edit_vehicle_color_hint">Color</string>
+  <string name="edit_vehicle_model_hint">Model</string>
+  <string name="edit_vehicle_vin_hint">VIN</string>
+  <string name="edit_vehicle_license_plate_hint">License Plate</string>
   <string name="edit_vehicle_duplicate_warning">
     There is already a Vehicle with the same Color, Year and Model, the same Name, the same VIN,
     or the same License Plate.\n\nDo you want to save this as a duplicate?
@@ -143,9 +157,9 @@
 
   <string name="first_vehicle_hint_title">Add or Edit a Vehicle</string>
   <string name="first_vehicle_hint">
-    Looks like this is your first time here. This is the screen where you add or edit vehicles. The
-    only thing you must provide is a Name—or instead provide a Color, Model and Year, in which
-    case a Name will be created from those. The License Plate and VIN fields are optional.
+    Looks like this is your first time here. This screen where you add or edit vehicles. The
+    only thing you MUST provide is a Name—or instead, provide a Color, Model and Year (in which
+    case a Name will be created for you). The License Plate and VIN fields are completely optional.
   </string>
 
   <string name="first_fueling_hint_title">Add or Edit a Fueling</string>
@@ -153,8 +167,8 @@
     This screen is where you add (or edit) details about a particular time you filled your car
     with gas. The app provides a date and time, but you can change them if you want to. You must
     provide the Distance, Volume, and Total Price Paid.\n\nIf you permit the app to read your
-    location, then the location field will be filled in for you, but you are welcome to change
-    it to whatever feel like. The Odometer field is optional—use it if you want to.
+    GPS location, then the Location field will be filled in for you (you are welcome to change
+    it if you would like to). The Odometer field is optional—use it if you want to.
   </string>
 
   <string name="hint_title">Hint</string>

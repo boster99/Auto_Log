@@ -30,9 +30,9 @@
             <EditText
                 android:id="@+id/vehicle_edit_name"
                 style="@style/EditDetailStyle"
-                android:hint="@string/edit_vehicle_name_label"
-                android:inputType="text|textCapWords|textAutoComplete"
-                android:imeOptions="actionNext"/>
+                android:hint="@string/edit_vehicle_name_hint"
+                android:imeOptions="actionNext"
+                android:inputType="text|textCapWords|textAutoComplete"/>
 
         </LinearLayout>
 
@@ -46,9 +46,9 @@
             <EditText
                 android:id="@+id/vehicle_edit_color"
                 style="@style/EditDetailStyle"
-                android:hint="@string/edit_vehicle_color_label"
-                android:inputType="text|textCapWords|textAutoComplete"
-                android:imeOptions="actionNext"/>
+                android:hint="@string/edit_vehicle_color_hint"
+                android:imeOptions="actionNext"
+                android:inputType="text|textCapWords|textAutoComplete"/>
 
         </LinearLayout>
 
@@ -62,9 +62,9 @@
             <EditText
                 android:id="@+id/vehicle_edit_year"
                 style="@style/EditDetailStyle"
-                android:hint="@string/edit_vehicle_model_year_label"
-                android:inputType="number"
-                android:imeOptions="actionNext"/>
+                android:hint="@string/edit_vehicle_model_year_hint"
+                android:imeOptions="actionNext"
+                android:inputType="number"/>
 
         </LinearLayout>
 
@@ -78,9 +78,9 @@
             <EditText
                 android:id="@+id/vehicle_edit_model"
                 style="@style/EditDetailStyle"
-                android:hint="@string/edit_vehicle_model_label"
-                android:inputType="text|textCapWords|textAutoComplete"
-                android:imeOptions="actionNext"/>
+                android:hint="@string/edit_vehicle_model_hint"
+                android:imeOptions="actionNext"
+                android:inputType="text|textCapWords|textAutoComplete"/>
 
         </LinearLayout>
 
@@ -94,9 +94,9 @@
             <EditText
                 android:id="@+id/vehicle_edit_license_plate"
                 style="@style/EditDetailStyle"
-                android:hint="@string/edit_vehicle_license_plate_label"
-                android:inputType="text|textCapCharacters|textNoSuggestions"
-                android:imeOptions="actionNext"/>
+                android:hint="@string/edit_vehicle_license_plate_hint"
+                android:imeOptions="actionNext"
+                android:inputType="text|textCapCharacters|textNoSuggestions"/>
 
         </LinearLayout>
 
@@ -110,9 +110,9 @@
             <EditText
                 android:id="@+id/vehicle_edit_vin"
                 style="@style/EditDetailStyle"
-                android:hint="@string/edit_vehicle_vin_label"
-                android:inputType="text|textCapCharacters|textNoSuggestions"
-                android:imeOptions="actionDone"/>
+                android:hint="@string/edit_vehicle_vin_hint"
+                android:imeOptions="actionDone"
+                android:inputType="text|textCapCharacters|textNoSuggestions"/>
 
         </LinearLayout>
 
