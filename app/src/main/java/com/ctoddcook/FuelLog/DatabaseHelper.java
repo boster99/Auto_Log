@@ -262,6 +262,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
    * @param vList an array of Model_Vehicle objects to be updated in the database
    * @return the number of successfully updated rows
    */
+  @SuppressWarnings("unused")
   public int updateVehicles(ArrayList<Model_Vehicle> vList) {
     int result = 0;
 
@@ -430,6 +431,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
    * @param fdList an array of Model_Fueling objects to be updated in the database
    * @return the number of successfully updated rows
    */
+  @SuppressWarnings("unused")
   public int updateFueling(ArrayList<Model_Fueling> fdList) {
     int result = 0;
 
