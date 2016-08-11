@@ -1,4 +1,4 @@
-package com.ctoddcook.CamGenTools;
+package com.ctoddcook.FuelLogBackup;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,10 +9,17 @@ import android.util.Log;
 import android.util.LongSparseArray;
 import android.util.Xml;
 
+import com.ctoddcook.CamGenTools.CTools;
+import com.ctoddcook.CamGenTools.XmlBase;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -42,9 +49,9 @@ public class XmlToDatabaseImporter extends XmlBase {
       throws IOException {
     final InputStreamReader isr = new InputStreamReader(is, "UTF8");
     try {
-      final XmlPullParser p = Xml.newPullParser();
-      p.setInput(isr);
-      readTag(p, DATABASE_TAG, false);
+      final XmlPullParser parser = Xml.newPullParser();
+      parser.setInput(isr);
+      readTag(parser, BackupXmlDatabase.DATABASE_TAG, false);
 
       // Order of tables matters for foreign keys. If a table has a foreign key pointing to
       // another table, it must come after the table it points to
@@ -94,10 +101,10 @@ public class XmlToDatabaseImporter extends XmlBase {
       @Nullable final String fkColumn,  // points to the prime key of another table
       @Nullable final LongSparseArray<Long> fkRemapping,
       final String... mergeByColumn) throws IOException, XmlPullParserException {
-    readTag(xmlParser, TABLE_TAG, false);
-    CTools.assertEquals(tableName, xmlParser.getAttributeValue(null, NAME_ATTR));
+    readTag(xmlParser, BackupXmlTable.TABLE_TAG, false);
+    CTools.assertEquals(tableName, xmlParser.getAttributeValue(null, BackupXmlTable.NAME_ATTR));
 
-    final String pkColumn = xmlParser.getAttributeValue(null, PK_ATTR);
+    final String pkColumn = xmlParser.getAttributeValue(null, BackupXmlTable.PK_ATTR);
     final LongSparseArray<Long> remapping = overwrite ? null : new LongSparseArray<Long>();
     final HashSet<String> mb = new HashSet<>(mergeByColumn.length);
     mb.addAll(Arrays.asList(mergeByColumn));
@@ -105,11 +112,11 @@ public class XmlToDatabaseImporter extends XmlBase {
     while (true) {
       final int et = xmlParser.nextTag();
       if (et == XmlPullParser.END_TAG) {
-        CTools.assertEquals(TABLE_TAG, xmlParser.getName());
+        CTools.assertEquals(BackupXmlTable.TABLE_TAG, xmlParser.getName());
         return remapping;
       } else {
         CTools.assertEquals(XmlPullParser.START_TAG, et);
-        CTools.assertEquals(ROW_TAG, xmlParser.getName());
+        CTools.assertEquals(BackupXmlRow.ROW_TAG, xmlParser.getName());
         importRow(db, xmlParser, tableName, pkColumn, remapping, fkColumn, fkRemapping, mb);
       }
     }
@@ -135,13 +142,13 @@ public class XmlToDatabaseImporter extends XmlBase {
     while (true) {
       final int et = xmlParser.nextTag();
       if (et == XmlPullParser.END_TAG) {
-        if (ROW_TAG.equals(xmlParser.getName()))
+        if (BackupXmlRow.ROW_TAG.equals(xmlParser.getName()))
           break;
-        CTools.assertEquals(COLUMN_TAG, xmlParser.getName());
+        CTools.assertEquals(BackupXmlColumn.COLUMN_TAG, xmlParser.getName());
       } else {
         CTools.assertEquals(XmlPullParser.START_TAG, et);
-        CTools.assertEquals(COLUMN_TAG, xmlParser.getName());
-        final String columnName = xmlParser.getAttributeValue(null, NAME_ATTR);
+        CTools.assertEquals(BackupXmlColumn.COLUMN_TAG, xmlParser.getName());
+        final String columnName = xmlParser.getAttributeValue(null, BackupXmlColumn.NAME_ATTR);
         final String columnValue = unescape(xmlParser.nextText());
 
         if (pkRemapping == null || !columnName.equals(pkColumn))

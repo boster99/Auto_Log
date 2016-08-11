@@ -29,8 +29,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ctoddcook.CamGenTools.PropertiesHelper;
+import com.ctoddcook.CamGenTools.PropertyDataMap;
 import com.ctoddcook.CamUiTools.Handler_Hints;
+import com.ctoddcook.FuelLogBackup.BackupXmlDatabase;
+import com.ctoddcook.FuelLogBackup.BackupXmlEncoder;
+import com.ctoddcook.FuelLogBackup.BackupXmlParser;
 
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -97,18 +106,26 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
 
     showHint();
 
-//    ByteArrayOutputStream baos = new ByteArrayOutputStream(1024);
-//    try {
-//      DatabaseToXmlExporter d2x = DatabaseToXmlExporter.getInstance(sDatabaseHelper, baos);
-//      d2x.writeTable(PropertyDataMap.TABLE_NAME, PropertyDataMap._ID);
-//      String p = baos.toString();
-//      d2x.writeTable(DatabaseMap_Fueling.TABLE_NAME, DatabaseMap_Fueling._ID);
-//      String f = baos.toString();
-//      d2x.writeTable(DatabaseMap_Vehicle.TABLE_NAME, DatabaseMap_Vehicle._ID);
-//      String v = baos.toString();
-//    } catch (IOException e) {
-//      e.printStackTrace();
-//    }
+    ByteArrayOutputStream outstream = new ByteArrayOutputStream(1024);
+    try {
+      BackupXmlEncoder d2x = BackupXmlEncoder.getInstance(sDatabaseHelper, outstream);
+      d2x.adddTable(PropertyDataMap.TABLE_NAME, PropertyDataMap._ID);
+      d2x.adddTable(DatabaseMap_Fueling.TABLE_NAME, DatabaseMap_Fueling._ID);
+      d2x.adddTable(DatabaseMap_Vehicle.TABLE_NAME, DatabaseMap_Vehicle._ID);
+      d2x.encodeDatabase();
+      String v = outstream.toString();
+
+      byte[] barray = outstream.toByteArray();
+      ByteArrayInputStream instream = new ByteArrayInputStream(barray);
+      BackupXmlParser parser = new BackupXmlParser();
+      try {
+        BackupXmlDatabase db = parser.parse(instream);
+      } catch (XmlPullParserException e) {
+      }
+
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   /**
@@ -658,7 +675,7 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
             mFuelingToDelete.setDeleted();
             sDatabaseHelper.deleteFueling(mFuelingToDelete);
             mFuelingToDelete = null;
-            Handler_DataEvents.getInstance().dispatchDataUpdateEvent(
+            Handler_DataEvents.getInstance().dispatchDataUpdatedEvent(
                 Handler_DataEvents.DataUpdateEvent.FUELING_LIST_UPDATED, null);
             break;
 
