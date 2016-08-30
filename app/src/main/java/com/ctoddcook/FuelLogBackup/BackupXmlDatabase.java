@@ -3,7 +3,7 @@ package com.ctoddcook.FuelLogBackup;
 import java.util.ArrayList;
 
 /**
- * Holds the data from the data, as imported by BackupXmlParser
+ * Holds the data from the database, as imported by BackupXmlParser
  * <p/>
  * Created by C. Todd Cook on 6/27/2016.<br>
  * ctodd@ctoddcook.com
