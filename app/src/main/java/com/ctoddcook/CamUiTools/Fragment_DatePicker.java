@@ -28,7 +28,7 @@ import java.util.Calendar;
 public class Fragment_DatePicker extends DialogFragment
                             implements DatePickerDialog.OnDateSetListener {
 
-    private static final String KEY_DATE_TO_UPDATE = "com.ctoddcook.CUITools.DATE_TO_UPDATE";
+    private static final String KEY_INITIAL_DATE = "com.ctoddcook.CUITools.DATE_TO_UPDATE";
 
     /**
      * A factory to create an instance of this class, sets its arguments to the initial date to
@@ -40,7 +40,7 @@ public class Fragment_DatePicker extends DialogFragment
     public static Fragment_DatePicker newInstance(long date) {
         Fragment_DatePicker frag = new Fragment_DatePicker();
         Bundle args = new Bundle();
-        args.putLong(KEY_DATE_TO_UPDATE, date);
+        args.putLong(KEY_INITIAL_DATE, date);
         frag.setArguments(args);
         return frag;
     }
@@ -58,17 +58,17 @@ public class Fragment_DatePicker extends DialogFragment
         super.onCreateDialog(savedInstanceState);
 
         // Get the initial time to display from the arguments for the fragment
-        long dateToUpdateMillis;
+        long initialDate;
         Bundle args = this.getArguments();
         if (args != null)
-            dateToUpdateMillis = args.getLong(KEY_DATE_TO_UPDATE);
+            initialDate = args.getLong(KEY_INITIAL_DATE);
         else
         throw new IllegalArgumentException("Caller must provide initial date to display via " +
                 "the newInstance() method");
         final Calendar c = Calendar.getInstance();
 
         // if provided argument is not 0, use current date
-        if (dateToUpdateMillis > 0) c.setTimeInMillis(dateToUpdateMillis);
+        if (initialDate != 0) c.setTimeInMillis(initialDate);
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
