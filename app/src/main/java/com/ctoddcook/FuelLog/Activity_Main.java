@@ -690,7 +690,7 @@ public class Activity_Main extends AppCompatActivity implements AdapterView.OnIt
     // Set up and display the dialog to get the user's confirmation that the fueling should be
     // deleted.
     AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    builder.setTitle("Delete Model_Fueling");
+    builder.setTitle("Delete Fueling?");
     builder.setMessage("Deleting a fueling cannot be undone. Are you sure you want to do this?")
         .setPositiveButton("Yes, delete it", dialogClickListener)
         .setNegativeButton("No, never mind", dialogClickListener).show();
