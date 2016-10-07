@@ -1,118 +1,118 @@
 <resources>
-  <string name="app_name">Fuel Log</string>
+    <string name="app_name">Fuel Log</string>
 
-  <string name="settings_title">Settings</string>
+    <string name="settings_title">Settings</string>
 
-  <!-- The following are strings on the main screen -->
-  <string name="main_price_label">Price</string>
-  <string name="main_distance_label">Dist</string>
-  <string name="main_volume_label">Vol</string>
-  <string name="main_fuel_efficiency_label">MPG</string>
-  <string name="main_averages_label">Averages for </string>
-  <string name="main_fuelings_label">Individual Fuelings</string>
-  <string name="main_blank_value">---</string>
-  <string name="main_first_averages_label">3 months</string>
-  <string name="main_second_averages_label">6 months</string>
-  <string name="main_third_averages_label">One Year</string>
-  <string name="main_fourth_averages_label">Lifetime</string>
+    <!-- The following are strings on the main screen -->
+    <string name="main_price_label">Price</string>
+    <string name="main_distance_label">Dist</string>
+    <string name="main_volume_label">Vol</string>
+    <string name="main_fuel_efficiency_label">MPG</string>
+    <string name="main_averages_label">Averages for </string>
+    <string name="main_fuelings_label">Individual Fuelings</string>
+    <string name="main_blank_value">---</string>
+    <string name="main_first_averages_label">3 months</string>
+    <string name="main_second_averages_label">6 months</string>
+    <string name="main_third_averages_label">One Year</string>
+    <string name="main_fourth_averages_label">Lifetime</string>
 
-  <!-- Following are used on Edit Fueling activity -->
-  <string name="edit_fueling_title">Enter Fueling Details</string>
-  <string name="edit_fueling_date_label">Date *</string>
-  <string name="edit_fueling_time_label">Time *</string>
-  <string name="edit_fueling_volume_label">Volume *</string>
-  <string name="edit_fueling_distance_label">Distance *</string>
-  <string name="edit_fueling_total_price_paid_label">Total Price Paid *</string>
-  <string name="edit_fueling_location_label">Location</string>
-  <string name="edit_fueling_odometer_label">Odometer</string>
-  <string name="edit_fueling_date_hint">Date</string>
-  <string name="edit_fueling_time_hint">Time</string>
-  <string name="edit_fueling_volume_hint">Volume</string>
-  <string name="edit_fueling_distance_hint">Distance</string>
-  <string name="edit_fueling_total_price_paid_hint">Total Price Paid</string>
-  <string name="edit_fueling_location_hint">Location</string>
-  <string name="edit_fueling_odometer_hint">Odometer</string>
+    <!-- Following are used on Edit Fueling activity -->
+    <string name="edit_fueling_title">Enter Fueling Details</string>
+    <string name="edit_fueling_date_label">Date *</string>
+    <string name="edit_fueling_time_label">Time *</string>
+    <string name="edit_fueling_volume_label">Volume *</string>
+    <string name="edit_fueling_distance_label">Distance *</string>
+    <string name="edit_fueling_total_price_paid_label">Total Price Paid *</string>
+    <string name="edit_fueling_location_label">Location</string>
+    <string name="edit_fueling_odometer_label">Odometer</string>
+    <string name="edit_fueling_date_hint">Date</string>
+    <string name="edit_fueling_time_hint">Time</string>
+    <string name="edit_fueling_volume_hint">Volume</string>
+    <string name="edit_fueling_distance_hint">Distance</string>
+    <string name="edit_fueling_total_price_paid_hint">Total Price Paid</string>
+    <string name="edit_fueling_location_hint">Location</string>
+    <string name="edit_fueling_odometer_hint">Odometer</string>
 
-  <!-- Following are used in multiple layouts, activities and fragments -->
-  <string name="all_vehicle_label">Vehicle</string>
-  <string name="all_period_label">Period</string>
-  <string name="all_date_label">Date</string>
-  <string name="all_datetime_label">Date and Time</string>
-  <string name="all_fuel_efficiency_label">Miles/Gallon</string>
-  <string name="all_cost_efficiency_label">Price/Mile</string>
-  <string name="all_unit_price_label">Price/Gallon</string>
-  <string name="row_fueling_details_coordinates">GPS Coordinates</string>
+    <!-- Following are used in multiple layouts, activities and fragments -->
+    <string name="all_vehicle_label">Vehicle</string>
+    <string name="all_period_label">Period</string>
+    <string name="all_date_label">Date</string>
+    <string name="all_datetime_label">Date and Time</string>
+    <string name="all_fuel_efficiency_label">Miles/Gallon</string>
+    <string name="all_cost_efficiency_label">Price/Mile</string>
+    <string name="all_unit_price_label">Price/Gallon</string>
+    <string name="row_fueling_details_coordinates">GPS Coordinates</string>
 
-  <!-- Following are used in fragment_averages_detail.xml -->
-  <string name="averages_detail_title">Averages Details</string>
-  <string name="averages_distance_label">Avg Distance</string>
-  <string name="averages_volume_label">Avg Volume</string>
-  <string name="averages_total_price_paid_label">Avg Price</string>
-  <string name="averages_unit_price_label">Avg Price/Gallon</string>
-  <string name="averages_fuel_efficiency_label">Avg Miles/Gallon</string>
-  <string name="averages_cost_efficiency_label">Avg Price/Mile</string>
+    <!-- Following are used in fragment_averages_detail.xml -->
+    <string name="averages_detail_title">Averages Details</string>
+    <string name="averages_distance_label">Avg Distance</string>
+    <string name="averages_volume_label">Avg Volume</string>
+    <string name="averages_total_price_paid_label">Avg Price</string>
+    <string name="averages_unit_price_label">Avg Price/Gallon</string>
+    <string name="averages_fuel_efficiency_label">Avg Miles/Gallon</string>
+    <string name="averages_cost_efficiency_label">Avg Price/Mile</string>
 
-  <!-- Following are used on AddEditVehicle activity -->
-  <string name="edit_vehicle_title">Enter Vehicle Details</string>
-  <string name="edit_vehicle_name_label">Vehicle Name *</string>
-  <string name="edit_vehicle_model_year_label">Model Year</string>
-  <string name="edit_vehicle_color_label">Color</string>
-  <string name="edit_vehicle_model_label">Model</string>
-  <string name="edit_vehicle_vin_label">VIN</string>
-  <string name="edit_vehicle_license_plate_label">License Plate</string>
-  <string name="edit_vehicle_name_hint">Vehicle Name</string>
-  <string name="edit_vehicle_model_year_hint">Model Year</string>
-  <string name="edit_vehicle_color_hint">Color</string>
-  <string name="edit_vehicle_model_hint">Model</string>
-  <string name="edit_vehicle_vin_hint">VIN</string>
-  <string name="edit_vehicle_license_plate_hint">License Plate</string>
+    <!-- Following are used on AddEditVehicle activity -->
+    <string name="edit_vehicle_title">Enter Vehicle Details</string>
+    <string name="edit_vehicle_name_label">Vehicle Name *</string>
+    <string name="edit_vehicle_model_year_label">Model Year</string>
+    <string name="edit_vehicle_color_label">Color</string>
+    <string name="edit_vehicle_model_label">Model</string>
+    <string name="edit_vehicle_vin_label">VIN</string>
+    <string name="edit_vehicle_license_plate_label">License Plate</string>
+    <string name="edit_vehicle_name_hint">Vehicle Name</string>
+    <string name="edit_vehicle_model_year_hint">Model Year</string>
+    <string name="edit_vehicle_color_hint">Color</string>
+    <string name="edit_vehicle_model_hint">Model</string>
+    <string name="edit_vehicle_vin_hint">VIN</string>
+    <string name="edit_vehicle_license_plate_hint">License Plate</string>
   <string name="edit_vehicle_duplicate_warning">
     There is already a Vehicle with the same Color, Year and Model, the same Name, the same VIN,
     or the same License Plate.\n\nDo you want to save this as a duplicate?
   </string>
 
-  <!-- For re-used buttons -->
-  <string name="btn_save_label">Save</string>
-  <string name="btn_cancel_label">Cancel</string>
-  <string name="btn_edit_label">Edit</string>
-  <string name="btn_delete_label">Delete</string>
+    <!-- For re-used buttons -->
+    <string name="btn_save_label">Save</string>
+    <string name="btn_cancel_label">Cancel</string>
+    <string name="btn_edit_label">Edit</string>
+    <string name="btn_delete_label">Delete</string>
 
-  <!-- For Model_Fueling data display formatting -->
-  <string name="format_currency">¤ 0.00</string>
-  <string name="format_currency_raw">0.00</string>
-  <string name="format_currency_long">¤ 0.000</string>
-  <string name="format_currency_long_raw">0.000</string>
-  <string name="format_one_decimal_place">0.0</string>
-  <string name="format_two_decimal_places">0.00</string>
-  <string name="format_three_decimal_places">0.000</string>
-  <string name="format_data_pattern">%1$s %2$s</string>
-  <string name="format_distance_label">m</string>
-  <string name="format_volume_label">g</string>
-  <string name="format_fuel_efficiency_label">m/g</string>
+    <!-- For Model_Fueling data display formatting -->
+    <string name="format_currency">¤ 0.00</string>
+    <string name="format_currency_raw">0.00</string>
+    <string name="format_currency_long">¤ 0.000</string>
+    <string name="format_currency_long_raw">0.000</string>
+    <string name="format_one_decimal_place">0.0</string>
+    <string name="format_two_decimal_places">0.00</string>
+    <string name="format_three_decimal_places">0.000</string>
+    <string name="format_data_pattern">%1$s %2$s</string>
+    <string name="format_distance_label">m</string>
+    <string name="format_volume_label">g</string>
+    <string name="format_fuel_efficiency_label">m/g</string>
 
-  <!-- Menu and Menu Item Titles -->
-  <string name="menu_vehicle_label">Show Vehicles</string>
-  <string name="menu_backup_label">Backup to External Storage</string>
-  <string name="menu_restore_label">Restore from External Storage</string>
-  <string name="menu_settings_label">Settings</string>
-  <string name="menu_make_default_label">Make Default</string>
-  <string name="menu_retire_label">Retire</string>
-  <string name="menu_unretire_label">Un-retire</string>
-  <string name="menu_view_label">View</string>
+    <!-- Menu and Menu Item Titles -->
+    <string name="menu_vehicle_label">Show Vehicles</string>
+    <string name="menu_backup_label">Backup to External Storage</string>
+    <string name="menu_restore_label">Restore from External Storage</string>
+    <string name="menu_settings_label">Settings</string>
+    <string name="menu_make_default_label">Make Default</string>
+    <string name="menu_retire_label">Retire</string>
+    <string name="menu_unretire_label">Un-retire</string>
+    <string name="menu_view_label">View</string>
 
-  <!-- Miscellaneous -->
-  <string name="fueling_details_title">Fueling Details</string>
-  <string name="vehicle_details_title">Vehicle Details</string>
-  <string name="detail_frame_title">View Details</string>
-  <string name="nav_drawer_open_description">Drawer Opening</string>
-  <string name="nav_drawer_close_description">Drawer Closing</string>
-  <string name="vehicle_list_title">Vehicle List</string>
-  <string name="settings_switch_allow_gps_description">Allow GPS/Network Services search to identify fueling location</string>
-  <string name="settings_btn_reset_hints_label">Reset</string>
-  <string name="settings_btn_reset_hints_description">Reset first-time hints (to show them again)</string>
-  <string name="all_btn_okay">Okay</string>
+    <!-- Miscellaneous -->
+    <string name="fueling_details_title">Fueling Details</string>
+    <string name="vehicle_details_title">Vehicle Details</string>
+    <string name="detail_frame_title">View Details</string>
+    <string name="nav_drawer_open_description">Drawer Opening</string>
+    <string name="nav_drawer_close_description">Drawer Closing</string>
+    <string name="vehicle_list_title">Vehicle List</string>
+    <string name="settings_switch_allow_gps_description">Allow GPS/Network Services search to identify fueling location</string>
+    <string name="settings_btn_reset_hints_label">Reset</string>
+    <string name="settings_btn_reset_hints_description">Reset first-time hints (to show them again)</string>
+    <string name="all_btn_okay">Okay</string>
 
-  <!-- Hint messages -->
+    <!-- Hint messages -->
   <string name="edit_vehicle_hint">
     HINT: You can enter your own descriptive \"Name\" for this vehicle. Or, if you leave
     it blank, the vehicle\'s color, year and model will be used to create a name for you.
@@ -122,30 +122,30 @@
     HINT: Touch the coordinates, and a map will show the location.
   </string>
 
-  <string name="pager_vehicle_hint_title">Vehicle Details</string>
+    <string name="pager_vehicle_hint_title">Vehicle Details</string>
   <string name="pager_vehicle_hint">
     If you have more than one vehicle, on this screen you can swipe left or right to view
     the prior or next vehicle\'s details.
   </string>
 
-  <string name="pager_fueling_hint_title">Fueling Details</string>
+    <string name="pager_fueling_hint_title">Fueling Details</string>
   <string name="pager_fueling_hint">
     If you have more than one fueling, on this screen you can swipe left or right to view
     the prior or next fueling\'s details.
   </string>
 
-  <string name="pager_averages_hint_title">Averages Details</string>
+    <string name="pager_averages_hint_title">Averages Details</string>
   <string name="pager_averages_hint">
     Swipe left or right to view the prior or next set of averages.
   </string>
 
-  <string name="vehicle_list_hint_title">Vehicle List</string>
+    <string name="vehicle_list_hint_title">Vehicle List</string>
   <string name="vehicle_list_hint">
     Touch a vehicle on this screen to be shown more details about that vehicle. Long-touch
     a vehicle to open a context menu of options available for that vehicle.
   </string>
 
-  <string name="main_fuelings_hint_title">Main View</string>
+    <string name="main_fuelings_hint_title">Main View</string>
   <string name="main_fuelings_hint">
     This is the main screen, and is probably mostly empty right now. At the top are four rows of
     Averages, which will become meaningful as you add more and more fuelings. Touch a row of
@@ -156,7 +156,7 @@
     fill your vehicle with gas.
   </string>
 
-  <string name="first_vehicle_hint_title">Add or Edit a Vehicle</string>
+    <string name="first_vehicle_hint_title">Add or Edit a Vehicle</string>
   <string name="first_vehicle_hint">
     Looks like this is your first time here. Welcome. We hope you find this easy and useful.
     Let\'s start by adding a vehicle. (You can add more Vehicles, later, if you\'d like
@@ -166,7 +166,7 @@
     optional.
   </string>
 
-  <string name="first_fueling_hint_title">Add or Edit a Fueling</string>
+    <string name="first_fueling_hint_title">Add or Edit a Fueling</string>
   <string name="first_fueling_hint">
     This screen is where you add (or edit) details when you fill your car with gas. The app
     provides a date and time, but you can change them if you want to. You must provide the
@@ -175,12 +175,12 @@
     it if you would like to). The Odometer field is optional—use it if you want to.
   </string>
 
-  <string name="hint_title">Hint</string>
-  <string name="hint_btn_okay_label">Got it</string>
+    <string name="hint_title">Hint</string>
+    <string name="hint_btn_okay_label">Got it</string>
 
 
-  <!-- GPS Services Messages -->
-  <string name="location_request_explanation_title">Location Services</string>
+    <!-- GPS Services Messages -->
+    <string name="location_request_explanation_title">Location Services</string>
   <string name="location_request_explanation_message">Location Services are used to capture
     the coordinates of your location when you get gas. These coordinates are stored, and used
     later to show you a map of that location.</string>
