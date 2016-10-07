@@ -92,7 +92,8 @@
 
   <!-- Menu and Menu Item Titles -->
   <string name="menu_vehicle_label">Show Vehicles</string>
-  <string name="menu_back_label">Backup to File</string>
+  <string name="menu_backup_label">Backup to External Storage</string>
+  <string name="menu_restore_label">Restore from External Storage</string>
   <string name="menu_settings_label">Settings</string>
   <string name="menu_make_default_label">Make Default</string>
   <string name="menu_retire_label">Retire</string>
