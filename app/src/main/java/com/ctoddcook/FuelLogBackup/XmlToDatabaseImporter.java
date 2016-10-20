@@ -31,33 +31,33 @@ import java.util.Set;
  * @author <a href="mailto:konstantin.sobolev@gmail.com">Konstantin Sobolev</a>
  */
 public class XmlToDatabaseImporter extends XmlBase {
-  private static final String TAG = "XmlToDatabaseImporter";
-  private static SQLiteDatabase mDB;
+    private static final String TAG = "XmlToDatabaseImporter";
+    private static SQLiteDatabase mDB;
 
 
-  public static void importData(final Context ctx, final File f, final boolean overwrite)
-      throws IOException {
-    final FileInputStream fis = new FileInputStream(f);
-    try {
-      importData(ctx, fis, overwrite);
-    } finally {
-      fis.close();
+    public static void importData(final Context ctx, final File f, final boolean overwrite)
+            throws IOException {
+        final FileInputStream fis = new FileInputStream(f);
+        try {
+            importData(ctx, fis, overwrite);
+        } finally {
+            fis.close();
+        }
     }
-  }
 
-  public static void importData(final Context ctx, final InputStream is, final boolean overwrite)
-      throws IOException {
-    final InputStreamReader isr = new InputStreamReader(is, "UTF8");
-    try {
-      final XmlPullParser parser = Xml.newPullParser();
-      parser.setInput(isr);
-      readTag(parser, BackupXmlDatabase.DATABASE_TAG, false);
+    public static void importData(final Context ctx, final InputStream is, final boolean overwrite)
+            throws IOException {
+        final InputStreamReader isr = new InputStreamReader(is, "UTF8");
+        try {
+            final XmlPullParser parser = Xml.newPullParser();
+            parser.setInput(isr);
+            readTag(parser, BackupXmlDatabase.DATABASE_TAG, false);
 
-      // Order of tables matters for foreign keys. If a table has a foreign key pointing to
-      // another table, it must come after the table it points to
+            // Order of tables matters for foreign keys. If a table has a foreign key pointing to
+            // another table, it must come after the table it points to
 
-      // I've commented out the next 2 lines so I can get the app to compile, but otherwise I
-      // have not changed them.
+            // I've commented out the next 2 lines so I can get the app to compile, but otherwise I
+            // have not changed them.
 //      final LongSparseArray<Long> tagIDRemapping = importTable(
 //          mDB,
 //          p,
@@ -75,69 +75,69 @@ public class XmlToDatabaseImporter extends XmlBase {
 //          tagIDRemapping,
 //          DBHelper.TODO_TAG_ID,
 //          DBHelper.TODO_SUMMARY);
-    } catch (XmlPullParserException e) {
-      Log.e(TAG, "error parsing backup file", e);
-    } finally {
-      mDB.close();
-      isr.close();
+        } catch (XmlPullParserException e) {
+            Log.e(TAG, "error parsing backup file", e);
+        } finally {
+            mDB.close();
+            isr.close();
+        }
     }
-  }
 
 
-  /*
-  I have not been able to figure out what he's doing with the mergeByColumn arguments. He called
-  this method with two tables. For the first one, he passed nothing for mergeByColumn; for the
-  second one, he passed TODO_TAG_ID (which appears to be a foreign key pointing to the TAG_ID
-  column of the TAG table), and passed TODO_SUMMARY.
+    /*
+    I have not been able to figure out what he's doing with the mergeByColumn arguments. He called
+    this method with two tables. For the first one, he passed nothing for mergeByColumn; for the
+    second one, he passed TODO_TAG_ID (which appears to be a foreign key pointing to the TAG_ID
+    column of the TAG table), and passed TODO_SUMMARY.
 
-  fkColumn is when the table being passed here has a foreign key pointing to another table.
-   */
-  // todo document this method thoroughly
-  private static LongSparseArray<Long> importTable(
-      final SQLiteDatabase db,
-      final XmlPullParser xmlParser,
-      final String tableName,
-      final boolean overwrite,
-      @Nullable final String fkColumn,  // points to the prime key of another table
-      @Nullable final LongSparseArray<Long> fkRemapping,
-      final String... mergeByColumn) throws IOException, XmlPullParserException {
-    readTag(xmlParser, BackupXmlTable.TABLE_TAG, false);
-    CTools.assertEquals(tableName, xmlParser.getAttributeValue(null, BackupXmlTable.NAME_ATTR));
+    fkColumn is when the table being passed here has a foreign key pointing to another table.
+     */
+    // todo document this method thoroughly
+    private static LongSparseArray<Long> importTable(
+            final SQLiteDatabase db,
+            final XmlPullParser xmlParser,
+            final String tableName,
+            final boolean overwrite,
+            @Nullable final String fkColumn,  // points to the prime key of another table
+            @Nullable final LongSparseArray<Long> fkRemapping,
+            final String... mergeByColumn) throws IOException, XmlPullParserException {
+        readTag(xmlParser, BackupXmlTable.TABLE_TAG, false);
+        CTools.assertEquals(tableName, xmlParser.getAttributeValue(null, BackupXmlTable.NAME_ATTR));
 
-    final String pkColumn = xmlParser.getAttributeValue(null, BackupXmlTable.PK_ATTR);
-    final LongSparseArray<Long> remapping = overwrite ? null : new LongSparseArray<Long>();
-    final HashSet<String> mb = new HashSet<>(mergeByColumn.length);
-    mb.addAll(Arrays.asList(mergeByColumn));
+        final String pkColumn = xmlParser.getAttributeValue(null, BackupXmlTable.PK_ATTR);
+        final LongSparseArray<Long> remapping = overwrite ? null : new LongSparseArray<Long>();
+        final HashSet<String> mb = new HashSet<>(mergeByColumn.length);
+        mb.addAll(Arrays.asList(mergeByColumn));
 
-    while (true) {
-      final int et = xmlParser.nextTag();
-      if (et == XmlPullParser.END_TAG) {
-        CTools.assertEquals(BackupXmlTable.TABLE_TAG, xmlParser.getName());
-        return remapping;
-      } else {
-        CTools.assertEquals(XmlPullParser.START_TAG, et);
-        CTools.assertEquals(BackupXmlRow.ROW_TAG, xmlParser.getName());
-        importRow(db, xmlParser, tableName, pkColumn, remapping, fkColumn, fkRemapping, mb);
-      }
+        while (true) {
+            final int et = xmlParser.nextTag();
+            if (et == XmlPullParser.END_TAG) {
+                CTools.assertEquals(BackupXmlTable.TABLE_TAG, xmlParser.getName());
+                return remapping;
+            } else {
+                CTools.assertEquals(XmlPullParser.START_TAG, et);
+                CTools.assertEquals(BackupXmlRow.ROW_TAG, xmlParser.getName());
+                importRow(db, xmlParser, tableName, pkColumn, remapping, fkColumn, fkRemapping, mb);
+            }
+        }
     }
-  }
 
-  // todo document this method thoroughly
-  private static void importRow(final SQLiteDatabase db,
-                                final XmlPullParser xmlParser,
-                                final String tableName,
-                                final String pkColumn,
-                                final LongSparseArray<Long> pkRemapping, //we fill pkRemapping
-                                @Nullable final String fkColumn,
-                                @Nullable final LongSparseArray<Long> fkRemapping, //we use
-                                final Set<String> mergeByColumn)
-        throws IOException, XmlPullParserException {
-    final ContentValues cv = new ContentValues();
-    int mergeCnt = 0;
-    final StringBuilder mergeCond = new StringBuilder();
-    final String[] mergeCols = new String[mergeByColumn.size()];
-    final String[] mergeArgs = new String[mergeByColumn.size()];
-
+    // todo document this method thoroughly
+    private static void importRow(final SQLiteDatabase db,
+                                  final XmlPullParser xmlParser,
+                                  final String tableName,
+                                  final String pkColumn,
+                                  final LongSparseArray<Long> pkRemapping, //we fill pkRemapping
+                                  @Nullable final String fkColumn,
+                                  @Nullable final LongSparseArray<Long> fkRemapping, //we use
+                                  final Set<String> mergeByColumn)
+            throws IOException, XmlPullParserException {
+        final ContentValues cv = new ContentValues();
+        int mergeCnt = 0;
+        final StringBuilder mergeCond = new StringBuilder();
+        final String[] mergeCols = new String[mergeByColumn.size()];
+        final String[] mergeArgs = new String[mergeByColumn.size()];
+/*
     Long oldPK = null;
     while (true) {
       final int et = xmlParser.nextTag();
@@ -149,12 +149,12 @@ public class XmlToDatabaseImporter extends XmlBase {
         CTools.assertEquals(XmlPullParser.START_TAG, et);
         CTools.assertEquals(BackupXmlColumn.COLUMN_TAG, xmlParser.getName());
         final String columnName = xmlParser.getAttributeValue(null, BackupXmlColumn.NAME_ATTR);
-        final String columnValue = unescape(xmlParser.nextText());
+//        final String columnValue = unescape(xmlParser.nextText());
 
         if (pkRemapping == null || !columnName.equals(pkColumn))
-          cv.put(columnName, columnValue);
+//          cv.put(columnName, columnValue);
         if (fkRemapping != null && columnName.equals(fkColumn)) {
-          final Long oldFK = Long.parseLong(columnValue);
+//          final Long oldFK = Long.parseLong(columnValue);
           final Long newFK = fkRemapping.get(oldFK);
           if (newFK == null) {
             Log.w(TAG, "can't find remapping for " + oldFK + " for table " + tableName);
@@ -214,16 +214,18 @@ public class XmlToDatabaseImporter extends XmlBase {
       /*
       ????? He has no insert statement???? This next line was commented out by him
        */
-      //updated 0 = do an insert
+        //updated 0 = do an insert
+  /*
     }
     final long pk = db.replace(tableName, null, cv);
     if (oldPK != null && pkRemapping != null)
       pkRemapping.put(oldPK, pk);
-  }
+*/
+    }
 
-  private static void readTag(final XmlPullParser p, final String expectedName,
-                              final boolean closing) throws IOException, XmlPullParserException {
-    p.nextTag();
-    p.require(closing ? XmlPullParser.END_TAG : XmlPullParser.START_TAG, null, expectedName);
-  }
+    private static void readTag(final XmlPullParser p, final String expectedName,
+                                final boolean closing) throws IOException, XmlPullParserException {
+        p.nextTag();
+        p.require(closing ? XmlPullParser.END_TAG : XmlPullParser.START_TAG, null, expectedName);
+    }
 }
