@@ -8,4 +8,11 @@ package com.ctoddcook.FuelLogBackup;
  */
 
 class UnknownTableException extends Exception {
+    UnknownTableException() {
+        super();
+    }
+
+    UnknownTableException(String message) {
+        super(message);
+    }
 }
